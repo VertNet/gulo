@@ -4,3 +4,4 @@ pom.xml
 /classes/
 .lein-deps-sum
 .lein-plugins
+rm-dwca-reader-clj-jars.sh
