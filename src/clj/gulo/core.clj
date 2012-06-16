@@ -39,6 +39,11 @@
   [kingdom phylum class order family genus species sciname]
   (vec (map vector [kingdom phylum class order family genus species sciname])))
 
+(deffilterop valid-name?
+  "Return true if name is valid, otherwise return false."
+  [name]
+  (not= name "_"))
+
 (defn taxon-table
   "Create taxon table of unique names with generated UUIDs."
   [source sink-path]
@@ -48,7 +53,8 @@
                                      154 ?order 155 ?family 156 ?genus
                                      157 ?species 160 ?sciname})        
                     (map-names ?kingdom ?phylum ?class ?order ?family ?genus
-                               ?species ?sciname :> ?name))]
+                               ?species ?sciname :> ?name)
+                    (valid-name? ?name))]
     (?<- sink
          [?uuid ?name]
          (uniques ?name)

@@ -1,6 +1,5 @@
 (ns gulo.util
-  "This namespace contains utility functions."  
-  (:use [cartodb.client :as cdb :only (query)]))
+  "This namespace contains utility functions.")
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
