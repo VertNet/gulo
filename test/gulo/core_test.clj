@@ -1,59 +1,70 @@
 (ns gulo.core-test
+  "Unit test the gulo.core namespace."
   (:use gulo.core
+        [gulo.util :only (latlon-valid?)]
         [dwca.core]
+        [cascalog.api]
+        [cascalog.more-taps :as taps :only (hfs-delimited)]
         [midje sweet]
         [clojure.string :only (split)]
-        [clojure.java.io :as io])
+        [clojure.java.io :as io]
+        [clojure.contrib.java-utils :only (delete-file-recursively)])
   (:import [com.google.common.io Files]))
 
-;; (fact
-;;   "Check harvesting."
-;;   (let [source [["http://vertnet.nhm.ku.edu:8080/ipt/archive.do?r=ttrs_mammals"]]
-;;         temp-dir (Files/createTempDir)
-;;         sink-path (.getPath temp-dir)]
-;;     (harvest source sink-path)
-;;     (println sink-path)
-;;     (count (split (slurp (str sink-path "/part-00000")) #"\n")) => 968))
+(fact
+  "Check occ-tax-loc function."
+  (let [occ-path (->> (io/resource "nysm_mammals_3.csv") .getPath)
+        source (taps/hfs-delimited occ-path)
+        temp-dir (Files/createTempDir)
+        sink-path (.getPath temp-dir)
+        occ-sink (str sink-path "/occ")
+        tax-sink (str sink-path "/tax")
+        loc-sink (str sink-path "/loc")
+        tax-loc-sink (str sink-path "/tax-loc")]
+    (taxon-table source tax-sink)
+    (location-table source loc-sink)
+    (occ-tax-loc occ-path
+                 (str tax-sink "/part-00000")
+                 (str loc-sink "/part-00000")
+                 occ-sink
+                 tax-loc-sink)
+    (let [rows (split (slurp (str occ-sink "/part-00000")) #"\n")
+          row (first rows)
+          vals (split row #"\t")
+          uuid-pattern #"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"]
+      (count rows) => 2
+      (count vals) => 184
+      (re-matches uuid-pattern (nth vals 0)) => truthy
+      (re-matches uuid-pattern (nth vals 1)) => truthy)
+    (delete-file-recursively sink-path)))
 
 (fact
-  "Check occurrence table."
-  (let [source (get-records (->> (io/resource "test-archive") .getPath))
+  "Check location-table function."
+  (let [source (taps/hfs-delimited (->> (io/resource "nysm_mammals_3.csv") .getPath))
         temp-dir (Files/createTempDir)
         sink-path (.getPath temp-dir)]
-    (occurrence-table source sink-path)
+    (location-table source sink-path)
     (let [rows (split (slurp (str sink-path "/part-00000")) #"\n")
           row (first rows)
           vals (split row #"\t")
           uuid-pattern #"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"]
-      (count rows) => 1
-      (count vals) => 183
-      (count (filter #(not (= % "_")) vals)) => 6
+      (count rows) => 2
+      (count vals) => 3
       (re-matches uuid-pattern (nth vals 0)) => truthy
-      (nth vals 1) => "1"
-      (nth vals 22) => "40"
-      (nth vals 23) => "-122"
-      (nth vals 73) => "Berkeley, California, USA"
-      (nth vals 160) => "Puma concolor")))
+      (latlon-valid? (nth vals 1) (nth vals 2)) => truthy)
+    (delete-file-recursively temp-dir)))
 
 (fact
-  "Check occurrence table."
-  (let [source (get-records (->> (io/resource "test-archive") .getPath))
+  "Check taxon-table function."
+  (let [source (taps/hfs-delimited (->> (io/resource "nysm_mammals_3.csv") .getPath))
         temp-dir (Files/createTempDir)
-        temp-path (.getPath temp-dir)
-        occ-path (str temp-path "/occ")
-        tax-path (str temp-path "/tax")]
-    (occurrence-table source sink-path)
-    
+        sink-path (.getPath temp-dir)]
+    (taxon-table source sink-path)
     (let [rows (split (slurp (str sink-path "/part-00000")) #"\n")
           row (first rows)
           vals (split row #"\t")
           uuid-pattern #"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"]
-      (count rows) => 1
-      (count vals) => 183
-      (count (filter #(not (= % "_")) vals)) => 6
-      (re-matches uuid-pattern (nth vals 0)) => truthy
-      (nth vals 1) => "1"
-      (nth vals 22) => "40"
-      (nth vals 23) => "-122"
-      (nth vals 73) => "Berkeley, California, USA"
-      (nth vals 160) => "Puma concolor")))
+      (count rows) => 7
+      (count vals) => 2
+      (re-matches uuid-pattern (nth vals 0)) => truthy)
+    (delete-file-recursively temp-dir)))
