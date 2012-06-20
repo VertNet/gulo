@@ -16,7 +16,9 @@
                  [dwca-reader-clj "0.3.0-SNAPSHOT"]
                  [cartodb-clj "1.1.1-SNAPSHOT"]
                  [org.clojure/data.csv "0.1.2"]
-                 [clj-http "0.4.3"]]
+                 [clj-http "0.4.3"]
+                 [net.lingala.zip4j/zip4j "1.3.1"]
+                 [com.google.guava/guava "12.0"]]
   :dev-dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
                      [midje-cascalog "0.4.0"]
                      [midje "1.4.0"]])

@@ -31,8 +31,8 @@
          (tax-loc-uuid ?tax-loc-uuid ?taxon-id ?loc-id)
          (occ-tab :>> fields))
     (?<- tax-loc-sink
-         [?taxon-id ?loc-id]
-         (tax-loc ?taxon-id ?loc-id))))
+         [?tax-loc-id ?taxon-id ?loc-id]
+         (tax-loc-uuid ?tax-loc-id ?taxon-id ?loc-id))))
 
 (defmapcatop map-names
   "Emits all taxon names."
@@ -73,6 +73,21 @@
          (uniques ?lat ?lon)
          (util/gen-uuid :> ?uuid))))
 
-(defmain BuildTables
-  ;; TODO
-  )
+(comment
+  ;; First harvest the archives:
+  (harvest ["http://vertnet.nhm.ku.edu:8080/ipt/archive.do?r=nysm_mammals"]
+           "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
+
+  ;; Then MapReduce to build the tables:
+  (location-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
+                  "/mnt/hgfs/Data/vertnet/gulo/hfs/loc")
+
+  (taxon-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
+               "/mnt/hgfs/Data/vertnet/gulo/hfs/tax")
+
+  (occ-tax-loc
+   "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/occ"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc"))
