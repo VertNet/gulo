@@ -18,7 +18,8 @@
                  [org.clojure/data.csv "0.1.2"]
                  [clj-http "0.4.3"]
                  [net.lingala.zip4j/zip4j "1.3.1"]
-                 [com.google.guava/guava "12.0"]]
+                 [com.google.guava/guava "12.0"]
+                 [ratel/gdal "1.9.1"]]
   :dev-dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
                      [midje-cascalog "0.4.0"]
                      [midje "1.4.0"]])
