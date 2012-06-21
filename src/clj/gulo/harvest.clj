@@ -13,8 +13,8 @@
 (defn dwca-urls
   "Return vector of Darwin Core Archive URLs as strings."
   []
-  (println :what)
-  (vec (map #(first (vals %)) (cdb/query "SELECT dwca_url FROM publishers" "vertnet"))))
+  (let [rows (:map (cdb/query "SELECT dwca_url FROM publishers" "vertnet"))]
+    (vec (map #(first (vals %)) rows))))
 
 (defn prepend-uuid
   "Return vector of supplied DarwinCoreRecord values with a UUID prepended."

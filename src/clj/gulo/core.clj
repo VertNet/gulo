@@ -7,14 +7,33 @@
         [dwca.core :as dwca])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
-(defn occ-tax-loc
+(defn occ-table
   "Build occ and tax_loc tables."
-  [occ-path tax-path loc-path occ-sink-path tax-loc-sink-path]
+  [occ-path tax-path loc-path tax-loc-path occ-sink-path]
   (let [occ-tab (name-vars (taps/hfs-delimited occ-path) util/rec-fields)
         tax (taps/hfs-delimited tax-path)
         loc (taps/hfs-delimited loc-path)
+        tax-loc-source (taps/hfs-delimited tax-loc-path)
         fields util/rec-fields
         occ-sink (hfs-textline occ-sink-path :sinkmode :replace)
+        tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
+                        (tax ?taxon-id ?name)
+                        (loc ?loc-id ?lat ?lon)
+                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))   
+        tax-loc (<- [?taxon-id ?loc-id]
+                    (tax-loc-occ ?taxon-id ?loc-id ?occ-id))]
+    (?<- occ-sink
+         (vec (cons "?tax-loc-uuid" fields))
+         (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
+         (tax-loc-source ?tax-loc-uuid ?taxon-id ?loc-id)
+         (occ-tab :>> fields))))
+
+(defn tax-loc-table
+  "Build tax_loc table."
+  [occ-path tax-path loc-path tax-loc-sink-path]
+  (let [occ-tab (name-vars (taps/hfs-delimited occ-path) util/rec-fields)
+        tax (taps/hfs-delimited tax-path)
+        loc (taps/hfs-delimited loc-path)
         tax-loc-sink (taps/hfs-delimited tax-loc-sink-path :sinkmode :replace)
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
@@ -25,11 +44,6 @@
         tax-loc-uuid (<- [?uuid ?taxon-id ?loc-id]
                          (tax-loc ?taxon-id ?loc-id)
                          (util/gen-uuid :> ?uuid))]
-    (?<- occ-sink
-         (vec (cons "?tax-loc-uuid" fields))
-         (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
-         (tax-loc-uuid ?tax-loc-uuid ?taxon-id ?loc-id)
-         (occ-tab :>> fields))
     (?<- tax-loc-sink
          [?tax-loc-id ?taxon-id ?loc-id]
          (tax-loc-uuid ?tax-loc-id ?taxon-id ?loc-id))))
@@ -85,9 +99,15 @@
   (taxon-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
                "/mnt/hgfs/Data/vertnet/gulo/hfs/tax")
 
-  (occ-tax-loc
-   "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv"
+  (tax-loc-table
+   "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv"
    "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
    "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/occ"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc"))
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc")
+  
+  (occ-table
+   "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc/part-00000"
+   "/mnt/hgfs/Data/vertnet/gulo/hfs/occ"))

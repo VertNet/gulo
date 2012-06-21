@@ -85,7 +85,7 @@
         zip-path (str out-path "/" table-name ".zip")]
     (Files/copy (File. path) (File. file-path))
     ;; TODO: This sh is brittle business:
-    (sh "sed" "-i" (str "1i " (join \tab table-cols) ) file-path) ;; Add header to file
+    (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
     (sh "zip" "-j" "-r" "-D" zip-path file-path)
     zip-path))
 
