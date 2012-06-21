@@ -6,6 +6,11 @@
   [& x] ;; Cascalog ArityException: Wrong number of args without [& x]
   (str (java.util.UUID/randomUUID)))
 
+(defn wkt-point
+  "Return point encoded as WKT (well known text)."
+  [lat lng]
+  [(str "POINT(" lng " " lat ")")])
+
 ;; Valid ranges for latitude and longitude.
 (def latlon-range {:lat-min -90 :lat-max 90 :lon-min -180 :lon-max 180})
 

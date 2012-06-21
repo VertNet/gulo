@@ -18,7 +18,7 @@
         occ-sink (hfs-textline occ-sink-path :sinkmode :replace)
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
-                        (loc ?loc-id ?lat ?lon)
+                        (loc ?loc-id ?lat ?lon _)
                         (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))   
         tax-loc (<- [?taxon-id ?loc-id]
                     (tax-loc-occ ?taxon-id ?loc-id ?occ-id))]
@@ -37,7 +37,7 @@
         tax-loc-sink (taps/hfs-delimited tax-loc-sink-path :sinkmode :replace)
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
-                        (loc ?loc-id ?lat ?lon)
+                        (loc ?loc-id ?lat ?lon _)
                         (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))        
         tax-loc (<- [?taxon-id ?loc-id]
                     (tax-loc-occ ?taxon-id ?loc-id ?occ-id))
@@ -80,11 +80,12 @@
   [source sink-path]
   (let [sink (taps/hfs-delimited sink-path :sinkmode :replace)
         uniques (<- [?lat ?lon]
-                    (source :#> 183 {22 ?lat 23 ?lon})
+                    (source :#> 183 {22 ?lat 23 ?lon})                  
                     (util/latlon-valid? ?lat ?lon))]
     (?<- sink
-         [?uuid ?lat ?lon]
+         [?uuid ?lat ?lon ?wkt]
          (uniques ?lat ?lon)
+         (util/wkt-point ?lat ?lon :> ?wkt)
          (util/gen-uuid :> ?uuid))))
 
 (comment
