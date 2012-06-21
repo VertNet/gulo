@@ -3,6 +3,7 @@
   :repositories {"conjars" "http://conjars.org/repo/"
                  "gbif" "http://repository.gbif.org/content/groups/gbif/"
                  "maven2" "http://repo2.maven.org/maven2"}
+  :source-paths ["src/clj"]
   :source-path "src/clj"
   :resources-path "resources"
   :dev-resources-path "dev"
