@@ -98,7 +98,7 @@
         tax-loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc/part-00000"]
     (prepare-zip "occ" occ-columns occ-source sink)
     (prepare-zip "tax" ["tax_id" "name"] tax-source sink)
-    (prepare-zip "loc" ["loc_id" "lat" "lon"] loc-source sink)
+    (prepare-zip "loc" ["loc_id" "lat" "lon" "wkt_geom"] loc-source sink)
     (prepare-zip "tax-loc" ["tax_loc_id" "tax_id" "loc_id"] tax-loc-source sink)))
 
 (defn wire-tables
