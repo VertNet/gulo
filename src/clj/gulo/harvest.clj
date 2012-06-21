@@ -13,7 +13,7 @@
 (defn dwca-urls
   "Return vector of Darwin Core Archive URLs as strings."
   []
-  (let [rows (:map (cdb/query "SELECT dwca_url FROM publishers" "vertnet"))]
+  (let [rows (:rows (cdb/query "SELECT dwca_url FROM publishers" "vertnet"))]
     (vec (map #(first (vals %)) rows))))
 
 (defn prepend-uuid
@@ -32,3 +32,4 @@
   "Harvest Darwin Core Archives from URLs into a tab delimited file at path."
  [urls path] 
  (map (partial url->csv path) urls))
+
