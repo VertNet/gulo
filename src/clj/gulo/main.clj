@@ -5,7 +5,12 @@
         [gulo.core]
         [gulo.harvest]))
 
-(defmain Attack
+(defn Harvest
+  [urls harvest-path]
+  (let [csv-file (str harvest-path "/" "dwc.csv")]
+    (harvest urls csv-file)))
+
+(defmain Shred
   [urls harvest-path hfs-path tables-path]
   (let [csv-file (str harvest-path "/" "dwc.csv")
         hfs-tax (str hfs-path "/" "tax")
@@ -20,13 +25,11 @@
     (tax-loc-table csv-file tax-part loc-part hfs-tax-loc)
     (occ-table csv-file tax-part loc-part tax-loc-part hfs-occ)))
 
-(defmain Burp [] (wire-tables))  
+(defn PrepareTables
+  []
+  (prepare-tables))
 
-(defn Shred
-  [urls harvest-path hfs-path tables-path]
-  (let [csv-file (str harvest-path "/" "dwc.csv")]
-    (harvest urls csv-file)
-    (Attack urls harvest-path hfs-path tables-path)
-    (prepare-tables)))
-  
+(defn WireTables
+  []
+  (wire-tables))
 
