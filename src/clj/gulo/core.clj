@@ -22,7 +22,7 @@
                         (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
     (?<- occ-sink
          (vec (cons "?tax-loc-uuid" fields))
-         (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
+         (tax-loc-occ ?taxon-id ?loc-id _)
          (tax-loc-source ?tax-loc-uuid ?taxon-id ?loc-id)
          (occ-tab :>> fields))))
 
@@ -88,10 +88,10 @@
            "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
 
   ;; Then MapReduce to build the tables:
-  (location-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
+  (location-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv")
                   "/mnt/hgfs/Data/vertnet/gulo/hfs/loc")
 
-  (taxon-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
+  (taxon-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv")
                "/mnt/hgfs/Data/vertnet/gulo/hfs/tax")
 
   (tax-loc-table
