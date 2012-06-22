@@ -21,9 +21,9 @@
                         (loc ?loc-id ?lat ?lon _)
                         (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
     (?<- occ-sink
-         (vec (cons "?tax-loc-uuid" fields))
-         (tax-loc-occ ?taxon-id ?loc-id _)
-         (tax-loc-source ?tax-loc-uuid ?taxon-id ?loc-id)
+         (vec (cons "?tax-loc-id" fields))
+         (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
+         (tax-loc-source ?tax-loc-id ?taxon-id ?loc-id)
          (occ-tab :>> fields))))
 
 (defn tax-loc-table
