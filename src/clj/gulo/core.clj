@@ -19,9 +19,7 @@
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
                         (loc ?loc-id ?lat ?lon _)
-                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))   
-        tax-loc (<- [?taxon-id ?loc-id]
-                    (tax-loc-occ ?taxon-id ?loc-id ?occ-id))]
+                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
     (?<- occ-sink
          (vec (cons "?tax-loc-uuid" fields))
          (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
@@ -38,15 +36,11 @@
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
                         (loc ?loc-id ?lat ?lon _)
-                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))        
-        tax-loc (<- [?taxon-id ?loc-id]
-                    (tax-loc-occ ?taxon-id ?loc-id ?occ-id))
-        tax-loc-uuid (<- [?uuid ?taxon-id ?loc-id]
-                         (tax-loc ?taxon-id ?loc-id)
-                         (util/gen-uuid :> ?uuid))]
+                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
     (?<- tax-loc-sink
          [?tax-loc-id ?taxon-id ?loc-id]
-         (tax-loc-uuid ?tax-loc-id ?taxon-id ?loc-id))))
+         (tax-loc-occ ?taxon-id ?loc-id _)
+         (util/gen-uuid :> ?tax-loc-id))))
 
 (defmapcatop map-names
   "Emits all taxon names."
