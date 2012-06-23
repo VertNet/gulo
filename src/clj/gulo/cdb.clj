@@ -8,11 +8,16 @@
             [cartodb.client :as cdb])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
-           [java.io File FileInputStream]
+           [java.io File FileInputStream FileWriter]
            [net.lingala.zip4j.core ZipFile]
            [net.lingala.zip4j.model ZipParameters]
            [net.lingala.zip4j.util Zip4jConstants]
            [net.lingala.zip4j.exception ZipException]))
+
+(defn sql-builder
+  "Return space-separated query."
+  [& strs]
+  (apply str (interpose " " strs)))
 
 ;; Slurps resources/creds.json for OAuth: {"key" "secret" "user" "password"}
 (def creds (read-json (slurp (io/resource "creds.json"))))
@@ -22,7 +27,7 @@
   [table column & {:keys [cascade execute account]
                    :or {cascade false execute true account nil}}]
   (let [account (if (not account) (:user creds) account)
-        sql (cdb/sql-builder "ALTER TABLE" table "DROP COLUMN" column)
+        sql (sql-builder "ALTER TABLE" table "DROP COLUMN" column)
         sql (if cascade (str sql " CASCADE;") (str sql ";"))]
     (if execute (cdb/query sql account :oauth creds) sql)))
 
@@ -32,7 +37,7 @@
                    :or {execute true account nil}}]
   (let [tables (if (coll? table) (join "," table) table)
         account (if (not account) (:user creds) account)
-        sql (cdb/sql-builder "DROP TABLE IF EXISTS" tables ";")]
+        sql (sql-builder "DROP TABLE IF EXISTS" tables ";")]
     (if execute (cdb/query sql account :oauth creds) sql)))
 
 (defn- create-index
@@ -40,7 +45,7 @@
   [table column index & {:keys [unique execute account]
                          :or {unique false execute true account nil}}]
   (let [account (if (not account) (:user creds) account)
-        sql (cdb/sql-builder "CREATE"
+        sql (sql-builder "CREATE"
                              (if unique "UNIQUE" "")
                              "INDEX" index
                              "ON" table "(" column ");")]

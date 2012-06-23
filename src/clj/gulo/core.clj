@@ -1,52 +1,98 @@
 (ns gulo.core
-  "This namespace downloads and harvests a set of Darwin Core Archives using
-  Cascalog and unicorn magic."  
+  "Cascalog queries for transforming CSV Darwin Core data into CartoDB tables."
   (:use [gulo.util :as util :only (latlon-valid? gen-uuid)]
         [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
+;; Position of values in a split texline.
+(def OCC-ID 0)
+(def LAT 22)
+(def LON 23)
+(def SCINAME 160)
+
+(defn- makeline
+  "Returns a string line by joining a sequence of values on tab."
+  [& vals]
+  (clojure.string/join \tab vals))
+
+(defn- splitline
+  "Returns vector of line values by splitting on tab."
+  [line]
+  (clojure.string/split line #"\t" -1))
+
+(defn- line->loc
+  "Return 3-tuple [occid lat lon] from supplied textline."
+  [line]
+  (let [vals (splitline line)
+        occid (nth vals OCC-ID)
+        lat (nth vals LAT)
+        lon (nth vals LON)]
+    [occid lat lon]))
+
+(defn- line->name
+  "Return 2-tuple [occid scientificname] from supplied textline."
+  [line]
+  (let [vals (splitline line)
+        occid (nth vals OCC-ID)
+        name (nth vals SCINAME)]
+  [occid name]))
+
+(defn- line->locname
+  "Return 4-tuple [occid lat lon name] from supplied textline."
+  [line]
+  (let [[occid lat lon] (line->loc line)
+        [occid name] (line->name line)]
+    [occid lat lon name]))
+
 (defn occ-table
   "Build occ and tax_loc tables."
   [occ-path tax-path loc-path tax-loc-path occ-sink-path]
-  (let [occ-tab (name-vars (taps/hfs-delimited occ-path) util/rec-fields)
-        tax (taps/hfs-delimited tax-path)
-        loc (taps/hfs-delimited loc-path)
-        tax-loc-source (taps/hfs-delimited tax-loc-path)
-        fields util/rec-fields
+  (let [fields util/rec-fields
         result-vector (vec (cons "?tax-loc-id" fields))
-        occ-sink (hfs-textline occ-sink-path :sinkmode :replace)
-        tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
-                        (tax ?taxon-id ?name)
-                        (loc ?loc-id ?lat ?lon _)
-                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
+        occ-tab (hfs-textline occ-path)
+        occ-source (hfs-textline occ-path)
+        tax (hfs-textline tax-path)
+        loc (hfs-textline loc-path)
+        tax-loc-source (hfs-textline tax-loc-path)
+        occ-sink (taps/hfs-delimited occ-sink-path :sinkmode :replace)        
+        tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id ?name ?lat ?lon]
+                        (tax ?tax-line)
+                        (splitline ?tax-line :> ?taxon-id ?name)
+                        (loc ?loc-line)
+                        (splitline ?loc-line :> ?loc-id ?lat ?lon _)
+                        (occ-tab ?occ-line)
+                        (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name))]
+
     (?<- occ-sink
-     (vec (cons "?tax-loc-id" fields))
-     (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
-     (tax-loc-source ?tax-loc-id ?taxon-id ?loc-id)
-     (occ-tab :>> fields))))
+         result-vector
+         (tax-loc-occ ?taxon-id ?loc-id ?occ-id ?scientificname ?decimallatitude ?decimallongitude)
+         (tax-loc-source ?tax-loc-line)
+         (splitline ?tax-loc-line :> ?tax-loc-id ?taxon-id ?loc-id)
+         (occ-tab ?occ-line)
+         (splitline ?occ-line :>> fields))))
 
 (defn tax-loc-table
   "Build tax_loc table."
   [occ-path tax-path loc-path tax-loc-sink-path]
-  (let [occ-tab (name-vars (taps/hfs-delimited occ-path) util/rec-fields)
-        tax (taps/hfs-delimited tax-path)
-        loc (taps/hfs-delimited loc-path)
-        tax-loc-sink (taps/hfs-delimited tax-loc-sink-path :sinkmode :replace)
-        tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
-                        (tax ?taxon-id ?name)
-                        (loc ?loc-id ?lat ?lon _)
-                        (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
+  (let [occ-tab (hfs-textline occ-path)
+        tax (hfs-textline tax-path)
+        loc (hfs-textline loc-path)
+        tax-loc-sink (hfs-textline tax-loc-sink-path :sinkmode :replace)
+        tax-loc-occ (<- [?taxon-id ?loc-id]
+                        (tax ?tax-line)
+                        (splitline ?tax-line :> ?taxon-id ?name)
+                        (loc ?loc-line)
+                        (splitline ?loc-line :> ?loc-id ?lat ?lon _)
+                        (occ-tab ?occ-line)
+                        (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name)
+                        (:distinct true))]
     (?<- tax-loc-sink
-         [?tax-loc-id ?taxon-id ?loc-id]
-         (tax-loc-occ ?taxon-id ?loc-id _)
-         (util/gen-uuid :> ?tax-loc-id))))
-
-(defmapcatop map-names
-  "Emits all taxon names."
-  [kingdom phylum class order family genus species sciname]
-  (vec (map vector [kingdom phylum class order family genus species sciname])))
+         [?line]
+         (tax-loc-occ ?taxon-id ?loc-id)
+         (util/gen-uuid :> ?tax-loc-id)
+         (makeline ?tax-loc-id ?taxon-id ?loc-id :> ?line))))
 
 (deffilterop valid-name?
   "Return true if name is valid, otherwise return false."
@@ -54,56 +100,34 @@
   (not= name "_"))
 
 (defn taxon-table
-  "Create taxon table of unique names with generated UUIDs."
+  "Create taxon table with unique [uuid name] from supplied source of Darwin Core
+  textlines."
   [source sink-path]
-  (let [sink (taps/hfs-delimited sink-path :sinkmode :replace)
+  (let [sink (hfs-textline sink-path :sinkmode :replace)
         uniques (<- [?name]
-                    (source :#> 183 {151 ?kingdom 152 ?phylum 153 ?class
-                                     154 ?order 155 ?family 156 ?genus
-                                     157 ?species 160 ?sciname})        
-                    (map-names ?kingdom ?phylum ?class ?order ?family ?genus
-                               ?species ?sciname :> ?name)
-                    (valid-name? ?name))]
+                     (source ?line)
+                     (line->name ?line :> _ ?name)
+                     (:distinct true))]
     (?<- sink
-         [?uuid ?name]
+         [?line]
          (uniques ?name)
-         (util/gen-uuid :> ?uuid))))
+         (util/gen-uuid :> ?uuid)
+         (makeline ?uuid ?name :> ?line))))
 
 (defn location-table
-  "Create location table of unique and valid lat/lon with generated UUIDs from
-  the supplied hfs-delimited source of DarwinCoreRecord values."
+  "Create location table with unique lines [uuid lat lon wkt] from supplied
+  source of Darwin Core textlines."
   [source sink-path]
-  (let [sink (taps/hfs-delimited sink-path :sinkmode :replace)
+  (let [sink (hfs-textline sink-path :sinkmode :replace)
         uniques (<- [?lat ?lon]
-                    (source :#> 183 {22 ?lat 23 ?lon})                  
-                    (util/latlon-valid? ?lat ?lon))]
+                    (source ?line)
+                    (line->loc ?line :> _ ?lat ?lon)
+                    (util/latlon-valid? ?lat ?lon)
+                    (:distinct true))]
     (?<- sink
-         [?uuid ?lat ?lon ?wkt]
+         [?line]
          (uniques ?lat ?lon)
          (util/wkt-point ?lat ?lon :> ?wkt)
-         (util/gen-uuid :> ?uuid))))
-
-(comment
-  ;; First harvest the archives:
-  (harvest ["http://vertnet.nhm.ku.edu:8080/ipt/archive.do?r=nysm_mammals"]
-           "/mnt/hgfs/Data/vertnet/gulo/harvest/data.csv")
-
-  ;; Then MapReduce to build the tables:
-  (location-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv")
-                  "/mnt/hgfs/Data/vertnet/gulo/hfs/loc")
-
-  (taxon-table (taps/hfs-delimited "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv")
-               "/mnt/hgfs/Data/vertnet/gulo/hfs/tax")
-
-  (tax-loc-table
-   "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc")
-  
-  (occ-table
-   "/mnt/hgfs/Data/vertnet/gulo/harvest/dwc.csv"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc/part-00000"
-   "/mnt/hgfs/Data/vertnet/gulo/hfs/occ"))
+         (util/gen-uuid :> ?uuid)
+         (makeline ?uuid ?lat ?lon ?wkt :> ?line)
+         (:distinct true))))
