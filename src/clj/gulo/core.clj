@@ -15,16 +15,17 @@
         loc (taps/hfs-delimited loc-path)
         tax-loc-source (taps/hfs-delimited tax-loc-path)
         fields util/rec-fields
+        result-vector (vec (cons "?tax-loc-id" fields))
         occ-sink (hfs-textline occ-sink-path :sinkmode :replace)
         tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id]
                         (tax ?taxon-id ?name)
                         (loc ?loc-id ?lat ?lon _)
                         (occ-tab :#> 183 {0 ?occ-id 22 ?lat 23 ?lon 160 ?name}))]
     (?<- occ-sink
-         (vec (cons "?tax-loc-id" fields))
-         (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
-         (tax-loc-source ?tax-loc-id ?taxon-id ?loc-id)
-         (occ-tab :>> fields))))
+     (vec (cons "?tax-loc-id" fields))
+     (tax-loc-occ ?taxon-id ?loc-id ?occ-id)
+     (tax-loc-source ?tax-loc-id ?taxon-id ?loc-id)
+     (occ-tab :>> fields))))
 
 (defn tax-loc-table
   "Build tax_loc table."

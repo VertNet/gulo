@@ -24,6 +24,7 @@
 (defn url->csv
   "Convert Darwin Core Archive at supplied URL into tab delimited file at path."
   [path url]
+
   (let [records (dwca/open url)]
     (with-open [f (io/writer path :append true)]
       (csv/write-csv f (map prepend-uuid records) :separator \tab))))
