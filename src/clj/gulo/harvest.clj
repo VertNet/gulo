@@ -35,7 +35,7 @@
     val))
 
 (defn clean-vals
-  "Remove sequence of Darwin Core record values with special characters removed."
+  "Clean sequence of Darwin Core record values with special characters removed."
   [^DarwinCoreRecord rec]
   (map fix-val (prepend-uuid rec)))
 
