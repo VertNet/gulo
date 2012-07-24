@@ -2,7 +2,7 @@
   "This namespace handles harvesting Darwin Core Archives."
   (:use [gulo.util :as util :only (gen-uuid)]
         [dwca.core :as dwca]
-        [cartodb.core]
+        [cartodb.core :as cartodb]
         [clojure.data.csv :as csv]
         [clojure.java.io :as io])
   (:require [clojure.string :as s])
@@ -14,7 +14,7 @@
 (defn dwca-urls
   "Return vector of Darwin Core Archive URLs as strings."
   []
-  (let [rows (:rows (cdb/query "SELECT dwca_url FROM publishers" "vertnet"))]
+  (let [rows (:rows (cartodb/query "SELECT dwca_url FROM publishers" "vertnet"))]
     (vec (map #(first (vals %)) rows))))
 
 (defn prepend-uuid
