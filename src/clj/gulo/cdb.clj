@@ -5,7 +5,7 @@
         [clojure.string :only (join)]
         [clojure.contrib.shell-out :only (sh)])
   (:require [clojure.java.io :as io]
-            [cartodb.core :as cdb])
+            [cartodb.core :as cartodb])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]
@@ -29,7 +29,7 @@
   (let [account (if (not account) (:user creds) account)
         sql (sql-builder "ALTER TABLE" table "DROP COLUMN" column)
         sql (if cascade (str sql " CASCADE;") (str sql ";"))]
-    (if execute (cdb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth creds) sql)))
 
 (defn- drop-table
   "Drop the supplied table or just return the SQL."
@@ -38,7 +38,7 @@
   (let [tables (if (coll? table) (join "," table) table)
         account (if (not account) (:user creds) account)
         sql (sql-builder "DROP TABLE IF EXISTS" tables ";")]
-    (if execute (cdb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth creds) sql)))
 
 (defn- create-index
   "Create index on table column or just return the SQL."
@@ -49,7 +49,7 @@
                              (if unique "UNIQUE" "")
                              "INDEX" index
                              "ON" table "(" column ");")]
-    (if execute (cdb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth creds) sql)))
 
 (defn- create-occ-table
   "Create occ table."
@@ -59,7 +59,7 @@
         sql (str sql (join "," (map #(str % " text") occ-columns)))
         sql (str sql ");")
         account (:user creds)]
-    (if execute (cdb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth creds) sql)))
 
 (defn- wire-occ-table
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
