@@ -5,7 +5,7 @@
         [clojure.string :only (join)]
         [clojure.contrib.shell-out :only (sh)])
   (:require [clojure.java.io :as io]
-            [cartodb.client :as cdb])
+            [cartodb.core :as cdb])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]

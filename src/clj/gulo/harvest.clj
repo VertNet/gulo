@@ -2,7 +2,7 @@
   "This namespace handles harvesting Darwin Core Archives."
   (:use [gulo.util :as util :only (gen-uuid)]
         [dwca.core :as dwca]
-        [cartodb.client :as cdb :only (query)]
+        [cartodb.core]
         [clojure.data.csv :as csv]
         [clojure.java.io :as io])
   (:require [clojure.string :as s])
