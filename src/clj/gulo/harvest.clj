@@ -37,7 +37,7 @@
 (defn clean-vals
   "Remove sequence of Darwin Core record values with special characters removed."
   [^DarwinCoreRecord rec]
-  (map fix-val (field-vals rec)))
+  (map fix-val (prepend-uuid rec)))
 
 (defn url->csv
   "Convert Darwin Core Archive at supplied URL into tab delimited file at path."

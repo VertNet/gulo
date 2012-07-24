@@ -12,6 +12,8 @@
 (def LON 23)
 (def SCINAME 160)
 
+(defn- my-filter [& vals] (println (str "VAL--------------" vals)) true)
+
 (defn- makeline
   "Returns a string line by joining a sequence of values on tab."
   [& vals]
@@ -97,7 +99,7 @@
 (deffilterop valid-name?
   "Return true if name is valid, otherwise return false."
   [name]
-  (not= name "_"))
+  (and (not= name nil) (not= name "")))
 
 (defn taxon-table
   "Create taxon table with unique [uuid name] from supplied source of Darwin Core
@@ -107,6 +109,7 @@
         uniques (<- [?name]
                      (source ?line)
                      (line->name ?line :> _ ?name)
+                     (valid-name? ?name)
                      (:distinct true))]
     (?<- sink
          [?line]
