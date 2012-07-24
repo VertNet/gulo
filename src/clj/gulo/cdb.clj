@@ -5,7 +5,8 @@
         [clojure.string :only (join)]
         [clojure.contrib.shell-out :only (sh)])
   (:require [clojure.java.io :as io]
-            [cartodb.core :as cartodb])
+            [cartodb.core :as cartodb]
+            [clojure.java.io :as jio])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]
@@ -87,8 +88,10 @@
 (defn prepare-zip
   [table-name table-cols path out-path]
   (let [file-path (str out-path "/" table-name ".csv")
-        zip-path (str out-path "/" table-name ".zip")]
-    (Files/copy (File. path) (File. file-path))
+        zip-path (str out-path "/" table-name ".zip")
+        utf8er (.getPath (io/resource "utf8er.awk"))]
+    ;;(Files/copy (File. path) (File. file-path))
+    (jio/copy (File. path) (File. file-path) :encoding "UTF-8")
     ;; TODO: This sh is brittle business:
     (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
     (sh "zip" "-j" "-r" "-D" zip-path file-path)
