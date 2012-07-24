@@ -10,14 +10,14 @@
   :jvm-opts ["-XX:MaxPermSize=256M"
              "-XX:+UseConcMarkSweepGC"
              "-Xms1024M" "-Xmx1048M" "-server"]
-  :plugins [[swank-clojure "1.4.0-SNAPSHOT"]]
+  :plugins [[lein-swank "1.4.4"]]
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [cascalog "1.9.0"]                 
                  [eighty-cascalog-more-taps "0.2.1"]
                  [cascading/cascading-hadoop "2.0.2-wip-324"]
                  [org.pingles/cascading.protobuf "0.0.1"]
                  [dwca-reader-clj "0.5.0-SNAPSHOT"]
-                 [cartodb-clj "1.1.1-SNAPSHOT"]
+                 [cartodb-clj "1.5.0"]
                  [org.clojure/data.csv "0.1.2"]
                  [clj-http "0.4.3"]
                  [net.lingala.zip4j/zip4j "1.3.1"]
