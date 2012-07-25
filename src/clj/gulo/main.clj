@@ -6,11 +6,13 @@
         [gulo.core]
         [gulo.cdb :only (prepare-tables, wire-tables)]
         [gulo.harvest]
-        [gulo.util :as util]))
+        [gulo.util :as util]
+        [clojure.java.io :as io]))
 
 (defn Harvest
-  [urls harvest-path]
+  [urls harvest-path]  
   (let [csv-file (str harvest-path "/" "dwc.csv")]
+    (io/delete-file csv-file)
     (harvest urls csv-file)))
 
 (defmain Shred

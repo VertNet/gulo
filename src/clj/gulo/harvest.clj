@@ -25,12 +25,12 @@
 (defn fix-val
   "Returns string val with tabs and line breaks removed. Also replaces double
   quotes with a single quote."
-  [val]
+  [^String val]
   (if val
     (-> val
-        (s/replace "\\t" " ")
+        (s/replace "\t" " ")
         (s/replace "\n" " ")
-        (s/replace "\r\n" " ")
+        (s/replace "\r" " ")
         (s/replace "\"" "'"))
     val))
 
