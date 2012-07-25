@@ -89,10 +89,10 @@
   [table-name table-cols path out-path]
   (let [file-path (str out-path "/" table-name ".csv")
         zip-path (str out-path "/" table-name ".zip")
-        utf8er (.getPath (io/resource "utf8er.awk"))]
-    ;;(Files/copy (File. path) (File. file-path))
+        bom (.getPath (io/resource "bom.sh"))]
     (jio/copy (File. path) (File. file-path) :encoding "UTF-8")
-    ;; TODO: This sh is brittle business:
+    ;; TODO: This sh is brittle business
+    (sh bom file-path)
     (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
     (sh "zip" "-j" "-r" "-D" zip-path file-path)
     zip-path))
