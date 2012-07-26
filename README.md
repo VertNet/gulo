@@ -2,7 +2,9 @@
 
 ![](http://3.bp.blogspot.com/-s1vAPdg_zZM/TZ3bnzUZgVI/AAAAAAAACKo/Mk-Tu-Nil74/s1600/animalangry.jpg)
 
-Gulo is a project designed for harvesting Darwin Core Archives and loading them into [CartoDB](http://cartodb.com). It's written in the [Clojure](http://clojure.org) programming language and rides on [Cascading](http://www.cascading.org) and [Cascalog](https://github.com/nathanmarz/cascalog) for processing "Big Data" on top of [Hadoop](http://hadoop.apache.org) using [MapReduce](http://research.google.com/archive/mapreduce.html).
+Gulo is the genus for wolverine, the biggest land-dwelling species of weasel on the planet. It is a stocky and muscular carnivore, resembling a small bear. The wolverine has a reputation for endurance, ferocity, and strength out of proportion to its size, with the capacity to battle with competitors many times its size.
+
+Gulo is also a VertNet project designed for harvesting Darwin Core Archives, shredding them into small pieces, and loading them into [CartoDB](http://cartodb.com). It's written in the [Clojure](http://clojure.org) programming language and rides on [Cascading](http://www.cascading.org) and [Cascalog](https://github.com/nathanmarz/cascalog) for processing "Big Data" on top of [Hadoop](http://hadoop.apache.org) using [MapReduce](http://research.google.com/archive/mapreduce.html).
 
 # Developing
 
