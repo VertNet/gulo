@@ -1,5 +1,7 @@
 # What is Gulo?
 
+![](http://3.bp.blogspot.com/-s1vAPdg_zZM/TZ3bnzUZgVI/AAAAAAAACKo/Mk-Tu-Nil74/s1600/animalangry.jpg)
+
 Gulo is a project designed for harvesting Darwin Core Archives and loading them into [CartoDB](http://cartodb.com). It's written in the [Clojure](http://clojure.org) programming language and rides on [Cascading](http://www.cascading.org) and [Cascalog](https://github.com/nathanmarz/cascalog) for processing "Big Data" on top of [Hadoop](http://hadoop.apache.org) using [MapReduce](http://research.google.com/archive/mapreduce.html).
 
 # Developing
