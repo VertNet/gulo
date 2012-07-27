@@ -42,12 +42,14 @@
 (defn url->csv
   "Convert Darwin Core Archive at supplied URL into tab delimited file at path."
   [path url]
-  (let [records (dwca/open url)
-        lines (map clean-vals records)
-        x (Files/newWriterSupplier (File. path) Charsets/UTF_8 true)
-        writer (.getOutput x)]
-    (with-open [f writer] 
-      (csv/write-csv f lines :separator \tab :quote \"))))
+  (try
+    (let [records (dwca/open url)
+          lines (map clean-vals records)
+          x (Files/newWriterSupplier (File. path) Charsets/UTF_8 true)
+          writer (.getOutput x)]
+      (with-open [f writer] 
+        (csv/write-csv f lines :separator \tab :quote \")))
+    (catch Exception e (prn "Error harvesting" url))))
 
 (defn harvest
   "Harvest Darwin Core Archives from URLs into a tab delimited file at path."
