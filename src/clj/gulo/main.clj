@@ -12,7 +12,7 @@
 (defn Harvest
   [urls harvest-path]  
   (let [csv-file (str harvest-path "/" "dwc.csv")]
-    (io/delete-file csv-file)
+    (io/delete-file csv-file true)
     (harvest urls csv-file)))
 
 (defmain Shred
