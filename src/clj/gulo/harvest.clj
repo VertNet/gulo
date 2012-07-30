@@ -49,7 +49,7 @@
           writer (.getOutput x)]
       (with-open [f writer] 
         (csv/write-csv f lines :separator \tab :quote \")))
-    (catch Exception e (prn "Error harvesting" url))))
+    (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
 (defn harvest
   "Harvest Darwin Core Archives from URLs into a tab delimited file at path."
