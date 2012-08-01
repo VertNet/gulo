@@ -22,30 +22,25 @@
 (defn- splitline
   "Returns vector of line values by splitting on tab."
   [line]
-  (clojure.string/split line #"\t" -1))
+  (vec (.split line "\t")))
 
 (defn- line->loc
   "Return 3-tuple [occid lat lon] from supplied textline."
   [line]
-  (let [vals (splitline line)
-        occid (nth vals OCC-ID)
-        lat (nth vals LAT)
-        lon (nth vals LON)]
-    [occid lat lon]))
+  (let [vals (splitline line)]
+    (map (partial nth vals) [OCC-ID LAT LON])))
 
 (defn- line->name
   "Return 2-tuple [occid scientificname] from supplied textline."
   [line]
-  (let [vals (splitline line)
-        occid (nth vals OCC-ID)
-        name (nth vals SCINAME)]
-  [occid name]))
+  (let [vals (splitline line)]
+    (map (partial nth vals) [OCC-ID SCINAME])))
 
 (defn- line->locname
   "Return 4-tuple [occid lat lon name] from supplied textline."
   [line]
   (let [[occid lat lon] (line->loc line)
-        [occid name] (line->name line)]
+        [_ name] (line->name line)]
     [occid lat lon name]))
 
 (defn occ-table

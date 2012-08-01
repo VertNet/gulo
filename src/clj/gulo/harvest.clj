@@ -14,17 +14,19 @@
 (defn dwca-urls
   "Return vector of Darwin Core Archive URLs as strings."
   []
-  (let [rows (:rows (cartodb/query "SELECT dwca_url FROM publishers" "vertnet"))]
-    (vec (map #(first (vals %)) rows))))
+  (let [sql "SELECT dwca_url FROM publishers"
+        rows (:rows (cartodb/query sql "vertnet"))]
+    (map :dwca_url rows)))
 
 (defn prepend-uuid
-  "Return vector of supplied DarwinCoreRecord values with a UUID prepended."
+  "Return vector of supplied DarwinCoreRecord values with a UUID
+  prepended."
   [^DarwinCoreRecord rec]
   (cons (util/gen-uuid) (field-vals rec)))
 
 (defn fix-val
-  "Returns string val with tabs and line breaks removed. Also replaces double
-  quotes with a single quote."
+  "Returns string val with tabs and line breaks removed. Also replaces
+  double quotes with a single quote."
   [^String val]
   (if val
     (-> val
@@ -35,12 +37,14 @@
     val))
 
 (defn clean-vals
-  "Clean sequence of Darwin Core record values with special characters removed."
+  "Clean sequence of Darwin Core record values with special characters
+  removed."
   [^DarwinCoreRecord rec]
   (map fix-val (prepend-uuid rec)))
 
 (defn url->csv
-  "Convert Darwin Core Archive at supplied URL into tab delimited file at path."
+  "Convert Darwin Core Archive at supplied URL into tab delimited file
+  at path."
   [path url]
   (try
     (let [records (dwca/open url)
@@ -52,6 +56,7 @@
     (catch Exception e (prn "Error harvesting" url))))
 
 (defn harvest
-  "Harvest Darwin Core Archives from URLs into a tab delimited file at path."
- [urls path] 
- (map (partial url->csv path) urls))
+  "Harvest Darwin Core Archives from URLs into a tab delimited file at
+  path."
+  [urls path]
+  (map (partial url->csv path) urls))
