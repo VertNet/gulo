@@ -17,9 +17,8 @@
 (defn read-latlon
   "Converts lat and lon values from string to number."
   [lat lon]
-  {:pre [(instance? java.lang.String lat)
-         (instance? java.lang.String lon)]}
-  [(read-string lat) (read-string lon)])
+  {:pre [(every? string? [lat lon])]}
+  (map read-string [lat lon]))
 
 (defn latlon-valid?
   "Return true if lat and lon are valid, otherwise return false."
