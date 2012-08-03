@@ -42,7 +42,7 @@
   [^DarwinCoreRecord rec]
   (map fix-val (prepend-uuid rec)))
 
-(defn url->csv
+(defn url->file
   "Convert Darwin Core Archive at supplied URL into tab delimited file
   at path."
   [path url]
@@ -59,4 +59,4 @@
   "Harvest Darwin Core Archives from URLs into a tab delimited file at
   path."
   [urls path]
-  (map (partial url->csv path) urls))
+  (map (partial url->file path) urls))
