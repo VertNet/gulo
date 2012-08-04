@@ -56,7 +56,6 @@
           vals (map #(append-vals % inst_name inst_code) vals)
           x (Files/newWriterSupplier (File. path) Charsets/UTF_8 true)
           writer (.getOutput x)]
-      (prn (first vals))
       (with-open [f writer] 
         (csv/write-csv f vals :separator \tab :quote \")))
     (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
