@@ -94,8 +94,7 @@
     ;; TODO: This sh is brittle business
     (sh bom file-path)
     (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
-    (sh "zip" "-j" "-r" "-D" zip-path file-path)
-    zip-path))
+    (sh "zip" "-j" "-r" "-D" zip-path file-path)))
 
 (defn prepare-tables
   []
