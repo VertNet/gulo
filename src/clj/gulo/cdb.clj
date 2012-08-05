@@ -66,7 +66,9 @@
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
   (if drop-geom (drop-column "occ" "the_geom" :cascade true))
   (create-index "occ" "occ_id" "occ_occ_id_idx" :unique true)
-  (create-index "occ" "tax_loc_id" "occ_tax_loc_id_idx"))
+  (create-index "occ" "tax_loc_id" "occ_tax_loc_id_idx")
+  (create-index "occ" "icode" "occ_icode_idx")
+  (create-index "occ" "iname" "occ_iname_idx"))
 
 (defn- wire-tax-table
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
@@ -94,10 +96,10 @@
     ;; TODO: This sh is brittle business
     (sh bom file-path)
     (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
-    (sh "zip" "-j" "-r" "-D" zip-path file-path)
-    zip-path))
+    (sh "zip" "-j" "-r" "-D" zip-path file-path)))
 
 (defn prepare-tables
+  "Prepare tables for CartoDB upload by adding headers, adding BOM, and zipping."
   []
   (let [sink "/mnt/hgfs/Data/vertnet/gulo/tables"
         occ-source "/mnt/hgfs/Data/vertnet/gulo/hfs/occ/part-00000"        
@@ -110,14 +112,10 @@
     (prepare-zip "tax-loc" ["tax_loc_id" "tax_id" "loc_id"] tax-loc-source sink)))
 
 (defn wire-tables
+  "Wire occ, tax, loc, and tax-loc tables by creating indexes and dropping
+  unneeded columns."
   []
   (wire-occ-table :drop-geom true)
   (wire-tax-table :drop-geom true)
   (wire-loc-table)
   (wire-tax-loc-table :drop-geom true))
-
-(comment
-  ;; After harvest and MapReduce steps:
-  (prepare-tables)
-  ;; Then for now manually upload ZIPs to CartoDB and finally:
-  (wire-tables))
