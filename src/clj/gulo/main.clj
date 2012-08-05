@@ -23,7 +23,7 @@
   (let [csv-file (str harvest-path "/dwc.csv")
         hfs-tax (str hfs-path "/tax")
         hfs-loc (str hfs-path "/loc")
-        hfs-tax-loc (str hfs-path "/tax-loc")
+        hfs-tax-loc (str hfs-path "/taxloc")
         hfs-occ (str hfs-path "/occ")]
     (location-table (hfs-textline csv-file) hfs-loc)
     (taxon-table (hfs-textline csv-file) hfs-tax)
