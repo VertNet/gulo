@@ -26,4 +26,5 @@
                  [net.lingala.zip4j/zip4j "1.3.1"]
                  [com.google.guava/guava "12.0"]
                  [ratel/gdal "1.9.1"]]
-  :min-lein-version "2.0.0")
+  :min-lein-version "2.0.0"
+  :aot [gulo.main])
