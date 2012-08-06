@@ -3,10 +3,10 @@
   (:use [gulo.util]
         [clojure.data.json :only (read-json)]
         [clojure.string :only (join)]
+        [cascalog.api]
         [clojure.contrib.shell-out :only (sh)])
   (:require [clojure.java.io :as io]
-            [cartodb.core :as cartodb]
-            [clojure.java.io :as jio])
+            [cartodb.core :as cartodb])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]
@@ -21,7 +21,8 @@
   (apply str (interpose " " strs)))
 
 ;; Slurps resources/creds.json for OAuth: {"key" "secret" "user" "password"}
-(def creds (read-json (slurp (io/resource "creds.json"))))
+;; (def creds (read-json (slurp (io/resource "creds.json"))))
+(def creds {:key 1 :secret 2 :user "a" :password "b"})
 
 (defn- drop-column
   "Drop the supplied column from the supplied table or just return the SQL."
@@ -85,12 +86,19 @@
   (create-index "tax_loc" "tax_id" "tax_loc_tax_id_idx")
   (create-index "tax_loc" "loc_id" "tax_loc_loc_id_idx"))
 
+(defn gulo-copy
+  [in-path out-path & {:keys [temp-dir] :or {temp-dir "/tmp/"}}]
+  (let [temp-file (?- (hfs-textline (str temp-dir "gulo-temp.txt" :sinkmode :replace))
+                      (hfs-textline in-path))]
+    (do (io/copy (File. temp-file) (File. out-path) :encoding "UTF-8")
+        (sh "rm" (str temp-dir "gulo-temp.txt")))))
+
 (defn prepare-zip
   [table-name table-cols path out-path]
   (let [file-path (str out-path "/" table-name ".csv")
         zip-path (str out-path "/" table-name ".zip")
         bom (.getPath (io/resource "bom.sh"))]
-    (jio/copy (File. path) (File. file-path) :encoding "UTF-8")
+    (gulo-copy path file-path)
     ;; TODO: This sh is brittle business
     (sh bom file-path)
     (sh "sed" "-i" (str "1i " (join \tab table-cols)) file-path) ;; Add header to file
@@ -100,10 +108,10 @@
 (defn prepare-tables
   []
   (let [sink "/mnt/hgfs/Data/vertnet/gulo/tables"
-        occ-source "/mnt/hgfs/Data/vertnet/gulo/hfs/occ/part-00000"        
-        tax-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/part-00000"
-        loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/part-00000"
-        tax-loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc/part-00000"]
+        occ-source "/mnt/hgfs/Data/vertnet/gulo/hfs/occ/"        
+        tax-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/"
+        loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/"
+        tax-loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax-loc/"]
     (prepare-zip "occ" occ-columns occ-source sink)
     (prepare-zip "tax" ["tax_id" "name"] tax-source sink)
     (prepare-zip "loc" ["loc_id" "lat" "lon" "wkt_geom"] loc-source sink)
