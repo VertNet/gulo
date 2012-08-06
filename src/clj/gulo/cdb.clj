@@ -21,8 +21,7 @@
   (apply str (interpose " " strs)))
 
 ;; Slurps resources/creds.json for OAuth: {"key" "secret" "user" "password"}
-;; (def creds (read-json (slurp (io/resource "creds.json"))))
-(def creds {:key 1 :secret 2 :user "a" :password "b"})
+(def creds (read-json (slurp (io/resource "creds.json"))))
 
 (defn- drop-column
   "Drop the supplied column from the supplied table or just return the SQL."
