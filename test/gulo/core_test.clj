@@ -46,7 +46,7 @@
     1 => 1
     ))
 
-(fact "Test occ-tabcle"
+(fact "Test occ-table"
   (let [occ-path (->> (io/resource "dwc.tsv") .getPath)
         source (hfs-textline occ-path)
         temp-dir (->> (io/resource "test") .getPath)
@@ -56,5 +56,4 @@
         tax-loc-part (str temp-dir "/tax-loc/part-00000")
         sink-part (str sink-path "/part-00000")]
     (occ-table occ-path tax-part loc-part tax-loc-part sink-path)
-    1 => 1
-    ))
+    1 => 1))
