@@ -43,13 +43,16 @@
 
 (defn- create-index
   "Create index on table column or just return the SQL."
-  [table column index & {:keys [unique execute account]
-                         :or {unique false execute true account nil}}]
+  [table column index & {:keys [unique execute account lower]
+                         :or {unique false execute true account nil lower false}}]
   (let [account (if (not account) (:user creds) account)
         sql (sql-builder "CREATE"
-                             (if unique "UNIQUE" "")
-                             "INDEX" index
-                             "ON" table "(" column ");")]
+                         (if unique "UNIQUE" "")
+                         "INDEX" index
+                         "ON" table
+                         "("
+                         (if lower (str "lower(" column ")") column)
+                         ");")]
     (if execute (cartodb/query sql account :oauth creds) sql)))
 
 (defn- create-occ-table
@@ -66,15 +69,15 @@
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
   (if drop-geom (drop-column "occ" "the_geom" :cascade true))
   (create-index "occ" "occ_id" "occ_occ_id_idx" :unique true)
-  (create-index "occ" "tax_loc_id" "occ_tax_loc_id_idx")
-  (create-index "occ" "icode" "occ_icode_idx")
-  (create-index "occ" "iname" "occ_iname_idx"))
+  (create-index "occ" "tax_loc_id" "occ_tax_loc_id_idx"))
+  (create-index "occ" "_classs" "occ_class_idx" :lower true)
+  (create-index "occ" "icode" "occ_icode_idx" :lower true))
 
 (defn- wire-tax-table
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
   (if drop-geom (drop-column "tax" "the_geom" :cascade true))
   (create-index "tax" "tax_id" "tax_tax_id_idx" :unique true)
-  (create-index "tax" "name" "tax_name_idx" :unique true))
+  (create-index "tax" "name" "tax_name_idx" :unique true :lower true))
 
 (defn- wire-loc-table
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]

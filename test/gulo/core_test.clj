@@ -50,10 +50,10 @@
   (let [occ-path (->> (io/resource "dwc.tsv") .getPath)
         source (hfs-textline occ-path)
         temp-dir (->> (io/resource "test") .getPath)
-        sink-path (str temp-dir "/tax-loc")
+        sink-path (str temp-dir "/occ")
         tax-part (str temp-dir "/tax/part-00000")
         loc-part (str temp-dir "/loc/part-00000")
+        tax-loc-part (str temp-dir "/tax-loc/part-00000")
         sink-part (str sink-path "/part-00000")]
-    (tax-loc-table occ-path tax-part loc-part sink-path)
-    1 => 1
-    ))
+    (occ-table occ-path tax-part loc-part tax-loc-part sink-path)
+    1 => 1))
