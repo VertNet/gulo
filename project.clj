@@ -24,6 +24,7 @@
                  [clj-http "0.4.3"]
                  [net.lingala.zip4j/zip4j "1.3.1"]
                  [com.google.guava/guava "12.0"]
-                 [ratel/gdal "1.9.1"]]
+                 [ratel/gdal "1.9.1"]
+                 [clj-aws-s3 "0.3.2"]]
   :min-lein-version "2.0.0"
   :aot [gulo.main])
