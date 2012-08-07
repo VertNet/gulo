@@ -6,7 +6,6 @@
         [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [midje sweet cascalog]
-        [clojure.string :only (split)]
         [clojure.java.io :as io]
         [clojure.contrib.java-utils :only (delete-file-recursively)])
   (:import [com.google.common.io Files]))
