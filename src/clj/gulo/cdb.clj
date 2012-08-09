@@ -94,40 +94,7 @@
   (create-index "taxloc" "tax_id" "taxloc_tax_id_idx")
   (create-index "taxloc" "loc_id" "taxloc_loc_id_idx"))
 
-(defn- s3-keys
-  "Get all S3 keys for supplied bucket and prefix."
-  [bucket prefix]
-  (let [objects (:objects (s3/list-objects s3-creds bucket {:prefix prefix}))
-        keys (map :key objects)]
-    keys))
-
-(defn- s3-objects
-  "Get a map of S3 key to object InputStream for supplied bucket and keys."
-  [bucket keys]
-  (let [f (fn [k] {(keyword k) (:content (s3/get-object s3-creds bucket k))})
-        objects (map f keys)]
-    (apply merge objects)))
-
-(defn- s3-download
-  [path key object-stream]
-  (let [path (str path (clojure.string/replace key ":" ""))
-        x (io/delete-file path true)
-        out (io/writer (io/file path) :encoding "UTF-8")]
-    (io/copy object-stream out :encoding "UTF-8")))
-
-(defn s3-get
-  "Get all part files for supplied table."
-  [table]
-  (let [bucket "gulohfs"
-        prefix (str table "/part")
-        keys (s3-keys bucket prefix)
-        path "/mnt/hgfs/Data/vertnet/gulo/hfs/"
-        output (str path table "/" table ".csv")]
-    (io/delete-file output true)
-    (for [key keys]
-      (s3-download path key (:content (s3/get-object s3-creds bucket key))))))
-
-(defn s3-merge
+(defn merge-parts
   "Merge all part files into single file for supplied table."
   [table]
   (let [path (str "/mnt/hgfs/Data/vertnet/gulo/hfs/" table)
@@ -136,6 +103,17 @@
         files (vec (filter #(.isFile %) (file-seq (io/file path))))
         out (io/writer (io/file output) :append true :encoding "UTF-8")]
     (map #(io/copy % out :encoding "UTF-8") files)))
+
+(defn s3parts->file
+  "Download part files from S3 for supplied table and merge into single file."
+  [table & {:keys [local] :or {local "/mnt/hgfs/Data/vertnet/gulo/hfs/"}}]
+  (let [sink (str local table)
+        key (:access-key s3-creds)
+        secret (:secret-key s3-creds)
+        source (str "s3n://" key  ":" secret "@gulohfs/" table)
+        temp-file (?- (hfs-textline sink :sinkmode :replace)
+                      (hfs-textline source))]
+    (merge-parts table)))
 
 (defn prepare-zip
   [table-name table-cols path out-path]
