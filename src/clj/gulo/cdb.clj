@@ -168,7 +168,7 @@
   "Wire occ, tax, loc, and tax-loc tables by creating indexes and dropping
   unneeded columns."
   []
-  ;;(wire-occ-table :drop-geom true)
-  ;;(wire-tax-table :drop-geom true)
-  ;;(wire-loc-table)
+  (wire-occ-table :drop-geom true)
+  (wire-tax-table :drop-geom true)
+  (wire-loc-table)
   (wire-tax-loc-table :drop-geom true))
