@@ -1,5 +1,7 @@
 (ns gulo.util
-  "This namespace contains utility functions.")
+  "This namespace contains utility functions."
+  (:use [dwca.core :as dwca])
+  (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
@@ -20,17 +22,28 @@
   {:pre [(every? string? [lat lon])]}
   (map read-string [lat lon]))
 
+(defn name-valid?
+  "Return true if name is valid, otherwise return false."
+  [rec]
+  (let [index (dwca/index-of rec :scientificname)
+        name (nth (field-vals rec) index)]
+    (and (not= name nil) (not= (.trim name) ""))))
+
 (defn latlon-valid?
   "Return true if lat and lon are valid, otherwise return false."
-  [lat lon]
-  (try
-    (let [{:keys [lat-min lat-max lon-min lon-max]} latlon-range
-          [lat lon] (read-latlon lat lon)]
-      (and (<= lat lat-max)
-           (>= lat lat-min)
-           (<= lon lon-max)
-           (>= lon lon-min)))
-    (catch Exception e false)))
+  ([^DarwinCoreRecord rec]
+     (let [lat (nth (field-vals rec) (dwca/index-of rec :decimallatitude))
+           lon (nth (field-vals rec) (dwca/index-of rec :decimallongitude))]
+       (apply latlon-valid? (map str [lat lon]))))
+  ([lat lon]
+     (try
+       (let [{:keys [lat-min lat-max lon-min lon-max]} latlon-range
+             [lat lon] (read-latlon lat lon)]
+         (and (<= lat lat-max)
+              (>= lat lat-min)
+              (<= lon lon-max)
+              (>= lon lon-min)))
+       (catch Exception e false))))
 
 ;; Ordered vector of occ table column names for use in wide Cascalog sources:
 (def rec-fields ["?occ-id" "?id" "?associatedmedia" "?associatedoccurrences"
