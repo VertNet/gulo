@@ -7,7 +7,8 @@
         [cartodb.core :as cartodb]
         [clojure.data.csv :as csv]
         [clojure.java.io :as io])
-  (:require [clojure.string :as s])
+  (:require [clojure.string :as s]
+            [clojure.java.io :as io])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [com.google.common.io Files]
@@ -21,7 +22,7 @@
   for each publisher in the publishers CartoDB table."
   []
   (let [sql "SELECT dwca_url, inst_code, inst_name FROM publishers"]
-    (:rows (cartodb/query sql "vertnet"))))
+    (:rows (cartodb/query sql "vertnet" :api-version "v1"))))
 
 (defn- prepend-uuid
   "Prepend UUID to sequence of vals."
@@ -67,6 +68,7 @@
 (defn publisher->file
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
+  (prn "Harvesting:" :dwca_url publisher)
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
           path (str path "/" (dwca/archive-name dwca_url) ".csv")
@@ -76,13 +78,13 @@
           vals (map clean vals)
           vals (map prepend-uuid vals)
           vals (map #(append-vals % inst_name inst_code) vals)
-          x (Files/newWriterSupplier (File. path) Charsets/UTF_8 true)
-          writer (.getOutput x)]
-      (with-open [f writer] 
+          out (io/writer (io/file path) :encoding "UTF-8")]
+      (with-open [f out] 
         (csv/write-csv f vals :separator \tab :quote \")))
-    (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
+    (catch Exception e (prn "Error harvesting" (:dwca_url publisher) (.getMessage e)))))
 
-(defn harvest
-  "Harvest Darwin Core Archives from list of publishers to file at supplied path."
+(defn harvestp
+  "Harvest supplied map of publishers in parallel to CSV files at path."
   [publishers path]
-  (doall (pmap (partial publisher->file path) publishers)))
+  (doall
+   (map #(future (publisher->file path %)) publishers)))
