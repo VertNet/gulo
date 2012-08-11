@@ -22,7 +22,7 @@
   (apply str (interpose " " strs)))
 
 ;; Slurps resources/creds.json for OAuth: {"key" "secret" "user" "password"}
-(def creds (read-json (slurp (io/resource "creds.json"))))
+(def creds (read-json (slurp (io/resource "cartodb.json"))))
 
 ;; Slurps resources/s3.json for Amazon S3: {"access-key" "secret-key"}
 (def s3-creds (read-json (slurp (io/resource "s3.json"))))
@@ -111,9 +111,19 @@
         key (:access-key s3-creds)
         secret (:secret-key s3-creds)
         source (str "s3n://" key  ":" secret "@gulohfs/" table)
-        temp-file (?- (hfs-textline sink :sinkmode :replace)
+        temp-file (?- (hfs-textline sink)
                       (hfs-textline source))]
     (merge-parts table)))
+
+(defn file->s3
+  "Upload file at supplied path to S3 path."
+  [path s3path]
+  (let [key (:access-key s3-creds)
+        secret (:secret-key s3-creds)
+        sink (str "s3n://" key  ":" secret "@" s3path)]
+    (prn sink)
+    (?- (hfs-textline sink :sinkmode :replace)
+        (hfs-textline path))))
 
 (defn prepare-zip
   [table-name table-cols path out-path]
