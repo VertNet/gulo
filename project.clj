@@ -18,7 +18,7 @@
                  [eighty-cascalog-more-taps "0.2.1"]
                  [cascading/cascading-hadoop "2.0.2-wip-324"]
                  [org.pingles/cascading.protobuf "0.0.1"]
-                 [dwca-reader-clj "0.5.0-SNAPSHOT"]
+                 [dwca-reader-clj "0.6.0-SNAPSHOT"]
                  [cartodb-clj "1.5.2"]
                  [org.clojure/data.csv "0.1.2"]
                  [clj-http "0.4.3"]

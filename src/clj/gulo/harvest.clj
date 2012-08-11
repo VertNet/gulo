@@ -1,6 +1,6 @@
 (ns gulo.harvest
   "This namespace handles harvesting Darwin Core Archives."
-  (:use [gulo.util :as util :only (gen-uuid)]
+  (:use [gulo.util :as util :only (gen-uuid, name-valid? latlon-valid?)]
         [dwca.core :as dwca]
         [cartodb.core :as cartodb]
         [clojure.data.csv :as csv]
@@ -45,12 +45,18 @@
   [vals]
   (map clean-val vals))
 
+(defn- valid-rec?
+  [rec]
+  (and (name-valid? rec) (latlon-valid? rec)))
+
 (defn publisher->file
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
-          vals (map field-vals (dwca/open dwca_url))
+          records (dwca/open dwca_url)
+          valid (filter valid-rec? records)
+          vals (map field-vals valid)
           vals (map clean vals)
           vals (map prepend-uuid vals)
           vals (map #(append-vals % inst_name inst_code) vals)
