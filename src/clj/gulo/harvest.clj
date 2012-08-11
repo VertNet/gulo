@@ -45,15 +45,18 @@
   [vals]
   (map clean-val vals))
 
+(defn- valid-rec?
+  [rec]
+  (and (name-valid? rec) (latlon-valid? rec)))
+
 (defn publisher->file
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
           records (dwca/open dwca_url)
-          filtered (filter name-valid? records)
-          filtered (filter latlon-valid? records)
-          vals (map field-vals filtered)
+          valid (filter valid-rec? records)
+          vals (map field-vals valid)
           vals (map clean vals)
           vals (map prepend-uuid vals)
           vals (map #(append-vals % inst_name inst_code) vals)
