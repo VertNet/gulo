@@ -83,7 +83,7 @@
         (csv/write-csv f vals :separator \tab :quote \")))
     (catch Exception e (prn "Error harvesting" (:dwca_url publisher) (.getMessage e)))))
 
-(defn harvestp
+(defn harvest
   "Harvest supplied map of publishers in parallel to CSV files at path."
   [publishers path]
   (doall
