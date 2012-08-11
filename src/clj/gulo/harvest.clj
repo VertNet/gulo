@@ -85,4 +85,4 @@
 (defn harvest
   "Harvest Darwin Core Archives from list of publishers to file at supplied path."
   [publishers path]
-  (map (partial publisher->file path) publishers))
+  (pmap (partial publisher->file path) publishers))
