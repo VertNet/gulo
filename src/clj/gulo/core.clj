@@ -14,29 +14,29 @@
 
 (defn- my-filter [& vals] (println (str "VAL--------------" vals)) true)
 
-(defn- makeline
+(defn makeline
   "Returns a string line by joining a sequence of values on tab."
   [& vals]
   (clojure.string/join \tab vals))
 
-(defn- splitline
+(defn splitline
   "Returns vector of line values by splitting on tab."
   [line]
   (vec (.split line "\t")))
 
-(defn- line->loc
+(defn line->loc
   "Return 3-tuple [occid lat lon] from supplied textline."
   [line]
   (let [vals (splitline line)]
     (map (partial nth vals) [OCC-ID LAT LON])))
 
-(defn- line->name
+(defn line->name
   "Return 2-tuple [occid scientificname] from supplied textline."
   [line]
   (let [vals (splitline line)]
     (map (partial nth vals) [OCC-ID SCINAME])))
 
-(defn- line->locname
+(defn line->locname
   "Return 4-tuple [occid lat lon name] from supplied textline."
   [line]
   (let [[occid lat lon] (line->loc line)
