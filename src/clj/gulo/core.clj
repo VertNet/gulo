@@ -7,10 +7,10 @@
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
 ;; Position of values in a split texline.
-(def OCC-ID 0)
-(def LAT 22)
-(def LON 23)
-(def SCINAME 160)
+(def ^:const OCC-ID 0)
+(def ^:const LAT 22)
+(def ^:const LON 23)
+(def ^:const SCINAME 160)
 
 (defn- my-filter [& vals] (println (str "VAL--------------" vals)) true)
 
