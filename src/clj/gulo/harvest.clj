@@ -71,7 +71,8 @@
   (prn "Harvesting:" :dwca_url publisher)
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
-          path (str path "/" (dwca/archive-name dwca_url) ".csv")
+          name (dwca/archive-name dwca_url)
+          path (str path "/" name ".csv")
           records (dwca/open dwca_url)
           valid (filter valid-rec? records)
           vals (map field-vals valid)
@@ -79,8 +80,10 @@
           vals (map prepend-uuid vals)
           vals (map #(append-vals % inst_name inst_code) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
-      (with-open [f out] 
-        (csv/write-csv f vals :separator \tab :quote \")))
+      (with-open [f out]
+        (prn "Processing" path)
+        (csv/write-csv f vals :separator \tab :quote \"))
+      (file->s3 path (str "guloharvest/" name)))
     (catch Exception e (prn "Error harvesting" (:dwca_url publisher) (.getMessage e)))))
 
 (defn harvest
