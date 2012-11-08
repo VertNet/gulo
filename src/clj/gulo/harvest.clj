@@ -61,14 +61,12 @@
   (let [key (:access-key s3-creds)
         secret (:secret-key s3-creds)
         sink (str "s3n://" key  ":" secret "@" s3path)]
-    (prn sink)
     (?- (hfs-textline sink :sinkmode :replace)
         (hfs-textline path))))
 
 (defn publisher->file
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
-  (prn "Harvesting:" :dwca_url publisher)
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
           name (:archive_name publisher)
@@ -81,10 +79,9 @@
           vals (map #(append-vals % inst_name inst_code) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
       (with-open [f out]
-        (prn "Processing" path)
         (csv/write-csv f vals :separator \tab :quote \"))
       (file->s3 path (str "guloharvest/" name)))
-    (catch Exception e (prn "Error harvesting" (:dwca_url publisher) (.getMessage e)))))
+    (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
 
 (defn harvest
   "Harvest supplied map of publishers in parallel to CSV files at path."
