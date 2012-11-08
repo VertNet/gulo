@@ -21,7 +21,7 @@
   "Return vector of maps containing :dwca_url, :inst_code, and :inst_name keys
   for each publisher in the publishers CartoDB table."
   []
-  (let [sql "SELECT dwca_url, inst_code, inst_name FROM publishers"]
+  (let [sql "SELECT archive_name, dwca_url, inst_code, inst_name FROM publishers"]
     (:rows (cartodb/query sql "vertnet" :api-version "v1"))))
 
 (defn- prepend-uuid
@@ -71,7 +71,7 @@
   (prn "Harvesting:" :dwca_url publisher)
   (try
     (let [{:keys [dwca_url inst_code inst_name]} publisher
-          name (dwca/archive-name dwca_url)
+          name (:archive_name publisher)
           path (str path "/" name ".csv")
           records (dwca/open dwca_url)
           valid (filter valid-rec? records)
