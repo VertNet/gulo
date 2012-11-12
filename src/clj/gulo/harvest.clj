@@ -64,6 +64,11 @@
     (?- (hfs-textline sink :sinkmode :replace)
         (hfs-textline path))))
 
+(defn csv->s3
+  "Uploads all CSV files at supplied path using vector of file names."
+  [path names]
+  (map #(file->s3 (str path % ".csv") (str "guloharvest/publishers/" %)) names))
+
 (defn publisher->file
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
@@ -80,7 +85,7 @@
           out (io/writer (io/file path) :encoding "UTF-8")]
       (with-open [f out]
         (csv/write-csv f vals :separator \tab :quote \"))
-      (file->s3 path (str "guloharvest/" name)))
+      (prn "Done harvesting" name))
     (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
 
 (defn harvest
