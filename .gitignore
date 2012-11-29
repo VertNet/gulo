@@ -8,3 +8,6 @@ rm-dwca-reader-clj-jars.sh
 creds.json
 s3.json
 target/
+#*.*
+*.*~
+*sublime*
