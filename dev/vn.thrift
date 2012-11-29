@@ -1,7 +1,8 @@
 namespace java vn.schema
 
 union RecordID {
-  1: string id;
+  1: required string sourceID;
+  2: required string datasetUUID;
 }
 
 struct Occurrence {

@@ -30,11 +30,13 @@ import org.slf4j.LoggerFactory;
 
 public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("RecordID");
-  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField SOURCE_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("sourceID", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField DATASET_UUID_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetUUID", org.apache.thrift.protocol.TType.STRING, (short)2);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ID((short)1, "id");
+    SOURCE_ID((short)1, "sourceID"),
+    DATASET_UUID((short)2, "datasetUUID");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -49,8 +51,10 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ID
-          return ID;
+        case 1: // SOURCE_ID
+          return SOURCE_ID;
+        case 2: // DATASET_UUID
+          return DATASET_UUID;
         default:
           return null;
       }
@@ -93,7 +97,9 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.SOURCE_ID, new org.apache.thrift.meta_data.FieldMetaData("sourceID", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.DATASET_UUID, new org.apache.thrift.meta_data.FieldMetaData("datasetUUID", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(RecordID.class, metaDataMap);
@@ -114,9 +120,15 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
     return new RecordID(this);
   }
 
-  public static RecordID id(String value) {
+  public static RecordID sourceID(String value) {
     RecordID x = new RecordID();
-    x.setId(value);
+    x.setSourceID(value);
+    return x;
+  }
+
+  public static RecordID datasetUUID(String value) {
+    RecordID x = new RecordID();
+    x.setDatasetUUID(value);
     return x;
   }
 
@@ -124,11 +136,16 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case ID:
+      case SOURCE_ID:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'id', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'sourceID', but got " + value.getClass().getSimpleName());
+      case DATASET_UUID:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'datasetUUID', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -139,11 +156,20 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case ID:
-          if (field.type == ID_FIELD_DESC.type) {
-            String id;
-            id = iprot.readString();
-            return id;
+        case SOURCE_ID:
+          if (field.type == SOURCE_ID_FIELD_DESC.type) {
+            String sourceID;
+            sourceID = iprot.readString();
+            return sourceID;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case DATASET_UUID:
+          if (field.type == DATASET_UUID_FIELD_DESC.type) {
+            String datasetUUID;
+            datasetUUID = iprot.readString();
+            return datasetUUID;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -159,9 +185,13 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ID:
-        String id = (String)value_;
-        oprot.writeString(id);
+      case SOURCE_ID:
+        String sourceID = (String)value_;
+        oprot.writeString(sourceID);
+        return;
+      case DATASET_UUID:
+        String datasetUUID = (String)value_;
+        oprot.writeString(datasetUUID);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -173,10 +203,14 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case ID:
-          String id;
-          id = iprot.readString();
-          return id;
+        case SOURCE_ID:
+          String sourceID;
+          sourceID = iprot.readString();
+          return sourceID;
+        case DATASET_UUID:
+          String datasetUUID;
+          datasetUUID = iprot.readString();
+          return datasetUUID;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -188,9 +222,13 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ID:
-        String id = (String)value_;
-        oprot.writeString(id);
+      case SOURCE_ID:
+        String sourceID = (String)value_;
+        oprot.writeString(sourceID);
+        return;
+      case DATASET_UUID:
+        String datasetUUID = (String)value_;
+        oprot.writeString(datasetUUID);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -200,8 +238,10 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case ID:
-        return ID_FIELD_DESC;
+      case SOURCE_ID:
+        return SOURCE_ID_FIELD_DESC;
+      case DATASET_UUID:
+        return DATASET_UUID_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -222,22 +262,41 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   }
 
 
-  public String getId() {
-    if (getSetField() == _Fields.ID) {
+  public String getSourceID() {
+    if (getSetField() == _Fields.SOURCE_ID) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'id' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'sourceID' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setId(String value) {
+  public void setSourceID(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.ID;
+    setField_ = _Fields.SOURCE_ID;
     value_ = value;
   }
 
-  public boolean isSetId() {
-    return setField_ == _Fields.ID;
+  public String getDatasetUUID() {
+    if (getSetField() == _Fields.DATASET_UUID) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'datasetUUID' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setDatasetUUID(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.DATASET_UUID;
+    value_ = value;
+  }
+
+  public boolean isSetSourceID() {
+    return setField_ == _Fields.SOURCE_ID;
+  }
+
+
+  public boolean isSetDatasetUUID() {
+    return setField_ == _Fields.DATASET_UUID;
   }
 
 
