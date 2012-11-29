@@ -1,6 +1,6 @@
 namespace java vn.schema
 
-union RecordID {
+struct RecordID {
   1: required string sourceID;
   2: required string datasetUUID;
 }
