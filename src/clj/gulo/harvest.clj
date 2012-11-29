@@ -69,7 +69,8 @@
   [path names]
   (map #(file->s3 (str path % ".csv") (str "guloharvest/publishers/" %)) names))
 
-(defn publisher->file
+
+(defn archive->csv
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path publisher]
   (try
@@ -77,9 +78,7 @@
           name (:archive_name publisher)
           path (str path "/" name ".csv")
           records (dwca/open dwca_url)
-          valid (filter valid-rec? records)
-          vals (map field-vals valid)
-          vals (map clean vals)
+          vals (map field-vals records)
           vals (map prepend-uuid vals)
           vals (map #(append-vals % inst_name inst_code) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
@@ -92,4 +91,4 @@
   "Harvest supplied map of publishers in parallel to CSV files at path."
   [publishers path]
   (doall
-   (map #(future (publisher->file path %)) publishers)))
+   (map #(future (archive->csv path %)) publishers)))
