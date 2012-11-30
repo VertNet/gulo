@@ -1,4 +1,4 @@
-namespace java vn.schema
+namespace java gulo.schema
 
 struct RecordID {
   1: required string sourceID;

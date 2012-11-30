@@ -19,10 +19,10 @@
              :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [cascalog "1.9.0"]
-                 [backtype/dfs-datastores "1.1.3"]
-                 [backtype/dfs-datastores-cascading "1.2.0"]
-                 ;;[eighty-cascalog-more-taps "0.2.1"]
-                 ;;[cascading/cascading-hadoop "2.0.2-wip-324"]
+                 [backtype/dfs-datastores "1.2.0"]
+                 [eighty-cascalog-more-taps "0.2.1"]
+                 [backtype/dfs-datastores-cascading "1.3.0"]                 
+                 [cascading/cascading-hadoop "2.0.2"]
                  [org.pingles/cascading.protobuf "0.0.1"]
                  [dwca-reader-clj "0.7.0-SNAPSHOT"]
                  [cartodb-clj "1.5.2"]
@@ -35,4 +35,4 @@
                  [org.apache.thrift/libthrift "0.8.0"
                   :exclusions [org.slf4j/slf4j-api]]]
   :min-lein-version "2.0.0"
-  :aot [gulo.main, vn.schema])
+  :aot [gulo.hadoop.pail, gulo.main, vn.schema])

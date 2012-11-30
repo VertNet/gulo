@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package vn.schema;
+package gulo.schema;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.thrift.scheme.IScheme;
@@ -28,8 +28,8 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GeologicalContext implements org.apache.thrift.TBase<GeologicalContext, GeologicalContext._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("GeologicalContext");
+public class Identification implements org.apache.thrift.TBase<Identification, Identification._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Identification");
 
   private static final org.apache.thrift.protocol.TField BED_FIELD_DESC = new org.apache.thrift.protocol.TField("bed", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField EARLIEST_AGE_OR_LOWEST_STAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestAgeOrLowestStage", org.apache.thrift.protocol.TType.STRING, (short)2);
@@ -52,8 +52,8 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new GeologicalContextStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new GeologicalContextTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new IdentificationStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new IdentificationTupleSchemeFactory());
   }
 
   public String bed; // optional
@@ -226,16 +226,16 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     tmpMap.put(_Fields.MEMBER, new org.apache.thrift.meta_data.FieldMetaData("member", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GeologicalContext.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Identification.class, metaDataMap);
   }
 
-  public GeologicalContext() {
+  public Identification() {
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public GeologicalContext(GeologicalContext other) {
+  public Identification(Identification other) {
     if (other.isSetBed()) {
       this.bed = other.bed;
     }
@@ -292,8 +292,8 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     }
   }
 
-  public GeologicalContext deepCopy() {
-    return new GeologicalContext(this);
+  public Identification deepCopy() {
+    return new Identification(this);
   }
 
   @Override
@@ -322,7 +322,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.bed;
   }
 
-  public GeologicalContext setBed(String bed) {
+  public Identification setBed(String bed) {
     this.bed = bed;
     return this;
   }
@@ -346,7 +346,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.earliestAgeOrLowestStage;
   }
 
-  public GeologicalContext setEarliestAgeOrLowestStage(String earliestAgeOrLowestStage) {
+  public Identification setEarliestAgeOrLowestStage(String earliestAgeOrLowestStage) {
     this.earliestAgeOrLowestStage = earliestAgeOrLowestStage;
     return this;
   }
@@ -370,7 +370,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.earliestEonOrLowestEonothem;
   }
 
-  public GeologicalContext setEarliestEonOrLowestEonothem(String earliestEonOrLowestEonothem) {
+  public Identification setEarliestEonOrLowestEonothem(String earliestEonOrLowestEonothem) {
     this.earliestEonOrLowestEonothem = earliestEonOrLowestEonothem;
     return this;
   }
@@ -394,7 +394,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.earliestEpochOrLowestSeries;
   }
 
-  public GeologicalContext setEarliestEpochOrLowestSeries(String earliestEpochOrLowestSeries) {
+  public Identification setEarliestEpochOrLowestSeries(String earliestEpochOrLowestSeries) {
     this.earliestEpochOrLowestSeries = earliestEpochOrLowestSeries;
     return this;
   }
@@ -418,7 +418,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.earliestEraOrLowestErathem;
   }
 
-  public GeologicalContext setEarliestEraOrLowestErathem(String earliestEraOrLowestErathem) {
+  public Identification setEarliestEraOrLowestErathem(String earliestEraOrLowestErathem) {
     this.earliestEraOrLowestErathem = earliestEraOrLowestErathem;
     return this;
   }
@@ -442,7 +442,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.earliestPeriodOrLowestSystem;
   }
 
-  public GeologicalContext setEarliestPeriodOrLowestSystem(String earliestPeriodOrLowestSystem) {
+  public Identification setEarliestPeriodOrLowestSystem(String earliestPeriodOrLowestSystem) {
     this.earliestPeriodOrLowestSystem = earliestPeriodOrLowestSystem;
     return this;
   }
@@ -466,7 +466,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.formation;
   }
 
-  public GeologicalContext setFormation(String formation) {
+  public Identification setFormation(String formation) {
     this.formation = formation;
     return this;
   }
@@ -490,7 +490,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.geologicalContextID;
   }
 
-  public GeologicalContext setGeologicalContextID(String geologicalContextID) {
+  public Identification setGeologicalContextID(String geologicalContextID) {
     this.geologicalContextID = geologicalContextID;
     return this;
   }
@@ -514,7 +514,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.group;
   }
 
-  public GeologicalContext setGroup(String group) {
+  public Identification setGroup(String group) {
     this.group = group;
     return this;
   }
@@ -538,7 +538,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.highestBiostratigraphicZone;
   }
 
-  public GeologicalContext setHighestBiostratigraphicZone(String highestBiostratigraphicZone) {
+  public Identification setHighestBiostratigraphicZone(String highestBiostratigraphicZone) {
     this.highestBiostratigraphicZone = highestBiostratigraphicZone;
     return this;
   }
@@ -562,7 +562,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.latestAgeOrHighestStage;
   }
 
-  public GeologicalContext setLatestAgeOrHighestStage(String latestAgeOrHighestStage) {
+  public Identification setLatestAgeOrHighestStage(String latestAgeOrHighestStage) {
     this.latestAgeOrHighestStage = latestAgeOrHighestStage;
     return this;
   }
@@ -586,7 +586,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.latestEonOrHighestEonothem;
   }
 
-  public GeologicalContext setLatestEonOrHighestEonothem(String latestEonOrHighestEonothem) {
+  public Identification setLatestEonOrHighestEonothem(String latestEonOrHighestEonothem) {
     this.latestEonOrHighestEonothem = latestEonOrHighestEonothem;
     return this;
   }
@@ -610,7 +610,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.latestEpochOrHighestSeries;
   }
 
-  public GeologicalContext setLatestEpochOrHighestSeries(String latestEpochOrHighestSeries) {
+  public Identification setLatestEpochOrHighestSeries(String latestEpochOrHighestSeries) {
     this.latestEpochOrHighestSeries = latestEpochOrHighestSeries;
     return this;
   }
@@ -634,7 +634,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.latestEraOrHighestErathem;
   }
 
-  public GeologicalContext setLatestEraOrHighestErathem(String latestEraOrHighestErathem) {
+  public Identification setLatestEraOrHighestErathem(String latestEraOrHighestErathem) {
     this.latestEraOrHighestErathem = latestEraOrHighestErathem;
     return this;
   }
@@ -658,7 +658,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.latestPeriodOrHighestSystem;
   }
 
-  public GeologicalContext setLatestPeriodOrHighestSystem(String latestPeriodOrHighestSystem) {
+  public Identification setLatestPeriodOrHighestSystem(String latestPeriodOrHighestSystem) {
     this.latestPeriodOrHighestSystem = latestPeriodOrHighestSystem;
     return this;
   }
@@ -682,7 +682,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.lithostratigraphicTerms;
   }
 
-  public GeologicalContext setLithostratigraphicTerms(String lithostratigraphicTerms) {
+  public Identification setLithostratigraphicTerms(String lithostratigraphicTerms) {
     this.lithostratigraphicTerms = lithostratigraphicTerms;
     return this;
   }
@@ -706,7 +706,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.lowestBiostratigraphicZone;
   }
 
-  public GeologicalContext setLowestBiostratigraphicZone(String lowestBiostratigraphicZone) {
+  public Identification setLowestBiostratigraphicZone(String lowestBiostratigraphicZone) {
     this.lowestBiostratigraphicZone = lowestBiostratigraphicZone;
     return this;
   }
@@ -730,7 +730,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return this.member;
   }
 
-  public GeologicalContext setMember(String member) {
+  public Identification setMember(String member) {
     this.member = member;
     return this;
   }
@@ -1010,12 +1010,12 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof GeologicalContext)
-      return this.equals((GeologicalContext)that);
+    if (that instanceof Identification)
+      return this.equals((Identification)that);
     return false;
   }
 
-  public boolean equals(GeologicalContext that) {
+  public boolean equals(Identification that) {
     if (that == null)
       return false;
 
@@ -1281,13 +1281,13 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     return builder.toHashCode();
   }
 
-  public int compareTo(GeologicalContext other) {
+  public int compareTo(Identification other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    GeologicalContext typedOther = (GeologicalContext)other;
+    Identification typedOther = (Identification)other;
 
     lastComparison = Boolean.valueOf(isSetBed()).compareTo(typedOther.isSetBed());
     if (lastComparison != 0) {
@@ -1486,7 +1486,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("GeologicalContext(");
+    StringBuilder sb = new StringBuilder("Identification(");
     boolean first = true;
 
     if (isSetBed()) {
@@ -1692,15 +1692,15 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     }
   }
 
-  private static class GeologicalContextStandardSchemeFactory implements SchemeFactory {
-    public GeologicalContextStandardScheme getScheme() {
-      return new GeologicalContextStandardScheme();
+  private static class IdentificationStandardSchemeFactory implements SchemeFactory {
+    public IdentificationStandardScheme getScheme() {
+      return new IdentificationStandardScheme();
     }
   }
 
-  private static class GeologicalContextStandardScheme extends StandardScheme<GeologicalContext> {
+  private static class IdentificationStandardScheme extends StandardScheme<Identification> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, GeologicalContext struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Identification struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -1865,7 +1865,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, GeologicalContext struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Identification struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -2001,16 +2001,16 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
 
   }
 
-  private static class GeologicalContextTupleSchemeFactory implements SchemeFactory {
-    public GeologicalContextTupleScheme getScheme() {
-      return new GeologicalContextTupleScheme();
+  private static class IdentificationTupleSchemeFactory implements SchemeFactory {
+    public IdentificationTupleScheme getScheme() {
+      return new IdentificationTupleScheme();
     }
   }
 
-  private static class GeologicalContextTupleScheme extends TupleScheme<GeologicalContext> {
+  private static class IdentificationTupleScheme extends TupleScheme<Identification> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, GeologicalContext struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Identification struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetBed()) {
@@ -2125,7 +2125,7 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, GeologicalContext struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Identification struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(18);
       if (incoming.get(0)) {

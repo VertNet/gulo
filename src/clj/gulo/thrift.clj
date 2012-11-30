@@ -1,5 +1,5 @@
 (ns gulo.thrift
-  (:import [vn.schema
+  (:import [gulo.schema
             Data DataUnit Event GeologicalContext Identification Location
             MeasurementOrFact Occurrence Pedigree RecordID RecordProperty
             RecordPropertyValue ResourceRelationship Taxon]
