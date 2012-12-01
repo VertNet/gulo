@@ -2,6 +2,7 @@
   (:use cascalog.api
         [cascalog.io :only (with-fs-tmp)]
         [gulo.thrift :as thrift])
+  (:require [clojure.string :as s])
   (:import [java.util List]
            [gulo.schema
             Data DataUnit Event GeologicalContext Identification Location
@@ -18,22 +19,38 @@
 (defn pail-getType [this] Data)
 (defn pail-createThriftObject [this] (Data.))
 
-; (gen-class :name gulo.hadoop.pail.SplitDataPailStructure
-;            :extends gulo.hadoop.pail.DataPailStructure
-;            :prefix "split-")
+(gen-class :name gulo.hadoop.pail.SplitDataPailStructure
+           :extends gulo.hadoop.pail.DataPailStructure
+           :prefix "split-")
 
-; (defn split-getTarget [this ^Chunk d]
-;   (let [location   (-> d .getLocationProperty .getProperty .getFieldValue)
-;         resolution (format "%s-%s"
-;                            (.getResolution location)
-;                            (.getTemporalRes d))]
-;     [(.getDataset d) resolution]))
+(defn split-getTarget [this ^Data d]
+  (let [location   (-> d .getLocationProperty .getProperty .getFieldValue)
+        resolution (format "%s-%s"
+                           (.getResolution location)
+                           (.getTemporalRes d))]
+    [(.getDataset d) resolution]))
+
+(defn slugify
+  [str]
+  "Return supplied string lower case with whitespace replaced with dash."
+  (let [clean (s/lower-case (s/trim str))]
+    (s/replace clean #"\s+" "-")))
+
+(defn split-getTarget
+  [this ^Data d]
+  "museum-of-vertebrate-zoology/nmmnh-mammal-uuid"
+  (let [dataset (-> d .getPedigree .getMetadata .getDataSet)
+        org (slugify (.getOrganizationName dataset))
+        title (slugify (.getTitle dataset))
+        uuid (.getDatasetUUID dataset)
+        ds (format "%s-%s" title uuid)]
+    [org ds]))
 
 (defn split-isValidTarget [this dirs]
   (boolean (#{2 3} (count dirs))))
 
 (defn pail-structure []
-  (gulo.hadoop.pail.DataPailStructure.))
+  (gulo.hadoop.pail.SplitDataPailStructure.))
 
 (defn- pail-tap
   [path colls structure]
@@ -85,9 +102,13 @@
 (comment
   (let [id (thrift/RecordID* "123" "343fs33")
         value (thrift/RecordPropertyValue* "mine!")
-        pedigree (thrift/Pedigree* 23)
+        dataset (thrift/DataSet* "abs" "uuid" "rights" "lang"
+                                 "Museum of Vertebrate Zoology" "date"
+                                 "MVZ Herps")
+        metadata (thrift/Metadata* dataset)
+        pedigree (thrift/Pedigree* 23 metadata)
         data (thrift/Data* id value pedigree)
         a [[data]]
         q (<- [?a]
             (a ?a))]
-  (to-pail "/tmp/test" q)))
+  (to-pail "/tmp/gulo" q)))

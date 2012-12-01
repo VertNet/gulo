@@ -230,8 +230,23 @@ struct RecordProperty {
   2: required RecordPropertyValue property;
 }
 
+struct DataSet {
+  1: required string abstractSummary;
+  2: required string datasetUUID;
+  3: required string intellectualRights;
+  4: required string language;
+  5: required string organizationName;
+  6: required string pubDate;
+  7: required string title;
+}
+
+struct Metadata {
+  1: required DataSet dataSet;
+}
+
 struct Pedigree {
   1: required i32 trueAsOfSecs;
+  2: required Metadata metadata;
 }
 
 union DataUnit {

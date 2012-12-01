@@ -1,8 +1,8 @@
 (ns gulo.thrift
   (:import [gulo.schema
-            Data DataUnit Event GeologicalContext Identification Location
-            MeasurementOrFact Occurrence Pedigree RecordID RecordProperty
-            RecordPropertyValue ResourceRelationship Taxon]
+            Data DataSet DataUnit Event GeologicalContext Identification
+            Location MeasurementOrFact Metadata Occurrence Pedigree RecordID
+            RecordProperty RecordPropertyValue ResourceRelationship Taxon]
            [org.apache.thrift TBase TUnion]))
 
 (defn RecordID*
@@ -21,9 +21,17 @@
   [id property]
   (RecordProperty. id property))
 
+(defn DataSet*
+  [abstract uuid rights lang orgname date title]
+  (DataSet. abstract uuid rights lang orgname date title))
+
+(defn Metadata*
+  [dataset]
+  (Metadata. dataset))
+
 (defn Pedigree*
-  [secs]
-  (Pedigree. secs))
+  [secs metadata]
+  (Pedigree. secs metadata))
 
 (defn Data*
   [id value pedigree]
