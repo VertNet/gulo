@@ -31,24 +31,14 @@ import org.slf4j.LoggerFactory;
 public class Identification implements org.apache.thrift.TBase<Identification, Identification._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Identification");
 
-  private static final org.apache.thrift.protocol.TField BED_FIELD_DESC = new org.apache.thrift.protocol.TField("bed", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField EARLIEST_AGE_OR_LOWEST_STAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestAgeOrLowestStage", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField EARLIEST_EON_OR_LOWEST_EONOTHEM_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestEonOrLowestEonothem", org.apache.thrift.protocol.TType.STRING, (short)3);
-  private static final org.apache.thrift.protocol.TField EARLIEST_EPOCH_OR_LOWEST_SERIES_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestEpochOrLowestSeries", org.apache.thrift.protocol.TType.STRING, (short)4);
-  private static final org.apache.thrift.protocol.TField EARLIEST_ERA_OR_LOWEST_ERATHEM_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestEraOrLowestErathem", org.apache.thrift.protocol.TType.STRING, (short)5);
-  private static final org.apache.thrift.protocol.TField EARLIEST_PERIOD_OR_LOWEST_SYSTEM_FIELD_DESC = new org.apache.thrift.protocol.TField("earliestPeriodOrLowestSystem", org.apache.thrift.protocol.TType.STRING, (short)6);
-  private static final org.apache.thrift.protocol.TField FORMATION_FIELD_DESC = new org.apache.thrift.protocol.TField("formation", org.apache.thrift.protocol.TType.STRING, (short)7);
-  private static final org.apache.thrift.protocol.TField GEOLOGICAL_CONTEXT_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("geologicalContextID", org.apache.thrift.protocol.TType.STRING, (short)8);
-  private static final org.apache.thrift.protocol.TField GROUP_FIELD_DESC = new org.apache.thrift.protocol.TField("group", org.apache.thrift.protocol.TType.STRING, (short)9);
-  private static final org.apache.thrift.protocol.TField HIGHEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC = new org.apache.thrift.protocol.TField("highestBiostratigraphicZone", org.apache.thrift.protocol.TType.STRING, (short)10);
-  private static final org.apache.thrift.protocol.TField LATEST_AGE_OR_HIGHEST_STAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("latestAgeOrHighestStage", org.apache.thrift.protocol.TType.STRING, (short)11);
-  private static final org.apache.thrift.protocol.TField LATEST_EON_OR_HIGHEST_EONOTHEM_FIELD_DESC = new org.apache.thrift.protocol.TField("latestEonOrHighestEonothem", org.apache.thrift.protocol.TType.STRING, (short)12);
-  private static final org.apache.thrift.protocol.TField LATEST_EPOCH_OR_HIGHEST_SERIES_FIELD_DESC = new org.apache.thrift.protocol.TField("latestEpochOrHighestSeries", org.apache.thrift.protocol.TType.STRING, (short)13);
-  private static final org.apache.thrift.protocol.TField LATEST_ERA_OR_HIGHEST_ERATHEM_FIELD_DESC = new org.apache.thrift.protocol.TField("latestEraOrHighestErathem", org.apache.thrift.protocol.TType.STRING, (short)14);
-  private static final org.apache.thrift.protocol.TField LATEST_PERIOD_OR_HIGHEST_SYSTEM_FIELD_DESC = new org.apache.thrift.protocol.TField("latestPeriodOrHighestSystem", org.apache.thrift.protocol.TType.STRING, (short)15);
-  private static final org.apache.thrift.protocol.TField LITHOSTRATIGRAPHIC_TERMS_FIELD_DESC = new org.apache.thrift.protocol.TField("lithostratigraphicTerms", org.apache.thrift.protocol.TType.STRING, (short)16);
-  private static final org.apache.thrift.protocol.TField LOWEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC = new org.apache.thrift.protocol.TField("lowestBiostratigraphicZone", org.apache.thrift.protocol.TType.STRING, (short)17);
-  private static final org.apache.thrift.protocol.TField MEMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("member", org.apache.thrift.protocol.TType.STRING, (short)18);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("identificationID", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField IDENTIFIED_BY_FIELD_DESC = new org.apache.thrift.protocol.TField("identifiedBy", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField DATE_IDENTIFIED_FIELD_DESC = new org.apache.thrift.protocol.TField("dateIdentified", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_REFERENCES_FIELD_DESC = new org.apache.thrift.protocol.TField("identificationReferences", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_VERIFICATION_STATUS_FIELD_DESC = new org.apache.thrift.protocol.TField("identificationVerificationStatus", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_REMARKS_FIELD_DESC = new org.apache.thrift.protocol.TField("identificationRemarks", org.apache.thrift.protocol.TType.STRING, (short)6);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_QUALIFIER_FIELD_DESC = new org.apache.thrift.protocol.TField("identificationQualifier", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField TYPE_STATUS_FIELD_DESC = new org.apache.thrift.protocol.TField("typeStatus", org.apache.thrift.protocol.TType.STRING, (short)8);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -56,45 +46,25 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     schemes.put(TupleScheme.class, new IdentificationTupleSchemeFactory());
   }
 
-  public String bed; // optional
-  public String earliestAgeOrLowestStage; // optional
-  public String earliestEonOrLowestEonothem; // optional
-  public String earliestEpochOrLowestSeries; // optional
-  public String earliestEraOrLowestErathem; // optional
-  public String earliestPeriodOrLowestSystem; // optional
-  public String formation; // optional
-  public String geologicalContextID; // optional
-  public String group; // optional
-  public String highestBiostratigraphicZone; // optional
-  public String latestAgeOrHighestStage; // optional
-  public String latestEonOrHighestEonothem; // optional
-  public String latestEpochOrHighestSeries; // optional
-  public String latestEraOrHighestErathem; // optional
-  public String latestPeriodOrHighestSystem; // optional
-  public String lithostratigraphicTerms; // optional
-  public String lowestBiostratigraphicZone; // optional
-  public String member; // optional
+  public String identificationID; // required
+  public String identifiedBy; // required
+  public String dateIdentified; // required
+  public String identificationReferences; // required
+  public String identificationVerificationStatus; // required
+  public String identificationRemarks; // required
+  public String identificationQualifier; // required
+  public String typeStatus; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    BED((short)1, "bed"),
-    EARLIEST_AGE_OR_LOWEST_STAGE((short)2, "earliestAgeOrLowestStage"),
-    EARLIEST_EON_OR_LOWEST_EONOTHEM((short)3, "earliestEonOrLowestEonothem"),
-    EARLIEST_EPOCH_OR_LOWEST_SERIES((short)4, "earliestEpochOrLowestSeries"),
-    EARLIEST_ERA_OR_LOWEST_ERATHEM((short)5, "earliestEraOrLowestErathem"),
-    EARLIEST_PERIOD_OR_LOWEST_SYSTEM((short)6, "earliestPeriodOrLowestSystem"),
-    FORMATION((short)7, "formation"),
-    GEOLOGICAL_CONTEXT_ID((short)8, "geologicalContextID"),
-    GROUP((short)9, "group"),
-    HIGHEST_BIOSTRATIGRAPHIC_ZONE((short)10, "highestBiostratigraphicZone"),
-    LATEST_AGE_OR_HIGHEST_STAGE((short)11, "latestAgeOrHighestStage"),
-    LATEST_EON_OR_HIGHEST_EONOTHEM((short)12, "latestEonOrHighestEonothem"),
-    LATEST_EPOCH_OR_HIGHEST_SERIES((short)13, "latestEpochOrHighestSeries"),
-    LATEST_ERA_OR_HIGHEST_ERATHEM((short)14, "latestEraOrHighestErathem"),
-    LATEST_PERIOD_OR_HIGHEST_SYSTEM((short)15, "latestPeriodOrHighestSystem"),
-    LITHOSTRATIGRAPHIC_TERMS((short)16, "lithostratigraphicTerms"),
-    LOWEST_BIOSTRATIGRAPHIC_ZONE((short)17, "lowestBiostratigraphicZone"),
-    MEMBER((short)18, "member");
+    IDENTIFICATION_ID((short)1, "identificationID"),
+    IDENTIFIED_BY((short)2, "identifiedBy"),
+    DATE_IDENTIFIED((short)3, "dateIdentified"),
+    IDENTIFICATION_REFERENCES((short)4, "identificationReferences"),
+    IDENTIFICATION_VERIFICATION_STATUS((short)5, "identificationVerificationStatus"),
+    IDENTIFICATION_REMARKS((short)6, "identificationRemarks"),
+    IDENTIFICATION_QUALIFIER((short)7, "identificationQualifier"),
+    TYPE_STATUS((short)8, "typeStatus");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -109,42 +79,22 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // BED
-          return BED;
-        case 2: // EARLIEST_AGE_OR_LOWEST_STAGE
-          return EARLIEST_AGE_OR_LOWEST_STAGE;
-        case 3: // EARLIEST_EON_OR_LOWEST_EONOTHEM
-          return EARLIEST_EON_OR_LOWEST_EONOTHEM;
-        case 4: // EARLIEST_EPOCH_OR_LOWEST_SERIES
-          return EARLIEST_EPOCH_OR_LOWEST_SERIES;
-        case 5: // EARLIEST_ERA_OR_LOWEST_ERATHEM
-          return EARLIEST_ERA_OR_LOWEST_ERATHEM;
-        case 6: // EARLIEST_PERIOD_OR_LOWEST_SYSTEM
-          return EARLIEST_PERIOD_OR_LOWEST_SYSTEM;
-        case 7: // FORMATION
-          return FORMATION;
-        case 8: // GEOLOGICAL_CONTEXT_ID
-          return GEOLOGICAL_CONTEXT_ID;
-        case 9: // GROUP
-          return GROUP;
-        case 10: // HIGHEST_BIOSTRATIGRAPHIC_ZONE
-          return HIGHEST_BIOSTRATIGRAPHIC_ZONE;
-        case 11: // LATEST_AGE_OR_HIGHEST_STAGE
-          return LATEST_AGE_OR_HIGHEST_STAGE;
-        case 12: // LATEST_EON_OR_HIGHEST_EONOTHEM
-          return LATEST_EON_OR_HIGHEST_EONOTHEM;
-        case 13: // LATEST_EPOCH_OR_HIGHEST_SERIES
-          return LATEST_EPOCH_OR_HIGHEST_SERIES;
-        case 14: // LATEST_ERA_OR_HIGHEST_ERATHEM
-          return LATEST_ERA_OR_HIGHEST_ERATHEM;
-        case 15: // LATEST_PERIOD_OR_HIGHEST_SYSTEM
-          return LATEST_PERIOD_OR_HIGHEST_SYSTEM;
-        case 16: // LITHOSTRATIGRAPHIC_TERMS
-          return LITHOSTRATIGRAPHIC_TERMS;
-        case 17: // LOWEST_BIOSTRATIGRAPHIC_ZONE
-          return LOWEST_BIOSTRATIGRAPHIC_ZONE;
-        case 18: // MEMBER
-          return MEMBER;
+        case 1: // IDENTIFICATION_ID
+          return IDENTIFICATION_ID;
+        case 2: // IDENTIFIED_BY
+          return IDENTIFIED_BY;
+        case 3: // DATE_IDENTIFIED
+          return DATE_IDENTIFIED;
+        case 4: // IDENTIFICATION_REFERENCES
+          return IDENTIFICATION_REFERENCES;
+        case 5: // IDENTIFICATION_VERIFICATION_STATUS
+          return IDENTIFICATION_VERIFICATION_STATUS;
+        case 6: // IDENTIFICATION_REMARKS
+          return IDENTIFICATION_REMARKS;
+        case 7: // IDENTIFICATION_QUALIFIER
+          return IDENTIFICATION_QUALIFIER;
+        case 8: // TYPE_STATUS
+          return TYPE_STATUS;
         default:
           return null;
       }
@@ -185,45 +135,24 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.BED,_Fields.EARLIEST_AGE_OR_LOWEST_STAGE,_Fields.EARLIEST_EON_OR_LOWEST_EONOTHEM,_Fields.EARLIEST_EPOCH_OR_LOWEST_SERIES,_Fields.EARLIEST_ERA_OR_LOWEST_ERATHEM,_Fields.EARLIEST_PERIOD_OR_LOWEST_SYSTEM,_Fields.FORMATION,_Fields.GEOLOGICAL_CONTEXT_ID,_Fields.GROUP,_Fields.HIGHEST_BIOSTRATIGRAPHIC_ZONE,_Fields.LATEST_AGE_OR_HIGHEST_STAGE,_Fields.LATEST_EON_OR_HIGHEST_EONOTHEM,_Fields.LATEST_EPOCH_OR_HIGHEST_SERIES,_Fields.LATEST_ERA_OR_HIGHEST_ERATHEM,_Fields.LATEST_PERIOD_OR_HIGHEST_SYSTEM,_Fields.LITHOSTRATIGRAPHIC_TERMS,_Fields.LOWEST_BIOSTRATIGRAPHIC_ZONE,_Fields.MEMBER};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.BED, new org.apache.thrift.meta_data.FieldMetaData("bed", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFICATION_ID, new org.apache.thrift.meta_data.FieldMetaData("identificationID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_AGE_OR_LOWEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("earliestAgeOrLowestStage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFIED_BY, new org.apache.thrift.meta_data.FieldMetaData("identifiedBy", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_EON_OR_LOWEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEonOrLowestEonothem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.DATE_IDENTIFIED, new org.apache.thrift.meta_data.FieldMetaData("dateIdentified", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_EPOCH_OR_LOWEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("earliestEpochOrLowestSeries", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFICATION_REFERENCES, new org.apache.thrift.meta_data.FieldMetaData("identificationReferences", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_ERA_OR_LOWEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEraOrLowestErathem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFICATION_VERIFICATION_STATUS, new org.apache.thrift.meta_data.FieldMetaData("identificationVerificationStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_PERIOD_OR_LOWEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("earliestPeriodOrLowestSystem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFICATION_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("identificationRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FORMATION, new org.apache.thrift.meta_data.FieldMetaData("formation", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.IDENTIFICATION_QUALIFIER, new org.apache.thrift.meta_data.FieldMetaData("identificationQualifier", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOLOGICAL_CONTEXT_ID, new org.apache.thrift.meta_data.FieldMetaData("geologicalContextID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GROUP, new org.apache.thrift.meta_data.FieldMetaData("group", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HIGHEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("highestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_AGE_OR_HIGHEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("latestAgeOrHighestStage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_EON_OR_HIGHEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEonOrHighestEonothem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_EPOCH_OR_HIGHEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("latestEpochOrHighestSeries", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_ERA_OR_HIGHEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEraOrHighestErathem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_PERIOD_OR_HIGHEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("latestPeriodOrHighestSystem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LITHOSTRATIGRAPHIC_TERMS, new org.apache.thrift.meta_data.FieldMetaData("lithostratigraphicTerms", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOWEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("lowestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEMBER, new org.apache.thrift.meta_data.FieldMetaData("member", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TYPE_STATUS, new org.apache.thrift.meta_data.FieldMetaData("typeStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Identification.class, metaDataMap);
@@ -232,63 +161,54 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
   public Identification() {
   }
 
+  public Identification(
+    String identificationID,
+    String identifiedBy,
+    String dateIdentified,
+    String identificationReferences,
+    String identificationVerificationStatus,
+    String identificationRemarks,
+    String identificationQualifier,
+    String typeStatus)
+  {
+    this();
+    this.identificationID = identificationID;
+    this.identifiedBy = identifiedBy;
+    this.dateIdentified = dateIdentified;
+    this.identificationReferences = identificationReferences;
+    this.identificationVerificationStatus = identificationVerificationStatus;
+    this.identificationRemarks = identificationRemarks;
+    this.identificationQualifier = identificationQualifier;
+    this.typeStatus = typeStatus;
+  }
+
   /**
    * Performs a deep copy on <i>other</i>.
    */
   public Identification(Identification other) {
-    if (other.isSetBed()) {
-      this.bed = other.bed;
+    if (other.isSetIdentificationID()) {
+      this.identificationID = other.identificationID;
     }
-    if (other.isSetEarliestAgeOrLowestStage()) {
-      this.earliestAgeOrLowestStage = other.earliestAgeOrLowestStage;
+    if (other.isSetIdentifiedBy()) {
+      this.identifiedBy = other.identifiedBy;
     }
-    if (other.isSetEarliestEonOrLowestEonothem()) {
-      this.earliestEonOrLowestEonothem = other.earliestEonOrLowestEonothem;
+    if (other.isSetDateIdentified()) {
+      this.dateIdentified = other.dateIdentified;
     }
-    if (other.isSetEarliestEpochOrLowestSeries()) {
-      this.earliestEpochOrLowestSeries = other.earliestEpochOrLowestSeries;
+    if (other.isSetIdentificationReferences()) {
+      this.identificationReferences = other.identificationReferences;
     }
-    if (other.isSetEarliestEraOrLowestErathem()) {
-      this.earliestEraOrLowestErathem = other.earliestEraOrLowestErathem;
+    if (other.isSetIdentificationVerificationStatus()) {
+      this.identificationVerificationStatus = other.identificationVerificationStatus;
     }
-    if (other.isSetEarliestPeriodOrLowestSystem()) {
-      this.earliestPeriodOrLowestSystem = other.earliestPeriodOrLowestSystem;
+    if (other.isSetIdentificationRemarks()) {
+      this.identificationRemarks = other.identificationRemarks;
     }
-    if (other.isSetFormation()) {
-      this.formation = other.formation;
+    if (other.isSetIdentificationQualifier()) {
+      this.identificationQualifier = other.identificationQualifier;
     }
-    if (other.isSetGeologicalContextID()) {
-      this.geologicalContextID = other.geologicalContextID;
-    }
-    if (other.isSetGroup()) {
-      this.group = other.group;
-    }
-    if (other.isSetHighestBiostratigraphicZone()) {
-      this.highestBiostratigraphicZone = other.highestBiostratigraphicZone;
-    }
-    if (other.isSetLatestAgeOrHighestStage()) {
-      this.latestAgeOrHighestStage = other.latestAgeOrHighestStage;
-    }
-    if (other.isSetLatestEonOrHighestEonothem()) {
-      this.latestEonOrHighestEonothem = other.latestEonOrHighestEonothem;
-    }
-    if (other.isSetLatestEpochOrHighestSeries()) {
-      this.latestEpochOrHighestSeries = other.latestEpochOrHighestSeries;
-    }
-    if (other.isSetLatestEraOrHighestErathem()) {
-      this.latestEraOrHighestErathem = other.latestEraOrHighestErathem;
-    }
-    if (other.isSetLatestPeriodOrHighestSystem()) {
-      this.latestPeriodOrHighestSystem = other.latestPeriodOrHighestSystem;
-    }
-    if (other.isSetLithostratigraphicTerms()) {
-      this.lithostratigraphicTerms = other.lithostratigraphicTerms;
-    }
-    if (other.isSetLowestBiostratigraphicZone()) {
-      this.lowestBiostratigraphicZone = other.lowestBiostratigraphicZone;
-    }
-    if (other.isSetMember()) {
-      this.member = other.member;
+    if (other.isSetTypeStatus()) {
+      this.typeStatus = other.typeStatus;
     }
   }
 
@@ -298,601 +218,271 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
 
   @Override
   public void clear() {
-    this.bed = null;
-    this.earliestAgeOrLowestStage = null;
-    this.earliestEonOrLowestEonothem = null;
-    this.earliestEpochOrLowestSeries = null;
-    this.earliestEraOrLowestErathem = null;
-    this.earliestPeriodOrLowestSystem = null;
-    this.formation = null;
-    this.geologicalContextID = null;
-    this.group = null;
-    this.highestBiostratigraphicZone = null;
-    this.latestAgeOrHighestStage = null;
-    this.latestEonOrHighestEonothem = null;
-    this.latestEpochOrHighestSeries = null;
-    this.latestEraOrHighestErathem = null;
-    this.latestPeriodOrHighestSystem = null;
-    this.lithostratigraphicTerms = null;
-    this.lowestBiostratigraphicZone = null;
-    this.member = null;
+    this.identificationID = null;
+    this.identifiedBy = null;
+    this.dateIdentified = null;
+    this.identificationReferences = null;
+    this.identificationVerificationStatus = null;
+    this.identificationRemarks = null;
+    this.identificationQualifier = null;
+    this.typeStatus = null;
   }
 
-  public String getBed() {
-    return this.bed;
+  public String getIdentificationID() {
+    return this.identificationID;
   }
 
-  public Identification setBed(String bed) {
-    this.bed = bed;
+  public Identification setIdentificationID(String identificationID) {
+    this.identificationID = identificationID;
     return this;
   }
 
-  public void unsetBed() {
-    this.bed = null;
+  public void unsetIdentificationID() {
+    this.identificationID = null;
   }
 
-  /** Returns true if field bed is set (has been assigned a value) and false otherwise */
-  public boolean isSetBed() {
-    return this.bed != null;
+  /** Returns true if field identificationID is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentificationID() {
+    return this.identificationID != null;
   }
 
-  public void setBedIsSet(boolean value) {
+  public void setIdentificationIDIsSet(boolean value) {
     if (!value) {
-      this.bed = null;
+      this.identificationID = null;
     }
   }
 
-  public String getEarliestAgeOrLowestStage() {
-    return this.earliestAgeOrLowestStage;
+  public String getIdentifiedBy() {
+    return this.identifiedBy;
   }
 
-  public Identification setEarliestAgeOrLowestStage(String earliestAgeOrLowestStage) {
-    this.earliestAgeOrLowestStage = earliestAgeOrLowestStage;
+  public Identification setIdentifiedBy(String identifiedBy) {
+    this.identifiedBy = identifiedBy;
     return this;
   }
 
-  public void unsetEarliestAgeOrLowestStage() {
-    this.earliestAgeOrLowestStage = null;
+  public void unsetIdentifiedBy() {
+    this.identifiedBy = null;
   }
 
-  /** Returns true if field earliestAgeOrLowestStage is set (has been assigned a value) and false otherwise */
-  public boolean isSetEarliestAgeOrLowestStage() {
-    return this.earliestAgeOrLowestStage != null;
+  /** Returns true if field identifiedBy is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentifiedBy() {
+    return this.identifiedBy != null;
   }
 
-  public void setEarliestAgeOrLowestStageIsSet(boolean value) {
+  public void setIdentifiedByIsSet(boolean value) {
     if (!value) {
-      this.earliestAgeOrLowestStage = null;
+      this.identifiedBy = null;
     }
   }
 
-  public String getEarliestEonOrLowestEonothem() {
-    return this.earliestEonOrLowestEonothem;
+  public String getDateIdentified() {
+    return this.dateIdentified;
   }
 
-  public Identification setEarliestEonOrLowestEonothem(String earliestEonOrLowestEonothem) {
-    this.earliestEonOrLowestEonothem = earliestEonOrLowestEonothem;
+  public Identification setDateIdentified(String dateIdentified) {
+    this.dateIdentified = dateIdentified;
     return this;
   }
 
-  public void unsetEarliestEonOrLowestEonothem() {
-    this.earliestEonOrLowestEonothem = null;
+  public void unsetDateIdentified() {
+    this.dateIdentified = null;
   }
 
-  /** Returns true if field earliestEonOrLowestEonothem is set (has been assigned a value) and false otherwise */
-  public boolean isSetEarliestEonOrLowestEonothem() {
-    return this.earliestEonOrLowestEonothem != null;
+  /** Returns true if field dateIdentified is set (has been assigned a value) and false otherwise */
+  public boolean isSetDateIdentified() {
+    return this.dateIdentified != null;
   }
 
-  public void setEarliestEonOrLowestEonothemIsSet(boolean value) {
+  public void setDateIdentifiedIsSet(boolean value) {
     if (!value) {
-      this.earliestEonOrLowestEonothem = null;
+      this.dateIdentified = null;
     }
   }
 
-  public String getEarliestEpochOrLowestSeries() {
-    return this.earliestEpochOrLowestSeries;
+  public String getIdentificationReferences() {
+    return this.identificationReferences;
   }
 
-  public Identification setEarliestEpochOrLowestSeries(String earliestEpochOrLowestSeries) {
-    this.earliestEpochOrLowestSeries = earliestEpochOrLowestSeries;
+  public Identification setIdentificationReferences(String identificationReferences) {
+    this.identificationReferences = identificationReferences;
     return this;
   }
 
-  public void unsetEarliestEpochOrLowestSeries() {
-    this.earliestEpochOrLowestSeries = null;
+  public void unsetIdentificationReferences() {
+    this.identificationReferences = null;
   }
 
-  /** Returns true if field earliestEpochOrLowestSeries is set (has been assigned a value) and false otherwise */
-  public boolean isSetEarliestEpochOrLowestSeries() {
-    return this.earliestEpochOrLowestSeries != null;
+  /** Returns true if field identificationReferences is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentificationReferences() {
+    return this.identificationReferences != null;
   }
 
-  public void setEarliestEpochOrLowestSeriesIsSet(boolean value) {
+  public void setIdentificationReferencesIsSet(boolean value) {
     if (!value) {
-      this.earliestEpochOrLowestSeries = null;
+      this.identificationReferences = null;
     }
   }
 
-  public String getEarliestEraOrLowestErathem() {
-    return this.earliestEraOrLowestErathem;
+  public String getIdentificationVerificationStatus() {
+    return this.identificationVerificationStatus;
   }
 
-  public Identification setEarliestEraOrLowestErathem(String earliestEraOrLowestErathem) {
-    this.earliestEraOrLowestErathem = earliestEraOrLowestErathem;
+  public Identification setIdentificationVerificationStatus(String identificationVerificationStatus) {
+    this.identificationVerificationStatus = identificationVerificationStatus;
     return this;
   }
 
-  public void unsetEarliestEraOrLowestErathem() {
-    this.earliestEraOrLowestErathem = null;
+  public void unsetIdentificationVerificationStatus() {
+    this.identificationVerificationStatus = null;
   }
 
-  /** Returns true if field earliestEraOrLowestErathem is set (has been assigned a value) and false otherwise */
-  public boolean isSetEarliestEraOrLowestErathem() {
-    return this.earliestEraOrLowestErathem != null;
+  /** Returns true if field identificationVerificationStatus is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentificationVerificationStatus() {
+    return this.identificationVerificationStatus != null;
   }
 
-  public void setEarliestEraOrLowestErathemIsSet(boolean value) {
+  public void setIdentificationVerificationStatusIsSet(boolean value) {
     if (!value) {
-      this.earliestEraOrLowestErathem = null;
+      this.identificationVerificationStatus = null;
     }
   }
 
-  public String getEarliestPeriodOrLowestSystem() {
-    return this.earliestPeriodOrLowestSystem;
+  public String getIdentificationRemarks() {
+    return this.identificationRemarks;
   }
 
-  public Identification setEarliestPeriodOrLowestSystem(String earliestPeriodOrLowestSystem) {
-    this.earliestPeriodOrLowestSystem = earliestPeriodOrLowestSystem;
+  public Identification setIdentificationRemarks(String identificationRemarks) {
+    this.identificationRemarks = identificationRemarks;
     return this;
   }
 
-  public void unsetEarliestPeriodOrLowestSystem() {
-    this.earliestPeriodOrLowestSystem = null;
+  public void unsetIdentificationRemarks() {
+    this.identificationRemarks = null;
   }
 
-  /** Returns true if field earliestPeriodOrLowestSystem is set (has been assigned a value) and false otherwise */
-  public boolean isSetEarliestPeriodOrLowestSystem() {
-    return this.earliestPeriodOrLowestSystem != null;
+  /** Returns true if field identificationRemarks is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentificationRemarks() {
+    return this.identificationRemarks != null;
   }
 
-  public void setEarliestPeriodOrLowestSystemIsSet(boolean value) {
+  public void setIdentificationRemarksIsSet(boolean value) {
     if (!value) {
-      this.earliestPeriodOrLowestSystem = null;
+      this.identificationRemarks = null;
     }
   }
 
-  public String getFormation() {
-    return this.formation;
+  public String getIdentificationQualifier() {
+    return this.identificationQualifier;
   }
 
-  public Identification setFormation(String formation) {
-    this.formation = formation;
+  public Identification setIdentificationQualifier(String identificationQualifier) {
+    this.identificationQualifier = identificationQualifier;
     return this;
   }
 
-  public void unsetFormation() {
-    this.formation = null;
+  public void unsetIdentificationQualifier() {
+    this.identificationQualifier = null;
   }
 
-  /** Returns true if field formation is set (has been assigned a value) and false otherwise */
-  public boolean isSetFormation() {
-    return this.formation != null;
+  /** Returns true if field identificationQualifier is set (has been assigned a value) and false otherwise */
+  public boolean isSetIdentificationQualifier() {
+    return this.identificationQualifier != null;
   }
 
-  public void setFormationIsSet(boolean value) {
+  public void setIdentificationQualifierIsSet(boolean value) {
     if (!value) {
-      this.formation = null;
+      this.identificationQualifier = null;
     }
   }
 
-  public String getGeologicalContextID() {
-    return this.geologicalContextID;
+  public String getTypeStatus() {
+    return this.typeStatus;
   }
 
-  public Identification setGeologicalContextID(String geologicalContextID) {
-    this.geologicalContextID = geologicalContextID;
+  public Identification setTypeStatus(String typeStatus) {
+    this.typeStatus = typeStatus;
     return this;
   }
 
-  public void unsetGeologicalContextID() {
-    this.geologicalContextID = null;
+  public void unsetTypeStatus() {
+    this.typeStatus = null;
   }
 
-  /** Returns true if field geologicalContextID is set (has been assigned a value) and false otherwise */
-  public boolean isSetGeologicalContextID() {
-    return this.geologicalContextID != null;
+  /** Returns true if field typeStatus is set (has been assigned a value) and false otherwise */
+  public boolean isSetTypeStatus() {
+    return this.typeStatus != null;
   }
 
-  public void setGeologicalContextIDIsSet(boolean value) {
+  public void setTypeStatusIsSet(boolean value) {
     if (!value) {
-      this.geologicalContextID = null;
-    }
-  }
-
-  public String getGroup() {
-    return this.group;
-  }
-
-  public Identification setGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
-  public void unsetGroup() {
-    this.group = null;
-  }
-
-  /** Returns true if field group is set (has been assigned a value) and false otherwise */
-  public boolean isSetGroup() {
-    return this.group != null;
-  }
-
-  public void setGroupIsSet(boolean value) {
-    if (!value) {
-      this.group = null;
-    }
-  }
-
-  public String getHighestBiostratigraphicZone() {
-    return this.highestBiostratigraphicZone;
-  }
-
-  public Identification setHighestBiostratigraphicZone(String highestBiostratigraphicZone) {
-    this.highestBiostratigraphicZone = highestBiostratigraphicZone;
-    return this;
-  }
-
-  public void unsetHighestBiostratigraphicZone() {
-    this.highestBiostratigraphicZone = null;
-  }
-
-  /** Returns true if field highestBiostratigraphicZone is set (has been assigned a value) and false otherwise */
-  public boolean isSetHighestBiostratigraphicZone() {
-    return this.highestBiostratigraphicZone != null;
-  }
-
-  public void setHighestBiostratigraphicZoneIsSet(boolean value) {
-    if (!value) {
-      this.highestBiostratigraphicZone = null;
-    }
-  }
-
-  public String getLatestAgeOrHighestStage() {
-    return this.latestAgeOrHighestStage;
-  }
-
-  public Identification setLatestAgeOrHighestStage(String latestAgeOrHighestStage) {
-    this.latestAgeOrHighestStage = latestAgeOrHighestStage;
-    return this;
-  }
-
-  public void unsetLatestAgeOrHighestStage() {
-    this.latestAgeOrHighestStage = null;
-  }
-
-  /** Returns true if field latestAgeOrHighestStage is set (has been assigned a value) and false otherwise */
-  public boolean isSetLatestAgeOrHighestStage() {
-    return this.latestAgeOrHighestStage != null;
-  }
-
-  public void setLatestAgeOrHighestStageIsSet(boolean value) {
-    if (!value) {
-      this.latestAgeOrHighestStage = null;
-    }
-  }
-
-  public String getLatestEonOrHighestEonothem() {
-    return this.latestEonOrHighestEonothem;
-  }
-
-  public Identification setLatestEonOrHighestEonothem(String latestEonOrHighestEonothem) {
-    this.latestEonOrHighestEonothem = latestEonOrHighestEonothem;
-    return this;
-  }
-
-  public void unsetLatestEonOrHighestEonothem() {
-    this.latestEonOrHighestEonothem = null;
-  }
-
-  /** Returns true if field latestEonOrHighestEonothem is set (has been assigned a value) and false otherwise */
-  public boolean isSetLatestEonOrHighestEonothem() {
-    return this.latestEonOrHighestEonothem != null;
-  }
-
-  public void setLatestEonOrHighestEonothemIsSet(boolean value) {
-    if (!value) {
-      this.latestEonOrHighestEonothem = null;
-    }
-  }
-
-  public String getLatestEpochOrHighestSeries() {
-    return this.latestEpochOrHighestSeries;
-  }
-
-  public Identification setLatestEpochOrHighestSeries(String latestEpochOrHighestSeries) {
-    this.latestEpochOrHighestSeries = latestEpochOrHighestSeries;
-    return this;
-  }
-
-  public void unsetLatestEpochOrHighestSeries() {
-    this.latestEpochOrHighestSeries = null;
-  }
-
-  /** Returns true if field latestEpochOrHighestSeries is set (has been assigned a value) and false otherwise */
-  public boolean isSetLatestEpochOrHighestSeries() {
-    return this.latestEpochOrHighestSeries != null;
-  }
-
-  public void setLatestEpochOrHighestSeriesIsSet(boolean value) {
-    if (!value) {
-      this.latestEpochOrHighestSeries = null;
-    }
-  }
-
-  public String getLatestEraOrHighestErathem() {
-    return this.latestEraOrHighestErathem;
-  }
-
-  public Identification setLatestEraOrHighestErathem(String latestEraOrHighestErathem) {
-    this.latestEraOrHighestErathem = latestEraOrHighestErathem;
-    return this;
-  }
-
-  public void unsetLatestEraOrHighestErathem() {
-    this.latestEraOrHighestErathem = null;
-  }
-
-  /** Returns true if field latestEraOrHighestErathem is set (has been assigned a value) and false otherwise */
-  public boolean isSetLatestEraOrHighestErathem() {
-    return this.latestEraOrHighestErathem != null;
-  }
-
-  public void setLatestEraOrHighestErathemIsSet(boolean value) {
-    if (!value) {
-      this.latestEraOrHighestErathem = null;
-    }
-  }
-
-  public String getLatestPeriodOrHighestSystem() {
-    return this.latestPeriodOrHighestSystem;
-  }
-
-  public Identification setLatestPeriodOrHighestSystem(String latestPeriodOrHighestSystem) {
-    this.latestPeriodOrHighestSystem = latestPeriodOrHighestSystem;
-    return this;
-  }
-
-  public void unsetLatestPeriodOrHighestSystem() {
-    this.latestPeriodOrHighestSystem = null;
-  }
-
-  /** Returns true if field latestPeriodOrHighestSystem is set (has been assigned a value) and false otherwise */
-  public boolean isSetLatestPeriodOrHighestSystem() {
-    return this.latestPeriodOrHighestSystem != null;
-  }
-
-  public void setLatestPeriodOrHighestSystemIsSet(boolean value) {
-    if (!value) {
-      this.latestPeriodOrHighestSystem = null;
-    }
-  }
-
-  public String getLithostratigraphicTerms() {
-    return this.lithostratigraphicTerms;
-  }
-
-  public Identification setLithostratigraphicTerms(String lithostratigraphicTerms) {
-    this.lithostratigraphicTerms = lithostratigraphicTerms;
-    return this;
-  }
-
-  public void unsetLithostratigraphicTerms() {
-    this.lithostratigraphicTerms = null;
-  }
-
-  /** Returns true if field lithostratigraphicTerms is set (has been assigned a value) and false otherwise */
-  public boolean isSetLithostratigraphicTerms() {
-    return this.lithostratigraphicTerms != null;
-  }
-
-  public void setLithostratigraphicTermsIsSet(boolean value) {
-    if (!value) {
-      this.lithostratigraphicTerms = null;
-    }
-  }
-
-  public String getLowestBiostratigraphicZone() {
-    return this.lowestBiostratigraphicZone;
-  }
-
-  public Identification setLowestBiostratigraphicZone(String lowestBiostratigraphicZone) {
-    this.lowestBiostratigraphicZone = lowestBiostratigraphicZone;
-    return this;
-  }
-
-  public void unsetLowestBiostratigraphicZone() {
-    this.lowestBiostratigraphicZone = null;
-  }
-
-  /** Returns true if field lowestBiostratigraphicZone is set (has been assigned a value) and false otherwise */
-  public boolean isSetLowestBiostratigraphicZone() {
-    return this.lowestBiostratigraphicZone != null;
-  }
-
-  public void setLowestBiostratigraphicZoneIsSet(boolean value) {
-    if (!value) {
-      this.lowestBiostratigraphicZone = null;
-    }
-  }
-
-  public String getMember() {
-    return this.member;
-  }
-
-  public Identification setMember(String member) {
-    this.member = member;
-    return this;
-  }
-
-  public void unsetMember() {
-    this.member = null;
-  }
-
-  /** Returns true if field member is set (has been assigned a value) and false otherwise */
-  public boolean isSetMember() {
-    return this.member != null;
-  }
-
-  public void setMemberIsSet(boolean value) {
-    if (!value) {
-      this.member = null;
+      this.typeStatus = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case BED:
+    case IDENTIFICATION_ID:
       if (value == null) {
-        unsetBed();
+        unsetIdentificationID();
       } else {
-        setBed((String)value);
+        setIdentificationID((String)value);
       }
       break;
 
-    case EARLIEST_AGE_OR_LOWEST_STAGE:
+    case IDENTIFIED_BY:
       if (value == null) {
-        unsetEarliestAgeOrLowestStage();
+        unsetIdentifiedBy();
       } else {
-        setEarliestAgeOrLowestStage((String)value);
+        setIdentifiedBy((String)value);
       }
       break;
 
-    case EARLIEST_EON_OR_LOWEST_EONOTHEM:
+    case DATE_IDENTIFIED:
       if (value == null) {
-        unsetEarliestEonOrLowestEonothem();
+        unsetDateIdentified();
       } else {
-        setEarliestEonOrLowestEonothem((String)value);
+        setDateIdentified((String)value);
       }
       break;
 
-    case EARLIEST_EPOCH_OR_LOWEST_SERIES:
+    case IDENTIFICATION_REFERENCES:
       if (value == null) {
-        unsetEarliestEpochOrLowestSeries();
+        unsetIdentificationReferences();
       } else {
-        setEarliestEpochOrLowestSeries((String)value);
+        setIdentificationReferences((String)value);
       }
       break;
 
-    case EARLIEST_ERA_OR_LOWEST_ERATHEM:
+    case IDENTIFICATION_VERIFICATION_STATUS:
       if (value == null) {
-        unsetEarliestEraOrLowestErathem();
+        unsetIdentificationVerificationStatus();
       } else {
-        setEarliestEraOrLowestErathem((String)value);
+        setIdentificationVerificationStatus((String)value);
       }
       break;
 
-    case EARLIEST_PERIOD_OR_LOWEST_SYSTEM:
+    case IDENTIFICATION_REMARKS:
       if (value == null) {
-        unsetEarliestPeriodOrLowestSystem();
+        unsetIdentificationRemarks();
       } else {
-        setEarliestPeriodOrLowestSystem((String)value);
+        setIdentificationRemarks((String)value);
       }
       break;
 
-    case FORMATION:
+    case IDENTIFICATION_QUALIFIER:
       if (value == null) {
-        unsetFormation();
+        unsetIdentificationQualifier();
       } else {
-        setFormation((String)value);
+        setIdentificationQualifier((String)value);
       }
       break;
 
-    case GEOLOGICAL_CONTEXT_ID:
+    case TYPE_STATUS:
       if (value == null) {
-        unsetGeologicalContextID();
+        unsetTypeStatus();
       } else {
-        setGeologicalContextID((String)value);
-      }
-      break;
-
-    case GROUP:
-      if (value == null) {
-        unsetGroup();
-      } else {
-        setGroup((String)value);
-      }
-      break;
-
-    case HIGHEST_BIOSTRATIGRAPHIC_ZONE:
-      if (value == null) {
-        unsetHighestBiostratigraphicZone();
-      } else {
-        setHighestBiostratigraphicZone((String)value);
-      }
-      break;
-
-    case LATEST_AGE_OR_HIGHEST_STAGE:
-      if (value == null) {
-        unsetLatestAgeOrHighestStage();
-      } else {
-        setLatestAgeOrHighestStage((String)value);
-      }
-      break;
-
-    case LATEST_EON_OR_HIGHEST_EONOTHEM:
-      if (value == null) {
-        unsetLatestEonOrHighestEonothem();
-      } else {
-        setLatestEonOrHighestEonothem((String)value);
-      }
-      break;
-
-    case LATEST_EPOCH_OR_HIGHEST_SERIES:
-      if (value == null) {
-        unsetLatestEpochOrHighestSeries();
-      } else {
-        setLatestEpochOrHighestSeries((String)value);
-      }
-      break;
-
-    case LATEST_ERA_OR_HIGHEST_ERATHEM:
-      if (value == null) {
-        unsetLatestEraOrHighestErathem();
-      } else {
-        setLatestEraOrHighestErathem((String)value);
-      }
-      break;
-
-    case LATEST_PERIOD_OR_HIGHEST_SYSTEM:
-      if (value == null) {
-        unsetLatestPeriodOrHighestSystem();
-      } else {
-        setLatestPeriodOrHighestSystem((String)value);
-      }
-      break;
-
-    case LITHOSTRATIGRAPHIC_TERMS:
-      if (value == null) {
-        unsetLithostratigraphicTerms();
-      } else {
-        setLithostratigraphicTerms((String)value);
-      }
-      break;
-
-    case LOWEST_BIOSTRATIGRAPHIC_ZONE:
-      if (value == null) {
-        unsetLowestBiostratigraphicZone();
-      } else {
-        setLowestBiostratigraphicZone((String)value);
-      }
-      break;
-
-    case MEMBER:
-      if (value == null) {
-        unsetMember();
-      } else {
-        setMember((String)value);
+        setTypeStatus((String)value);
       }
       break;
 
@@ -901,59 +491,29 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case BED:
-      return getBed();
+    case IDENTIFICATION_ID:
+      return getIdentificationID();
 
-    case EARLIEST_AGE_OR_LOWEST_STAGE:
-      return getEarliestAgeOrLowestStage();
+    case IDENTIFIED_BY:
+      return getIdentifiedBy();
 
-    case EARLIEST_EON_OR_LOWEST_EONOTHEM:
-      return getEarliestEonOrLowestEonothem();
+    case DATE_IDENTIFIED:
+      return getDateIdentified();
 
-    case EARLIEST_EPOCH_OR_LOWEST_SERIES:
-      return getEarliestEpochOrLowestSeries();
+    case IDENTIFICATION_REFERENCES:
+      return getIdentificationReferences();
 
-    case EARLIEST_ERA_OR_LOWEST_ERATHEM:
-      return getEarliestEraOrLowestErathem();
+    case IDENTIFICATION_VERIFICATION_STATUS:
+      return getIdentificationVerificationStatus();
 
-    case EARLIEST_PERIOD_OR_LOWEST_SYSTEM:
-      return getEarliestPeriodOrLowestSystem();
+    case IDENTIFICATION_REMARKS:
+      return getIdentificationRemarks();
 
-    case FORMATION:
-      return getFormation();
+    case IDENTIFICATION_QUALIFIER:
+      return getIdentificationQualifier();
 
-    case GEOLOGICAL_CONTEXT_ID:
-      return getGeologicalContextID();
-
-    case GROUP:
-      return getGroup();
-
-    case HIGHEST_BIOSTRATIGRAPHIC_ZONE:
-      return getHighestBiostratigraphicZone();
-
-    case LATEST_AGE_OR_HIGHEST_STAGE:
-      return getLatestAgeOrHighestStage();
-
-    case LATEST_EON_OR_HIGHEST_EONOTHEM:
-      return getLatestEonOrHighestEonothem();
-
-    case LATEST_EPOCH_OR_HIGHEST_SERIES:
-      return getLatestEpochOrHighestSeries();
-
-    case LATEST_ERA_OR_HIGHEST_ERATHEM:
-      return getLatestEraOrHighestErathem();
-
-    case LATEST_PERIOD_OR_HIGHEST_SYSTEM:
-      return getLatestPeriodOrHighestSystem();
-
-    case LITHOSTRATIGRAPHIC_TERMS:
-      return getLithostratigraphicTerms();
-
-    case LOWEST_BIOSTRATIGRAPHIC_ZONE:
-      return getLowestBiostratigraphicZone();
-
-    case MEMBER:
-      return getMember();
+    case TYPE_STATUS:
+      return getTypeStatus();
 
     }
     throw new IllegalStateException();
@@ -966,42 +526,22 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     }
 
     switch (field) {
-    case BED:
-      return isSetBed();
-    case EARLIEST_AGE_OR_LOWEST_STAGE:
-      return isSetEarliestAgeOrLowestStage();
-    case EARLIEST_EON_OR_LOWEST_EONOTHEM:
-      return isSetEarliestEonOrLowestEonothem();
-    case EARLIEST_EPOCH_OR_LOWEST_SERIES:
-      return isSetEarliestEpochOrLowestSeries();
-    case EARLIEST_ERA_OR_LOWEST_ERATHEM:
-      return isSetEarliestEraOrLowestErathem();
-    case EARLIEST_PERIOD_OR_LOWEST_SYSTEM:
-      return isSetEarliestPeriodOrLowestSystem();
-    case FORMATION:
-      return isSetFormation();
-    case GEOLOGICAL_CONTEXT_ID:
-      return isSetGeologicalContextID();
-    case GROUP:
-      return isSetGroup();
-    case HIGHEST_BIOSTRATIGRAPHIC_ZONE:
-      return isSetHighestBiostratigraphicZone();
-    case LATEST_AGE_OR_HIGHEST_STAGE:
-      return isSetLatestAgeOrHighestStage();
-    case LATEST_EON_OR_HIGHEST_EONOTHEM:
-      return isSetLatestEonOrHighestEonothem();
-    case LATEST_EPOCH_OR_HIGHEST_SERIES:
-      return isSetLatestEpochOrHighestSeries();
-    case LATEST_ERA_OR_HIGHEST_ERATHEM:
-      return isSetLatestEraOrHighestErathem();
-    case LATEST_PERIOD_OR_HIGHEST_SYSTEM:
-      return isSetLatestPeriodOrHighestSystem();
-    case LITHOSTRATIGRAPHIC_TERMS:
-      return isSetLithostratigraphicTerms();
-    case LOWEST_BIOSTRATIGRAPHIC_ZONE:
-      return isSetLowestBiostratigraphicZone();
-    case MEMBER:
-      return isSetMember();
+    case IDENTIFICATION_ID:
+      return isSetIdentificationID();
+    case IDENTIFIED_BY:
+      return isSetIdentifiedBy();
+    case DATE_IDENTIFIED:
+      return isSetDateIdentified();
+    case IDENTIFICATION_REFERENCES:
+      return isSetIdentificationReferences();
+    case IDENTIFICATION_VERIFICATION_STATUS:
+      return isSetIdentificationVerificationStatus();
+    case IDENTIFICATION_REMARKS:
+      return isSetIdentificationRemarks();
+    case IDENTIFICATION_QUALIFIER:
+      return isSetIdentificationQualifier();
+    case TYPE_STATUS:
+      return isSetTypeStatus();
     }
     throw new IllegalStateException();
   }
@@ -1019,165 +559,75 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     if (that == null)
       return false;
 
-    boolean this_present_bed = true && this.isSetBed();
-    boolean that_present_bed = true && that.isSetBed();
-    if (this_present_bed || that_present_bed) {
-      if (!(this_present_bed && that_present_bed))
+    boolean this_present_identificationID = true && this.isSetIdentificationID();
+    boolean that_present_identificationID = true && that.isSetIdentificationID();
+    if (this_present_identificationID || that_present_identificationID) {
+      if (!(this_present_identificationID && that_present_identificationID))
         return false;
-      if (!this.bed.equals(that.bed))
-        return false;
-    }
-
-    boolean this_present_earliestAgeOrLowestStage = true && this.isSetEarliestAgeOrLowestStage();
-    boolean that_present_earliestAgeOrLowestStage = true && that.isSetEarliestAgeOrLowestStage();
-    if (this_present_earliestAgeOrLowestStage || that_present_earliestAgeOrLowestStage) {
-      if (!(this_present_earliestAgeOrLowestStage && that_present_earliestAgeOrLowestStage))
-        return false;
-      if (!this.earliestAgeOrLowestStage.equals(that.earliestAgeOrLowestStage))
+      if (!this.identificationID.equals(that.identificationID))
         return false;
     }
 
-    boolean this_present_earliestEonOrLowestEonothem = true && this.isSetEarliestEonOrLowestEonothem();
-    boolean that_present_earliestEonOrLowestEonothem = true && that.isSetEarliestEonOrLowestEonothem();
-    if (this_present_earliestEonOrLowestEonothem || that_present_earliestEonOrLowestEonothem) {
-      if (!(this_present_earliestEonOrLowestEonothem && that_present_earliestEonOrLowestEonothem))
+    boolean this_present_identifiedBy = true && this.isSetIdentifiedBy();
+    boolean that_present_identifiedBy = true && that.isSetIdentifiedBy();
+    if (this_present_identifiedBy || that_present_identifiedBy) {
+      if (!(this_present_identifiedBy && that_present_identifiedBy))
         return false;
-      if (!this.earliestEonOrLowestEonothem.equals(that.earliestEonOrLowestEonothem))
-        return false;
-    }
-
-    boolean this_present_earliestEpochOrLowestSeries = true && this.isSetEarliestEpochOrLowestSeries();
-    boolean that_present_earliestEpochOrLowestSeries = true && that.isSetEarliestEpochOrLowestSeries();
-    if (this_present_earliestEpochOrLowestSeries || that_present_earliestEpochOrLowestSeries) {
-      if (!(this_present_earliestEpochOrLowestSeries && that_present_earliestEpochOrLowestSeries))
-        return false;
-      if (!this.earliestEpochOrLowestSeries.equals(that.earliestEpochOrLowestSeries))
+      if (!this.identifiedBy.equals(that.identifiedBy))
         return false;
     }
 
-    boolean this_present_earliestEraOrLowestErathem = true && this.isSetEarliestEraOrLowestErathem();
-    boolean that_present_earliestEraOrLowestErathem = true && that.isSetEarliestEraOrLowestErathem();
-    if (this_present_earliestEraOrLowestErathem || that_present_earliestEraOrLowestErathem) {
-      if (!(this_present_earliestEraOrLowestErathem && that_present_earliestEraOrLowestErathem))
+    boolean this_present_dateIdentified = true && this.isSetDateIdentified();
+    boolean that_present_dateIdentified = true && that.isSetDateIdentified();
+    if (this_present_dateIdentified || that_present_dateIdentified) {
+      if (!(this_present_dateIdentified && that_present_dateIdentified))
         return false;
-      if (!this.earliestEraOrLowestErathem.equals(that.earliestEraOrLowestErathem))
-        return false;
-    }
-
-    boolean this_present_earliestPeriodOrLowestSystem = true && this.isSetEarliestPeriodOrLowestSystem();
-    boolean that_present_earliestPeriodOrLowestSystem = true && that.isSetEarliestPeriodOrLowestSystem();
-    if (this_present_earliestPeriodOrLowestSystem || that_present_earliestPeriodOrLowestSystem) {
-      if (!(this_present_earliestPeriodOrLowestSystem && that_present_earliestPeriodOrLowestSystem))
-        return false;
-      if (!this.earliestPeriodOrLowestSystem.equals(that.earliestPeriodOrLowestSystem))
+      if (!this.dateIdentified.equals(that.dateIdentified))
         return false;
     }
 
-    boolean this_present_formation = true && this.isSetFormation();
-    boolean that_present_formation = true && that.isSetFormation();
-    if (this_present_formation || that_present_formation) {
-      if (!(this_present_formation && that_present_formation))
+    boolean this_present_identificationReferences = true && this.isSetIdentificationReferences();
+    boolean that_present_identificationReferences = true && that.isSetIdentificationReferences();
+    if (this_present_identificationReferences || that_present_identificationReferences) {
+      if (!(this_present_identificationReferences && that_present_identificationReferences))
         return false;
-      if (!this.formation.equals(that.formation))
-        return false;
-    }
-
-    boolean this_present_geologicalContextID = true && this.isSetGeologicalContextID();
-    boolean that_present_geologicalContextID = true && that.isSetGeologicalContextID();
-    if (this_present_geologicalContextID || that_present_geologicalContextID) {
-      if (!(this_present_geologicalContextID && that_present_geologicalContextID))
-        return false;
-      if (!this.geologicalContextID.equals(that.geologicalContextID))
+      if (!this.identificationReferences.equals(that.identificationReferences))
         return false;
     }
 
-    boolean this_present_group = true && this.isSetGroup();
-    boolean that_present_group = true && that.isSetGroup();
-    if (this_present_group || that_present_group) {
-      if (!(this_present_group && that_present_group))
+    boolean this_present_identificationVerificationStatus = true && this.isSetIdentificationVerificationStatus();
+    boolean that_present_identificationVerificationStatus = true && that.isSetIdentificationVerificationStatus();
+    if (this_present_identificationVerificationStatus || that_present_identificationVerificationStatus) {
+      if (!(this_present_identificationVerificationStatus && that_present_identificationVerificationStatus))
         return false;
-      if (!this.group.equals(that.group))
-        return false;
-    }
-
-    boolean this_present_highestBiostratigraphicZone = true && this.isSetHighestBiostratigraphicZone();
-    boolean that_present_highestBiostratigraphicZone = true && that.isSetHighestBiostratigraphicZone();
-    if (this_present_highestBiostratigraphicZone || that_present_highestBiostratigraphicZone) {
-      if (!(this_present_highestBiostratigraphicZone && that_present_highestBiostratigraphicZone))
-        return false;
-      if (!this.highestBiostratigraphicZone.equals(that.highestBiostratigraphicZone))
+      if (!this.identificationVerificationStatus.equals(that.identificationVerificationStatus))
         return false;
     }
 
-    boolean this_present_latestAgeOrHighestStage = true && this.isSetLatestAgeOrHighestStage();
-    boolean that_present_latestAgeOrHighestStage = true && that.isSetLatestAgeOrHighestStage();
-    if (this_present_latestAgeOrHighestStage || that_present_latestAgeOrHighestStage) {
-      if (!(this_present_latestAgeOrHighestStage && that_present_latestAgeOrHighestStage))
+    boolean this_present_identificationRemarks = true && this.isSetIdentificationRemarks();
+    boolean that_present_identificationRemarks = true && that.isSetIdentificationRemarks();
+    if (this_present_identificationRemarks || that_present_identificationRemarks) {
+      if (!(this_present_identificationRemarks && that_present_identificationRemarks))
         return false;
-      if (!this.latestAgeOrHighestStage.equals(that.latestAgeOrHighestStage))
-        return false;
-    }
-
-    boolean this_present_latestEonOrHighestEonothem = true && this.isSetLatestEonOrHighestEonothem();
-    boolean that_present_latestEonOrHighestEonothem = true && that.isSetLatestEonOrHighestEonothem();
-    if (this_present_latestEonOrHighestEonothem || that_present_latestEonOrHighestEonothem) {
-      if (!(this_present_latestEonOrHighestEonothem && that_present_latestEonOrHighestEonothem))
-        return false;
-      if (!this.latestEonOrHighestEonothem.equals(that.latestEonOrHighestEonothem))
+      if (!this.identificationRemarks.equals(that.identificationRemarks))
         return false;
     }
 
-    boolean this_present_latestEpochOrHighestSeries = true && this.isSetLatestEpochOrHighestSeries();
-    boolean that_present_latestEpochOrHighestSeries = true && that.isSetLatestEpochOrHighestSeries();
-    if (this_present_latestEpochOrHighestSeries || that_present_latestEpochOrHighestSeries) {
-      if (!(this_present_latestEpochOrHighestSeries && that_present_latestEpochOrHighestSeries))
+    boolean this_present_identificationQualifier = true && this.isSetIdentificationQualifier();
+    boolean that_present_identificationQualifier = true && that.isSetIdentificationQualifier();
+    if (this_present_identificationQualifier || that_present_identificationQualifier) {
+      if (!(this_present_identificationQualifier && that_present_identificationQualifier))
         return false;
-      if (!this.latestEpochOrHighestSeries.equals(that.latestEpochOrHighestSeries))
-        return false;
-    }
-
-    boolean this_present_latestEraOrHighestErathem = true && this.isSetLatestEraOrHighestErathem();
-    boolean that_present_latestEraOrHighestErathem = true && that.isSetLatestEraOrHighestErathem();
-    if (this_present_latestEraOrHighestErathem || that_present_latestEraOrHighestErathem) {
-      if (!(this_present_latestEraOrHighestErathem && that_present_latestEraOrHighestErathem))
-        return false;
-      if (!this.latestEraOrHighestErathem.equals(that.latestEraOrHighestErathem))
+      if (!this.identificationQualifier.equals(that.identificationQualifier))
         return false;
     }
 
-    boolean this_present_latestPeriodOrHighestSystem = true && this.isSetLatestPeriodOrHighestSystem();
-    boolean that_present_latestPeriodOrHighestSystem = true && that.isSetLatestPeriodOrHighestSystem();
-    if (this_present_latestPeriodOrHighestSystem || that_present_latestPeriodOrHighestSystem) {
-      if (!(this_present_latestPeriodOrHighestSystem && that_present_latestPeriodOrHighestSystem))
+    boolean this_present_typeStatus = true && this.isSetTypeStatus();
+    boolean that_present_typeStatus = true && that.isSetTypeStatus();
+    if (this_present_typeStatus || that_present_typeStatus) {
+      if (!(this_present_typeStatus && that_present_typeStatus))
         return false;
-      if (!this.latestPeriodOrHighestSystem.equals(that.latestPeriodOrHighestSystem))
-        return false;
-    }
-
-    boolean this_present_lithostratigraphicTerms = true && this.isSetLithostratigraphicTerms();
-    boolean that_present_lithostratigraphicTerms = true && that.isSetLithostratigraphicTerms();
-    if (this_present_lithostratigraphicTerms || that_present_lithostratigraphicTerms) {
-      if (!(this_present_lithostratigraphicTerms && that_present_lithostratigraphicTerms))
-        return false;
-      if (!this.lithostratigraphicTerms.equals(that.lithostratigraphicTerms))
-        return false;
-    }
-
-    boolean this_present_lowestBiostratigraphicZone = true && this.isSetLowestBiostratigraphicZone();
-    boolean that_present_lowestBiostratigraphicZone = true && that.isSetLowestBiostratigraphicZone();
-    if (this_present_lowestBiostratigraphicZone || that_present_lowestBiostratigraphicZone) {
-      if (!(this_present_lowestBiostratigraphicZone && that_present_lowestBiostratigraphicZone))
-        return false;
-      if (!this.lowestBiostratigraphicZone.equals(that.lowestBiostratigraphicZone))
-        return false;
-    }
-
-    boolean this_present_member = true && this.isSetMember();
-    boolean that_present_member = true && that.isSetMember();
-    if (this_present_member || that_present_member) {
-      if (!(this_present_member && that_present_member))
-        return false;
-      if (!this.member.equals(that.member))
+      if (!this.typeStatus.equals(that.typeStatus))
         return false;
     }
 
@@ -1188,95 +638,45 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_bed = true && (isSetBed());
-    builder.append(present_bed);
-    if (present_bed)
-      builder.append(bed);
+    boolean present_identificationID = true && (isSetIdentificationID());
+    builder.append(present_identificationID);
+    if (present_identificationID)
+      builder.append(identificationID);
 
-    boolean present_earliestAgeOrLowestStage = true && (isSetEarliestAgeOrLowestStage());
-    builder.append(present_earliestAgeOrLowestStage);
-    if (present_earliestAgeOrLowestStage)
-      builder.append(earliestAgeOrLowestStage);
+    boolean present_identifiedBy = true && (isSetIdentifiedBy());
+    builder.append(present_identifiedBy);
+    if (present_identifiedBy)
+      builder.append(identifiedBy);
 
-    boolean present_earliestEonOrLowestEonothem = true && (isSetEarliestEonOrLowestEonothem());
-    builder.append(present_earliestEonOrLowestEonothem);
-    if (present_earliestEonOrLowestEonothem)
-      builder.append(earliestEonOrLowestEonothem);
+    boolean present_dateIdentified = true && (isSetDateIdentified());
+    builder.append(present_dateIdentified);
+    if (present_dateIdentified)
+      builder.append(dateIdentified);
 
-    boolean present_earliestEpochOrLowestSeries = true && (isSetEarliestEpochOrLowestSeries());
-    builder.append(present_earliestEpochOrLowestSeries);
-    if (present_earliestEpochOrLowestSeries)
-      builder.append(earliestEpochOrLowestSeries);
+    boolean present_identificationReferences = true && (isSetIdentificationReferences());
+    builder.append(present_identificationReferences);
+    if (present_identificationReferences)
+      builder.append(identificationReferences);
 
-    boolean present_earliestEraOrLowestErathem = true && (isSetEarliestEraOrLowestErathem());
-    builder.append(present_earliestEraOrLowestErathem);
-    if (present_earliestEraOrLowestErathem)
-      builder.append(earliestEraOrLowestErathem);
+    boolean present_identificationVerificationStatus = true && (isSetIdentificationVerificationStatus());
+    builder.append(present_identificationVerificationStatus);
+    if (present_identificationVerificationStatus)
+      builder.append(identificationVerificationStatus);
 
-    boolean present_earliestPeriodOrLowestSystem = true && (isSetEarliestPeriodOrLowestSystem());
-    builder.append(present_earliestPeriodOrLowestSystem);
-    if (present_earliestPeriodOrLowestSystem)
-      builder.append(earliestPeriodOrLowestSystem);
+    boolean present_identificationRemarks = true && (isSetIdentificationRemarks());
+    builder.append(present_identificationRemarks);
+    if (present_identificationRemarks)
+      builder.append(identificationRemarks);
 
-    boolean present_formation = true && (isSetFormation());
-    builder.append(present_formation);
-    if (present_formation)
-      builder.append(formation);
+    boolean present_identificationQualifier = true && (isSetIdentificationQualifier());
+    builder.append(present_identificationQualifier);
+    if (present_identificationQualifier)
+      builder.append(identificationQualifier);
 
-    boolean present_geologicalContextID = true && (isSetGeologicalContextID());
-    builder.append(present_geologicalContextID);
-    if (present_geologicalContextID)
-      builder.append(geologicalContextID);
-
-    boolean present_group = true && (isSetGroup());
-    builder.append(present_group);
-    if (present_group)
-      builder.append(group);
-
-    boolean present_highestBiostratigraphicZone = true && (isSetHighestBiostratigraphicZone());
-    builder.append(present_highestBiostratigraphicZone);
-    if (present_highestBiostratigraphicZone)
-      builder.append(highestBiostratigraphicZone);
-
-    boolean present_latestAgeOrHighestStage = true && (isSetLatestAgeOrHighestStage());
-    builder.append(present_latestAgeOrHighestStage);
-    if (present_latestAgeOrHighestStage)
-      builder.append(latestAgeOrHighestStage);
-
-    boolean present_latestEonOrHighestEonothem = true && (isSetLatestEonOrHighestEonothem());
-    builder.append(present_latestEonOrHighestEonothem);
-    if (present_latestEonOrHighestEonothem)
-      builder.append(latestEonOrHighestEonothem);
-
-    boolean present_latestEpochOrHighestSeries = true && (isSetLatestEpochOrHighestSeries());
-    builder.append(present_latestEpochOrHighestSeries);
-    if (present_latestEpochOrHighestSeries)
-      builder.append(latestEpochOrHighestSeries);
-
-    boolean present_latestEraOrHighestErathem = true && (isSetLatestEraOrHighestErathem());
-    builder.append(present_latestEraOrHighestErathem);
-    if (present_latestEraOrHighestErathem)
-      builder.append(latestEraOrHighestErathem);
-
-    boolean present_latestPeriodOrHighestSystem = true && (isSetLatestPeriodOrHighestSystem());
-    builder.append(present_latestPeriodOrHighestSystem);
-    if (present_latestPeriodOrHighestSystem)
-      builder.append(latestPeriodOrHighestSystem);
-
-    boolean present_lithostratigraphicTerms = true && (isSetLithostratigraphicTerms());
-    builder.append(present_lithostratigraphicTerms);
-    if (present_lithostratigraphicTerms)
-      builder.append(lithostratigraphicTerms);
-
-    boolean present_lowestBiostratigraphicZone = true && (isSetLowestBiostratigraphicZone());
-    builder.append(present_lowestBiostratigraphicZone);
-    if (present_lowestBiostratigraphicZone)
-      builder.append(lowestBiostratigraphicZone);
-
-    boolean present_member = true && (isSetMember());
-    builder.append(present_member);
-    if (present_member)
-      builder.append(member);
+    boolean present_typeStatus = true && (isSetTypeStatus());
+    builder.append(present_typeStatus);
+    if (present_typeStatus)
+      builder.append(typeStatus);
 
     return builder.toHashCode();
   }
@@ -1289,182 +689,82 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     int lastComparison = 0;
     Identification typedOther = (Identification)other;
 
-    lastComparison = Boolean.valueOf(isSetBed()).compareTo(typedOther.isSetBed());
+    lastComparison = Boolean.valueOf(isSetIdentificationID()).compareTo(typedOther.isSetIdentificationID());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetBed()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.bed, typedOther.bed);
+    if (isSetIdentificationID()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identificationID, typedOther.identificationID);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEarliestAgeOrLowestStage()).compareTo(typedOther.isSetEarliestAgeOrLowestStage());
+    lastComparison = Boolean.valueOf(isSetIdentifiedBy()).compareTo(typedOther.isSetIdentifiedBy());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetEarliestAgeOrLowestStage()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.earliestAgeOrLowestStage, typedOther.earliestAgeOrLowestStage);
+    if (isSetIdentifiedBy()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identifiedBy, typedOther.identifiedBy);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEarliestEonOrLowestEonothem()).compareTo(typedOther.isSetEarliestEonOrLowestEonothem());
+    lastComparison = Boolean.valueOf(isSetDateIdentified()).compareTo(typedOther.isSetDateIdentified());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetEarliestEonOrLowestEonothem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.earliestEonOrLowestEonothem, typedOther.earliestEonOrLowestEonothem);
+    if (isSetDateIdentified()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dateIdentified, typedOther.dateIdentified);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEarliestEpochOrLowestSeries()).compareTo(typedOther.isSetEarliestEpochOrLowestSeries());
+    lastComparison = Boolean.valueOf(isSetIdentificationReferences()).compareTo(typedOther.isSetIdentificationReferences());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetEarliestEpochOrLowestSeries()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.earliestEpochOrLowestSeries, typedOther.earliestEpochOrLowestSeries);
+    if (isSetIdentificationReferences()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identificationReferences, typedOther.identificationReferences);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEarliestEraOrLowestErathem()).compareTo(typedOther.isSetEarliestEraOrLowestErathem());
+    lastComparison = Boolean.valueOf(isSetIdentificationVerificationStatus()).compareTo(typedOther.isSetIdentificationVerificationStatus());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetEarliestEraOrLowestErathem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.earliestEraOrLowestErathem, typedOther.earliestEraOrLowestErathem);
+    if (isSetIdentificationVerificationStatus()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identificationVerificationStatus, typedOther.identificationVerificationStatus);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetEarliestPeriodOrLowestSystem()).compareTo(typedOther.isSetEarliestPeriodOrLowestSystem());
+    lastComparison = Boolean.valueOf(isSetIdentificationRemarks()).compareTo(typedOther.isSetIdentificationRemarks());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetEarliestPeriodOrLowestSystem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.earliestPeriodOrLowestSystem, typedOther.earliestPeriodOrLowestSystem);
+    if (isSetIdentificationRemarks()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identificationRemarks, typedOther.identificationRemarks);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetFormation()).compareTo(typedOther.isSetFormation());
+    lastComparison = Boolean.valueOf(isSetIdentificationQualifier()).compareTo(typedOther.isSetIdentificationQualifier());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetFormation()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.formation, typedOther.formation);
+    if (isSetIdentificationQualifier()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.identificationQualifier, typedOther.identificationQualifier);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetGeologicalContextID()).compareTo(typedOther.isSetGeologicalContextID());
+    lastComparison = Boolean.valueOf(isSetTypeStatus()).compareTo(typedOther.isSetTypeStatus());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetGeologicalContextID()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.geologicalContextID, typedOther.geologicalContextID);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetGroup()).compareTo(typedOther.isSetGroup());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetGroup()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.group, typedOther.group);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetHighestBiostratigraphicZone()).compareTo(typedOther.isSetHighestBiostratigraphicZone());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetHighestBiostratigraphicZone()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.highestBiostratigraphicZone, typedOther.highestBiostratigraphicZone);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLatestAgeOrHighestStage()).compareTo(typedOther.isSetLatestAgeOrHighestStage());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLatestAgeOrHighestStage()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.latestAgeOrHighestStage, typedOther.latestAgeOrHighestStage);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLatestEonOrHighestEonothem()).compareTo(typedOther.isSetLatestEonOrHighestEonothem());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLatestEonOrHighestEonothem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.latestEonOrHighestEonothem, typedOther.latestEonOrHighestEonothem);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLatestEpochOrHighestSeries()).compareTo(typedOther.isSetLatestEpochOrHighestSeries());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLatestEpochOrHighestSeries()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.latestEpochOrHighestSeries, typedOther.latestEpochOrHighestSeries);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLatestEraOrHighestErathem()).compareTo(typedOther.isSetLatestEraOrHighestErathem());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLatestEraOrHighestErathem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.latestEraOrHighestErathem, typedOther.latestEraOrHighestErathem);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLatestPeriodOrHighestSystem()).compareTo(typedOther.isSetLatestPeriodOrHighestSystem());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLatestPeriodOrHighestSystem()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.latestPeriodOrHighestSystem, typedOther.latestPeriodOrHighestSystem);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLithostratigraphicTerms()).compareTo(typedOther.isSetLithostratigraphicTerms());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLithostratigraphicTerms()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.lithostratigraphicTerms, typedOther.lithostratigraphicTerms);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetLowestBiostratigraphicZone()).compareTo(typedOther.isSetLowestBiostratigraphicZone());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetLowestBiostratigraphicZone()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.lowestBiostratigraphicZone, typedOther.lowestBiostratigraphicZone);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetMember()).compareTo(typedOther.isSetMember());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetMember()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.member, typedOther.member);
+    if (isSetTypeStatus()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.typeStatus, typedOther.typeStatus);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -1489,185 +789,69 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     StringBuilder sb = new StringBuilder("Identification(");
     boolean first = true;
 
-    if (isSetBed()) {
-      sb.append("bed:");
-      if (this.bed == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.bed);
-      }
-      first = false;
+    sb.append("identificationID:");
+    if (this.identificationID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identificationID);
     }
-    if (isSetEarliestAgeOrLowestStage()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestAgeOrLowestStage:");
-      if (this.earliestAgeOrLowestStage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestAgeOrLowestStage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("identifiedBy:");
+    if (this.identifiedBy == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identifiedBy);
     }
-    if (isSetEarliestEonOrLowestEonothem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEonOrLowestEonothem:");
-      if (this.earliestEonOrLowestEonothem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEonOrLowestEonothem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("dateIdentified:");
+    if (this.dateIdentified == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.dateIdentified);
     }
-    if (isSetEarliestEpochOrLowestSeries()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEpochOrLowestSeries:");
-      if (this.earliestEpochOrLowestSeries == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEpochOrLowestSeries);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("identificationReferences:");
+    if (this.identificationReferences == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identificationReferences);
     }
-    if (isSetEarliestEraOrLowestErathem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEraOrLowestErathem:");
-      if (this.earliestEraOrLowestErathem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEraOrLowestErathem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("identificationVerificationStatus:");
+    if (this.identificationVerificationStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identificationVerificationStatus);
     }
-    if (isSetEarliestPeriodOrLowestSystem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestPeriodOrLowestSystem:");
-      if (this.earliestPeriodOrLowestSystem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestPeriodOrLowestSystem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("identificationRemarks:");
+    if (this.identificationRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identificationRemarks);
     }
-    if (isSetFormation()) {
-      if (!first) sb.append(", ");
-      sb.append("formation:");
-      if (this.formation == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.formation);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("identificationQualifier:");
+    if (this.identificationQualifier == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.identificationQualifier);
     }
-    if (isSetGeologicalContextID()) {
-      if (!first) sb.append(", ");
-      sb.append("geologicalContextID:");
-      if (this.geologicalContextID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.geologicalContextID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("typeStatus:");
+    if (this.typeStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.typeStatus);
     }
-    if (isSetGroup()) {
-      if (!first) sb.append(", ");
-      sb.append("group:");
-      if (this.group == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.group);
-      }
-      first = false;
-    }
-    if (isSetHighestBiostratigraphicZone()) {
-      if (!first) sb.append(", ");
-      sb.append("highestBiostratigraphicZone:");
-      if (this.highestBiostratigraphicZone == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.highestBiostratigraphicZone);
-      }
-      first = false;
-    }
-    if (isSetLatestAgeOrHighestStage()) {
-      if (!first) sb.append(", ");
-      sb.append("latestAgeOrHighestStage:");
-      if (this.latestAgeOrHighestStage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestAgeOrHighestStage);
-      }
-      first = false;
-    }
-    if (isSetLatestEonOrHighestEonothem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEonOrHighestEonothem:");
-      if (this.latestEonOrHighestEonothem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEonOrHighestEonothem);
-      }
-      first = false;
-    }
-    if (isSetLatestEpochOrHighestSeries()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEpochOrHighestSeries:");
-      if (this.latestEpochOrHighestSeries == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEpochOrHighestSeries);
-      }
-      first = false;
-    }
-    if (isSetLatestEraOrHighestErathem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEraOrHighestErathem:");
-      if (this.latestEraOrHighestErathem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEraOrHighestErathem);
-      }
-      first = false;
-    }
-    if (isSetLatestPeriodOrHighestSystem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestPeriodOrHighestSystem:");
-      if (this.latestPeriodOrHighestSystem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestPeriodOrHighestSystem);
-      }
-      first = false;
-    }
-    if (isSetLithostratigraphicTerms()) {
-      if (!first) sb.append(", ");
-      sb.append("lithostratigraphicTerms:");
-      if (this.lithostratigraphicTerms == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.lithostratigraphicTerms);
-      }
-      first = false;
-    }
-    if (isSetLowestBiostratigraphicZone()) {
-      if (!first) sb.append(", ");
-      sb.append("lowestBiostratigraphicZone:");
-      if (this.lowestBiostratigraphicZone == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.lowestBiostratigraphicZone);
-      }
-      first = false;
-    }
-    if (isSetMember()) {
-      if (!first) sb.append(", ");
-      sb.append("member:");
-      if (this.member == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.member);
-      }
-      first = false;
-    }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -1710,146 +894,66 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
           break;
         }
         switch (schemeField.id) {
-          case 1: // BED
+          case 1: // IDENTIFICATION_ID
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.bed = iprot.readString();
-              struct.setBedIsSet(true);
+              struct.identificationID = iprot.readString();
+              struct.setIdentificationIDIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // EARLIEST_AGE_OR_LOWEST_STAGE
+          case 2: // IDENTIFIED_BY
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.earliestAgeOrLowestStage = iprot.readString();
-              struct.setEarliestAgeOrLowestStageIsSet(true);
+              struct.identifiedBy = iprot.readString();
+              struct.setIdentifiedByIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // EARLIEST_EON_OR_LOWEST_EONOTHEM
+          case 3: // DATE_IDENTIFIED
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.earliestEonOrLowestEonothem = iprot.readString();
-              struct.setEarliestEonOrLowestEonothemIsSet(true);
+              struct.dateIdentified = iprot.readString();
+              struct.setDateIdentifiedIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // EARLIEST_EPOCH_OR_LOWEST_SERIES
+          case 4: // IDENTIFICATION_REFERENCES
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.earliestEpochOrLowestSeries = iprot.readString();
-              struct.setEarliestEpochOrLowestSeriesIsSet(true);
+              struct.identificationReferences = iprot.readString();
+              struct.setIdentificationReferencesIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 5: // EARLIEST_ERA_OR_LOWEST_ERATHEM
+          case 5: // IDENTIFICATION_VERIFICATION_STATUS
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.earliestEraOrLowestErathem = iprot.readString();
-              struct.setEarliestEraOrLowestErathemIsSet(true);
+              struct.identificationVerificationStatus = iprot.readString();
+              struct.setIdentificationVerificationStatusIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 6: // EARLIEST_PERIOD_OR_LOWEST_SYSTEM
+          case 6: // IDENTIFICATION_REMARKS
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.earliestPeriodOrLowestSystem = iprot.readString();
-              struct.setEarliestPeriodOrLowestSystemIsSet(true);
+              struct.identificationRemarks = iprot.readString();
+              struct.setIdentificationRemarksIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 7: // FORMATION
+          case 7: // IDENTIFICATION_QUALIFIER
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.formation = iprot.readString();
-              struct.setFormationIsSet(true);
+              struct.identificationQualifier = iprot.readString();
+              struct.setIdentificationQualifierIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 8: // GEOLOGICAL_CONTEXT_ID
+          case 8: // TYPE_STATUS
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.geologicalContextID = iprot.readString();
-              struct.setGeologicalContextIDIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 9: // GROUP
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.group = iprot.readString();
-              struct.setGroupIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 10: // HIGHEST_BIOSTRATIGRAPHIC_ZONE
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.highestBiostratigraphicZone = iprot.readString();
-              struct.setHighestBiostratigraphicZoneIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 11: // LATEST_AGE_OR_HIGHEST_STAGE
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.latestAgeOrHighestStage = iprot.readString();
-              struct.setLatestAgeOrHighestStageIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 12: // LATEST_EON_OR_HIGHEST_EONOTHEM
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.latestEonOrHighestEonothem = iprot.readString();
-              struct.setLatestEonOrHighestEonothemIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 13: // LATEST_EPOCH_OR_HIGHEST_SERIES
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.latestEpochOrHighestSeries = iprot.readString();
-              struct.setLatestEpochOrHighestSeriesIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 14: // LATEST_ERA_OR_HIGHEST_ERATHEM
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.latestEraOrHighestErathem = iprot.readString();
-              struct.setLatestEraOrHighestErathemIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 15: // LATEST_PERIOD_OR_HIGHEST_SYSTEM
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.latestPeriodOrHighestSystem = iprot.readString();
-              struct.setLatestPeriodOrHighestSystemIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 16: // LITHOSTRATIGRAPHIC_TERMS
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.lithostratigraphicTerms = iprot.readString();
-              struct.setLithostratigraphicTermsIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 17: // LOWEST_BIOSTRATIGRAPHIC_ZONE
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.lowestBiostratigraphicZone = iprot.readString();
-              struct.setLowestBiostratigraphicZoneIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 18: // MEMBER
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.member = iprot.readString();
-              struct.setMemberIsSet(true);
+              struct.typeStatus = iprot.readString();
+              struct.setTypeStatusIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -1869,131 +973,45 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.bed != null) {
-        if (struct.isSetBed()) {
-          oprot.writeFieldBegin(BED_FIELD_DESC);
-          oprot.writeString(struct.bed);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identificationID != null) {
+        oprot.writeFieldBegin(IDENTIFICATION_ID_FIELD_DESC);
+        oprot.writeString(struct.identificationID);
+        oprot.writeFieldEnd();
       }
-      if (struct.earliestAgeOrLowestStage != null) {
-        if (struct.isSetEarliestAgeOrLowestStage()) {
-          oprot.writeFieldBegin(EARLIEST_AGE_OR_LOWEST_STAGE_FIELD_DESC);
-          oprot.writeString(struct.earliestAgeOrLowestStage);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identifiedBy != null) {
+        oprot.writeFieldBegin(IDENTIFIED_BY_FIELD_DESC);
+        oprot.writeString(struct.identifiedBy);
+        oprot.writeFieldEnd();
       }
-      if (struct.earliestEonOrLowestEonothem != null) {
-        if (struct.isSetEarliestEonOrLowestEonothem()) {
-          oprot.writeFieldBegin(EARLIEST_EON_OR_LOWEST_EONOTHEM_FIELD_DESC);
-          oprot.writeString(struct.earliestEonOrLowestEonothem);
-          oprot.writeFieldEnd();
-        }
+      if (struct.dateIdentified != null) {
+        oprot.writeFieldBegin(DATE_IDENTIFIED_FIELD_DESC);
+        oprot.writeString(struct.dateIdentified);
+        oprot.writeFieldEnd();
       }
-      if (struct.earliestEpochOrLowestSeries != null) {
-        if (struct.isSetEarliestEpochOrLowestSeries()) {
-          oprot.writeFieldBegin(EARLIEST_EPOCH_OR_LOWEST_SERIES_FIELD_DESC);
-          oprot.writeString(struct.earliestEpochOrLowestSeries);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identificationReferences != null) {
+        oprot.writeFieldBegin(IDENTIFICATION_REFERENCES_FIELD_DESC);
+        oprot.writeString(struct.identificationReferences);
+        oprot.writeFieldEnd();
       }
-      if (struct.earliestEraOrLowestErathem != null) {
-        if (struct.isSetEarliestEraOrLowestErathem()) {
-          oprot.writeFieldBegin(EARLIEST_ERA_OR_LOWEST_ERATHEM_FIELD_DESC);
-          oprot.writeString(struct.earliestEraOrLowestErathem);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identificationVerificationStatus != null) {
+        oprot.writeFieldBegin(IDENTIFICATION_VERIFICATION_STATUS_FIELD_DESC);
+        oprot.writeString(struct.identificationVerificationStatus);
+        oprot.writeFieldEnd();
       }
-      if (struct.earliestPeriodOrLowestSystem != null) {
-        if (struct.isSetEarliestPeriodOrLowestSystem()) {
-          oprot.writeFieldBegin(EARLIEST_PERIOD_OR_LOWEST_SYSTEM_FIELD_DESC);
-          oprot.writeString(struct.earliestPeriodOrLowestSystem);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identificationRemarks != null) {
+        oprot.writeFieldBegin(IDENTIFICATION_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.identificationRemarks);
+        oprot.writeFieldEnd();
       }
-      if (struct.formation != null) {
-        if (struct.isSetFormation()) {
-          oprot.writeFieldBegin(FORMATION_FIELD_DESC);
-          oprot.writeString(struct.formation);
-          oprot.writeFieldEnd();
-        }
+      if (struct.identificationQualifier != null) {
+        oprot.writeFieldBegin(IDENTIFICATION_QUALIFIER_FIELD_DESC);
+        oprot.writeString(struct.identificationQualifier);
+        oprot.writeFieldEnd();
       }
-      if (struct.geologicalContextID != null) {
-        if (struct.isSetGeologicalContextID()) {
-          oprot.writeFieldBegin(GEOLOGICAL_CONTEXT_ID_FIELD_DESC);
-          oprot.writeString(struct.geologicalContextID);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.group != null) {
-        if (struct.isSetGroup()) {
-          oprot.writeFieldBegin(GROUP_FIELD_DESC);
-          oprot.writeString(struct.group);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.highestBiostratigraphicZone != null) {
-        if (struct.isSetHighestBiostratigraphicZone()) {
-          oprot.writeFieldBegin(HIGHEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
-          oprot.writeString(struct.highestBiostratigraphicZone);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.latestAgeOrHighestStage != null) {
-        if (struct.isSetLatestAgeOrHighestStage()) {
-          oprot.writeFieldBegin(LATEST_AGE_OR_HIGHEST_STAGE_FIELD_DESC);
-          oprot.writeString(struct.latestAgeOrHighestStage);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.latestEonOrHighestEonothem != null) {
-        if (struct.isSetLatestEonOrHighestEonothem()) {
-          oprot.writeFieldBegin(LATEST_EON_OR_HIGHEST_EONOTHEM_FIELD_DESC);
-          oprot.writeString(struct.latestEonOrHighestEonothem);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.latestEpochOrHighestSeries != null) {
-        if (struct.isSetLatestEpochOrHighestSeries()) {
-          oprot.writeFieldBegin(LATEST_EPOCH_OR_HIGHEST_SERIES_FIELD_DESC);
-          oprot.writeString(struct.latestEpochOrHighestSeries);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.latestEraOrHighestErathem != null) {
-        if (struct.isSetLatestEraOrHighestErathem()) {
-          oprot.writeFieldBegin(LATEST_ERA_OR_HIGHEST_ERATHEM_FIELD_DESC);
-          oprot.writeString(struct.latestEraOrHighestErathem);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.latestPeriodOrHighestSystem != null) {
-        if (struct.isSetLatestPeriodOrHighestSystem()) {
-          oprot.writeFieldBegin(LATEST_PERIOD_OR_HIGHEST_SYSTEM_FIELD_DESC);
-          oprot.writeString(struct.latestPeriodOrHighestSystem);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.lithostratigraphicTerms != null) {
-        if (struct.isSetLithostratigraphicTerms()) {
-          oprot.writeFieldBegin(LITHOSTRATIGRAPHIC_TERMS_FIELD_DESC);
-          oprot.writeString(struct.lithostratigraphicTerms);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.lowestBiostratigraphicZone != null) {
-        if (struct.isSetLowestBiostratigraphicZone()) {
-          oprot.writeFieldBegin(LOWEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
-          oprot.writeString(struct.lowestBiostratigraphicZone);
-          oprot.writeFieldEnd();
-        }
-      }
-      if (struct.member != null) {
-        if (struct.isSetMember()) {
-          oprot.writeFieldBegin(MEMBER_FIELD_DESC);
-          oprot.writeString(struct.member);
-          oprot.writeFieldEnd();
-        }
+      if (struct.typeStatus != null) {
+        oprot.writeFieldBegin(TYPE_STATUS_FIELD_DESC);
+        oprot.writeString(struct.typeStatus);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -2013,192 +1031,92 @@ public class Identification implements org.apache.thrift.TBase<Identification, I
     public void write(org.apache.thrift.protocol.TProtocol prot, Identification struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
-      if (struct.isSetBed()) {
+      if (struct.isSetIdentificationID()) {
         optionals.set(0);
       }
-      if (struct.isSetEarliestAgeOrLowestStage()) {
+      if (struct.isSetIdentifiedBy()) {
         optionals.set(1);
       }
-      if (struct.isSetEarliestEonOrLowestEonothem()) {
+      if (struct.isSetDateIdentified()) {
         optionals.set(2);
       }
-      if (struct.isSetEarliestEpochOrLowestSeries()) {
+      if (struct.isSetIdentificationReferences()) {
         optionals.set(3);
       }
-      if (struct.isSetEarliestEraOrLowestErathem()) {
+      if (struct.isSetIdentificationVerificationStatus()) {
         optionals.set(4);
       }
-      if (struct.isSetEarliestPeriodOrLowestSystem()) {
+      if (struct.isSetIdentificationRemarks()) {
         optionals.set(5);
       }
-      if (struct.isSetFormation()) {
+      if (struct.isSetIdentificationQualifier()) {
         optionals.set(6);
       }
-      if (struct.isSetGeologicalContextID()) {
+      if (struct.isSetTypeStatus()) {
         optionals.set(7);
       }
-      if (struct.isSetGroup()) {
-        optionals.set(8);
+      oprot.writeBitSet(optionals, 8);
+      if (struct.isSetIdentificationID()) {
+        oprot.writeString(struct.identificationID);
       }
-      if (struct.isSetHighestBiostratigraphicZone()) {
-        optionals.set(9);
+      if (struct.isSetIdentifiedBy()) {
+        oprot.writeString(struct.identifiedBy);
       }
-      if (struct.isSetLatestAgeOrHighestStage()) {
-        optionals.set(10);
+      if (struct.isSetDateIdentified()) {
+        oprot.writeString(struct.dateIdentified);
       }
-      if (struct.isSetLatestEonOrHighestEonothem()) {
-        optionals.set(11);
+      if (struct.isSetIdentificationReferences()) {
+        oprot.writeString(struct.identificationReferences);
       }
-      if (struct.isSetLatestEpochOrHighestSeries()) {
-        optionals.set(12);
+      if (struct.isSetIdentificationVerificationStatus()) {
+        oprot.writeString(struct.identificationVerificationStatus);
       }
-      if (struct.isSetLatestEraOrHighestErathem()) {
-        optionals.set(13);
+      if (struct.isSetIdentificationRemarks()) {
+        oprot.writeString(struct.identificationRemarks);
       }
-      if (struct.isSetLatestPeriodOrHighestSystem()) {
-        optionals.set(14);
+      if (struct.isSetIdentificationQualifier()) {
+        oprot.writeString(struct.identificationQualifier);
       }
-      if (struct.isSetLithostratigraphicTerms()) {
-        optionals.set(15);
-      }
-      if (struct.isSetLowestBiostratigraphicZone()) {
-        optionals.set(16);
-      }
-      if (struct.isSetMember()) {
-        optionals.set(17);
-      }
-      oprot.writeBitSet(optionals, 18);
-      if (struct.isSetBed()) {
-        oprot.writeString(struct.bed);
-      }
-      if (struct.isSetEarliestAgeOrLowestStage()) {
-        oprot.writeString(struct.earliestAgeOrLowestStage);
-      }
-      if (struct.isSetEarliestEonOrLowestEonothem()) {
-        oprot.writeString(struct.earliestEonOrLowestEonothem);
-      }
-      if (struct.isSetEarliestEpochOrLowestSeries()) {
-        oprot.writeString(struct.earliestEpochOrLowestSeries);
-      }
-      if (struct.isSetEarliestEraOrLowestErathem()) {
-        oprot.writeString(struct.earliestEraOrLowestErathem);
-      }
-      if (struct.isSetEarliestPeriodOrLowestSystem()) {
-        oprot.writeString(struct.earliestPeriodOrLowestSystem);
-      }
-      if (struct.isSetFormation()) {
-        oprot.writeString(struct.formation);
-      }
-      if (struct.isSetGeologicalContextID()) {
-        oprot.writeString(struct.geologicalContextID);
-      }
-      if (struct.isSetGroup()) {
-        oprot.writeString(struct.group);
-      }
-      if (struct.isSetHighestBiostratigraphicZone()) {
-        oprot.writeString(struct.highestBiostratigraphicZone);
-      }
-      if (struct.isSetLatestAgeOrHighestStage()) {
-        oprot.writeString(struct.latestAgeOrHighestStage);
-      }
-      if (struct.isSetLatestEonOrHighestEonothem()) {
-        oprot.writeString(struct.latestEonOrHighestEonothem);
-      }
-      if (struct.isSetLatestEpochOrHighestSeries()) {
-        oprot.writeString(struct.latestEpochOrHighestSeries);
-      }
-      if (struct.isSetLatestEraOrHighestErathem()) {
-        oprot.writeString(struct.latestEraOrHighestErathem);
-      }
-      if (struct.isSetLatestPeriodOrHighestSystem()) {
-        oprot.writeString(struct.latestPeriodOrHighestSystem);
-      }
-      if (struct.isSetLithostratigraphicTerms()) {
-        oprot.writeString(struct.lithostratigraphicTerms);
-      }
-      if (struct.isSetLowestBiostratigraphicZone()) {
-        oprot.writeString(struct.lowestBiostratigraphicZone);
-      }
-      if (struct.isSetMember()) {
-        oprot.writeString(struct.member);
+      if (struct.isSetTypeStatus()) {
+        oprot.writeString(struct.typeStatus);
       }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Identification struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(18);
+      BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
-        struct.bed = iprot.readString();
-        struct.setBedIsSet(true);
+        struct.identificationID = iprot.readString();
+        struct.setIdentificationIDIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.earliestAgeOrLowestStage = iprot.readString();
-        struct.setEarliestAgeOrLowestStageIsSet(true);
+        struct.identifiedBy = iprot.readString();
+        struct.setIdentifiedByIsSet(true);
       }
       if (incoming.get(2)) {
-        struct.earliestEonOrLowestEonothem = iprot.readString();
-        struct.setEarliestEonOrLowestEonothemIsSet(true);
+        struct.dateIdentified = iprot.readString();
+        struct.setDateIdentifiedIsSet(true);
       }
       if (incoming.get(3)) {
-        struct.earliestEpochOrLowestSeries = iprot.readString();
-        struct.setEarliestEpochOrLowestSeriesIsSet(true);
+        struct.identificationReferences = iprot.readString();
+        struct.setIdentificationReferencesIsSet(true);
       }
       if (incoming.get(4)) {
-        struct.earliestEraOrLowestErathem = iprot.readString();
-        struct.setEarliestEraOrLowestErathemIsSet(true);
+        struct.identificationVerificationStatus = iprot.readString();
+        struct.setIdentificationVerificationStatusIsSet(true);
       }
       if (incoming.get(5)) {
-        struct.earliestPeriodOrLowestSystem = iprot.readString();
-        struct.setEarliestPeriodOrLowestSystemIsSet(true);
+        struct.identificationRemarks = iprot.readString();
+        struct.setIdentificationRemarksIsSet(true);
       }
       if (incoming.get(6)) {
-        struct.formation = iprot.readString();
-        struct.setFormationIsSet(true);
+        struct.identificationQualifier = iprot.readString();
+        struct.setIdentificationQualifierIsSet(true);
       }
       if (incoming.get(7)) {
-        struct.geologicalContextID = iprot.readString();
-        struct.setGeologicalContextIDIsSet(true);
-      }
-      if (incoming.get(8)) {
-        struct.group = iprot.readString();
-        struct.setGroupIsSet(true);
-      }
-      if (incoming.get(9)) {
-        struct.highestBiostratigraphicZone = iprot.readString();
-        struct.setHighestBiostratigraphicZoneIsSet(true);
-      }
-      if (incoming.get(10)) {
-        struct.latestAgeOrHighestStage = iprot.readString();
-        struct.setLatestAgeOrHighestStageIsSet(true);
-      }
-      if (incoming.get(11)) {
-        struct.latestEonOrHighestEonothem = iprot.readString();
-        struct.setLatestEonOrHighestEonothemIsSet(true);
-      }
-      if (incoming.get(12)) {
-        struct.latestEpochOrHighestSeries = iprot.readString();
-        struct.setLatestEpochOrHighestSeriesIsSet(true);
-      }
-      if (incoming.get(13)) {
-        struct.latestEraOrHighestErathem = iprot.readString();
-        struct.setLatestEraOrHighestErathemIsSet(true);
-      }
-      if (incoming.get(14)) {
-        struct.latestPeriodOrHighestSystem = iprot.readString();
-        struct.setLatestPeriodOrHighestSystemIsSet(true);
-      }
-      if (incoming.get(15)) {
-        struct.lithostratigraphicTerms = iprot.readString();
-        struct.setLithostratigraphicTermsIsSet(true);
-      }
-      if (incoming.get(16)) {
-        struct.lowestBiostratigraphicZone = iprot.readString();
-        struct.setLowestBiostratigraphicZoneIsSet(true);
-      }
-      if (incoming.get(17)) {
-        struct.member = iprot.readString();
-        struct.setMemberIsSet(true);
+        struct.typeStatus = iprot.readString();
+        struct.setTypeStatusIsSet(true);
       }
     }
   }

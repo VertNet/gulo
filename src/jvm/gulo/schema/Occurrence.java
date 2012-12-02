@@ -60,28 +60,28 @@ public class Occurrence implements org.apache.thrift.TBase<Occurrence, Occurrenc
     schemes.put(TupleScheme.class, new OccurrenceTupleSchemeFactory());
   }
 
-  public String associatedMedia; // optional
-  public String associatedOccurrences; // optional
-  public String associatedReferences; // optional
-  public String associatedSequences; // optional
-  public String associatedTaxa; // optional
-  public String behavior; // optional
-  public String catalogNumber; // optional
-  public String disposition; // optional
-  public String establishmentMeans; // optional
-  public String individualCount; // optional
-  public String individualID; // optional
-  public String lifeStage; // optional
-  public String occurrenceID; // optional
-  public String occurrenceRemarks; // optional
-  public String occurrenceStatus; // optional
-  public String otherCatalogNumbers; // optional
-  public String preparations; // optional
-  public String previousIdentifications; // optional
-  public String recordNumber; // optional
-  public String recordedBy; // optional
-  public String reproductiveCondition; // optional
-  public String sex; // optional
+  public String associatedMedia; // required
+  public String associatedOccurrences; // required
+  public String associatedReferences; // required
+  public String associatedSequences; // required
+  public String associatedTaxa; // required
+  public String behavior; // required
+  public String catalogNumber; // required
+  public String disposition; // required
+  public String establishmentMeans; // required
+  public String individualCount; // required
+  public String individualID; // required
+  public String lifeStage; // required
+  public String occurrenceID; // required
+  public String occurrenceRemarks; // required
+  public String occurrenceStatus; // required
+  public String otherCatalogNumbers; // required
+  public String preparations; // required
+  public String previousIdentifications; // required
+  public String recordNumber; // required
+  public String recordedBy; // required
+  public String reproductiveCondition; // required
+  public String sex; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -205,59 +205,107 @@ public class Occurrence implements org.apache.thrift.TBase<Occurrence, Occurrenc
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.ASSOCIATED_MEDIA,_Fields.ASSOCIATED_OCCURRENCES,_Fields.ASSOCIATED_REFERENCES,_Fields.ASSOCIATED_SEQUENCES,_Fields.ASSOCIATED_TAXA,_Fields.BEHAVIOR,_Fields.CATALOG_NUMBER,_Fields.DISPOSITION,_Fields.ESTABLISHMENT_MEANS,_Fields.INDIVIDUAL_COUNT,_Fields.INDIVIDUAL_ID,_Fields.LIFE_STAGE,_Fields.OCCURRENCE_ID,_Fields.OCCURRENCE_REMARKS,_Fields.OCCURRENCE_STATUS,_Fields.OTHER_CATALOG_NUMBERS,_Fields.PREPARATIONS,_Fields.PREVIOUS_IDENTIFICATIONS,_Fields.RECORD_NUMBER,_Fields.RECORDED_BY,_Fields.REPRODUCTIVE_CONDITION,_Fields.SEX};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ASSOCIATED_MEDIA, new org.apache.thrift.meta_data.FieldMetaData("associatedMedia", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ASSOCIATED_MEDIA, new org.apache.thrift.meta_data.FieldMetaData("associatedMedia", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ASSOCIATED_OCCURRENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedOccurrences", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ASSOCIATED_OCCURRENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedOccurrences", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ASSOCIATED_REFERENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedReferences", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ASSOCIATED_REFERENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedReferences", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ASSOCIATED_SEQUENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedSequences", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ASSOCIATED_SEQUENCES, new org.apache.thrift.meta_data.FieldMetaData("associatedSequences", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ASSOCIATED_TAXA, new org.apache.thrift.meta_data.FieldMetaData("associatedTaxa", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ASSOCIATED_TAXA, new org.apache.thrift.meta_data.FieldMetaData("associatedTaxa", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.BEHAVIOR, new org.apache.thrift.meta_data.FieldMetaData("behavior", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.BEHAVIOR, new org.apache.thrift.meta_data.FieldMetaData("behavior", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.CATALOG_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("catalogNumber", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.CATALOG_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("catalogNumber", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DISPOSITION, new org.apache.thrift.meta_data.FieldMetaData("disposition", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.DISPOSITION, new org.apache.thrift.meta_data.FieldMetaData("disposition", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ESTABLISHMENT_MEANS, new org.apache.thrift.meta_data.FieldMetaData("establishmentMeans", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ESTABLISHMENT_MEANS, new org.apache.thrift.meta_data.FieldMetaData("establishmentMeans", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INDIVIDUAL_COUNT, new org.apache.thrift.meta_data.FieldMetaData("individualCount", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.INDIVIDUAL_COUNT, new org.apache.thrift.meta_data.FieldMetaData("individualCount", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INDIVIDUAL_ID, new org.apache.thrift.meta_data.FieldMetaData("individualID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.INDIVIDUAL_ID, new org.apache.thrift.meta_data.FieldMetaData("individualID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LIFE_STAGE, new org.apache.thrift.meta_data.FieldMetaData("lifeStage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LIFE_STAGE, new org.apache.thrift.meta_data.FieldMetaData("lifeStage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.OCCURRENCE_ID, new org.apache.thrift.meta_data.FieldMetaData("occurrenceID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.OCCURRENCE_ID, new org.apache.thrift.meta_data.FieldMetaData("occurrenceID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.OCCURRENCE_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("occurrenceRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.OCCURRENCE_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("occurrenceRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.OCCURRENCE_STATUS, new org.apache.thrift.meta_data.FieldMetaData("occurrenceStatus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.OCCURRENCE_STATUS, new org.apache.thrift.meta_data.FieldMetaData("occurrenceStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.OTHER_CATALOG_NUMBERS, new org.apache.thrift.meta_data.FieldMetaData("otherCatalogNumbers", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.OTHER_CATALOG_NUMBERS, new org.apache.thrift.meta_data.FieldMetaData("otherCatalogNumbers", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PREPARATIONS, new org.apache.thrift.meta_data.FieldMetaData("preparations", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PREPARATIONS, new org.apache.thrift.meta_data.FieldMetaData("preparations", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PREVIOUS_IDENTIFICATIONS, new org.apache.thrift.meta_data.FieldMetaData("previousIdentifications", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PREVIOUS_IDENTIFICATIONS, new org.apache.thrift.meta_data.FieldMetaData("previousIdentifications", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RECORD_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("recordNumber", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RECORD_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("recordNumber", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RECORDED_BY, new org.apache.thrift.meta_data.FieldMetaData("recordedBy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RECORDED_BY, new org.apache.thrift.meta_data.FieldMetaData("recordedBy", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.REPRODUCTIVE_CONDITION, new org.apache.thrift.meta_data.FieldMetaData("reproductiveCondition", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.REPRODUCTIVE_CONDITION, new org.apache.thrift.meta_data.FieldMetaData("reproductiveCondition", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SEX, new org.apache.thrift.meta_data.FieldMetaData("sex", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SEX, new org.apache.thrift.meta_data.FieldMetaData("sex", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Occurrence.class, metaDataMap);
   }
 
   public Occurrence() {
+  }
+
+  public Occurrence(
+    String associatedMedia,
+    String associatedOccurrences,
+    String associatedReferences,
+    String associatedSequences,
+    String associatedTaxa,
+    String behavior,
+    String catalogNumber,
+    String disposition,
+    String establishmentMeans,
+    String individualCount,
+    String individualID,
+    String lifeStage,
+    String occurrenceID,
+    String occurrenceRemarks,
+    String occurrenceStatus,
+    String otherCatalogNumbers,
+    String preparations,
+    String previousIdentifications,
+    String recordNumber,
+    String recordedBy,
+    String reproductiveCondition,
+    String sex)
+  {
+    this();
+    this.associatedMedia = associatedMedia;
+    this.associatedOccurrences = associatedOccurrences;
+    this.associatedReferences = associatedReferences;
+    this.associatedSequences = associatedSequences;
+    this.associatedTaxa = associatedTaxa;
+    this.behavior = behavior;
+    this.catalogNumber = catalogNumber;
+    this.disposition = disposition;
+    this.establishmentMeans = establishmentMeans;
+    this.individualCount = individualCount;
+    this.individualID = individualID;
+    this.lifeStage = lifeStage;
+    this.occurrenceID = occurrenceID;
+    this.occurrenceRemarks = occurrenceRemarks;
+    this.occurrenceStatus = occurrenceStatus;
+    this.otherCatalogNumbers = otherCatalogNumbers;
+    this.preparations = preparations;
+    this.previousIdentifications = previousIdentifications;
+    this.recordNumber = recordNumber;
+    this.recordedBy = recordedBy;
+    this.reproductiveCondition = reproductiveCondition;
+    this.sex = sex;
   }
 
   /**
@@ -1777,225 +1825,181 @@ public class Occurrence implements org.apache.thrift.TBase<Occurrence, Occurrenc
     StringBuilder sb = new StringBuilder("Occurrence(");
     boolean first = true;
 
-    if (isSetAssociatedMedia()) {
-      sb.append("associatedMedia:");
-      if (this.associatedMedia == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.associatedMedia);
-      }
-      first = false;
+    sb.append("associatedMedia:");
+    if (this.associatedMedia == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.associatedMedia);
     }
-    if (isSetAssociatedOccurrences()) {
-      if (!first) sb.append(", ");
-      sb.append("associatedOccurrences:");
-      if (this.associatedOccurrences == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.associatedOccurrences);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("associatedOccurrences:");
+    if (this.associatedOccurrences == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.associatedOccurrences);
     }
-    if (isSetAssociatedReferences()) {
-      if (!first) sb.append(", ");
-      sb.append("associatedReferences:");
-      if (this.associatedReferences == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.associatedReferences);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("associatedReferences:");
+    if (this.associatedReferences == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.associatedReferences);
     }
-    if (isSetAssociatedSequences()) {
-      if (!first) sb.append(", ");
-      sb.append("associatedSequences:");
-      if (this.associatedSequences == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.associatedSequences);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("associatedSequences:");
+    if (this.associatedSequences == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.associatedSequences);
     }
-    if (isSetAssociatedTaxa()) {
-      if (!first) sb.append(", ");
-      sb.append("associatedTaxa:");
-      if (this.associatedTaxa == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.associatedTaxa);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("associatedTaxa:");
+    if (this.associatedTaxa == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.associatedTaxa);
     }
-    if (isSetBehavior()) {
-      if (!first) sb.append(", ");
-      sb.append("behavior:");
-      if (this.behavior == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.behavior);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("behavior:");
+    if (this.behavior == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.behavior);
     }
-    if (isSetCatalogNumber()) {
-      if (!first) sb.append(", ");
-      sb.append("catalogNumber:");
-      if (this.catalogNumber == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.catalogNumber);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("catalogNumber:");
+    if (this.catalogNumber == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.catalogNumber);
     }
-    if (isSetDisposition()) {
-      if (!first) sb.append(", ");
-      sb.append("disposition:");
-      if (this.disposition == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.disposition);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("disposition:");
+    if (this.disposition == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.disposition);
     }
-    if (isSetEstablishmentMeans()) {
-      if (!first) sb.append(", ");
-      sb.append("establishmentMeans:");
-      if (this.establishmentMeans == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.establishmentMeans);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("establishmentMeans:");
+    if (this.establishmentMeans == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.establishmentMeans);
     }
-    if (isSetIndividualCount()) {
-      if (!first) sb.append(", ");
-      sb.append("individualCount:");
-      if (this.individualCount == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.individualCount);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("individualCount:");
+    if (this.individualCount == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.individualCount);
     }
-    if (isSetIndividualID()) {
-      if (!first) sb.append(", ");
-      sb.append("individualID:");
-      if (this.individualID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.individualID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("individualID:");
+    if (this.individualID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.individualID);
     }
-    if (isSetLifeStage()) {
-      if (!first) sb.append(", ");
-      sb.append("lifeStage:");
-      if (this.lifeStage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.lifeStage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("lifeStage:");
+    if (this.lifeStage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.lifeStage);
     }
-    if (isSetOccurrenceID()) {
-      if (!first) sb.append(", ");
-      sb.append("occurrenceID:");
-      if (this.occurrenceID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.occurrenceID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("occurrenceID:");
+    if (this.occurrenceID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.occurrenceID);
     }
-    if (isSetOccurrenceRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("occurrenceRemarks:");
-      if (this.occurrenceRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.occurrenceRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("occurrenceRemarks:");
+    if (this.occurrenceRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.occurrenceRemarks);
     }
-    if (isSetOccurrenceStatus()) {
-      if (!first) sb.append(", ");
-      sb.append("occurrenceStatus:");
-      if (this.occurrenceStatus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.occurrenceStatus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("occurrenceStatus:");
+    if (this.occurrenceStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.occurrenceStatus);
     }
-    if (isSetOtherCatalogNumbers()) {
-      if (!first) sb.append(", ");
-      sb.append("otherCatalogNumbers:");
-      if (this.otherCatalogNumbers == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.otherCatalogNumbers);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("otherCatalogNumbers:");
+    if (this.otherCatalogNumbers == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.otherCatalogNumbers);
     }
-    if (isSetPreparations()) {
-      if (!first) sb.append(", ");
-      sb.append("preparations:");
-      if (this.preparations == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.preparations);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("preparations:");
+    if (this.preparations == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.preparations);
     }
-    if (isSetPreviousIdentifications()) {
-      if (!first) sb.append(", ");
-      sb.append("previousIdentifications:");
-      if (this.previousIdentifications == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.previousIdentifications);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("previousIdentifications:");
+    if (this.previousIdentifications == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.previousIdentifications);
     }
-    if (isSetRecordNumber()) {
-      if (!first) sb.append(", ");
-      sb.append("recordNumber:");
-      if (this.recordNumber == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.recordNumber);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("recordNumber:");
+    if (this.recordNumber == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.recordNumber);
     }
-    if (isSetRecordedBy()) {
-      if (!first) sb.append(", ");
-      sb.append("recordedBy:");
-      if (this.recordedBy == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.recordedBy);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("recordedBy:");
+    if (this.recordedBy == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.recordedBy);
     }
-    if (isSetReproductiveCondition()) {
-      if (!first) sb.append(", ");
-      sb.append("reproductiveCondition:");
-      if (this.reproductiveCondition == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.reproductiveCondition);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("reproductiveCondition:");
+    if (this.reproductiveCondition == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.reproductiveCondition);
     }
-    if (isSetSex()) {
-      if (!first) sb.append(", ");
-      sb.append("sex:");
-      if (this.sex == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.sex);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("sex:");
+    if (this.sex == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.sex);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -2230,158 +2234,114 @@ public class Occurrence implements org.apache.thrift.TBase<Occurrence, Occurrenc
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.associatedMedia != null) {
-        if (struct.isSetAssociatedMedia()) {
-          oprot.writeFieldBegin(ASSOCIATED_MEDIA_FIELD_DESC);
-          oprot.writeString(struct.associatedMedia);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ASSOCIATED_MEDIA_FIELD_DESC);
+        oprot.writeString(struct.associatedMedia);
+        oprot.writeFieldEnd();
       }
       if (struct.associatedOccurrences != null) {
-        if (struct.isSetAssociatedOccurrences()) {
-          oprot.writeFieldBegin(ASSOCIATED_OCCURRENCES_FIELD_DESC);
-          oprot.writeString(struct.associatedOccurrences);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ASSOCIATED_OCCURRENCES_FIELD_DESC);
+        oprot.writeString(struct.associatedOccurrences);
+        oprot.writeFieldEnd();
       }
       if (struct.associatedReferences != null) {
-        if (struct.isSetAssociatedReferences()) {
-          oprot.writeFieldBegin(ASSOCIATED_REFERENCES_FIELD_DESC);
-          oprot.writeString(struct.associatedReferences);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ASSOCIATED_REFERENCES_FIELD_DESC);
+        oprot.writeString(struct.associatedReferences);
+        oprot.writeFieldEnd();
       }
       if (struct.associatedSequences != null) {
-        if (struct.isSetAssociatedSequences()) {
-          oprot.writeFieldBegin(ASSOCIATED_SEQUENCES_FIELD_DESC);
-          oprot.writeString(struct.associatedSequences);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ASSOCIATED_SEQUENCES_FIELD_DESC);
+        oprot.writeString(struct.associatedSequences);
+        oprot.writeFieldEnd();
       }
       if (struct.associatedTaxa != null) {
-        if (struct.isSetAssociatedTaxa()) {
-          oprot.writeFieldBegin(ASSOCIATED_TAXA_FIELD_DESC);
-          oprot.writeString(struct.associatedTaxa);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ASSOCIATED_TAXA_FIELD_DESC);
+        oprot.writeString(struct.associatedTaxa);
+        oprot.writeFieldEnd();
       }
       if (struct.behavior != null) {
-        if (struct.isSetBehavior()) {
-          oprot.writeFieldBegin(BEHAVIOR_FIELD_DESC);
-          oprot.writeString(struct.behavior);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(BEHAVIOR_FIELD_DESC);
+        oprot.writeString(struct.behavior);
+        oprot.writeFieldEnd();
       }
       if (struct.catalogNumber != null) {
-        if (struct.isSetCatalogNumber()) {
-          oprot.writeFieldBegin(CATALOG_NUMBER_FIELD_DESC);
-          oprot.writeString(struct.catalogNumber);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(CATALOG_NUMBER_FIELD_DESC);
+        oprot.writeString(struct.catalogNumber);
+        oprot.writeFieldEnd();
       }
       if (struct.disposition != null) {
-        if (struct.isSetDisposition()) {
-          oprot.writeFieldBegin(DISPOSITION_FIELD_DESC);
-          oprot.writeString(struct.disposition);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(DISPOSITION_FIELD_DESC);
+        oprot.writeString(struct.disposition);
+        oprot.writeFieldEnd();
       }
       if (struct.establishmentMeans != null) {
-        if (struct.isSetEstablishmentMeans()) {
-          oprot.writeFieldBegin(ESTABLISHMENT_MEANS_FIELD_DESC);
-          oprot.writeString(struct.establishmentMeans);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ESTABLISHMENT_MEANS_FIELD_DESC);
+        oprot.writeString(struct.establishmentMeans);
+        oprot.writeFieldEnd();
       }
       if (struct.individualCount != null) {
-        if (struct.isSetIndividualCount()) {
-          oprot.writeFieldBegin(INDIVIDUAL_COUNT_FIELD_DESC);
-          oprot.writeString(struct.individualCount);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(INDIVIDUAL_COUNT_FIELD_DESC);
+        oprot.writeString(struct.individualCount);
+        oprot.writeFieldEnd();
       }
       if (struct.individualID != null) {
-        if (struct.isSetIndividualID()) {
-          oprot.writeFieldBegin(INDIVIDUAL_ID_FIELD_DESC);
-          oprot.writeString(struct.individualID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(INDIVIDUAL_ID_FIELD_DESC);
+        oprot.writeString(struct.individualID);
+        oprot.writeFieldEnd();
       }
       if (struct.lifeStage != null) {
-        if (struct.isSetLifeStage()) {
-          oprot.writeFieldBegin(LIFE_STAGE_FIELD_DESC);
-          oprot.writeString(struct.lifeStage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LIFE_STAGE_FIELD_DESC);
+        oprot.writeString(struct.lifeStage);
+        oprot.writeFieldEnd();
       }
       if (struct.occurrenceID != null) {
-        if (struct.isSetOccurrenceID()) {
-          oprot.writeFieldBegin(OCCURRENCE_ID_FIELD_DESC);
-          oprot.writeString(struct.occurrenceID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(OCCURRENCE_ID_FIELD_DESC);
+        oprot.writeString(struct.occurrenceID);
+        oprot.writeFieldEnd();
       }
       if (struct.occurrenceRemarks != null) {
-        if (struct.isSetOccurrenceRemarks()) {
-          oprot.writeFieldBegin(OCCURRENCE_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.occurrenceRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(OCCURRENCE_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.occurrenceRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.occurrenceStatus != null) {
-        if (struct.isSetOccurrenceStatus()) {
-          oprot.writeFieldBegin(OCCURRENCE_STATUS_FIELD_DESC);
-          oprot.writeString(struct.occurrenceStatus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(OCCURRENCE_STATUS_FIELD_DESC);
+        oprot.writeString(struct.occurrenceStatus);
+        oprot.writeFieldEnd();
       }
       if (struct.otherCatalogNumbers != null) {
-        if (struct.isSetOtherCatalogNumbers()) {
-          oprot.writeFieldBegin(OTHER_CATALOG_NUMBERS_FIELD_DESC);
-          oprot.writeString(struct.otherCatalogNumbers);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(OTHER_CATALOG_NUMBERS_FIELD_DESC);
+        oprot.writeString(struct.otherCatalogNumbers);
+        oprot.writeFieldEnd();
       }
       if (struct.preparations != null) {
-        if (struct.isSetPreparations()) {
-          oprot.writeFieldBegin(PREPARATIONS_FIELD_DESC);
-          oprot.writeString(struct.preparations);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(PREPARATIONS_FIELD_DESC);
+        oprot.writeString(struct.preparations);
+        oprot.writeFieldEnd();
       }
       if (struct.previousIdentifications != null) {
-        if (struct.isSetPreviousIdentifications()) {
-          oprot.writeFieldBegin(PREVIOUS_IDENTIFICATIONS_FIELD_DESC);
-          oprot.writeString(struct.previousIdentifications);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(PREVIOUS_IDENTIFICATIONS_FIELD_DESC);
+        oprot.writeString(struct.previousIdentifications);
+        oprot.writeFieldEnd();
       }
       if (struct.recordNumber != null) {
-        if (struct.isSetRecordNumber()) {
-          oprot.writeFieldBegin(RECORD_NUMBER_FIELD_DESC);
-          oprot.writeString(struct.recordNumber);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RECORD_NUMBER_FIELD_DESC);
+        oprot.writeString(struct.recordNumber);
+        oprot.writeFieldEnd();
       }
       if (struct.recordedBy != null) {
-        if (struct.isSetRecordedBy()) {
-          oprot.writeFieldBegin(RECORDED_BY_FIELD_DESC);
-          oprot.writeString(struct.recordedBy);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RECORDED_BY_FIELD_DESC);
+        oprot.writeString(struct.recordedBy);
+        oprot.writeFieldEnd();
       }
       if (struct.reproductiveCondition != null) {
-        if (struct.isSetReproductiveCondition()) {
-          oprot.writeFieldBegin(REPRODUCTIVE_CONDITION_FIELD_DESC);
-          oprot.writeString(struct.reproductiveCondition);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(REPRODUCTIVE_CONDITION_FIELD_DESC);
+        oprot.writeString(struct.reproductiveCondition);
+        oprot.writeFieldEnd();
       }
       if (struct.sex != null) {
-        if (struct.isSetSex()) {
-          oprot.writeFieldBegin(SEX_FIELD_DESC);
-          oprot.writeString(struct.sex);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SEX_FIELD_DESC);
+        oprot.writeString(struct.sex);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

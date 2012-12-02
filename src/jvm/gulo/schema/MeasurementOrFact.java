@@ -47,15 +47,15 @@ public class MeasurementOrFact implements org.apache.thrift.TBase<MeasurementOrF
     schemes.put(TupleScheme.class, new MeasurementOrFactTupleSchemeFactory());
   }
 
-  public String measurementAccuracy; // optional
-  public String measurementDeterminedBy; // optional
-  public String measurementDeterminedDate; // optional
-  public String measurementID; // optional
-  public String measurementMethod; // optional
-  public String measurementRemarks; // optional
-  public String measurementType; // optional
-  public String measurementUnit; // optional
-  public String measurementValue; // optional
+  public String measurementAccuracy; // required
+  public String measurementDeterminedBy; // required
+  public String measurementDeterminedDate; // required
+  public String measurementID; // required
+  public String measurementMethod; // required
+  public String measurementRemarks; // required
+  public String measurementType; // required
+  public String measurementUnit; // required
+  public String measurementValue; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -140,33 +140,55 @@ public class MeasurementOrFact implements org.apache.thrift.TBase<MeasurementOrF
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.MEASUREMENT_ACCURACY,_Fields.MEASUREMENT_DETERMINED_BY,_Fields.MEASUREMENT_DETERMINED_DATE,_Fields.MEASUREMENT_ID,_Fields.MEASUREMENT_METHOD,_Fields.MEASUREMENT_REMARKS,_Fields.MEASUREMENT_TYPE,_Fields.MEASUREMENT_UNIT,_Fields.MEASUREMENT_VALUE};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.MEASUREMENT_ACCURACY, new org.apache.thrift.meta_data.FieldMetaData("measurementAccuracy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_ACCURACY, new org.apache.thrift.meta_data.FieldMetaData("measurementAccuracy", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_DETERMINED_BY, new org.apache.thrift.meta_data.FieldMetaData("measurementDeterminedBy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_DETERMINED_BY, new org.apache.thrift.meta_data.FieldMetaData("measurementDeterminedBy", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_DETERMINED_DATE, new org.apache.thrift.meta_data.FieldMetaData("measurementDeterminedDate", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_DETERMINED_DATE, new org.apache.thrift.meta_data.FieldMetaData("measurementDeterminedDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_ID, new org.apache.thrift.meta_data.FieldMetaData("measurementID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_ID, new org.apache.thrift.meta_data.FieldMetaData("measurementID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_METHOD, new org.apache.thrift.meta_data.FieldMetaData("measurementMethod", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_METHOD, new org.apache.thrift.meta_data.FieldMetaData("measurementMethod", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("measurementRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("measurementRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_TYPE, new org.apache.thrift.meta_data.FieldMetaData("measurementType", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_TYPE, new org.apache.thrift.meta_data.FieldMetaData("measurementType", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_UNIT, new org.apache.thrift.meta_data.FieldMetaData("measurementUnit", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_UNIT, new org.apache.thrift.meta_data.FieldMetaData("measurementUnit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEASUREMENT_VALUE, new org.apache.thrift.meta_data.FieldMetaData("measurementValue", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEASUREMENT_VALUE, new org.apache.thrift.meta_data.FieldMetaData("measurementValue", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(MeasurementOrFact.class, metaDataMap);
   }
 
   public MeasurementOrFact() {
+  }
+
+  public MeasurementOrFact(
+    String measurementAccuracy,
+    String measurementDeterminedBy,
+    String measurementDeterminedDate,
+    String measurementID,
+    String measurementMethod,
+    String measurementRemarks,
+    String measurementType,
+    String measurementUnit,
+    String measurementValue)
+  {
+    this();
+    this.measurementAccuracy = measurementAccuracy;
+    this.measurementDeterminedBy = measurementDeterminedBy;
+    this.measurementDeterminedDate = measurementDeterminedDate;
+    this.measurementID = measurementID;
+    this.measurementMethod = measurementMethod;
+    this.measurementRemarks = measurementRemarks;
+    this.measurementType = measurementType;
+    this.measurementUnit = measurementUnit;
+    this.measurementValue = measurementValue;
   }
 
   /**
@@ -841,95 +863,77 @@ public class MeasurementOrFact implements org.apache.thrift.TBase<MeasurementOrF
     StringBuilder sb = new StringBuilder("MeasurementOrFact(");
     boolean first = true;
 
-    if (isSetMeasurementAccuracy()) {
-      sb.append("measurementAccuracy:");
-      if (this.measurementAccuracy == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementAccuracy);
-      }
-      first = false;
+    sb.append("measurementAccuracy:");
+    if (this.measurementAccuracy == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementAccuracy);
     }
-    if (isSetMeasurementDeterminedBy()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementDeterminedBy:");
-      if (this.measurementDeterminedBy == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementDeterminedBy);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementDeterminedBy:");
+    if (this.measurementDeterminedBy == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementDeterminedBy);
     }
-    if (isSetMeasurementDeterminedDate()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementDeterminedDate:");
-      if (this.measurementDeterminedDate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementDeterminedDate);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementDeterminedDate:");
+    if (this.measurementDeterminedDate == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementDeterminedDate);
     }
-    if (isSetMeasurementID()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementID:");
-      if (this.measurementID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementID:");
+    if (this.measurementID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementID);
     }
-    if (isSetMeasurementMethod()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementMethod:");
-      if (this.measurementMethod == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementMethod);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementMethod:");
+    if (this.measurementMethod == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementMethod);
     }
-    if (isSetMeasurementRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementRemarks:");
-      if (this.measurementRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementRemarks:");
+    if (this.measurementRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementRemarks);
     }
-    if (isSetMeasurementType()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementType:");
-      if (this.measurementType == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementType);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementType:");
+    if (this.measurementType == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementType);
     }
-    if (isSetMeasurementUnit()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementUnit:");
-      if (this.measurementUnit == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementUnit);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementUnit:");
+    if (this.measurementUnit == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementUnit);
     }
-    if (isSetMeasurementValue()) {
-      if (!first) sb.append(", ");
-      sb.append("measurementValue:");
-      if (this.measurementValue == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.measurementValue);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("measurementValue:");
+    if (this.measurementValue == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.measurementValue);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -1060,67 +1064,49 @@ public class MeasurementOrFact implements org.apache.thrift.TBase<MeasurementOrF
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.measurementAccuracy != null) {
-        if (struct.isSetMeasurementAccuracy()) {
-          oprot.writeFieldBegin(MEASUREMENT_ACCURACY_FIELD_DESC);
-          oprot.writeString(struct.measurementAccuracy);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_ACCURACY_FIELD_DESC);
+        oprot.writeString(struct.measurementAccuracy);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementDeterminedBy != null) {
-        if (struct.isSetMeasurementDeterminedBy()) {
-          oprot.writeFieldBegin(MEASUREMENT_DETERMINED_BY_FIELD_DESC);
-          oprot.writeString(struct.measurementDeterminedBy);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_DETERMINED_BY_FIELD_DESC);
+        oprot.writeString(struct.measurementDeterminedBy);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementDeterminedDate != null) {
-        if (struct.isSetMeasurementDeterminedDate()) {
-          oprot.writeFieldBegin(MEASUREMENT_DETERMINED_DATE_FIELD_DESC);
-          oprot.writeString(struct.measurementDeterminedDate);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_DETERMINED_DATE_FIELD_DESC);
+        oprot.writeString(struct.measurementDeterminedDate);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementID != null) {
-        if (struct.isSetMeasurementID()) {
-          oprot.writeFieldBegin(MEASUREMENT_ID_FIELD_DESC);
-          oprot.writeString(struct.measurementID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_ID_FIELD_DESC);
+        oprot.writeString(struct.measurementID);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementMethod != null) {
-        if (struct.isSetMeasurementMethod()) {
-          oprot.writeFieldBegin(MEASUREMENT_METHOD_FIELD_DESC);
-          oprot.writeString(struct.measurementMethod);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_METHOD_FIELD_DESC);
+        oprot.writeString(struct.measurementMethod);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementRemarks != null) {
-        if (struct.isSetMeasurementRemarks()) {
-          oprot.writeFieldBegin(MEASUREMENT_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.measurementRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.measurementRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementType != null) {
-        if (struct.isSetMeasurementType()) {
-          oprot.writeFieldBegin(MEASUREMENT_TYPE_FIELD_DESC);
-          oprot.writeString(struct.measurementType);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_TYPE_FIELD_DESC);
+        oprot.writeString(struct.measurementType);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementUnit != null) {
-        if (struct.isSetMeasurementUnit()) {
-          oprot.writeFieldBegin(MEASUREMENT_UNIT_FIELD_DESC);
-          oprot.writeString(struct.measurementUnit);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_UNIT_FIELD_DESC);
+        oprot.writeString(struct.measurementUnit);
+        oprot.writeFieldEnd();
       }
       if (struct.measurementValue != null) {
-        if (struct.isSetMeasurementValue()) {
-          oprot.writeFieldBegin(MEASUREMENT_VALUE_FIELD_DESC);
-          oprot.writeString(struct.measurementValue);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEASUREMENT_VALUE_FIELD_DESC);
+        oprot.writeString(struct.measurementValue);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

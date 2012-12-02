@@ -53,21 +53,21 @@ public class Event implements org.apache.thrift.TBase<Event, Event._Fields>, jav
     schemes.put(TupleScheme.class, new EventTupleSchemeFactory());
   }
 
-  public String day; // optional
-  public String endDayOfYear; // optional
-  public String eventDate; // optional
-  public String eventID; // optional
-  public String eventRemarks; // optional
-  public String eventTime; // optional
-  public String fieldNotes; // optional
-  public String fieldNumber; // optional
-  public String habitat; // optional
-  public String month; // optional
-  public String samplingEffort; // optional
-  public String samplingProtocol; // optional
-  public String startDayOfYear; // optional
-  public String verbatimEventDate; // optional
-  public String year; // optional
+  public String day; // required
+  public String endDayOfYear; // required
+  public String eventDate; // required
+  public String eventID; // required
+  public String eventRemarks; // required
+  public String eventTime; // required
+  public String fieldNotes; // required
+  public String fieldNumber; // required
+  public String habitat; // required
+  public String month; // required
+  public String samplingEffort; // required
+  public String samplingProtocol; // required
+  public String startDayOfYear; // required
+  public String verbatimEventDate; // required
+  public String year; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -170,45 +170,79 @@ public class Event implements org.apache.thrift.TBase<Event, Event._Fields>, jav
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.DAY,_Fields.END_DAY_OF_YEAR,_Fields.EVENT_DATE,_Fields.EVENT_ID,_Fields.EVENT_REMARKS,_Fields.EVENT_TIME,_Fields.FIELD_NOTES,_Fields.FIELD_NUMBER,_Fields.HABITAT,_Fields.MONTH,_Fields.SAMPLING_EFFORT,_Fields.SAMPLING_PROTOCOL,_Fields.START_DAY_OF_YEAR,_Fields.VERBATIM_EVENT_DATE,_Fields.YEAR};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.DAY, new org.apache.thrift.meta_data.FieldMetaData("day", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.DAY, new org.apache.thrift.meta_data.FieldMetaData("day", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.END_DAY_OF_YEAR, new org.apache.thrift.meta_data.FieldMetaData("endDayOfYear", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.END_DAY_OF_YEAR, new org.apache.thrift.meta_data.FieldMetaData("endDayOfYear", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EVENT_DATE, new org.apache.thrift.meta_data.FieldMetaData("eventDate", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EVENT_DATE, new org.apache.thrift.meta_data.FieldMetaData("eventDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EVENT_ID, new org.apache.thrift.meta_data.FieldMetaData("eventID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EVENT_ID, new org.apache.thrift.meta_data.FieldMetaData("eventID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EVENT_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("eventRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EVENT_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("eventRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EVENT_TIME, new org.apache.thrift.meta_data.FieldMetaData("eventTime", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EVENT_TIME, new org.apache.thrift.meta_data.FieldMetaData("eventTime", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FIELD_NOTES, new org.apache.thrift.meta_data.FieldMetaData("fieldNotes", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FIELD_NOTES, new org.apache.thrift.meta_data.FieldMetaData("fieldNotes", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FIELD_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("fieldNumber", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FIELD_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("fieldNumber", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HABITAT, new org.apache.thrift.meta_data.FieldMetaData("habitat", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.HABITAT, new org.apache.thrift.meta_data.FieldMetaData("habitat", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MONTH, new org.apache.thrift.meta_data.FieldMetaData("month", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MONTH, new org.apache.thrift.meta_data.FieldMetaData("month", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SAMPLING_EFFORT, new org.apache.thrift.meta_data.FieldMetaData("samplingEffort", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SAMPLING_EFFORT, new org.apache.thrift.meta_data.FieldMetaData("samplingEffort", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SAMPLING_PROTOCOL, new org.apache.thrift.meta_data.FieldMetaData("samplingProtocol", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SAMPLING_PROTOCOL, new org.apache.thrift.meta_data.FieldMetaData("samplingProtocol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.START_DAY_OF_YEAR, new org.apache.thrift.meta_data.FieldMetaData("startDayOfYear", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.START_DAY_OF_YEAR, new org.apache.thrift.meta_data.FieldMetaData("startDayOfYear", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_EVENT_DATE, new org.apache.thrift.meta_data.FieldMetaData("verbatimEventDate", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_EVENT_DATE, new org.apache.thrift.meta_data.FieldMetaData("verbatimEventDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.YEAR, new org.apache.thrift.meta_data.FieldMetaData("year", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.YEAR, new org.apache.thrift.meta_data.FieldMetaData("year", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Event.class, metaDataMap);
   }
 
   public Event() {
+  }
+
+  public Event(
+    String day,
+    String endDayOfYear,
+    String eventDate,
+    String eventID,
+    String eventRemarks,
+    String eventTime,
+    String fieldNotes,
+    String fieldNumber,
+    String habitat,
+    String month,
+    String samplingEffort,
+    String samplingProtocol,
+    String startDayOfYear,
+    String verbatimEventDate,
+    String year)
+  {
+    this();
+    this.day = day;
+    this.endDayOfYear = endDayOfYear;
+    this.eventDate = eventDate;
+    this.eventID = eventID;
+    this.eventRemarks = eventRemarks;
+    this.eventTime = eventTime;
+    this.fieldNotes = fieldNotes;
+    this.fieldNumber = fieldNumber;
+    this.habitat = habitat;
+    this.month = month;
+    this.samplingEffort = samplingEffort;
+    this.samplingProtocol = samplingProtocol;
+    this.startDayOfYear = startDayOfYear;
+    this.verbatimEventDate = verbatimEventDate;
+    this.year = year;
   }
 
   /**
@@ -1273,155 +1307,125 @@ public class Event implements org.apache.thrift.TBase<Event, Event._Fields>, jav
     StringBuilder sb = new StringBuilder("Event(");
     boolean first = true;
 
-    if (isSetDay()) {
-      sb.append("day:");
-      if (this.day == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.day);
-      }
-      first = false;
+    sb.append("day:");
+    if (this.day == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.day);
     }
-    if (isSetEndDayOfYear()) {
-      if (!first) sb.append(", ");
-      sb.append("endDayOfYear:");
-      if (this.endDayOfYear == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.endDayOfYear);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("endDayOfYear:");
+    if (this.endDayOfYear == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.endDayOfYear);
     }
-    if (isSetEventDate()) {
-      if (!first) sb.append(", ");
-      sb.append("eventDate:");
-      if (this.eventDate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.eventDate);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("eventDate:");
+    if (this.eventDate == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.eventDate);
     }
-    if (isSetEventID()) {
-      if (!first) sb.append(", ");
-      sb.append("eventID:");
-      if (this.eventID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.eventID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("eventID:");
+    if (this.eventID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.eventID);
     }
-    if (isSetEventRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("eventRemarks:");
-      if (this.eventRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.eventRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("eventRemarks:");
+    if (this.eventRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.eventRemarks);
     }
-    if (isSetEventTime()) {
-      if (!first) sb.append(", ");
-      sb.append("eventTime:");
-      if (this.eventTime == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.eventTime);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("eventTime:");
+    if (this.eventTime == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.eventTime);
     }
-    if (isSetFieldNotes()) {
-      if (!first) sb.append(", ");
-      sb.append("fieldNotes:");
-      if (this.fieldNotes == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.fieldNotes);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("fieldNotes:");
+    if (this.fieldNotes == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.fieldNotes);
     }
-    if (isSetFieldNumber()) {
-      if (!first) sb.append(", ");
-      sb.append("fieldNumber:");
-      if (this.fieldNumber == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.fieldNumber);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("fieldNumber:");
+    if (this.fieldNumber == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.fieldNumber);
     }
-    if (isSetHabitat()) {
-      if (!first) sb.append(", ");
-      sb.append("habitat:");
-      if (this.habitat == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.habitat);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("habitat:");
+    if (this.habitat == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.habitat);
     }
-    if (isSetMonth()) {
-      if (!first) sb.append(", ");
-      sb.append("month:");
-      if (this.month == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.month);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("month:");
+    if (this.month == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.month);
     }
-    if (isSetSamplingEffort()) {
-      if (!first) sb.append(", ");
-      sb.append("samplingEffort:");
-      if (this.samplingEffort == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.samplingEffort);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("samplingEffort:");
+    if (this.samplingEffort == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.samplingEffort);
     }
-    if (isSetSamplingProtocol()) {
-      if (!first) sb.append(", ");
-      sb.append("samplingProtocol:");
-      if (this.samplingProtocol == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.samplingProtocol);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("samplingProtocol:");
+    if (this.samplingProtocol == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.samplingProtocol);
     }
-    if (isSetStartDayOfYear()) {
-      if (!first) sb.append(", ");
-      sb.append("startDayOfYear:");
-      if (this.startDayOfYear == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.startDayOfYear);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("startDayOfYear:");
+    if (this.startDayOfYear == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.startDayOfYear);
     }
-    if (isSetVerbatimEventDate()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimEventDate:");
-      if (this.verbatimEventDate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimEventDate);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimEventDate:");
+    if (this.verbatimEventDate == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimEventDate);
     }
-    if (isSetYear()) {
-      if (!first) sb.append(", ");
-      sb.append("year:");
-      if (this.year == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.year);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("year:");
+    if (this.year == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.year);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -1600,109 +1604,79 @@ public class Event implements org.apache.thrift.TBase<Event, Event._Fields>, jav
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.day != null) {
-        if (struct.isSetDay()) {
-          oprot.writeFieldBegin(DAY_FIELD_DESC);
-          oprot.writeString(struct.day);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(DAY_FIELD_DESC);
+        oprot.writeString(struct.day);
+        oprot.writeFieldEnd();
       }
       if (struct.endDayOfYear != null) {
-        if (struct.isSetEndDayOfYear()) {
-          oprot.writeFieldBegin(END_DAY_OF_YEAR_FIELD_DESC);
-          oprot.writeString(struct.endDayOfYear);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(END_DAY_OF_YEAR_FIELD_DESC);
+        oprot.writeString(struct.endDayOfYear);
+        oprot.writeFieldEnd();
       }
       if (struct.eventDate != null) {
-        if (struct.isSetEventDate()) {
-          oprot.writeFieldBegin(EVENT_DATE_FIELD_DESC);
-          oprot.writeString(struct.eventDate);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EVENT_DATE_FIELD_DESC);
+        oprot.writeString(struct.eventDate);
+        oprot.writeFieldEnd();
       }
       if (struct.eventID != null) {
-        if (struct.isSetEventID()) {
-          oprot.writeFieldBegin(EVENT_ID_FIELD_DESC);
-          oprot.writeString(struct.eventID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EVENT_ID_FIELD_DESC);
+        oprot.writeString(struct.eventID);
+        oprot.writeFieldEnd();
       }
       if (struct.eventRemarks != null) {
-        if (struct.isSetEventRemarks()) {
-          oprot.writeFieldBegin(EVENT_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.eventRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EVENT_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.eventRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.eventTime != null) {
-        if (struct.isSetEventTime()) {
-          oprot.writeFieldBegin(EVENT_TIME_FIELD_DESC);
-          oprot.writeString(struct.eventTime);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EVENT_TIME_FIELD_DESC);
+        oprot.writeString(struct.eventTime);
+        oprot.writeFieldEnd();
       }
       if (struct.fieldNotes != null) {
-        if (struct.isSetFieldNotes()) {
-          oprot.writeFieldBegin(FIELD_NOTES_FIELD_DESC);
-          oprot.writeString(struct.fieldNotes);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FIELD_NOTES_FIELD_DESC);
+        oprot.writeString(struct.fieldNotes);
+        oprot.writeFieldEnd();
       }
       if (struct.fieldNumber != null) {
-        if (struct.isSetFieldNumber()) {
-          oprot.writeFieldBegin(FIELD_NUMBER_FIELD_DESC);
-          oprot.writeString(struct.fieldNumber);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FIELD_NUMBER_FIELD_DESC);
+        oprot.writeString(struct.fieldNumber);
+        oprot.writeFieldEnd();
       }
       if (struct.habitat != null) {
-        if (struct.isSetHabitat()) {
-          oprot.writeFieldBegin(HABITAT_FIELD_DESC);
-          oprot.writeString(struct.habitat);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(HABITAT_FIELD_DESC);
+        oprot.writeString(struct.habitat);
+        oprot.writeFieldEnd();
       }
       if (struct.month != null) {
-        if (struct.isSetMonth()) {
-          oprot.writeFieldBegin(MONTH_FIELD_DESC);
-          oprot.writeString(struct.month);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MONTH_FIELD_DESC);
+        oprot.writeString(struct.month);
+        oprot.writeFieldEnd();
       }
       if (struct.samplingEffort != null) {
-        if (struct.isSetSamplingEffort()) {
-          oprot.writeFieldBegin(SAMPLING_EFFORT_FIELD_DESC);
-          oprot.writeString(struct.samplingEffort);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SAMPLING_EFFORT_FIELD_DESC);
+        oprot.writeString(struct.samplingEffort);
+        oprot.writeFieldEnd();
       }
       if (struct.samplingProtocol != null) {
-        if (struct.isSetSamplingProtocol()) {
-          oprot.writeFieldBegin(SAMPLING_PROTOCOL_FIELD_DESC);
-          oprot.writeString(struct.samplingProtocol);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SAMPLING_PROTOCOL_FIELD_DESC);
+        oprot.writeString(struct.samplingProtocol);
+        oprot.writeFieldEnd();
       }
       if (struct.startDayOfYear != null) {
-        if (struct.isSetStartDayOfYear()) {
-          oprot.writeFieldBegin(START_DAY_OF_YEAR_FIELD_DESC);
-          oprot.writeString(struct.startDayOfYear);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(START_DAY_OF_YEAR_FIELD_DESC);
+        oprot.writeString(struct.startDayOfYear);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimEventDate != null) {
-        if (struct.isSetVerbatimEventDate()) {
-          oprot.writeFieldBegin(VERBATIM_EVENT_DATE_FIELD_DESC);
-          oprot.writeString(struct.verbatimEventDate);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_EVENT_DATE_FIELD_DESC);
+        oprot.writeString(struct.verbatimEventDate);
+        oprot.writeFieldEnd();
       }
       if (struct.year != null) {
-        if (struct.isSetYear()) {
-          oprot.writeFieldBegin(YEAR_FIELD_DESC);
-          oprot.writeString(struct.year);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(YEAR_FIELD_DESC);
+        oprot.writeString(struct.year);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

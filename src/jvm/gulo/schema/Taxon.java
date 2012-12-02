@@ -71,39 +71,39 @@ public class Taxon implements org.apache.thrift.TBase<Taxon, Taxon._Fields>, jav
     schemes.put(TupleScheme.class, new TaxonTupleSchemeFactory());
   }
 
-  public String acceptedNameUsage; // optional
-  public String acceptedNameUsageID; // optional
-  public String clazz; // optional
-  public String family; // optional
-  public String genus; // optional
-  public String higherClassification; // optional
-  public String infraspecificEpithet; // optional
-  public String kingdom; // optional
-  public String nameAccordingTo; // optional
-  public String nameAccordingToID; // optional
-  public String namePublishedIn; // optional
-  public String namePublishedInID; // optional
-  public String namePublishedInYear; // optional
-  public String nomenclaturalCode; // optional
-  public String nomenclaturalStatus; // optional
-  public String order; // optional
-  public String originalNameUsage; // optional
-  public String originalNameUsageID; // optional
-  public String parentNameUsage; // optional
-  public String parentNameUsageID; // optional
-  public String phylum; // optional
-  public String scientificName; // optional
-  public String scientificNameAuthorship; // optional
-  public String scientificNameID; // optional
-  public String specificEpithet; // optional
-  public String subgenus; // optional
-  public String taxonConceptID; // optional
-  public String taxonID; // optional
-  public String taxonRank; // optional
-  public String taxonRemarks; // optional
-  public String taxonomicStatus; // optional
-  public String verbatimTaxonRank; // optional
-  public String vernacularName; // optional
+  public String acceptedNameUsage; // required
+  public String acceptedNameUsageID; // required
+  public String clazz; // required
+  public String family; // required
+  public String genus; // required
+  public String higherClassification; // required
+  public String infraspecificEpithet; // required
+  public String kingdom; // required
+  public String nameAccordingTo; // required
+  public String nameAccordingToID; // required
+  public String namePublishedIn; // required
+  public String namePublishedInID; // required
+  public String namePublishedInYear; // required
+  public String nomenclaturalCode; // required
+  public String nomenclaturalStatus; // required
+  public String order; // required
+  public String originalNameUsage; // required
+  public String originalNameUsageID; // required
+  public String parentNameUsage; // required
+  public String parentNameUsageID; // required
+  public String phylum; // required
+  public String scientificName; // required
+  public String scientificNameAuthorship; // required
+  public String scientificNameID; // required
+  public String specificEpithet; // required
+  public String subgenus; // required
+  public String taxonConceptID; // required
+  public String taxonID; // required
+  public String taxonRank; // required
+  public String taxonRemarks; // required
+  public String taxonomicStatus; // required
+  public String verbatimTaxonRank; // required
+  public String vernacularName; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -260,81 +260,151 @@ public class Taxon implements org.apache.thrift.TBase<Taxon, Taxon._Fields>, jav
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.ACCEPTED_NAME_USAGE,_Fields.ACCEPTED_NAME_USAGE_ID,_Fields.CLAZZ,_Fields.FAMILY,_Fields.GENUS,_Fields.HIGHER_CLASSIFICATION,_Fields.INFRASPECIFIC_EPITHET,_Fields.KINGDOM,_Fields.NAME_ACCORDING_TO,_Fields.NAME_ACCORDING_TO_ID,_Fields.NAME_PUBLISHED_IN,_Fields.NAME_PUBLISHED_IN_ID,_Fields.NAME_PUBLISHED_IN_YEAR,_Fields.NOMENCLATURAL_CODE,_Fields.NOMENCLATURAL_STATUS,_Fields.ORDER,_Fields.ORIGINAL_NAME_USAGE,_Fields.ORIGINAL_NAME_USAGE_ID,_Fields.PARENT_NAME_USAGE,_Fields.PARENT_NAME_USAGE_ID,_Fields.PHYLUM,_Fields.SCIENTIFIC_NAME,_Fields.SCIENTIFIC_NAME_AUTHORSHIP,_Fields.SCIENTIFIC_NAME_ID,_Fields.SPECIFIC_EPITHET,_Fields.SUBGENUS,_Fields.TAXON_CONCEPT_ID,_Fields.TAXON_ID,_Fields.TAXON_RANK,_Fields.TAXON_REMARKS,_Fields.TAXONOMIC_STATUS,_Fields.VERBATIM_TAXON_RANK,_Fields.VERNACULAR_NAME};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ACCEPTED_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("acceptedNameUsage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ACCEPTED_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("acceptedNameUsage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ACCEPTED_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("acceptedNameUsageID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ACCEPTED_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("acceptedNameUsageID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.CLAZZ, new org.apache.thrift.meta_data.FieldMetaData("clazz", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.CLAZZ, new org.apache.thrift.meta_data.FieldMetaData("clazz", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FAMILY, new org.apache.thrift.meta_data.FieldMetaData("family", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FAMILY, new org.apache.thrift.meta_data.FieldMetaData("family", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GENUS, new org.apache.thrift.meta_data.FieldMetaData("genus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GENUS, new org.apache.thrift.meta_data.FieldMetaData("genus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HIGHER_CLASSIFICATION, new org.apache.thrift.meta_data.FieldMetaData("higherClassification", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.HIGHER_CLASSIFICATION, new org.apache.thrift.meta_data.FieldMetaData("higherClassification", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INFRASPECIFIC_EPITHET, new org.apache.thrift.meta_data.FieldMetaData("infraspecificEpithet", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.INFRASPECIFIC_EPITHET, new org.apache.thrift.meta_data.FieldMetaData("infraspecificEpithet", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.KINGDOM, new org.apache.thrift.meta_data.FieldMetaData("kingdom", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.KINGDOM, new org.apache.thrift.meta_data.FieldMetaData("kingdom", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("nameAccordingTo", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NAME_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("nameAccordingTo", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME_ACCORDING_TO_ID, new org.apache.thrift.meta_data.FieldMetaData("nameAccordingToID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NAME_ACCORDING_TO_ID, new org.apache.thrift.meta_data.FieldMetaData("nameAccordingToID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME_PUBLISHED_IN, new org.apache.thrift.meta_data.FieldMetaData("namePublishedIn", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NAME_PUBLISHED_IN, new org.apache.thrift.meta_data.FieldMetaData("namePublishedIn", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME_PUBLISHED_IN_ID, new org.apache.thrift.meta_data.FieldMetaData("namePublishedInID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NAME_PUBLISHED_IN_ID, new org.apache.thrift.meta_data.FieldMetaData("namePublishedInID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME_PUBLISHED_IN_YEAR, new org.apache.thrift.meta_data.FieldMetaData("namePublishedInYear", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NAME_PUBLISHED_IN_YEAR, new org.apache.thrift.meta_data.FieldMetaData("namePublishedInYear", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NOMENCLATURAL_CODE, new org.apache.thrift.meta_data.FieldMetaData("nomenclaturalCode", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NOMENCLATURAL_CODE, new org.apache.thrift.meta_data.FieldMetaData("nomenclaturalCode", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NOMENCLATURAL_STATUS, new org.apache.thrift.meta_data.FieldMetaData("nomenclaturalStatus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.NOMENCLATURAL_STATUS, new org.apache.thrift.meta_data.FieldMetaData("nomenclaturalStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ORDER, new org.apache.thrift.meta_data.FieldMetaData("order", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ORDER, new org.apache.thrift.meta_data.FieldMetaData("order", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ORIGINAL_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("originalNameUsage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ORIGINAL_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("originalNameUsage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ORIGINAL_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("originalNameUsageID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ORIGINAL_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("originalNameUsageID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PARENT_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("parentNameUsage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PARENT_NAME_USAGE, new org.apache.thrift.meta_data.FieldMetaData("parentNameUsage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PARENT_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("parentNameUsageID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PARENT_NAME_USAGE_ID, new org.apache.thrift.meta_data.FieldMetaData("parentNameUsageID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PHYLUM, new org.apache.thrift.meta_data.FieldMetaData("phylum", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.PHYLUM, new org.apache.thrift.meta_data.FieldMetaData("phylum", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SCIENTIFIC_NAME, new org.apache.thrift.meta_data.FieldMetaData("scientificName", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SCIENTIFIC_NAME, new org.apache.thrift.meta_data.FieldMetaData("scientificName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SCIENTIFIC_NAME_AUTHORSHIP, new org.apache.thrift.meta_data.FieldMetaData("scientificNameAuthorship", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SCIENTIFIC_NAME_AUTHORSHIP, new org.apache.thrift.meta_data.FieldMetaData("scientificNameAuthorship", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SCIENTIFIC_NAME_ID, new org.apache.thrift.meta_data.FieldMetaData("scientificNameID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SCIENTIFIC_NAME_ID, new org.apache.thrift.meta_data.FieldMetaData("scientificNameID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SPECIFIC_EPITHET, new org.apache.thrift.meta_data.FieldMetaData("specificEpithet", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SPECIFIC_EPITHET, new org.apache.thrift.meta_data.FieldMetaData("specificEpithet", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.SUBGENUS, new org.apache.thrift.meta_data.FieldMetaData("subgenus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.SUBGENUS, new org.apache.thrift.meta_data.FieldMetaData("subgenus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TAXON_CONCEPT_ID, new org.apache.thrift.meta_data.FieldMetaData("taxonConceptID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TAXON_CONCEPT_ID, new org.apache.thrift.meta_data.FieldMetaData("taxonConceptID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TAXON_ID, new org.apache.thrift.meta_data.FieldMetaData("taxonID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TAXON_ID, new org.apache.thrift.meta_data.FieldMetaData("taxonID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TAXON_RANK, new org.apache.thrift.meta_data.FieldMetaData("taxonRank", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TAXON_RANK, new org.apache.thrift.meta_data.FieldMetaData("taxonRank", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TAXON_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("taxonRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TAXON_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("taxonRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TAXONOMIC_STATUS, new org.apache.thrift.meta_data.FieldMetaData("taxonomicStatus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.TAXONOMIC_STATUS, new org.apache.thrift.meta_data.FieldMetaData("taxonomicStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_TAXON_RANK, new org.apache.thrift.meta_data.FieldMetaData("verbatimTaxonRank", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_TAXON_RANK, new org.apache.thrift.meta_data.FieldMetaData("verbatimTaxonRank", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERNACULAR_NAME, new org.apache.thrift.meta_data.FieldMetaData("vernacularName", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERNACULAR_NAME, new org.apache.thrift.meta_data.FieldMetaData("vernacularName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Taxon.class, metaDataMap);
   }
 
   public Taxon() {
+  }
+
+  public Taxon(
+    String acceptedNameUsage,
+    String acceptedNameUsageID,
+    String clazz,
+    String family,
+    String genus,
+    String higherClassification,
+    String infraspecificEpithet,
+    String kingdom,
+    String nameAccordingTo,
+    String nameAccordingToID,
+    String namePublishedIn,
+    String namePublishedInID,
+    String namePublishedInYear,
+    String nomenclaturalCode,
+    String nomenclaturalStatus,
+    String order,
+    String originalNameUsage,
+    String originalNameUsageID,
+    String parentNameUsage,
+    String parentNameUsageID,
+    String phylum,
+    String scientificName,
+    String scientificNameAuthorship,
+    String scientificNameID,
+    String specificEpithet,
+    String subgenus,
+    String taxonConceptID,
+    String taxonID,
+    String taxonRank,
+    String taxonRemarks,
+    String taxonomicStatus,
+    String verbatimTaxonRank,
+    String vernacularName)
+  {
+    this();
+    this.acceptedNameUsage = acceptedNameUsage;
+    this.acceptedNameUsageID = acceptedNameUsageID;
+    this.clazz = clazz;
+    this.family = family;
+    this.genus = genus;
+    this.higherClassification = higherClassification;
+    this.infraspecificEpithet = infraspecificEpithet;
+    this.kingdom = kingdom;
+    this.nameAccordingTo = nameAccordingTo;
+    this.nameAccordingToID = nameAccordingToID;
+    this.namePublishedIn = namePublishedIn;
+    this.namePublishedInID = namePublishedInID;
+    this.namePublishedInYear = namePublishedInYear;
+    this.nomenclaturalCode = nomenclaturalCode;
+    this.nomenclaturalStatus = nomenclaturalStatus;
+    this.order = order;
+    this.originalNameUsage = originalNameUsage;
+    this.originalNameUsageID = originalNameUsageID;
+    this.parentNameUsage = parentNameUsage;
+    this.parentNameUsageID = parentNameUsageID;
+    this.phylum = phylum;
+    this.scientificName = scientificName;
+    this.scientificNameAuthorship = scientificNameAuthorship;
+    this.scientificNameID = scientificNameID;
+    this.specificEpithet = specificEpithet;
+    this.subgenus = subgenus;
+    this.taxonConceptID = taxonConceptID;
+    this.taxonID = taxonID;
+    this.taxonRank = taxonRank;
+    this.taxonRemarks = taxonRemarks;
+    this.taxonomicStatus = taxonomicStatus;
+    this.verbatimTaxonRank = verbatimTaxonRank;
+    this.vernacularName = vernacularName;
   }
 
   /**
@@ -2569,335 +2639,269 @@ public class Taxon implements org.apache.thrift.TBase<Taxon, Taxon._Fields>, jav
     StringBuilder sb = new StringBuilder("Taxon(");
     boolean first = true;
 
-    if (isSetAcceptedNameUsage()) {
-      sb.append("acceptedNameUsage:");
-      if (this.acceptedNameUsage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.acceptedNameUsage);
-      }
-      first = false;
+    sb.append("acceptedNameUsage:");
+    if (this.acceptedNameUsage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.acceptedNameUsage);
     }
-    if (isSetAcceptedNameUsageID()) {
-      if (!first) sb.append(", ");
-      sb.append("acceptedNameUsageID:");
-      if (this.acceptedNameUsageID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.acceptedNameUsageID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("acceptedNameUsageID:");
+    if (this.acceptedNameUsageID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.acceptedNameUsageID);
     }
-    if (isSetClazz()) {
-      if (!first) sb.append(", ");
-      sb.append("clazz:");
-      if (this.clazz == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.clazz);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("clazz:");
+    if (this.clazz == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.clazz);
     }
-    if (isSetFamily()) {
-      if (!first) sb.append(", ");
-      sb.append("family:");
-      if (this.family == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.family);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("family:");
+    if (this.family == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.family);
     }
-    if (isSetGenus()) {
-      if (!first) sb.append(", ");
-      sb.append("genus:");
-      if (this.genus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.genus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("genus:");
+    if (this.genus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.genus);
     }
-    if (isSetHigherClassification()) {
-      if (!first) sb.append(", ");
-      sb.append("higherClassification:");
-      if (this.higherClassification == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.higherClassification);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("higherClassification:");
+    if (this.higherClassification == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.higherClassification);
     }
-    if (isSetInfraspecificEpithet()) {
-      if (!first) sb.append(", ");
-      sb.append("infraspecificEpithet:");
-      if (this.infraspecificEpithet == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.infraspecificEpithet);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("infraspecificEpithet:");
+    if (this.infraspecificEpithet == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.infraspecificEpithet);
     }
-    if (isSetKingdom()) {
-      if (!first) sb.append(", ");
-      sb.append("kingdom:");
-      if (this.kingdom == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.kingdom);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("kingdom:");
+    if (this.kingdom == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.kingdom);
     }
-    if (isSetNameAccordingTo()) {
-      if (!first) sb.append(", ");
-      sb.append("nameAccordingTo:");
-      if (this.nameAccordingTo == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.nameAccordingTo);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("nameAccordingTo:");
+    if (this.nameAccordingTo == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.nameAccordingTo);
     }
-    if (isSetNameAccordingToID()) {
-      if (!first) sb.append(", ");
-      sb.append("nameAccordingToID:");
-      if (this.nameAccordingToID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.nameAccordingToID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("nameAccordingToID:");
+    if (this.nameAccordingToID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.nameAccordingToID);
     }
-    if (isSetNamePublishedIn()) {
-      if (!first) sb.append(", ");
-      sb.append("namePublishedIn:");
-      if (this.namePublishedIn == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.namePublishedIn);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("namePublishedIn:");
+    if (this.namePublishedIn == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.namePublishedIn);
     }
-    if (isSetNamePublishedInID()) {
-      if (!first) sb.append(", ");
-      sb.append("namePublishedInID:");
-      if (this.namePublishedInID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.namePublishedInID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("namePublishedInID:");
+    if (this.namePublishedInID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.namePublishedInID);
     }
-    if (isSetNamePublishedInYear()) {
-      if (!first) sb.append(", ");
-      sb.append("namePublishedInYear:");
-      if (this.namePublishedInYear == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.namePublishedInYear);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("namePublishedInYear:");
+    if (this.namePublishedInYear == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.namePublishedInYear);
     }
-    if (isSetNomenclaturalCode()) {
-      if (!first) sb.append(", ");
-      sb.append("nomenclaturalCode:");
-      if (this.nomenclaturalCode == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.nomenclaturalCode);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("nomenclaturalCode:");
+    if (this.nomenclaturalCode == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.nomenclaturalCode);
     }
-    if (isSetNomenclaturalStatus()) {
-      if (!first) sb.append(", ");
-      sb.append("nomenclaturalStatus:");
-      if (this.nomenclaturalStatus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.nomenclaturalStatus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("nomenclaturalStatus:");
+    if (this.nomenclaturalStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.nomenclaturalStatus);
     }
-    if (isSetOrder()) {
-      if (!first) sb.append(", ");
-      sb.append("order:");
-      if (this.order == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.order);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("order:");
+    if (this.order == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.order);
     }
-    if (isSetOriginalNameUsage()) {
-      if (!first) sb.append(", ");
-      sb.append("originalNameUsage:");
-      if (this.originalNameUsage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.originalNameUsage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("originalNameUsage:");
+    if (this.originalNameUsage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.originalNameUsage);
     }
-    if (isSetOriginalNameUsageID()) {
-      if (!first) sb.append(", ");
-      sb.append("originalNameUsageID:");
-      if (this.originalNameUsageID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.originalNameUsageID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("originalNameUsageID:");
+    if (this.originalNameUsageID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.originalNameUsageID);
     }
-    if (isSetParentNameUsage()) {
-      if (!first) sb.append(", ");
-      sb.append("parentNameUsage:");
-      if (this.parentNameUsage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.parentNameUsage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("parentNameUsage:");
+    if (this.parentNameUsage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.parentNameUsage);
     }
-    if (isSetParentNameUsageID()) {
-      if (!first) sb.append(", ");
-      sb.append("parentNameUsageID:");
-      if (this.parentNameUsageID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.parentNameUsageID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("parentNameUsageID:");
+    if (this.parentNameUsageID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.parentNameUsageID);
     }
-    if (isSetPhylum()) {
-      if (!first) sb.append(", ");
-      sb.append("phylum:");
-      if (this.phylum == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.phylum);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("phylum:");
+    if (this.phylum == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.phylum);
     }
-    if (isSetScientificName()) {
-      if (!first) sb.append(", ");
-      sb.append("scientificName:");
-      if (this.scientificName == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.scientificName);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("scientificName:");
+    if (this.scientificName == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.scientificName);
     }
-    if (isSetScientificNameAuthorship()) {
-      if (!first) sb.append(", ");
-      sb.append("scientificNameAuthorship:");
-      if (this.scientificNameAuthorship == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.scientificNameAuthorship);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("scientificNameAuthorship:");
+    if (this.scientificNameAuthorship == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.scientificNameAuthorship);
     }
-    if (isSetScientificNameID()) {
-      if (!first) sb.append(", ");
-      sb.append("scientificNameID:");
-      if (this.scientificNameID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.scientificNameID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("scientificNameID:");
+    if (this.scientificNameID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.scientificNameID);
     }
-    if (isSetSpecificEpithet()) {
-      if (!first) sb.append(", ");
-      sb.append("specificEpithet:");
-      if (this.specificEpithet == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.specificEpithet);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("specificEpithet:");
+    if (this.specificEpithet == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.specificEpithet);
     }
-    if (isSetSubgenus()) {
-      if (!first) sb.append(", ");
-      sb.append("subgenus:");
-      if (this.subgenus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.subgenus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("subgenus:");
+    if (this.subgenus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.subgenus);
     }
-    if (isSetTaxonConceptID()) {
-      if (!first) sb.append(", ");
-      sb.append("taxonConceptID:");
-      if (this.taxonConceptID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.taxonConceptID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("taxonConceptID:");
+    if (this.taxonConceptID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.taxonConceptID);
     }
-    if (isSetTaxonID()) {
-      if (!first) sb.append(", ");
-      sb.append("taxonID:");
-      if (this.taxonID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.taxonID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("taxonID:");
+    if (this.taxonID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.taxonID);
     }
-    if (isSetTaxonRank()) {
-      if (!first) sb.append(", ");
-      sb.append("taxonRank:");
-      if (this.taxonRank == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.taxonRank);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("taxonRank:");
+    if (this.taxonRank == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.taxonRank);
     }
-    if (isSetTaxonRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("taxonRemarks:");
-      if (this.taxonRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.taxonRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("taxonRemarks:");
+    if (this.taxonRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.taxonRemarks);
     }
-    if (isSetTaxonomicStatus()) {
-      if (!first) sb.append(", ");
-      sb.append("taxonomicStatus:");
-      if (this.taxonomicStatus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.taxonomicStatus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("taxonomicStatus:");
+    if (this.taxonomicStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.taxonomicStatus);
     }
-    if (isSetVerbatimTaxonRank()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimTaxonRank:");
-      if (this.verbatimTaxonRank == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimTaxonRank);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimTaxonRank:");
+    if (this.verbatimTaxonRank == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimTaxonRank);
     }
-    if (isSetVernacularName()) {
-      if (!first) sb.append(", ");
-      sb.append("vernacularName:");
-      if (this.vernacularName == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.vernacularName);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("vernacularName:");
+    if (this.vernacularName == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.vernacularName);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -3220,235 +3224,169 @@ public class Taxon implements org.apache.thrift.TBase<Taxon, Taxon._Fields>, jav
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.acceptedNameUsage != null) {
-        if (struct.isSetAcceptedNameUsage()) {
-          oprot.writeFieldBegin(ACCEPTED_NAME_USAGE_FIELD_DESC);
-          oprot.writeString(struct.acceptedNameUsage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ACCEPTED_NAME_USAGE_FIELD_DESC);
+        oprot.writeString(struct.acceptedNameUsage);
+        oprot.writeFieldEnd();
       }
       if (struct.acceptedNameUsageID != null) {
-        if (struct.isSetAcceptedNameUsageID()) {
-          oprot.writeFieldBegin(ACCEPTED_NAME_USAGE_ID_FIELD_DESC);
-          oprot.writeString(struct.acceptedNameUsageID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ACCEPTED_NAME_USAGE_ID_FIELD_DESC);
+        oprot.writeString(struct.acceptedNameUsageID);
+        oprot.writeFieldEnd();
       }
       if (struct.clazz != null) {
-        if (struct.isSetClazz()) {
-          oprot.writeFieldBegin(CLAZZ_FIELD_DESC);
-          oprot.writeString(struct.clazz);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(CLAZZ_FIELD_DESC);
+        oprot.writeString(struct.clazz);
+        oprot.writeFieldEnd();
       }
       if (struct.family != null) {
-        if (struct.isSetFamily()) {
-          oprot.writeFieldBegin(FAMILY_FIELD_DESC);
-          oprot.writeString(struct.family);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FAMILY_FIELD_DESC);
+        oprot.writeString(struct.family);
+        oprot.writeFieldEnd();
       }
       if (struct.genus != null) {
-        if (struct.isSetGenus()) {
-          oprot.writeFieldBegin(GENUS_FIELD_DESC);
-          oprot.writeString(struct.genus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GENUS_FIELD_DESC);
+        oprot.writeString(struct.genus);
+        oprot.writeFieldEnd();
       }
       if (struct.higherClassification != null) {
-        if (struct.isSetHigherClassification()) {
-          oprot.writeFieldBegin(HIGHER_CLASSIFICATION_FIELD_DESC);
-          oprot.writeString(struct.higherClassification);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(HIGHER_CLASSIFICATION_FIELD_DESC);
+        oprot.writeString(struct.higherClassification);
+        oprot.writeFieldEnd();
       }
       if (struct.infraspecificEpithet != null) {
-        if (struct.isSetInfraspecificEpithet()) {
-          oprot.writeFieldBegin(INFRASPECIFIC_EPITHET_FIELD_DESC);
-          oprot.writeString(struct.infraspecificEpithet);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(INFRASPECIFIC_EPITHET_FIELD_DESC);
+        oprot.writeString(struct.infraspecificEpithet);
+        oprot.writeFieldEnd();
       }
       if (struct.kingdom != null) {
-        if (struct.isSetKingdom()) {
-          oprot.writeFieldBegin(KINGDOM_FIELD_DESC);
-          oprot.writeString(struct.kingdom);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(KINGDOM_FIELD_DESC);
+        oprot.writeString(struct.kingdom);
+        oprot.writeFieldEnd();
       }
       if (struct.nameAccordingTo != null) {
-        if (struct.isSetNameAccordingTo()) {
-          oprot.writeFieldBegin(NAME_ACCORDING_TO_FIELD_DESC);
-          oprot.writeString(struct.nameAccordingTo);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NAME_ACCORDING_TO_FIELD_DESC);
+        oprot.writeString(struct.nameAccordingTo);
+        oprot.writeFieldEnd();
       }
       if (struct.nameAccordingToID != null) {
-        if (struct.isSetNameAccordingToID()) {
-          oprot.writeFieldBegin(NAME_ACCORDING_TO_ID_FIELD_DESC);
-          oprot.writeString(struct.nameAccordingToID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NAME_ACCORDING_TO_ID_FIELD_DESC);
+        oprot.writeString(struct.nameAccordingToID);
+        oprot.writeFieldEnd();
       }
       if (struct.namePublishedIn != null) {
-        if (struct.isSetNamePublishedIn()) {
-          oprot.writeFieldBegin(NAME_PUBLISHED_IN_FIELD_DESC);
-          oprot.writeString(struct.namePublishedIn);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NAME_PUBLISHED_IN_FIELD_DESC);
+        oprot.writeString(struct.namePublishedIn);
+        oprot.writeFieldEnd();
       }
       if (struct.namePublishedInID != null) {
-        if (struct.isSetNamePublishedInID()) {
-          oprot.writeFieldBegin(NAME_PUBLISHED_IN_ID_FIELD_DESC);
-          oprot.writeString(struct.namePublishedInID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NAME_PUBLISHED_IN_ID_FIELD_DESC);
+        oprot.writeString(struct.namePublishedInID);
+        oprot.writeFieldEnd();
       }
       if (struct.namePublishedInYear != null) {
-        if (struct.isSetNamePublishedInYear()) {
-          oprot.writeFieldBegin(NAME_PUBLISHED_IN_YEAR_FIELD_DESC);
-          oprot.writeString(struct.namePublishedInYear);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NAME_PUBLISHED_IN_YEAR_FIELD_DESC);
+        oprot.writeString(struct.namePublishedInYear);
+        oprot.writeFieldEnd();
       }
       if (struct.nomenclaturalCode != null) {
-        if (struct.isSetNomenclaturalCode()) {
-          oprot.writeFieldBegin(NOMENCLATURAL_CODE_FIELD_DESC);
-          oprot.writeString(struct.nomenclaturalCode);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NOMENCLATURAL_CODE_FIELD_DESC);
+        oprot.writeString(struct.nomenclaturalCode);
+        oprot.writeFieldEnd();
       }
       if (struct.nomenclaturalStatus != null) {
-        if (struct.isSetNomenclaturalStatus()) {
-          oprot.writeFieldBegin(NOMENCLATURAL_STATUS_FIELD_DESC);
-          oprot.writeString(struct.nomenclaturalStatus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(NOMENCLATURAL_STATUS_FIELD_DESC);
+        oprot.writeString(struct.nomenclaturalStatus);
+        oprot.writeFieldEnd();
       }
       if (struct.order != null) {
-        if (struct.isSetOrder()) {
-          oprot.writeFieldBegin(ORDER_FIELD_DESC);
-          oprot.writeString(struct.order);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ORDER_FIELD_DESC);
+        oprot.writeString(struct.order);
+        oprot.writeFieldEnd();
       }
       if (struct.originalNameUsage != null) {
-        if (struct.isSetOriginalNameUsage()) {
-          oprot.writeFieldBegin(ORIGINAL_NAME_USAGE_FIELD_DESC);
-          oprot.writeString(struct.originalNameUsage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ORIGINAL_NAME_USAGE_FIELD_DESC);
+        oprot.writeString(struct.originalNameUsage);
+        oprot.writeFieldEnd();
       }
       if (struct.originalNameUsageID != null) {
-        if (struct.isSetOriginalNameUsageID()) {
-          oprot.writeFieldBegin(ORIGINAL_NAME_USAGE_ID_FIELD_DESC);
-          oprot.writeString(struct.originalNameUsageID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ORIGINAL_NAME_USAGE_ID_FIELD_DESC);
+        oprot.writeString(struct.originalNameUsageID);
+        oprot.writeFieldEnd();
       }
       if (struct.parentNameUsage != null) {
-        if (struct.isSetParentNameUsage()) {
-          oprot.writeFieldBegin(PARENT_NAME_USAGE_FIELD_DESC);
-          oprot.writeString(struct.parentNameUsage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(PARENT_NAME_USAGE_FIELD_DESC);
+        oprot.writeString(struct.parentNameUsage);
+        oprot.writeFieldEnd();
       }
       if (struct.parentNameUsageID != null) {
-        if (struct.isSetParentNameUsageID()) {
-          oprot.writeFieldBegin(PARENT_NAME_USAGE_ID_FIELD_DESC);
-          oprot.writeString(struct.parentNameUsageID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(PARENT_NAME_USAGE_ID_FIELD_DESC);
+        oprot.writeString(struct.parentNameUsageID);
+        oprot.writeFieldEnd();
       }
       if (struct.phylum != null) {
-        if (struct.isSetPhylum()) {
-          oprot.writeFieldBegin(PHYLUM_FIELD_DESC);
-          oprot.writeString(struct.phylum);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(PHYLUM_FIELD_DESC);
+        oprot.writeString(struct.phylum);
+        oprot.writeFieldEnd();
       }
       if (struct.scientificName != null) {
-        if (struct.isSetScientificName()) {
-          oprot.writeFieldBegin(SCIENTIFIC_NAME_FIELD_DESC);
-          oprot.writeString(struct.scientificName);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SCIENTIFIC_NAME_FIELD_DESC);
+        oprot.writeString(struct.scientificName);
+        oprot.writeFieldEnd();
       }
       if (struct.scientificNameAuthorship != null) {
-        if (struct.isSetScientificNameAuthorship()) {
-          oprot.writeFieldBegin(SCIENTIFIC_NAME_AUTHORSHIP_FIELD_DESC);
-          oprot.writeString(struct.scientificNameAuthorship);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SCIENTIFIC_NAME_AUTHORSHIP_FIELD_DESC);
+        oprot.writeString(struct.scientificNameAuthorship);
+        oprot.writeFieldEnd();
       }
       if (struct.scientificNameID != null) {
-        if (struct.isSetScientificNameID()) {
-          oprot.writeFieldBegin(SCIENTIFIC_NAME_ID_FIELD_DESC);
-          oprot.writeString(struct.scientificNameID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SCIENTIFIC_NAME_ID_FIELD_DESC);
+        oprot.writeString(struct.scientificNameID);
+        oprot.writeFieldEnd();
       }
       if (struct.specificEpithet != null) {
-        if (struct.isSetSpecificEpithet()) {
-          oprot.writeFieldBegin(SPECIFIC_EPITHET_FIELD_DESC);
-          oprot.writeString(struct.specificEpithet);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SPECIFIC_EPITHET_FIELD_DESC);
+        oprot.writeString(struct.specificEpithet);
+        oprot.writeFieldEnd();
       }
       if (struct.subgenus != null) {
-        if (struct.isSetSubgenus()) {
-          oprot.writeFieldBegin(SUBGENUS_FIELD_DESC);
-          oprot.writeString(struct.subgenus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(SUBGENUS_FIELD_DESC);
+        oprot.writeString(struct.subgenus);
+        oprot.writeFieldEnd();
       }
       if (struct.taxonConceptID != null) {
-        if (struct.isSetTaxonConceptID()) {
-          oprot.writeFieldBegin(TAXON_CONCEPT_ID_FIELD_DESC);
-          oprot.writeString(struct.taxonConceptID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(TAXON_CONCEPT_ID_FIELD_DESC);
+        oprot.writeString(struct.taxonConceptID);
+        oprot.writeFieldEnd();
       }
       if (struct.taxonID != null) {
-        if (struct.isSetTaxonID()) {
-          oprot.writeFieldBegin(TAXON_ID_FIELD_DESC);
-          oprot.writeString(struct.taxonID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(TAXON_ID_FIELD_DESC);
+        oprot.writeString(struct.taxonID);
+        oprot.writeFieldEnd();
       }
       if (struct.taxonRank != null) {
-        if (struct.isSetTaxonRank()) {
-          oprot.writeFieldBegin(TAXON_RANK_FIELD_DESC);
-          oprot.writeString(struct.taxonRank);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(TAXON_RANK_FIELD_DESC);
+        oprot.writeString(struct.taxonRank);
+        oprot.writeFieldEnd();
       }
       if (struct.taxonRemarks != null) {
-        if (struct.isSetTaxonRemarks()) {
-          oprot.writeFieldBegin(TAXON_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.taxonRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(TAXON_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.taxonRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.taxonomicStatus != null) {
-        if (struct.isSetTaxonomicStatus()) {
-          oprot.writeFieldBegin(TAXONOMIC_STATUS_FIELD_DESC);
-          oprot.writeString(struct.taxonomicStatus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(TAXONOMIC_STATUS_FIELD_DESC);
+        oprot.writeString(struct.taxonomicStatus);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimTaxonRank != null) {
-        if (struct.isSetVerbatimTaxonRank()) {
-          oprot.writeFieldBegin(VERBATIM_TAXON_RANK_FIELD_DESC);
-          oprot.writeString(struct.verbatimTaxonRank);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_TAXON_RANK_FIELD_DESC);
+        oprot.writeString(struct.verbatimTaxonRank);
+        oprot.writeFieldEnd();
       }
       if (struct.vernacularName != null) {
-        if (struct.isSetVernacularName()) {
-          oprot.writeFieldBegin(VERNACULAR_NAME_FIELD_DESC);
-          oprot.writeString(struct.vernacularName);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERNACULAR_NAME_FIELD_DESC);
+        oprot.writeString(struct.vernacularName);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

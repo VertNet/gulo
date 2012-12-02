@@ -56,24 +56,24 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     schemes.put(TupleScheme.class, new GeologicalContextTupleSchemeFactory());
   }
 
-  public String bed; // optional
-  public String earliestAgeOrLowestStage; // optional
-  public String earliestEonOrLowestEonothem; // optional
-  public String earliestEpochOrLowestSeries; // optional
-  public String earliestEraOrLowestErathem; // optional
-  public String earliestPeriodOrLowestSystem; // optional
-  public String formation; // optional
-  public String geologicalContextID; // optional
-  public String group; // optional
-  public String highestBiostratigraphicZone; // optional
-  public String latestAgeOrHighestStage; // optional
-  public String latestEonOrHighestEonothem; // optional
-  public String latestEpochOrHighestSeries; // optional
-  public String latestEraOrHighestErathem; // optional
-  public String latestPeriodOrHighestSystem; // optional
-  public String lithostratigraphicTerms; // optional
-  public String lowestBiostratigraphicZone; // optional
-  public String member; // optional
+  public String bed; // required
+  public String earliestAgeOrLowestStage; // required
+  public String earliestEonOrLowestEonothem; // required
+  public String earliestEpochOrLowestSeries; // required
+  public String earliestEraOrLowestErathem; // required
+  public String earliestPeriodOrLowestSystem; // required
+  public String formation; // required
+  public String geologicalContextID; // required
+  public String group; // required
+  public String highestBiostratigraphicZone; // required
+  public String latestAgeOrHighestStage; // required
+  public String latestEonOrHighestEonothem; // required
+  public String latestEpochOrHighestSeries; // required
+  public String latestEraOrHighestErathem; // required
+  public String latestPeriodOrHighestSystem; // required
+  public String lithostratigraphicTerms; // required
+  public String lowestBiostratigraphicZone; // required
+  public String member; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -185,51 +185,91 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.BED,_Fields.EARLIEST_AGE_OR_LOWEST_STAGE,_Fields.EARLIEST_EON_OR_LOWEST_EONOTHEM,_Fields.EARLIEST_EPOCH_OR_LOWEST_SERIES,_Fields.EARLIEST_ERA_OR_LOWEST_ERATHEM,_Fields.EARLIEST_PERIOD_OR_LOWEST_SYSTEM,_Fields.FORMATION,_Fields.GEOLOGICAL_CONTEXT_ID,_Fields.GROUP,_Fields.HIGHEST_BIOSTRATIGRAPHIC_ZONE,_Fields.LATEST_AGE_OR_HIGHEST_STAGE,_Fields.LATEST_EON_OR_HIGHEST_EONOTHEM,_Fields.LATEST_EPOCH_OR_HIGHEST_SERIES,_Fields.LATEST_ERA_OR_HIGHEST_ERATHEM,_Fields.LATEST_PERIOD_OR_HIGHEST_SYSTEM,_Fields.LITHOSTRATIGRAPHIC_TERMS,_Fields.LOWEST_BIOSTRATIGRAPHIC_ZONE,_Fields.MEMBER};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.BED, new org.apache.thrift.meta_data.FieldMetaData("bed", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.BED, new org.apache.thrift.meta_data.FieldMetaData("bed", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_AGE_OR_LOWEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("earliestAgeOrLowestStage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EARLIEST_AGE_OR_LOWEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("earliestAgeOrLowestStage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_EON_OR_LOWEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEonOrLowestEonothem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EARLIEST_EON_OR_LOWEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEonOrLowestEonothem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_EPOCH_OR_LOWEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("earliestEpochOrLowestSeries", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EARLIEST_EPOCH_OR_LOWEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("earliestEpochOrLowestSeries", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_ERA_OR_LOWEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEraOrLowestErathem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EARLIEST_ERA_OR_LOWEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("earliestEraOrLowestErathem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EARLIEST_PERIOD_OR_LOWEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("earliestPeriodOrLowestSystem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.EARLIEST_PERIOD_OR_LOWEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("earliestPeriodOrLowestSystem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FORMATION, new org.apache.thrift.meta_data.FieldMetaData("formation", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FORMATION, new org.apache.thrift.meta_data.FieldMetaData("formation", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOLOGICAL_CONTEXT_ID, new org.apache.thrift.meta_data.FieldMetaData("geologicalContextID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOLOGICAL_CONTEXT_ID, new org.apache.thrift.meta_data.FieldMetaData("geologicalContextID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GROUP, new org.apache.thrift.meta_data.FieldMetaData("group", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GROUP, new org.apache.thrift.meta_data.FieldMetaData("group", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HIGHEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("highestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.HIGHEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("highestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_AGE_OR_HIGHEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("latestAgeOrHighestStage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LATEST_AGE_OR_HIGHEST_STAGE, new org.apache.thrift.meta_data.FieldMetaData("latestAgeOrHighestStage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_EON_OR_HIGHEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEonOrHighestEonothem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LATEST_EON_OR_HIGHEST_EONOTHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEonOrHighestEonothem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_EPOCH_OR_HIGHEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("latestEpochOrHighestSeries", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LATEST_EPOCH_OR_HIGHEST_SERIES, new org.apache.thrift.meta_data.FieldMetaData("latestEpochOrHighestSeries", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_ERA_OR_HIGHEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEraOrHighestErathem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LATEST_ERA_OR_HIGHEST_ERATHEM, new org.apache.thrift.meta_data.FieldMetaData("latestEraOrHighestErathem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LATEST_PERIOD_OR_HIGHEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("latestPeriodOrHighestSystem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LATEST_PERIOD_OR_HIGHEST_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("latestPeriodOrHighestSystem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LITHOSTRATIGRAPHIC_TERMS, new org.apache.thrift.meta_data.FieldMetaData("lithostratigraphicTerms", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LITHOSTRATIGRAPHIC_TERMS, new org.apache.thrift.meta_data.FieldMetaData("lithostratigraphicTerms", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOWEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("lowestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LOWEST_BIOSTRATIGRAPHIC_ZONE, new org.apache.thrift.meta_data.FieldMetaData("lowestBiostratigraphicZone", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MEMBER, new org.apache.thrift.meta_data.FieldMetaData("member", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MEMBER, new org.apache.thrift.meta_data.FieldMetaData("member", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GeologicalContext.class, metaDataMap);
   }
 
   public GeologicalContext() {
+  }
+
+  public GeologicalContext(
+    String bed,
+    String earliestAgeOrLowestStage,
+    String earliestEonOrLowestEonothem,
+    String earliestEpochOrLowestSeries,
+    String earliestEraOrLowestErathem,
+    String earliestPeriodOrLowestSystem,
+    String formation,
+    String geologicalContextID,
+    String group,
+    String highestBiostratigraphicZone,
+    String latestAgeOrHighestStage,
+    String latestEonOrHighestEonothem,
+    String latestEpochOrHighestSeries,
+    String latestEraOrHighestErathem,
+    String latestPeriodOrHighestSystem,
+    String lithostratigraphicTerms,
+    String lowestBiostratigraphicZone,
+    String member)
+  {
+    this();
+    this.bed = bed;
+    this.earliestAgeOrLowestStage = earliestAgeOrLowestStage;
+    this.earliestEonOrLowestEonothem = earliestEonOrLowestEonothem;
+    this.earliestEpochOrLowestSeries = earliestEpochOrLowestSeries;
+    this.earliestEraOrLowestErathem = earliestEraOrLowestErathem;
+    this.earliestPeriodOrLowestSystem = earliestPeriodOrLowestSystem;
+    this.formation = formation;
+    this.geologicalContextID = geologicalContextID;
+    this.group = group;
+    this.highestBiostratigraphicZone = highestBiostratigraphicZone;
+    this.latestAgeOrHighestStage = latestAgeOrHighestStage;
+    this.latestEonOrHighestEonothem = latestEonOrHighestEonothem;
+    this.latestEpochOrHighestSeries = latestEpochOrHighestSeries;
+    this.latestEraOrHighestErathem = latestEraOrHighestErathem;
+    this.latestPeriodOrHighestSystem = latestPeriodOrHighestSystem;
+    this.lithostratigraphicTerms = lithostratigraphicTerms;
+    this.lowestBiostratigraphicZone = lowestBiostratigraphicZone;
+    this.member = member;
   }
 
   /**
@@ -1489,185 +1529,149 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
     StringBuilder sb = new StringBuilder("GeologicalContext(");
     boolean first = true;
 
-    if (isSetBed()) {
-      sb.append("bed:");
-      if (this.bed == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.bed);
-      }
-      first = false;
+    sb.append("bed:");
+    if (this.bed == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.bed);
     }
-    if (isSetEarliestAgeOrLowestStage()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestAgeOrLowestStage:");
-      if (this.earliestAgeOrLowestStage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestAgeOrLowestStage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("earliestAgeOrLowestStage:");
+    if (this.earliestAgeOrLowestStage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.earliestAgeOrLowestStage);
     }
-    if (isSetEarliestEonOrLowestEonothem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEonOrLowestEonothem:");
-      if (this.earliestEonOrLowestEonothem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEonOrLowestEonothem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("earliestEonOrLowestEonothem:");
+    if (this.earliestEonOrLowestEonothem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.earliestEonOrLowestEonothem);
     }
-    if (isSetEarliestEpochOrLowestSeries()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEpochOrLowestSeries:");
-      if (this.earliestEpochOrLowestSeries == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEpochOrLowestSeries);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("earliestEpochOrLowestSeries:");
+    if (this.earliestEpochOrLowestSeries == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.earliestEpochOrLowestSeries);
     }
-    if (isSetEarliestEraOrLowestErathem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestEraOrLowestErathem:");
-      if (this.earliestEraOrLowestErathem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestEraOrLowestErathem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("earliestEraOrLowestErathem:");
+    if (this.earliestEraOrLowestErathem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.earliestEraOrLowestErathem);
     }
-    if (isSetEarliestPeriodOrLowestSystem()) {
-      if (!first) sb.append(", ");
-      sb.append("earliestPeriodOrLowestSystem:");
-      if (this.earliestPeriodOrLowestSystem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.earliestPeriodOrLowestSystem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("earliestPeriodOrLowestSystem:");
+    if (this.earliestPeriodOrLowestSystem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.earliestPeriodOrLowestSystem);
     }
-    if (isSetFormation()) {
-      if (!first) sb.append(", ");
-      sb.append("formation:");
-      if (this.formation == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.formation);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("formation:");
+    if (this.formation == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.formation);
     }
-    if (isSetGeologicalContextID()) {
-      if (!first) sb.append(", ");
-      sb.append("geologicalContextID:");
-      if (this.geologicalContextID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.geologicalContextID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("geologicalContextID:");
+    if (this.geologicalContextID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.geologicalContextID);
     }
-    if (isSetGroup()) {
-      if (!first) sb.append(", ");
-      sb.append("group:");
-      if (this.group == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.group);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("group:");
+    if (this.group == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.group);
     }
-    if (isSetHighestBiostratigraphicZone()) {
-      if (!first) sb.append(", ");
-      sb.append("highestBiostratigraphicZone:");
-      if (this.highestBiostratigraphicZone == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.highestBiostratigraphicZone);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("highestBiostratigraphicZone:");
+    if (this.highestBiostratigraphicZone == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.highestBiostratigraphicZone);
     }
-    if (isSetLatestAgeOrHighestStage()) {
-      if (!first) sb.append(", ");
-      sb.append("latestAgeOrHighestStage:");
-      if (this.latestAgeOrHighestStage == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestAgeOrHighestStage);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("latestAgeOrHighestStage:");
+    if (this.latestAgeOrHighestStage == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.latestAgeOrHighestStage);
     }
-    if (isSetLatestEonOrHighestEonothem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEonOrHighestEonothem:");
-      if (this.latestEonOrHighestEonothem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEonOrHighestEonothem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("latestEonOrHighestEonothem:");
+    if (this.latestEonOrHighestEonothem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.latestEonOrHighestEonothem);
     }
-    if (isSetLatestEpochOrHighestSeries()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEpochOrHighestSeries:");
-      if (this.latestEpochOrHighestSeries == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEpochOrHighestSeries);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("latestEpochOrHighestSeries:");
+    if (this.latestEpochOrHighestSeries == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.latestEpochOrHighestSeries);
     }
-    if (isSetLatestEraOrHighestErathem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestEraOrHighestErathem:");
-      if (this.latestEraOrHighestErathem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestEraOrHighestErathem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("latestEraOrHighestErathem:");
+    if (this.latestEraOrHighestErathem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.latestEraOrHighestErathem);
     }
-    if (isSetLatestPeriodOrHighestSystem()) {
-      if (!first) sb.append(", ");
-      sb.append("latestPeriodOrHighestSystem:");
-      if (this.latestPeriodOrHighestSystem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.latestPeriodOrHighestSystem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("latestPeriodOrHighestSystem:");
+    if (this.latestPeriodOrHighestSystem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.latestPeriodOrHighestSystem);
     }
-    if (isSetLithostratigraphicTerms()) {
-      if (!first) sb.append(", ");
-      sb.append("lithostratigraphicTerms:");
-      if (this.lithostratigraphicTerms == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.lithostratigraphicTerms);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("lithostratigraphicTerms:");
+    if (this.lithostratigraphicTerms == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.lithostratigraphicTerms);
     }
-    if (isSetLowestBiostratigraphicZone()) {
-      if (!first) sb.append(", ");
-      sb.append("lowestBiostratigraphicZone:");
-      if (this.lowestBiostratigraphicZone == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.lowestBiostratigraphicZone);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("lowestBiostratigraphicZone:");
+    if (this.lowestBiostratigraphicZone == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.lowestBiostratigraphicZone);
     }
-    if (isSetMember()) {
-      if (!first) sb.append(", ");
-      sb.append("member:");
-      if (this.member == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.member);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("member:");
+    if (this.member == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.member);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -1870,130 +1874,94 @@ public class GeologicalContext implements org.apache.thrift.TBase<GeologicalCont
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.bed != null) {
-        if (struct.isSetBed()) {
-          oprot.writeFieldBegin(BED_FIELD_DESC);
-          oprot.writeString(struct.bed);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(BED_FIELD_DESC);
+        oprot.writeString(struct.bed);
+        oprot.writeFieldEnd();
       }
       if (struct.earliestAgeOrLowestStage != null) {
-        if (struct.isSetEarliestAgeOrLowestStage()) {
-          oprot.writeFieldBegin(EARLIEST_AGE_OR_LOWEST_STAGE_FIELD_DESC);
-          oprot.writeString(struct.earliestAgeOrLowestStage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EARLIEST_AGE_OR_LOWEST_STAGE_FIELD_DESC);
+        oprot.writeString(struct.earliestAgeOrLowestStage);
+        oprot.writeFieldEnd();
       }
       if (struct.earliestEonOrLowestEonothem != null) {
-        if (struct.isSetEarliestEonOrLowestEonothem()) {
-          oprot.writeFieldBegin(EARLIEST_EON_OR_LOWEST_EONOTHEM_FIELD_DESC);
-          oprot.writeString(struct.earliestEonOrLowestEonothem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EARLIEST_EON_OR_LOWEST_EONOTHEM_FIELD_DESC);
+        oprot.writeString(struct.earliestEonOrLowestEonothem);
+        oprot.writeFieldEnd();
       }
       if (struct.earliestEpochOrLowestSeries != null) {
-        if (struct.isSetEarliestEpochOrLowestSeries()) {
-          oprot.writeFieldBegin(EARLIEST_EPOCH_OR_LOWEST_SERIES_FIELD_DESC);
-          oprot.writeString(struct.earliestEpochOrLowestSeries);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EARLIEST_EPOCH_OR_LOWEST_SERIES_FIELD_DESC);
+        oprot.writeString(struct.earliestEpochOrLowestSeries);
+        oprot.writeFieldEnd();
       }
       if (struct.earliestEraOrLowestErathem != null) {
-        if (struct.isSetEarliestEraOrLowestErathem()) {
-          oprot.writeFieldBegin(EARLIEST_ERA_OR_LOWEST_ERATHEM_FIELD_DESC);
-          oprot.writeString(struct.earliestEraOrLowestErathem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EARLIEST_ERA_OR_LOWEST_ERATHEM_FIELD_DESC);
+        oprot.writeString(struct.earliestEraOrLowestErathem);
+        oprot.writeFieldEnd();
       }
       if (struct.earliestPeriodOrLowestSystem != null) {
-        if (struct.isSetEarliestPeriodOrLowestSystem()) {
-          oprot.writeFieldBegin(EARLIEST_PERIOD_OR_LOWEST_SYSTEM_FIELD_DESC);
-          oprot.writeString(struct.earliestPeriodOrLowestSystem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(EARLIEST_PERIOD_OR_LOWEST_SYSTEM_FIELD_DESC);
+        oprot.writeString(struct.earliestPeriodOrLowestSystem);
+        oprot.writeFieldEnd();
       }
       if (struct.formation != null) {
-        if (struct.isSetFormation()) {
-          oprot.writeFieldBegin(FORMATION_FIELD_DESC);
-          oprot.writeString(struct.formation);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FORMATION_FIELD_DESC);
+        oprot.writeString(struct.formation);
+        oprot.writeFieldEnd();
       }
       if (struct.geologicalContextID != null) {
-        if (struct.isSetGeologicalContextID()) {
-          oprot.writeFieldBegin(GEOLOGICAL_CONTEXT_ID_FIELD_DESC);
-          oprot.writeString(struct.geologicalContextID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOLOGICAL_CONTEXT_ID_FIELD_DESC);
+        oprot.writeString(struct.geologicalContextID);
+        oprot.writeFieldEnd();
       }
       if (struct.group != null) {
-        if (struct.isSetGroup()) {
-          oprot.writeFieldBegin(GROUP_FIELD_DESC);
-          oprot.writeString(struct.group);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GROUP_FIELD_DESC);
+        oprot.writeString(struct.group);
+        oprot.writeFieldEnd();
       }
       if (struct.highestBiostratigraphicZone != null) {
-        if (struct.isSetHighestBiostratigraphicZone()) {
-          oprot.writeFieldBegin(HIGHEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
-          oprot.writeString(struct.highestBiostratigraphicZone);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(HIGHEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
+        oprot.writeString(struct.highestBiostratigraphicZone);
+        oprot.writeFieldEnd();
       }
       if (struct.latestAgeOrHighestStage != null) {
-        if (struct.isSetLatestAgeOrHighestStage()) {
-          oprot.writeFieldBegin(LATEST_AGE_OR_HIGHEST_STAGE_FIELD_DESC);
-          oprot.writeString(struct.latestAgeOrHighestStage);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LATEST_AGE_OR_HIGHEST_STAGE_FIELD_DESC);
+        oprot.writeString(struct.latestAgeOrHighestStage);
+        oprot.writeFieldEnd();
       }
       if (struct.latestEonOrHighestEonothem != null) {
-        if (struct.isSetLatestEonOrHighestEonothem()) {
-          oprot.writeFieldBegin(LATEST_EON_OR_HIGHEST_EONOTHEM_FIELD_DESC);
-          oprot.writeString(struct.latestEonOrHighestEonothem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LATEST_EON_OR_HIGHEST_EONOTHEM_FIELD_DESC);
+        oprot.writeString(struct.latestEonOrHighestEonothem);
+        oprot.writeFieldEnd();
       }
       if (struct.latestEpochOrHighestSeries != null) {
-        if (struct.isSetLatestEpochOrHighestSeries()) {
-          oprot.writeFieldBegin(LATEST_EPOCH_OR_HIGHEST_SERIES_FIELD_DESC);
-          oprot.writeString(struct.latestEpochOrHighestSeries);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LATEST_EPOCH_OR_HIGHEST_SERIES_FIELD_DESC);
+        oprot.writeString(struct.latestEpochOrHighestSeries);
+        oprot.writeFieldEnd();
       }
       if (struct.latestEraOrHighestErathem != null) {
-        if (struct.isSetLatestEraOrHighestErathem()) {
-          oprot.writeFieldBegin(LATEST_ERA_OR_HIGHEST_ERATHEM_FIELD_DESC);
-          oprot.writeString(struct.latestEraOrHighestErathem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LATEST_ERA_OR_HIGHEST_ERATHEM_FIELD_DESC);
+        oprot.writeString(struct.latestEraOrHighestErathem);
+        oprot.writeFieldEnd();
       }
       if (struct.latestPeriodOrHighestSystem != null) {
-        if (struct.isSetLatestPeriodOrHighestSystem()) {
-          oprot.writeFieldBegin(LATEST_PERIOD_OR_HIGHEST_SYSTEM_FIELD_DESC);
-          oprot.writeString(struct.latestPeriodOrHighestSystem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LATEST_PERIOD_OR_HIGHEST_SYSTEM_FIELD_DESC);
+        oprot.writeString(struct.latestPeriodOrHighestSystem);
+        oprot.writeFieldEnd();
       }
       if (struct.lithostratigraphicTerms != null) {
-        if (struct.isSetLithostratigraphicTerms()) {
-          oprot.writeFieldBegin(LITHOSTRATIGRAPHIC_TERMS_FIELD_DESC);
-          oprot.writeString(struct.lithostratigraphicTerms);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LITHOSTRATIGRAPHIC_TERMS_FIELD_DESC);
+        oprot.writeString(struct.lithostratigraphicTerms);
+        oprot.writeFieldEnd();
       }
       if (struct.lowestBiostratigraphicZone != null) {
-        if (struct.isSetLowestBiostratigraphicZone()) {
-          oprot.writeFieldBegin(LOWEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
-          oprot.writeString(struct.lowestBiostratigraphicZone);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LOWEST_BIOSTRATIGRAPHIC_ZONE_FIELD_DESC);
+        oprot.writeString(struct.lowestBiostratigraphicZone);
+        oprot.writeFieldEnd();
       }
       if (struct.member != null) {
-        if (struct.isSetMember()) {
-          oprot.writeFieldBegin(MEMBER_FIELD_DESC);
-          oprot.writeString(struct.member);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MEMBER_FIELD_DESC);
+        oprot.writeString(struct.member);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

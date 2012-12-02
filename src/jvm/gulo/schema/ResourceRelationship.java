@@ -45,13 +45,13 @@ public class ResourceRelationship implements org.apache.thrift.TBase<ResourceRel
     schemes.put(TupleScheme.class, new ResourceRelationshipTupleSchemeFactory());
   }
 
-  public String relatedResourceID; // optional
-  public String relationshipAccordingTo; // optional
-  public String relationshipEstablishedDate; // optional
-  public String relationshipOfResource; // optional
-  public String relationshipRemarks; // optional
-  public String resourceID; // optional
-  public String resourceRelationshipID; // optional
+  public String relatedResourceID; // required
+  public String relationshipAccordingTo; // required
+  public String relationshipEstablishedDate; // required
+  public String relationshipOfResource; // required
+  public String relationshipRemarks; // required
+  public String resourceID; // required
+  public String resourceRelationshipID; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -130,29 +130,47 @@ public class ResourceRelationship implements org.apache.thrift.TBase<ResourceRel
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.RELATED_RESOURCE_ID,_Fields.RELATIONSHIP_ACCORDING_TO,_Fields.RELATIONSHIP_ESTABLISHED_DATE,_Fields.RELATIONSHIP_OF_RESOURCE,_Fields.RELATIONSHIP_REMARKS,_Fields.RESOURCE_ID,_Fields.RESOURCE_RELATIONSHIP_ID};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.RELATED_RESOURCE_ID, new org.apache.thrift.meta_data.FieldMetaData("relatedResourceID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RELATED_RESOURCE_ID, new org.apache.thrift.meta_data.FieldMetaData("relatedResourceID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RELATIONSHIP_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("relationshipAccordingTo", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RELATIONSHIP_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("relationshipAccordingTo", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RELATIONSHIP_ESTABLISHED_DATE, new org.apache.thrift.meta_data.FieldMetaData("relationshipEstablishedDate", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RELATIONSHIP_ESTABLISHED_DATE, new org.apache.thrift.meta_data.FieldMetaData("relationshipEstablishedDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RELATIONSHIP_OF_RESOURCE, new org.apache.thrift.meta_data.FieldMetaData("relationshipOfResource", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RELATIONSHIP_OF_RESOURCE, new org.apache.thrift.meta_data.FieldMetaData("relationshipOfResource", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RELATIONSHIP_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("relationshipRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RELATIONSHIP_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("relationshipRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RESOURCE_ID, new org.apache.thrift.meta_data.FieldMetaData("resourceID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RESOURCE_ID, new org.apache.thrift.meta_data.FieldMetaData("resourceID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RESOURCE_RELATIONSHIP_ID, new org.apache.thrift.meta_data.FieldMetaData("resourceRelationshipID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.RESOURCE_RELATIONSHIP_ID, new org.apache.thrift.meta_data.FieldMetaData("resourceRelationshipID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResourceRelationship.class, metaDataMap);
   }
 
   public ResourceRelationship() {
+  }
+
+  public ResourceRelationship(
+    String relatedResourceID,
+    String relationshipAccordingTo,
+    String relationshipEstablishedDate,
+    String relationshipOfResource,
+    String relationshipRemarks,
+    String resourceID,
+    String resourceRelationshipID)
+  {
+    this();
+    this.relatedResourceID = relatedResourceID;
+    this.relationshipAccordingTo = relationshipAccordingTo;
+    this.relationshipEstablishedDate = relationshipEstablishedDate;
+    this.relationshipOfResource = relationshipOfResource;
+    this.relationshipRemarks = relationshipRemarks;
+    this.resourceID = resourceID;
+    this.resourceRelationshipID = resourceRelationshipID;
   }
 
   /**
@@ -697,75 +715,61 @@ public class ResourceRelationship implements org.apache.thrift.TBase<ResourceRel
     StringBuilder sb = new StringBuilder("ResourceRelationship(");
     boolean first = true;
 
-    if (isSetRelatedResourceID()) {
-      sb.append("relatedResourceID:");
-      if (this.relatedResourceID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.relatedResourceID);
-      }
-      first = false;
+    sb.append("relatedResourceID:");
+    if (this.relatedResourceID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.relatedResourceID);
     }
-    if (isSetRelationshipAccordingTo()) {
-      if (!first) sb.append(", ");
-      sb.append("relationshipAccordingTo:");
-      if (this.relationshipAccordingTo == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.relationshipAccordingTo);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("relationshipAccordingTo:");
+    if (this.relationshipAccordingTo == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.relationshipAccordingTo);
     }
-    if (isSetRelationshipEstablishedDate()) {
-      if (!first) sb.append(", ");
-      sb.append("relationshipEstablishedDate:");
-      if (this.relationshipEstablishedDate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.relationshipEstablishedDate);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("relationshipEstablishedDate:");
+    if (this.relationshipEstablishedDate == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.relationshipEstablishedDate);
     }
-    if (isSetRelationshipOfResource()) {
-      if (!first) sb.append(", ");
-      sb.append("relationshipOfResource:");
-      if (this.relationshipOfResource == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.relationshipOfResource);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("relationshipOfResource:");
+    if (this.relationshipOfResource == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.relationshipOfResource);
     }
-    if (isSetRelationshipRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("relationshipRemarks:");
-      if (this.relationshipRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.relationshipRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("relationshipRemarks:");
+    if (this.relationshipRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.relationshipRemarks);
     }
-    if (isSetResourceID()) {
-      if (!first) sb.append(", ");
-      sb.append("resourceID:");
-      if (this.resourceID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.resourceID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("resourceID:");
+    if (this.resourceID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.resourceID);
     }
-    if (isSetResourceRelationshipID()) {
-      if (!first) sb.append(", ");
-      sb.append("resourceRelationshipID:");
-      if (this.resourceRelationshipID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.resourceRelationshipID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("resourceRelationshipID:");
+    if (this.resourceRelationshipID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.resourceRelationshipID);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -880,53 +884,39 @@ public class ResourceRelationship implements org.apache.thrift.TBase<ResourceRel
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.relatedResourceID != null) {
-        if (struct.isSetRelatedResourceID()) {
-          oprot.writeFieldBegin(RELATED_RESOURCE_ID_FIELD_DESC);
-          oprot.writeString(struct.relatedResourceID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RELATED_RESOURCE_ID_FIELD_DESC);
+        oprot.writeString(struct.relatedResourceID);
+        oprot.writeFieldEnd();
       }
       if (struct.relationshipAccordingTo != null) {
-        if (struct.isSetRelationshipAccordingTo()) {
-          oprot.writeFieldBegin(RELATIONSHIP_ACCORDING_TO_FIELD_DESC);
-          oprot.writeString(struct.relationshipAccordingTo);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RELATIONSHIP_ACCORDING_TO_FIELD_DESC);
+        oprot.writeString(struct.relationshipAccordingTo);
+        oprot.writeFieldEnd();
       }
       if (struct.relationshipEstablishedDate != null) {
-        if (struct.isSetRelationshipEstablishedDate()) {
-          oprot.writeFieldBegin(RELATIONSHIP_ESTABLISHED_DATE_FIELD_DESC);
-          oprot.writeString(struct.relationshipEstablishedDate);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RELATIONSHIP_ESTABLISHED_DATE_FIELD_DESC);
+        oprot.writeString(struct.relationshipEstablishedDate);
+        oprot.writeFieldEnd();
       }
       if (struct.relationshipOfResource != null) {
-        if (struct.isSetRelationshipOfResource()) {
-          oprot.writeFieldBegin(RELATIONSHIP_OF_RESOURCE_FIELD_DESC);
-          oprot.writeString(struct.relationshipOfResource);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RELATIONSHIP_OF_RESOURCE_FIELD_DESC);
+        oprot.writeString(struct.relationshipOfResource);
+        oprot.writeFieldEnd();
       }
       if (struct.relationshipRemarks != null) {
-        if (struct.isSetRelationshipRemarks()) {
-          oprot.writeFieldBegin(RELATIONSHIP_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.relationshipRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RELATIONSHIP_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.relationshipRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.resourceID != null) {
-        if (struct.isSetResourceID()) {
-          oprot.writeFieldBegin(RESOURCE_ID_FIELD_DESC);
-          oprot.writeString(struct.resourceID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RESOURCE_ID_FIELD_DESC);
+        oprot.writeString(struct.resourceID);
+        oprot.writeFieldEnd();
       }
       if (struct.resourceRelationshipID != null) {
-        if (struct.isSetResourceRelationshipID()) {
-          oprot.writeFieldBegin(RESOURCE_RELATIONSHIP_ID_FIELD_DESC);
-          oprot.writeString(struct.resourceRelationshipID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(RESOURCE_RELATIONSHIP_ID_FIELD_DESC);
+        oprot.writeString(struct.resourceRelationshipID);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();

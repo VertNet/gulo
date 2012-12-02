@@ -82,50 +82,50 @@ public class Location implements org.apache.thrift.TBase<Location, Location._Fie
     schemes.put(TupleScheme.class, new LocationTupleSchemeFactory());
   }
 
-  public String continent; // optional
-  public String coordinatePrecision; // optional
-  public String coordinateUncertaintyInMeters; // optional
-  public String country; // optional
-  public String countryCode; // optional
-  public String county; // optional
-  public String decimalLatitude; // optional
-  public String decimalLongitude; // optional
-  public String footprintSRS; // optional
-  public String footprintSpatialFit; // optional
-  public String footprintWKT; // optional
-  public String geodeticDatum; // optional
-  public String georeferenceProtocol; // optional
-  public String georeferenceRemarks; // optional
-  public String georeferenceSources; // optional
-  public String georeferenceVerificationStatus; // optional
-  public String georeferencedBy; // optional
-  public String georeferencedDate; // optional
-  public String higherGeography; // optional
-  public String higherGeographyID; // optional
-  public String island; // optional
-  public String islandGroup; // optional
-  public String locality; // optional
-  public String locationAccordingTo; // optional
-  public String locationID; // optional
-  public String locationRemarks; // optional
-  public String maximumDepthInMeters; // optional
-  public String maximumDistanceAboveSurfaceInMeters; // optional
-  public String maximumElevationInMeters; // optional
-  public String minimumDepthInMeters; // optional
-  public String minimumDistanceAboveSurfaceInMeters; // optional
-  public String minimumElevationInMeters; // optional
-  public String municipality; // optional
-  public String pointRadiusSpatialFit; // optional
-  public String stateProvince; // optional
-  public String verbatimCoordinateSystem; // optional
-  public String verbatimCoordinates; // optional
-  public String verbatimDepth; // optional
-  public String verbatimElevation; // optional
-  public String verbatimLatitude; // optional
-  public String verbatimLocality; // optional
-  public String verbatimLongitude; // optional
-  public String verbatimSRS; // optional
-  public String waterBody; // optional
+  public String continent; // required
+  public String coordinatePrecision; // required
+  public String coordinateUncertaintyInMeters; // required
+  public String country; // required
+  public String countryCode; // required
+  public String county; // required
+  public String decimalLatitude; // required
+  public String decimalLongitude; // required
+  public String footprintSRS; // required
+  public String footprintSpatialFit; // required
+  public String footprintWKT; // required
+  public String geodeticDatum; // required
+  public String georeferenceProtocol; // required
+  public String georeferenceRemarks; // required
+  public String georeferenceSources; // required
+  public String georeferenceVerificationStatus; // required
+  public String georeferencedBy; // required
+  public String georeferencedDate; // required
+  public String higherGeography; // required
+  public String higherGeographyID; // required
+  public String island; // required
+  public String islandGroup; // required
+  public String locality; // required
+  public String locationAccordingTo; // required
+  public String locationID; // required
+  public String locationRemarks; // required
+  public String maximumDepthInMeters; // required
+  public String maximumDistanceAboveSurfaceInMeters; // required
+  public String maximumElevationInMeters; // required
+  public String minimumDepthInMeters; // required
+  public String minimumDistanceAboveSurfaceInMeters; // required
+  public String minimumElevationInMeters; // required
+  public String municipality; // required
+  public String pointRadiusSpatialFit; // required
+  public String stateProvince; // required
+  public String verbatimCoordinateSystem; // required
+  public String verbatimCoordinates; // required
+  public String verbatimDepth; // required
+  public String verbatimElevation; // required
+  public String verbatimLatitude; // required
+  public String verbatimLocality; // required
+  public String verbatimLongitude; // required
+  public String verbatimSRS; // required
+  public String waterBody; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -315,103 +315,195 @@ public class Location implements org.apache.thrift.TBase<Location, Location._Fie
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.CONTINENT,_Fields.COORDINATE_PRECISION,_Fields.COORDINATE_UNCERTAINTY_IN_METERS,_Fields.COUNTRY,_Fields.COUNTRY_CODE,_Fields.COUNTY,_Fields.DECIMAL_LATITUDE,_Fields.DECIMAL_LONGITUDE,_Fields.FOOTPRINT_SRS,_Fields.FOOTPRINT_SPATIAL_FIT,_Fields.FOOTPRINT_WKT,_Fields.GEODETIC_DATUM,_Fields.GEOREFERENCE_PROTOCOL,_Fields.GEOREFERENCE_REMARKS,_Fields.GEOREFERENCE_SOURCES,_Fields.GEOREFERENCE_VERIFICATION_STATUS,_Fields.GEOREFERENCED_BY,_Fields.GEOREFERENCED_DATE,_Fields.HIGHER_GEOGRAPHY,_Fields.HIGHER_GEOGRAPHY_ID,_Fields.ISLAND,_Fields.ISLAND_GROUP,_Fields.LOCALITY,_Fields.LOCATION_ACCORDING_TO,_Fields.LOCATION_ID,_Fields.LOCATION_REMARKS,_Fields.MAXIMUM_DEPTH_IN_METERS,_Fields.MAXIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS,_Fields.MAXIMUM_ELEVATION_IN_METERS,_Fields.MINIMUM_DEPTH_IN_METERS,_Fields.MINIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS,_Fields.MINIMUM_ELEVATION_IN_METERS,_Fields.MUNICIPALITY,_Fields.POINT_RADIUS_SPATIAL_FIT,_Fields.STATE_PROVINCE,_Fields.VERBATIM_COORDINATE_SYSTEM,_Fields.VERBATIM_COORDINATES,_Fields.VERBATIM_DEPTH,_Fields.VERBATIM_ELEVATION,_Fields.VERBATIM_LATITUDE,_Fields.VERBATIM_LOCALITY,_Fields.VERBATIM_LONGITUDE,_Fields.VERBATIM_SRS,_Fields.WATER_BODY};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.CONTINENT, new org.apache.thrift.meta_data.FieldMetaData("continent", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.CONTINENT, new org.apache.thrift.meta_data.FieldMetaData("continent", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COORDINATE_PRECISION, new org.apache.thrift.meta_data.FieldMetaData("coordinatePrecision", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COORDINATE_PRECISION, new org.apache.thrift.meta_data.FieldMetaData("coordinatePrecision", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COORDINATE_UNCERTAINTY_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("coordinateUncertaintyInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COORDINATE_UNCERTAINTY_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("coordinateUncertaintyInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COUNTRY, new org.apache.thrift.meta_data.FieldMetaData("country", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COUNTRY, new org.apache.thrift.meta_data.FieldMetaData("country", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COUNTRY_CODE, new org.apache.thrift.meta_data.FieldMetaData("countryCode", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COUNTRY_CODE, new org.apache.thrift.meta_data.FieldMetaData("countryCode", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COUNTY, new org.apache.thrift.meta_data.FieldMetaData("county", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.COUNTY, new org.apache.thrift.meta_data.FieldMetaData("county", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DECIMAL_LATITUDE, new org.apache.thrift.meta_data.FieldMetaData("decimalLatitude", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.DECIMAL_LATITUDE, new org.apache.thrift.meta_data.FieldMetaData("decimalLatitude", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DECIMAL_LONGITUDE, new org.apache.thrift.meta_data.FieldMetaData("decimalLongitude", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.DECIMAL_LONGITUDE, new org.apache.thrift.meta_data.FieldMetaData("decimalLongitude", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FOOTPRINT_SRS, new org.apache.thrift.meta_data.FieldMetaData("footprintSRS", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FOOTPRINT_SRS, new org.apache.thrift.meta_data.FieldMetaData("footprintSRS", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FOOTPRINT_SPATIAL_FIT, new org.apache.thrift.meta_data.FieldMetaData("footprintSpatialFit", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FOOTPRINT_SPATIAL_FIT, new org.apache.thrift.meta_data.FieldMetaData("footprintSpatialFit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.FOOTPRINT_WKT, new org.apache.thrift.meta_data.FieldMetaData("footprintWKT", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.FOOTPRINT_WKT, new org.apache.thrift.meta_data.FieldMetaData("footprintWKT", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEODETIC_DATUM, new org.apache.thrift.meta_data.FieldMetaData("geodeticDatum", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEODETIC_DATUM, new org.apache.thrift.meta_data.FieldMetaData("geodeticDatum", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCE_PROTOCOL, new org.apache.thrift.meta_data.FieldMetaData("georeferenceProtocol", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCE_PROTOCOL, new org.apache.thrift.meta_data.FieldMetaData("georeferenceProtocol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCE_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("georeferenceRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCE_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("georeferenceRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCE_SOURCES, new org.apache.thrift.meta_data.FieldMetaData("georeferenceSources", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCE_SOURCES, new org.apache.thrift.meta_data.FieldMetaData("georeferenceSources", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCE_VERIFICATION_STATUS, new org.apache.thrift.meta_data.FieldMetaData("georeferenceVerificationStatus", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCE_VERIFICATION_STATUS, new org.apache.thrift.meta_data.FieldMetaData("georeferenceVerificationStatus", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCED_BY, new org.apache.thrift.meta_data.FieldMetaData("georeferencedBy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCED_BY, new org.apache.thrift.meta_data.FieldMetaData("georeferencedBy", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.GEOREFERENCED_DATE, new org.apache.thrift.meta_data.FieldMetaData("georeferencedDate", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.GEOREFERENCED_DATE, new org.apache.thrift.meta_data.FieldMetaData("georeferencedDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HIGHER_GEOGRAPHY, new org.apache.thrift.meta_data.FieldMetaData("higherGeography", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.HIGHER_GEOGRAPHY, new org.apache.thrift.meta_data.FieldMetaData("higherGeography", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.HIGHER_GEOGRAPHY_ID, new org.apache.thrift.meta_data.FieldMetaData("higherGeographyID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.HIGHER_GEOGRAPHY_ID, new org.apache.thrift.meta_data.FieldMetaData("higherGeographyID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ISLAND, new org.apache.thrift.meta_data.FieldMetaData("island", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ISLAND, new org.apache.thrift.meta_data.FieldMetaData("island", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ISLAND_GROUP, new org.apache.thrift.meta_data.FieldMetaData("islandGroup", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ISLAND_GROUP, new org.apache.thrift.meta_data.FieldMetaData("islandGroup", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOCALITY, new org.apache.thrift.meta_data.FieldMetaData("locality", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LOCALITY, new org.apache.thrift.meta_data.FieldMetaData("locality", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOCATION_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("locationAccordingTo", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LOCATION_ACCORDING_TO, new org.apache.thrift.meta_data.FieldMetaData("locationAccordingTo", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOCATION_ID, new org.apache.thrift.meta_data.FieldMetaData("locationID", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LOCATION_ID, new org.apache.thrift.meta_data.FieldMetaData("locationID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LOCATION_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("locationRemarks", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.LOCATION_REMARKS, new org.apache.thrift.meta_data.FieldMetaData("locationRemarks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MAXIMUM_DEPTH_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumDepthInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MAXIMUM_DEPTH_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumDepthInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MAXIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumDistanceAboveSurfaceInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MAXIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumDistanceAboveSurfaceInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MAXIMUM_ELEVATION_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumElevationInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MAXIMUM_ELEVATION_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("maximumElevationInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MINIMUM_DEPTH_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumDepthInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MINIMUM_DEPTH_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumDepthInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MINIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumDistanceAboveSurfaceInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MINIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumDistanceAboveSurfaceInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MINIMUM_ELEVATION_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumElevationInMeters", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MINIMUM_ELEVATION_IN_METERS, new org.apache.thrift.meta_data.FieldMetaData("minimumElevationInMeters", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MUNICIPALITY, new org.apache.thrift.meta_data.FieldMetaData("municipality", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.MUNICIPALITY, new org.apache.thrift.meta_data.FieldMetaData("municipality", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.POINT_RADIUS_SPATIAL_FIT, new org.apache.thrift.meta_data.FieldMetaData("pointRadiusSpatialFit", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.POINT_RADIUS_SPATIAL_FIT, new org.apache.thrift.meta_data.FieldMetaData("pointRadiusSpatialFit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.STATE_PROVINCE, new org.apache.thrift.meta_data.FieldMetaData("stateProvince", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.STATE_PROVINCE, new org.apache.thrift.meta_data.FieldMetaData("stateProvince", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_COORDINATE_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("verbatimCoordinateSystem", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_COORDINATE_SYSTEM, new org.apache.thrift.meta_data.FieldMetaData("verbatimCoordinateSystem", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_COORDINATES, new org.apache.thrift.meta_data.FieldMetaData("verbatimCoordinates", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_COORDINATES, new org.apache.thrift.meta_data.FieldMetaData("verbatimCoordinates", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_DEPTH, new org.apache.thrift.meta_data.FieldMetaData("verbatimDepth", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_DEPTH, new org.apache.thrift.meta_data.FieldMetaData("verbatimDepth", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_ELEVATION, new org.apache.thrift.meta_data.FieldMetaData("verbatimElevation", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_ELEVATION, new org.apache.thrift.meta_data.FieldMetaData("verbatimElevation", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_LATITUDE, new org.apache.thrift.meta_data.FieldMetaData("verbatimLatitude", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_LATITUDE, new org.apache.thrift.meta_data.FieldMetaData("verbatimLatitude", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_LOCALITY, new org.apache.thrift.meta_data.FieldMetaData("verbatimLocality", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_LOCALITY, new org.apache.thrift.meta_data.FieldMetaData("verbatimLocality", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_LONGITUDE, new org.apache.thrift.meta_data.FieldMetaData("verbatimLongitude", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_LONGITUDE, new org.apache.thrift.meta_data.FieldMetaData("verbatimLongitude", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.VERBATIM_SRS, new org.apache.thrift.meta_data.FieldMetaData("verbatimSRS", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.VERBATIM_SRS, new org.apache.thrift.meta_data.FieldMetaData("verbatimSRS", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.WATER_BODY, new org.apache.thrift.meta_data.FieldMetaData("waterBody", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.WATER_BODY, new org.apache.thrift.meta_data.FieldMetaData("waterBody", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Location.class, metaDataMap);
   }
 
   public Location() {
+  }
+
+  public Location(
+    String continent,
+    String coordinatePrecision,
+    String coordinateUncertaintyInMeters,
+    String country,
+    String countryCode,
+    String county,
+    String decimalLatitude,
+    String decimalLongitude,
+    String footprintSRS,
+    String footprintSpatialFit,
+    String footprintWKT,
+    String geodeticDatum,
+    String georeferenceProtocol,
+    String georeferenceRemarks,
+    String georeferenceSources,
+    String georeferenceVerificationStatus,
+    String georeferencedBy,
+    String georeferencedDate,
+    String higherGeography,
+    String higherGeographyID,
+    String island,
+    String islandGroup,
+    String locality,
+    String locationAccordingTo,
+    String locationID,
+    String locationRemarks,
+    String maximumDepthInMeters,
+    String maximumDistanceAboveSurfaceInMeters,
+    String maximumElevationInMeters,
+    String minimumDepthInMeters,
+    String minimumDistanceAboveSurfaceInMeters,
+    String minimumElevationInMeters,
+    String municipality,
+    String pointRadiusSpatialFit,
+    String stateProvince,
+    String verbatimCoordinateSystem,
+    String verbatimCoordinates,
+    String verbatimDepth,
+    String verbatimElevation,
+    String verbatimLatitude,
+    String verbatimLocality,
+    String verbatimLongitude,
+    String verbatimSRS,
+    String waterBody)
+  {
+    this();
+    this.continent = continent;
+    this.coordinatePrecision = coordinatePrecision;
+    this.coordinateUncertaintyInMeters = coordinateUncertaintyInMeters;
+    this.country = country;
+    this.countryCode = countryCode;
+    this.county = county;
+    this.decimalLatitude = decimalLatitude;
+    this.decimalLongitude = decimalLongitude;
+    this.footprintSRS = footprintSRS;
+    this.footprintSpatialFit = footprintSpatialFit;
+    this.footprintWKT = footprintWKT;
+    this.geodeticDatum = geodeticDatum;
+    this.georeferenceProtocol = georeferenceProtocol;
+    this.georeferenceRemarks = georeferenceRemarks;
+    this.georeferenceSources = georeferenceSources;
+    this.georeferenceVerificationStatus = georeferenceVerificationStatus;
+    this.georeferencedBy = georeferencedBy;
+    this.georeferencedDate = georeferencedDate;
+    this.higherGeography = higherGeography;
+    this.higherGeographyID = higherGeographyID;
+    this.island = island;
+    this.islandGroup = islandGroup;
+    this.locality = locality;
+    this.locationAccordingTo = locationAccordingTo;
+    this.locationID = locationID;
+    this.locationRemarks = locationRemarks;
+    this.maximumDepthInMeters = maximumDepthInMeters;
+    this.maximumDistanceAboveSurfaceInMeters = maximumDistanceAboveSurfaceInMeters;
+    this.maximumElevationInMeters = maximumElevationInMeters;
+    this.minimumDepthInMeters = minimumDepthInMeters;
+    this.minimumDistanceAboveSurfaceInMeters = minimumDistanceAboveSurfaceInMeters;
+    this.minimumElevationInMeters = minimumElevationInMeters;
+    this.municipality = municipality;
+    this.pointRadiusSpatialFit = pointRadiusSpatialFit;
+    this.stateProvince = stateProvince;
+    this.verbatimCoordinateSystem = verbatimCoordinateSystem;
+    this.verbatimCoordinates = verbatimCoordinates;
+    this.verbatimDepth = verbatimDepth;
+    this.verbatimElevation = verbatimElevation;
+    this.verbatimLatitude = verbatimLatitude;
+    this.verbatimLocality = verbatimLocality;
+    this.verbatimLongitude = verbatimLongitude;
+    this.verbatimSRS = verbatimSRS;
+    this.waterBody = waterBody;
   }
 
   /**
@@ -3361,445 +3453,357 @@ public class Location implements org.apache.thrift.TBase<Location, Location._Fie
     StringBuilder sb = new StringBuilder("Location(");
     boolean first = true;
 
-    if (isSetContinent()) {
-      sb.append("continent:");
-      if (this.continent == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.continent);
-      }
-      first = false;
+    sb.append("continent:");
+    if (this.continent == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.continent);
     }
-    if (isSetCoordinatePrecision()) {
-      if (!first) sb.append(", ");
-      sb.append("coordinatePrecision:");
-      if (this.coordinatePrecision == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.coordinatePrecision);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("coordinatePrecision:");
+    if (this.coordinatePrecision == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.coordinatePrecision);
     }
-    if (isSetCoordinateUncertaintyInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("coordinateUncertaintyInMeters:");
-      if (this.coordinateUncertaintyInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.coordinateUncertaintyInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("coordinateUncertaintyInMeters:");
+    if (this.coordinateUncertaintyInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.coordinateUncertaintyInMeters);
     }
-    if (isSetCountry()) {
-      if (!first) sb.append(", ");
-      sb.append("country:");
-      if (this.country == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.country);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("country:");
+    if (this.country == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.country);
     }
-    if (isSetCountryCode()) {
-      if (!first) sb.append(", ");
-      sb.append("countryCode:");
-      if (this.countryCode == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.countryCode);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("countryCode:");
+    if (this.countryCode == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.countryCode);
     }
-    if (isSetCounty()) {
-      if (!first) sb.append(", ");
-      sb.append("county:");
-      if (this.county == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.county);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("county:");
+    if (this.county == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.county);
     }
-    if (isSetDecimalLatitude()) {
-      if (!first) sb.append(", ");
-      sb.append("decimalLatitude:");
-      if (this.decimalLatitude == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.decimalLatitude);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("decimalLatitude:");
+    if (this.decimalLatitude == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.decimalLatitude);
     }
-    if (isSetDecimalLongitude()) {
-      if (!first) sb.append(", ");
-      sb.append("decimalLongitude:");
-      if (this.decimalLongitude == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.decimalLongitude);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("decimalLongitude:");
+    if (this.decimalLongitude == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.decimalLongitude);
     }
-    if (isSetFootprintSRS()) {
-      if (!first) sb.append(", ");
-      sb.append("footprintSRS:");
-      if (this.footprintSRS == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.footprintSRS);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("footprintSRS:");
+    if (this.footprintSRS == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.footprintSRS);
     }
-    if (isSetFootprintSpatialFit()) {
-      if (!first) sb.append(", ");
-      sb.append("footprintSpatialFit:");
-      if (this.footprintSpatialFit == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.footprintSpatialFit);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("footprintSpatialFit:");
+    if (this.footprintSpatialFit == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.footprintSpatialFit);
     }
-    if (isSetFootprintWKT()) {
-      if (!first) sb.append(", ");
-      sb.append("footprintWKT:");
-      if (this.footprintWKT == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.footprintWKT);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("footprintWKT:");
+    if (this.footprintWKT == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.footprintWKT);
     }
-    if (isSetGeodeticDatum()) {
-      if (!first) sb.append(", ");
-      sb.append("geodeticDatum:");
-      if (this.geodeticDatum == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.geodeticDatum);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("geodeticDatum:");
+    if (this.geodeticDatum == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.geodeticDatum);
     }
-    if (isSetGeoreferenceProtocol()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferenceProtocol:");
-      if (this.georeferenceProtocol == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferenceProtocol);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferenceProtocol:");
+    if (this.georeferenceProtocol == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferenceProtocol);
     }
-    if (isSetGeoreferenceRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferenceRemarks:");
-      if (this.georeferenceRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferenceRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferenceRemarks:");
+    if (this.georeferenceRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferenceRemarks);
     }
-    if (isSetGeoreferenceSources()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferenceSources:");
-      if (this.georeferenceSources == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferenceSources);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferenceSources:");
+    if (this.georeferenceSources == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferenceSources);
     }
-    if (isSetGeoreferenceVerificationStatus()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferenceVerificationStatus:");
-      if (this.georeferenceVerificationStatus == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferenceVerificationStatus);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferenceVerificationStatus:");
+    if (this.georeferenceVerificationStatus == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferenceVerificationStatus);
     }
-    if (isSetGeoreferencedBy()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferencedBy:");
-      if (this.georeferencedBy == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferencedBy);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferencedBy:");
+    if (this.georeferencedBy == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferencedBy);
     }
-    if (isSetGeoreferencedDate()) {
-      if (!first) sb.append(", ");
-      sb.append("georeferencedDate:");
-      if (this.georeferencedDate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.georeferencedDate);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("georeferencedDate:");
+    if (this.georeferencedDate == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.georeferencedDate);
     }
-    if (isSetHigherGeography()) {
-      if (!first) sb.append(", ");
-      sb.append("higherGeography:");
-      if (this.higherGeography == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.higherGeography);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("higherGeography:");
+    if (this.higherGeography == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.higherGeography);
     }
-    if (isSetHigherGeographyID()) {
-      if (!first) sb.append(", ");
-      sb.append("higherGeographyID:");
-      if (this.higherGeographyID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.higherGeographyID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("higherGeographyID:");
+    if (this.higherGeographyID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.higherGeographyID);
     }
-    if (isSetIsland()) {
-      if (!first) sb.append(", ");
-      sb.append("island:");
-      if (this.island == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.island);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("island:");
+    if (this.island == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.island);
     }
-    if (isSetIslandGroup()) {
-      if (!first) sb.append(", ");
-      sb.append("islandGroup:");
-      if (this.islandGroup == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.islandGroup);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("islandGroup:");
+    if (this.islandGroup == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.islandGroup);
     }
-    if (isSetLocality()) {
-      if (!first) sb.append(", ");
-      sb.append("locality:");
-      if (this.locality == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.locality);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("locality:");
+    if (this.locality == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.locality);
     }
-    if (isSetLocationAccordingTo()) {
-      if (!first) sb.append(", ");
-      sb.append("locationAccordingTo:");
-      if (this.locationAccordingTo == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.locationAccordingTo);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("locationAccordingTo:");
+    if (this.locationAccordingTo == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.locationAccordingTo);
     }
-    if (isSetLocationID()) {
-      if (!first) sb.append(", ");
-      sb.append("locationID:");
-      if (this.locationID == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.locationID);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("locationID:");
+    if (this.locationID == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.locationID);
     }
-    if (isSetLocationRemarks()) {
-      if (!first) sb.append(", ");
-      sb.append("locationRemarks:");
-      if (this.locationRemarks == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.locationRemarks);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("locationRemarks:");
+    if (this.locationRemarks == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.locationRemarks);
     }
-    if (isSetMaximumDepthInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("maximumDepthInMeters:");
-      if (this.maximumDepthInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.maximumDepthInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("maximumDepthInMeters:");
+    if (this.maximumDepthInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.maximumDepthInMeters);
     }
-    if (isSetMaximumDistanceAboveSurfaceInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("maximumDistanceAboveSurfaceInMeters:");
-      if (this.maximumDistanceAboveSurfaceInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.maximumDistanceAboveSurfaceInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("maximumDistanceAboveSurfaceInMeters:");
+    if (this.maximumDistanceAboveSurfaceInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.maximumDistanceAboveSurfaceInMeters);
     }
-    if (isSetMaximumElevationInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("maximumElevationInMeters:");
-      if (this.maximumElevationInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.maximumElevationInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("maximumElevationInMeters:");
+    if (this.maximumElevationInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.maximumElevationInMeters);
     }
-    if (isSetMinimumDepthInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("minimumDepthInMeters:");
-      if (this.minimumDepthInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.minimumDepthInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("minimumDepthInMeters:");
+    if (this.minimumDepthInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.minimumDepthInMeters);
     }
-    if (isSetMinimumDistanceAboveSurfaceInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("minimumDistanceAboveSurfaceInMeters:");
-      if (this.minimumDistanceAboveSurfaceInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.minimumDistanceAboveSurfaceInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("minimumDistanceAboveSurfaceInMeters:");
+    if (this.minimumDistanceAboveSurfaceInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.minimumDistanceAboveSurfaceInMeters);
     }
-    if (isSetMinimumElevationInMeters()) {
-      if (!first) sb.append(", ");
-      sb.append("minimumElevationInMeters:");
-      if (this.minimumElevationInMeters == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.minimumElevationInMeters);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("minimumElevationInMeters:");
+    if (this.minimumElevationInMeters == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.minimumElevationInMeters);
     }
-    if (isSetMunicipality()) {
-      if (!first) sb.append(", ");
-      sb.append("municipality:");
-      if (this.municipality == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.municipality);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("municipality:");
+    if (this.municipality == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.municipality);
     }
-    if (isSetPointRadiusSpatialFit()) {
-      if (!first) sb.append(", ");
-      sb.append("pointRadiusSpatialFit:");
-      if (this.pointRadiusSpatialFit == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.pointRadiusSpatialFit);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("pointRadiusSpatialFit:");
+    if (this.pointRadiusSpatialFit == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.pointRadiusSpatialFit);
     }
-    if (isSetStateProvince()) {
-      if (!first) sb.append(", ");
-      sb.append("stateProvince:");
-      if (this.stateProvince == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.stateProvince);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("stateProvince:");
+    if (this.stateProvince == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.stateProvince);
     }
-    if (isSetVerbatimCoordinateSystem()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimCoordinateSystem:");
-      if (this.verbatimCoordinateSystem == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimCoordinateSystem);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimCoordinateSystem:");
+    if (this.verbatimCoordinateSystem == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimCoordinateSystem);
     }
-    if (isSetVerbatimCoordinates()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimCoordinates:");
-      if (this.verbatimCoordinates == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimCoordinates);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimCoordinates:");
+    if (this.verbatimCoordinates == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimCoordinates);
     }
-    if (isSetVerbatimDepth()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimDepth:");
-      if (this.verbatimDepth == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimDepth);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimDepth:");
+    if (this.verbatimDepth == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimDepth);
     }
-    if (isSetVerbatimElevation()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimElevation:");
-      if (this.verbatimElevation == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimElevation);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimElevation:");
+    if (this.verbatimElevation == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimElevation);
     }
-    if (isSetVerbatimLatitude()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimLatitude:");
-      if (this.verbatimLatitude == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimLatitude);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimLatitude:");
+    if (this.verbatimLatitude == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimLatitude);
     }
-    if (isSetVerbatimLocality()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimLocality:");
-      if (this.verbatimLocality == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimLocality);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimLocality:");
+    if (this.verbatimLocality == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimLocality);
     }
-    if (isSetVerbatimLongitude()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimLongitude:");
-      if (this.verbatimLongitude == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimLongitude);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimLongitude:");
+    if (this.verbatimLongitude == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimLongitude);
     }
-    if (isSetVerbatimSRS()) {
-      if (!first) sb.append(", ");
-      sb.append("verbatimSRS:");
-      if (this.verbatimSRS == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.verbatimSRS);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("verbatimSRS:");
+    if (this.verbatimSRS == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.verbatimSRS);
     }
-    if (isSetWaterBody()) {
-      if (!first) sb.append(", ");
-      sb.append("waterBody:");
-      if (this.waterBody == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.waterBody);
-      }
-      first = false;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("waterBody:");
+    if (this.waterBody == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.waterBody);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -4210,312 +4214,224 @@ public class Location implements org.apache.thrift.TBase<Location, Location._Fie
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.continent != null) {
-        if (struct.isSetContinent()) {
-          oprot.writeFieldBegin(CONTINENT_FIELD_DESC);
-          oprot.writeString(struct.continent);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(CONTINENT_FIELD_DESC);
+        oprot.writeString(struct.continent);
+        oprot.writeFieldEnd();
       }
       if (struct.coordinatePrecision != null) {
-        if (struct.isSetCoordinatePrecision()) {
-          oprot.writeFieldBegin(COORDINATE_PRECISION_FIELD_DESC);
-          oprot.writeString(struct.coordinatePrecision);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(COORDINATE_PRECISION_FIELD_DESC);
+        oprot.writeString(struct.coordinatePrecision);
+        oprot.writeFieldEnd();
       }
       if (struct.coordinateUncertaintyInMeters != null) {
-        if (struct.isSetCoordinateUncertaintyInMeters()) {
-          oprot.writeFieldBegin(COORDINATE_UNCERTAINTY_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.coordinateUncertaintyInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(COORDINATE_UNCERTAINTY_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.coordinateUncertaintyInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.country != null) {
-        if (struct.isSetCountry()) {
-          oprot.writeFieldBegin(COUNTRY_FIELD_DESC);
-          oprot.writeString(struct.country);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(COUNTRY_FIELD_DESC);
+        oprot.writeString(struct.country);
+        oprot.writeFieldEnd();
       }
       if (struct.countryCode != null) {
-        if (struct.isSetCountryCode()) {
-          oprot.writeFieldBegin(COUNTRY_CODE_FIELD_DESC);
-          oprot.writeString(struct.countryCode);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(COUNTRY_CODE_FIELD_DESC);
+        oprot.writeString(struct.countryCode);
+        oprot.writeFieldEnd();
       }
       if (struct.county != null) {
-        if (struct.isSetCounty()) {
-          oprot.writeFieldBegin(COUNTY_FIELD_DESC);
-          oprot.writeString(struct.county);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(COUNTY_FIELD_DESC);
+        oprot.writeString(struct.county);
+        oprot.writeFieldEnd();
       }
       if (struct.decimalLatitude != null) {
-        if (struct.isSetDecimalLatitude()) {
-          oprot.writeFieldBegin(DECIMAL_LATITUDE_FIELD_DESC);
-          oprot.writeString(struct.decimalLatitude);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(DECIMAL_LATITUDE_FIELD_DESC);
+        oprot.writeString(struct.decimalLatitude);
+        oprot.writeFieldEnd();
       }
       if (struct.decimalLongitude != null) {
-        if (struct.isSetDecimalLongitude()) {
-          oprot.writeFieldBegin(DECIMAL_LONGITUDE_FIELD_DESC);
-          oprot.writeString(struct.decimalLongitude);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(DECIMAL_LONGITUDE_FIELD_DESC);
+        oprot.writeString(struct.decimalLongitude);
+        oprot.writeFieldEnd();
       }
       if (struct.footprintSRS != null) {
-        if (struct.isSetFootprintSRS()) {
-          oprot.writeFieldBegin(FOOTPRINT_SRS_FIELD_DESC);
-          oprot.writeString(struct.footprintSRS);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FOOTPRINT_SRS_FIELD_DESC);
+        oprot.writeString(struct.footprintSRS);
+        oprot.writeFieldEnd();
       }
       if (struct.footprintSpatialFit != null) {
-        if (struct.isSetFootprintSpatialFit()) {
-          oprot.writeFieldBegin(FOOTPRINT_SPATIAL_FIT_FIELD_DESC);
-          oprot.writeString(struct.footprintSpatialFit);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FOOTPRINT_SPATIAL_FIT_FIELD_DESC);
+        oprot.writeString(struct.footprintSpatialFit);
+        oprot.writeFieldEnd();
       }
       if (struct.footprintWKT != null) {
-        if (struct.isSetFootprintWKT()) {
-          oprot.writeFieldBegin(FOOTPRINT_WKT_FIELD_DESC);
-          oprot.writeString(struct.footprintWKT);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(FOOTPRINT_WKT_FIELD_DESC);
+        oprot.writeString(struct.footprintWKT);
+        oprot.writeFieldEnd();
       }
       if (struct.geodeticDatum != null) {
-        if (struct.isSetGeodeticDatum()) {
-          oprot.writeFieldBegin(GEODETIC_DATUM_FIELD_DESC);
-          oprot.writeString(struct.geodeticDatum);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEODETIC_DATUM_FIELD_DESC);
+        oprot.writeString(struct.geodeticDatum);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferenceProtocol != null) {
-        if (struct.isSetGeoreferenceProtocol()) {
-          oprot.writeFieldBegin(GEOREFERENCE_PROTOCOL_FIELD_DESC);
-          oprot.writeString(struct.georeferenceProtocol);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCE_PROTOCOL_FIELD_DESC);
+        oprot.writeString(struct.georeferenceProtocol);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferenceRemarks != null) {
-        if (struct.isSetGeoreferenceRemarks()) {
-          oprot.writeFieldBegin(GEOREFERENCE_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.georeferenceRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCE_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.georeferenceRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferenceSources != null) {
-        if (struct.isSetGeoreferenceSources()) {
-          oprot.writeFieldBegin(GEOREFERENCE_SOURCES_FIELD_DESC);
-          oprot.writeString(struct.georeferenceSources);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCE_SOURCES_FIELD_DESC);
+        oprot.writeString(struct.georeferenceSources);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferenceVerificationStatus != null) {
-        if (struct.isSetGeoreferenceVerificationStatus()) {
-          oprot.writeFieldBegin(GEOREFERENCE_VERIFICATION_STATUS_FIELD_DESC);
-          oprot.writeString(struct.georeferenceVerificationStatus);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCE_VERIFICATION_STATUS_FIELD_DESC);
+        oprot.writeString(struct.georeferenceVerificationStatus);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferencedBy != null) {
-        if (struct.isSetGeoreferencedBy()) {
-          oprot.writeFieldBegin(GEOREFERENCED_BY_FIELD_DESC);
-          oprot.writeString(struct.georeferencedBy);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCED_BY_FIELD_DESC);
+        oprot.writeString(struct.georeferencedBy);
+        oprot.writeFieldEnd();
       }
       if (struct.georeferencedDate != null) {
-        if (struct.isSetGeoreferencedDate()) {
-          oprot.writeFieldBegin(GEOREFERENCED_DATE_FIELD_DESC);
-          oprot.writeString(struct.georeferencedDate);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(GEOREFERENCED_DATE_FIELD_DESC);
+        oprot.writeString(struct.georeferencedDate);
+        oprot.writeFieldEnd();
       }
       if (struct.higherGeography != null) {
-        if (struct.isSetHigherGeography()) {
-          oprot.writeFieldBegin(HIGHER_GEOGRAPHY_FIELD_DESC);
-          oprot.writeString(struct.higherGeography);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(HIGHER_GEOGRAPHY_FIELD_DESC);
+        oprot.writeString(struct.higherGeography);
+        oprot.writeFieldEnd();
       }
       if (struct.higherGeographyID != null) {
-        if (struct.isSetHigherGeographyID()) {
-          oprot.writeFieldBegin(HIGHER_GEOGRAPHY_ID_FIELD_DESC);
-          oprot.writeString(struct.higherGeographyID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(HIGHER_GEOGRAPHY_ID_FIELD_DESC);
+        oprot.writeString(struct.higherGeographyID);
+        oprot.writeFieldEnd();
       }
       if (struct.island != null) {
-        if (struct.isSetIsland()) {
-          oprot.writeFieldBegin(ISLAND_FIELD_DESC);
-          oprot.writeString(struct.island);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ISLAND_FIELD_DESC);
+        oprot.writeString(struct.island);
+        oprot.writeFieldEnd();
       }
       if (struct.islandGroup != null) {
-        if (struct.isSetIslandGroup()) {
-          oprot.writeFieldBegin(ISLAND_GROUP_FIELD_DESC);
-          oprot.writeString(struct.islandGroup);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ISLAND_GROUP_FIELD_DESC);
+        oprot.writeString(struct.islandGroup);
+        oprot.writeFieldEnd();
       }
       if (struct.locality != null) {
-        if (struct.isSetLocality()) {
-          oprot.writeFieldBegin(LOCALITY_FIELD_DESC);
-          oprot.writeString(struct.locality);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LOCALITY_FIELD_DESC);
+        oprot.writeString(struct.locality);
+        oprot.writeFieldEnd();
       }
       if (struct.locationAccordingTo != null) {
-        if (struct.isSetLocationAccordingTo()) {
-          oprot.writeFieldBegin(LOCATION_ACCORDING_TO_FIELD_DESC);
-          oprot.writeString(struct.locationAccordingTo);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LOCATION_ACCORDING_TO_FIELD_DESC);
+        oprot.writeString(struct.locationAccordingTo);
+        oprot.writeFieldEnd();
       }
       if (struct.locationID != null) {
-        if (struct.isSetLocationID()) {
-          oprot.writeFieldBegin(LOCATION_ID_FIELD_DESC);
-          oprot.writeString(struct.locationID);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LOCATION_ID_FIELD_DESC);
+        oprot.writeString(struct.locationID);
+        oprot.writeFieldEnd();
       }
       if (struct.locationRemarks != null) {
-        if (struct.isSetLocationRemarks()) {
-          oprot.writeFieldBegin(LOCATION_REMARKS_FIELD_DESC);
-          oprot.writeString(struct.locationRemarks);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(LOCATION_REMARKS_FIELD_DESC);
+        oprot.writeString(struct.locationRemarks);
+        oprot.writeFieldEnd();
       }
       if (struct.maximumDepthInMeters != null) {
-        if (struct.isSetMaximumDepthInMeters()) {
-          oprot.writeFieldBegin(MAXIMUM_DEPTH_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.maximumDepthInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MAXIMUM_DEPTH_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.maximumDepthInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.maximumDistanceAboveSurfaceInMeters != null) {
-        if (struct.isSetMaximumDistanceAboveSurfaceInMeters()) {
-          oprot.writeFieldBegin(MAXIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.maximumDistanceAboveSurfaceInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MAXIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.maximumDistanceAboveSurfaceInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.maximumElevationInMeters != null) {
-        if (struct.isSetMaximumElevationInMeters()) {
-          oprot.writeFieldBegin(MAXIMUM_ELEVATION_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.maximumElevationInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MAXIMUM_ELEVATION_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.maximumElevationInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.minimumDepthInMeters != null) {
-        if (struct.isSetMinimumDepthInMeters()) {
-          oprot.writeFieldBegin(MINIMUM_DEPTH_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.minimumDepthInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MINIMUM_DEPTH_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.minimumDepthInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.minimumDistanceAboveSurfaceInMeters != null) {
-        if (struct.isSetMinimumDistanceAboveSurfaceInMeters()) {
-          oprot.writeFieldBegin(MINIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.minimumDistanceAboveSurfaceInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MINIMUM_DISTANCE_ABOVE_SURFACE_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.minimumDistanceAboveSurfaceInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.minimumElevationInMeters != null) {
-        if (struct.isSetMinimumElevationInMeters()) {
-          oprot.writeFieldBegin(MINIMUM_ELEVATION_IN_METERS_FIELD_DESC);
-          oprot.writeString(struct.minimumElevationInMeters);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MINIMUM_ELEVATION_IN_METERS_FIELD_DESC);
+        oprot.writeString(struct.minimumElevationInMeters);
+        oprot.writeFieldEnd();
       }
       if (struct.municipality != null) {
-        if (struct.isSetMunicipality()) {
-          oprot.writeFieldBegin(MUNICIPALITY_FIELD_DESC);
-          oprot.writeString(struct.municipality);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(MUNICIPALITY_FIELD_DESC);
+        oprot.writeString(struct.municipality);
+        oprot.writeFieldEnd();
       }
       if (struct.pointRadiusSpatialFit != null) {
-        if (struct.isSetPointRadiusSpatialFit()) {
-          oprot.writeFieldBegin(POINT_RADIUS_SPATIAL_FIT_FIELD_DESC);
-          oprot.writeString(struct.pointRadiusSpatialFit);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(POINT_RADIUS_SPATIAL_FIT_FIELD_DESC);
+        oprot.writeString(struct.pointRadiusSpatialFit);
+        oprot.writeFieldEnd();
       }
       if (struct.stateProvince != null) {
-        if (struct.isSetStateProvince()) {
-          oprot.writeFieldBegin(STATE_PROVINCE_FIELD_DESC);
-          oprot.writeString(struct.stateProvince);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(STATE_PROVINCE_FIELD_DESC);
+        oprot.writeString(struct.stateProvince);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimCoordinateSystem != null) {
-        if (struct.isSetVerbatimCoordinateSystem()) {
-          oprot.writeFieldBegin(VERBATIM_COORDINATE_SYSTEM_FIELD_DESC);
-          oprot.writeString(struct.verbatimCoordinateSystem);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_COORDINATE_SYSTEM_FIELD_DESC);
+        oprot.writeString(struct.verbatimCoordinateSystem);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimCoordinates != null) {
-        if (struct.isSetVerbatimCoordinates()) {
-          oprot.writeFieldBegin(VERBATIM_COORDINATES_FIELD_DESC);
-          oprot.writeString(struct.verbatimCoordinates);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_COORDINATES_FIELD_DESC);
+        oprot.writeString(struct.verbatimCoordinates);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimDepth != null) {
-        if (struct.isSetVerbatimDepth()) {
-          oprot.writeFieldBegin(VERBATIM_DEPTH_FIELD_DESC);
-          oprot.writeString(struct.verbatimDepth);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_DEPTH_FIELD_DESC);
+        oprot.writeString(struct.verbatimDepth);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimElevation != null) {
-        if (struct.isSetVerbatimElevation()) {
-          oprot.writeFieldBegin(VERBATIM_ELEVATION_FIELD_DESC);
-          oprot.writeString(struct.verbatimElevation);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_ELEVATION_FIELD_DESC);
+        oprot.writeString(struct.verbatimElevation);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimLatitude != null) {
-        if (struct.isSetVerbatimLatitude()) {
-          oprot.writeFieldBegin(VERBATIM_LATITUDE_FIELD_DESC);
-          oprot.writeString(struct.verbatimLatitude);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_LATITUDE_FIELD_DESC);
+        oprot.writeString(struct.verbatimLatitude);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimLocality != null) {
-        if (struct.isSetVerbatimLocality()) {
-          oprot.writeFieldBegin(VERBATIM_LOCALITY_FIELD_DESC);
-          oprot.writeString(struct.verbatimLocality);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_LOCALITY_FIELD_DESC);
+        oprot.writeString(struct.verbatimLocality);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimLongitude != null) {
-        if (struct.isSetVerbatimLongitude()) {
-          oprot.writeFieldBegin(VERBATIM_LONGITUDE_FIELD_DESC);
-          oprot.writeString(struct.verbatimLongitude);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_LONGITUDE_FIELD_DESC);
+        oprot.writeString(struct.verbatimLongitude);
+        oprot.writeFieldEnd();
       }
       if (struct.verbatimSRS != null) {
-        if (struct.isSetVerbatimSRS()) {
-          oprot.writeFieldBegin(VERBATIM_SRS_FIELD_DESC);
-          oprot.writeString(struct.verbatimSRS);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(VERBATIM_SRS_FIELD_DESC);
+        oprot.writeString(struct.verbatimSRS);
+        oprot.writeFieldEnd();
       }
       if (struct.waterBody != null) {
-        if (struct.isSetWaterBody()) {
-          oprot.writeFieldBegin(WATER_BODY_FIELD_DESC);
-          oprot.writeString(struct.waterBody);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(WATER_BODY_FIELD_DESC);
+        oprot.writeString(struct.waterBody);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
