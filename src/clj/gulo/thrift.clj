@@ -1,16 +1,33 @@
 (ns gulo.thrift
   (:use [dwca.core :as dwca])
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [clojure.string :as s])
   (:import [gulo.schema
-            Data DataSet DataUnit Event GeologicalContext Identification
-            Location MeasurementOrFact Metadata Occurrence Pedigree RecordID
-            RecordProperty RecordPropertyValue ResourceRelationship Taxon]
+            Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
+            DatasetRecordEdge Event GeologicalContext Identification Location
+            MeasurementOrFact Occurrence OragnizationPropertyValue
+            OrganizationDatasetEdge OrganizationID OrganizationProperty Pedigree
+            RecordID RecordProperty RecordPropertyValue ResourceRelationship
+            Taxon]
            [org.apache.thrift TBase TUnion]
            [clojure.lang Reflector]))
 
 (defn construct
   [type keys fields]
   (Reflector/invokeConstructor type (to-array (map #(% fields) keys))))
+
+(defn construct-union
+  [type property fields]  
+  (let [key (keyword (s/lower-case property))
+        value (key fields)]
+    (if value
+      (Reflector/invokeStaticMethod type property (into-array Object [value])))))
+
+(def RecordID-
+  (let [type RecordID
+        keys [:id]
+        property "id"]
+    (partial construct-union type property)))
 
 (def Occurrence-
   (let [type Occurrence
@@ -93,78 +110,47 @@
               :measurementvalue]]
     (partial construct type keys)))
 
-; RPV is a union. Check schema to make sure general for other data
-; (not just dwc records).
-(def RecordPropertyValues-
+(def RecordPropertyValue-
   (let [type RecordPropertyValue
-        keys [:accessrights :basisofrecord :bibliographiccitation :collectioncode
-              :collectionid :datageneralizations :datasetid :datasetname
-              :dynamicproperties :informationwithheld :institutioncode
-              :institutionid :language :modified :ownerinstitutioncode
-              :references :rights :rightsholder :type :occurrence :event
-              :location :geologicalcontext :identification :taxon
-              :resourcerelationship :measurementorfact]
-        f (fn [type keys fields]
-            (let [new-fields {:occurrence (Occurrence- fields)
-                              :event (Event- fields)
-                              :location (Location- fields)
-                              :geologicalcontext (GeologicalContext- fields)
-                              :identification (Identification- fields)
-                              :taxon (Taxon- fields)
-                              :resourcerelationship (ResourceRelationship- fields)
-                              :measurementorfact (MeasurementOrFact- fields)}
-                  fields (merge new-fields fields)]
-              (construct type keys fields)))]
-    (partial f type keys)))
+        f (fn [type property fields]
+            (let [key (keyword (s/lower-case property))
+                  value (key fields)]
+              (if value
+                (Reflector/invokeStaticMethod type property (into-array Object [value])))))]
+    (partial construct-union type)))
 
-(defn RecordID*
-  [source-id dataset-uuid]
-  (RecordID. source-id dataset-uuid))
+(defn record-property-values
+  [fields]
+  "Return vector of RecordProperty objects for all values in supplied fields map."
+  (let [names {:accessrights "accessRights" :basisofrecord "basisOfRecord"
+              :bibliographiccitation "bibliographicCitation"
+              :collectioncode "collectionCode" :collectionid "collectionID"
+              :datageneralizations "dataGeneralizations" :datasetid "datasetID"
+              :datasetname "datasetName" :dynamicproperties "dynamicProperties"
+              :informationwithheld "informationWithheld"
+              :institutioncode "institutionCode" :institutionid "institutionID"
+              :language "language" :modified "modified"
+              :ownerinstitutioncode "ownerInstitutionCode"
+              :references "references" :string "string"
+              :rightsholder "rightsHolder" :type "type" :occurrence "occurrence"
+              :event "event" :location "location"
+              :geologicalcontext "geologicalContext"
+              :identification "identification" :taxon "taxon"
+              :resourcerelationship "resourceRelationship"
+              :measurementorfact "measurementOrFact"}
+        objects {:occurrence (Occurrence- fields)
+                 :event (Event- fields)
+                 :location (Location- fields)
+                 :geologicalcontext (GeologicalContext- fields)
+                 :identification (Identification- fields)
+                 :taxon (Taxon- fields)
+                 :resourcerelationship (ResourceRelationship- fields)
+                 :measurementorfact (MeasurementOrFact- fields)}
+        fields (merge fields objects)]
+    (filter #(not= % nil)
+            (map #(RecordPropertyValue- (% names) fields) (keys names)))))
 
-
-
-;; (defn Occurrence*
-;;   [props]
-;;   (let [keys [:associatedmedia :associatedoccurrences :associatedreferences
-;;               :associatedsequences :associatedtaxa :behavior :catalognumber
-;;               :disposition :establishmentmeans :individualcount :individualid
-;;               :lifestage :occurrenceid :occurrenceremarks :occurrencestatus
-;;               :othercatalognumbers :preparations :previousidentifications
-;;               :recordnumber :recordedby :reproductivecondition :sex]
-;;         vals (to-array (map #(% props) keys))]
-;;     (Reflector/invokeConstructor Occurrence vals)))
-
-(defn RecordPropertyValue-
-  [props]
-  (let [{:keys [f-name m-name l-name]} props]))
-
-(defn RecordPropertyValue*
-  [access-rights]
-  (let [obj (RecordPropertyValue.)]
-    (if access-rights
-      (doto obj
-        (.setAccessRights access-rights)))
-    obj))
-
-(defn RecordProperty*
-  [id property]
-  (RecordProperty. id property))
-
-(defn DataSet*
-  [abstract uuid rights lang orgname date title]
-  (DataSet. abstract uuid rights lang orgname date title))
-
-(defn Metadata*
-  [dataset]
-  (Metadata. dataset))
-
-(defn Pedigree*
-  [secs metadata]
-  (Pedigree. secs metadata))
-
-(defn Data*
-  [id value pedigree]
-  (let [property (RecordProperty. id value)
-        unit (->> property DataUnit/recordProperty)
-        data (Data. pedigree unit)]
-    data))
+(comment
+  (def path (.getPath (io/resource "archive-occ")))
+  (def recs (dwca/get-records path))
+  (def rec (first recs)))

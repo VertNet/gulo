@@ -229,7 +229,7 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.REFERENCES, new org.apache.thrift.meta_data.FieldMetaData("references", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RIGHTS, new org.apache.thrift.meta_data.FieldMetaData("rights", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.RIGHTS, new org.apache.thrift.meta_data.FieldMetaData("rights", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.RIGHTS_HOLDER, new org.apache.thrift.meta_data.FieldMetaData("rightsHolder", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));

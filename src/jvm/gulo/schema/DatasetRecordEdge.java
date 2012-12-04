@@ -28,22 +28,25 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Metadata");
+public class DatasetRecordEdge implements org.apache.thrift.TBase<DatasetRecordEdge, DatasetRecordEdge._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DatasetRecordEdge");
 
   private static final org.apache.thrift.protocol.TField DATA_SET_FIELD_DESC = new org.apache.thrift.protocol.TField("dataSet", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField RECORD_FIELD_DESC = new org.apache.thrift.protocol.TField("record", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new MetadataStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new MetadataTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new DatasetRecordEdgeStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new DatasetRecordEdgeTupleSchemeFactory());
   }
 
-  public DataSet dataSet; // required
+  public DatasetID dataSet; // required
+  public RecordID record; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    DATA_SET((short)1, "dataSet");
+    DATA_SET((short)1, "dataSet"),
+    RECORD((short)2, "record");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -60,6 +63,8 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
       switch(fieldId) {
         case 1: // DATA_SET
           return DATA_SET;
+        case 2: // RECORD
+          return RECORD;
         default:
           return null;
       }
@@ -104,44 +109,52 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATA_SET, new org.apache.thrift.meta_data.FieldMetaData("dataSet", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DataSet.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DatasetID.class)));
+    tmpMap.put(_Fields.RECORD, new org.apache.thrift.meta_data.FieldMetaData("record", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RecordID.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Metadata.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DatasetRecordEdge.class, metaDataMap);
   }
 
-  public Metadata() {
+  public DatasetRecordEdge() {
   }
 
-  public Metadata(
-    DataSet dataSet)
+  public DatasetRecordEdge(
+    DatasetID dataSet,
+    RecordID record)
   {
     this();
     this.dataSet = dataSet;
+    this.record = record;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Metadata(Metadata other) {
+  public DatasetRecordEdge(DatasetRecordEdge other) {
     if (other.isSetDataSet()) {
-      this.dataSet = new DataSet(other.dataSet);
+      this.dataSet = new DatasetID(other.dataSet);
+    }
+    if (other.isSetRecord()) {
+      this.record = new RecordID(other.record);
     }
   }
 
-  public Metadata deepCopy() {
-    return new Metadata(this);
+  public DatasetRecordEdge deepCopy() {
+    return new DatasetRecordEdge(this);
   }
 
   @Override
   public void clear() {
     this.dataSet = null;
+    this.record = null;
   }
 
-  public DataSet getDataSet() {
+  public DatasetID getDataSet() {
     return this.dataSet;
   }
 
-  public Metadata setDataSet(DataSet dataSet) {
+  public DatasetRecordEdge setDataSet(DatasetID dataSet) {
     this.dataSet = dataSet;
     return this;
   }
@@ -161,13 +174,45 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     }
   }
 
+  public RecordID getRecord() {
+    return this.record;
+  }
+
+  public DatasetRecordEdge setRecord(RecordID record) {
+    this.record = record;
+    return this;
+  }
+
+  public void unsetRecord() {
+    this.record = null;
+  }
+
+  /** Returns true if field record is set (has been assigned a value) and false otherwise */
+  public boolean isSetRecord() {
+    return this.record != null;
+  }
+
+  public void setRecordIsSet(boolean value) {
+    if (!value) {
+      this.record = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case DATA_SET:
       if (value == null) {
         unsetDataSet();
       } else {
-        setDataSet((DataSet)value);
+        setDataSet((DatasetID)value);
+      }
+      break;
+
+    case RECORD:
+      if (value == null) {
+        unsetRecord();
+      } else {
+        setRecord((RecordID)value);
       }
       break;
 
@@ -178,6 +223,9 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     switch (field) {
     case DATA_SET:
       return getDataSet();
+
+    case RECORD:
+      return getRecord();
 
     }
     throw new IllegalStateException();
@@ -192,6 +240,8 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     switch (field) {
     case DATA_SET:
       return isSetDataSet();
+    case RECORD:
+      return isSetRecord();
     }
     throw new IllegalStateException();
   }
@@ -200,12 +250,12 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Metadata)
-      return this.equals((Metadata)that);
+    if (that instanceof DatasetRecordEdge)
+      return this.equals((DatasetRecordEdge)that);
     return false;
   }
 
-  public boolean equals(Metadata that) {
+  public boolean equals(DatasetRecordEdge that) {
     if (that == null)
       return false;
 
@@ -215,6 +265,15 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
       if (!(this_present_dataSet && that_present_dataSet))
         return false;
       if (!this.dataSet.equals(that.dataSet))
+        return false;
+    }
+
+    boolean this_present_record = true && this.isSetRecord();
+    boolean that_present_record = true && that.isSetRecord();
+    if (this_present_record || that_present_record) {
+      if (!(this_present_record && that_present_record))
+        return false;
+      if (!this.record.equals(that.record))
         return false;
     }
 
@@ -230,16 +289,21 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     if (present_dataSet)
       builder.append(dataSet);
 
+    boolean present_record = true && (isSetRecord());
+    builder.append(present_record);
+    if (present_record)
+      builder.append(record);
+
     return builder.toHashCode();
   }
 
-  public int compareTo(Metadata other) {
+  public int compareTo(DatasetRecordEdge other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    Metadata typedOther = (Metadata)other;
+    DatasetRecordEdge typedOther = (DatasetRecordEdge)other;
 
     lastComparison = Boolean.valueOf(isSetDataSet()).compareTo(typedOther.isSetDataSet());
     if (lastComparison != 0) {
@@ -247,6 +311,16 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     }
     if (isSetDataSet()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dataSet, typedOther.dataSet);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetRecord()).compareTo(typedOther.isSetRecord());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetRecord()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.record, typedOther.record);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -268,7 +342,7 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Metadata(");
+    StringBuilder sb = new StringBuilder("DatasetRecordEdge(");
     boolean first = true;
 
     sb.append("dataSet:");
@@ -276,6 +350,14 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
       sb.append("null");
     } else {
       sb.append(this.dataSet);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("record:");
+    if (this.record == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.record);
     }
     first = false;
     sb.append(")");
@@ -286,6 +368,9 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     // check for required fields
     if (dataSet == null) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'dataSet' was not present! Struct: " + toString());
+    }
+    if (record == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'record' was not present! Struct: " + toString());
     }
   }
 
@@ -305,15 +390,15 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
     }
   }
 
-  private static class MetadataStandardSchemeFactory implements SchemeFactory {
-    public MetadataStandardScheme getScheme() {
-      return new MetadataStandardScheme();
+  private static class DatasetRecordEdgeStandardSchemeFactory implements SchemeFactory {
+    public DatasetRecordEdgeStandardScheme getScheme() {
+      return new DatasetRecordEdgeStandardScheme();
     }
   }
 
-  private static class MetadataStandardScheme extends StandardScheme<Metadata> {
+  private static class DatasetRecordEdgeStandardScheme extends StandardScheme<DatasetRecordEdge> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Metadata struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, DatasetRecordEdge struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -325,9 +410,18 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
         switch (schemeField.id) {
           case 1: // DATA_SET
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.dataSet = new DataSet();
+              struct.dataSet = new DatasetID();
               struct.dataSet.read(iprot);
               struct.setDataSetIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 2: // RECORD
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+              struct.record = new RecordID();
+              struct.record.read(iprot);
+              struct.setRecordIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -343,7 +437,7 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Metadata struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, DatasetRecordEdge struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -352,32 +446,41 @@ public class Metadata implements org.apache.thrift.TBase<Metadata, Metadata._Fie
         struct.dataSet.write(oprot);
         oprot.writeFieldEnd();
       }
+      if (struct.record != null) {
+        oprot.writeFieldBegin(RECORD_FIELD_DESC);
+        struct.record.write(oprot);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class MetadataTupleSchemeFactory implements SchemeFactory {
-    public MetadataTupleScheme getScheme() {
-      return new MetadataTupleScheme();
+  private static class DatasetRecordEdgeTupleSchemeFactory implements SchemeFactory {
+    public DatasetRecordEdgeTupleScheme getScheme() {
+      return new DatasetRecordEdgeTupleScheme();
     }
   }
 
-  private static class MetadataTupleScheme extends TupleScheme<Metadata> {
+  private static class DatasetRecordEdgeTupleScheme extends TupleScheme<DatasetRecordEdge> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Metadata struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, DatasetRecordEdge struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       struct.dataSet.write(oprot);
+      struct.record.write(oprot);
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Metadata struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, DatasetRecordEdge struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.dataSet = new DataSet();
+      struct.dataSet = new DatasetID();
       struct.dataSet.read(iprot);
       struct.setDataSetIsSet(true);
+      struct.record = new RecordID();
+      struct.record.read(iprot);
+      struct.setRecordIsSet(true);
     }
   }
 

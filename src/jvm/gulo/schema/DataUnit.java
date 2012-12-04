@@ -30,11 +30,19 @@ import org.slf4j.LoggerFactory;
 
 public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DataUnit");
-  private static final org.apache.thrift.protocol.TField RECORD_PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("recordProperty", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField DATASET_PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetProperty", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField DATASET_RECORD_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetRecord", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField ORGANIZATION_DATASET_FIELD_DESC = new org.apache.thrift.protocol.TField("organizationDataset", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField ORGANIZATION_PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("organizationProperty", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField RECORD_PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("recordProperty", org.apache.thrift.protocol.TType.STRUCT, (short)5);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    RECORD_PROPERTY((short)1, "recordProperty");
+    DATASET_PROPERTY((short)1, "datasetProperty"),
+    DATASET_RECORD((short)2, "datasetRecord"),
+    ORGANIZATION_DATASET((short)3, "organizationDataset"),
+    ORGANIZATION_PROPERTY((short)4, "organizationProperty"),
+    RECORD_PROPERTY((short)5, "recordProperty");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -49,7 +57,15 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // RECORD_PROPERTY
+        case 1: // DATASET_PROPERTY
+          return DATASET_PROPERTY;
+        case 2: // DATASET_RECORD
+          return DATASET_RECORD;
+        case 3: // ORGANIZATION_DATASET
+          return ORGANIZATION_DATASET;
+        case 4: // ORGANIZATION_PROPERTY
+          return ORGANIZATION_PROPERTY;
+        case 5: // RECORD_PROPERTY
           return RECORD_PROPERTY;
         default:
           return null;
@@ -93,6 +109,14 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+    tmpMap.put(_Fields.DATASET_PROPERTY, new org.apache.thrift.meta_data.FieldMetaData("datasetProperty", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DatasetProperty.class)));
+    tmpMap.put(_Fields.DATASET_RECORD, new org.apache.thrift.meta_data.FieldMetaData("datasetRecord", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DatasetRecordEdge.class)));
+    tmpMap.put(_Fields.ORGANIZATION_DATASET, new org.apache.thrift.meta_data.FieldMetaData("organizationDataset", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OrganizationDatasetEdge.class)));
+    tmpMap.put(_Fields.ORGANIZATION_PROPERTY, new org.apache.thrift.meta_data.FieldMetaData("organizationProperty", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OrganizationProperty.class)));
     tmpMap.put(_Fields.RECORD_PROPERTY, new org.apache.thrift.meta_data.FieldMetaData("recordProperty", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RecordProperty.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -114,6 +138,30 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     return new DataUnit(this);
   }
 
+  public static DataUnit datasetProperty(DatasetProperty value) {
+    DataUnit x = new DataUnit();
+    x.setDatasetProperty(value);
+    return x;
+  }
+
+  public static DataUnit datasetRecord(DatasetRecordEdge value) {
+    DataUnit x = new DataUnit();
+    x.setDatasetRecord(value);
+    return x;
+  }
+
+  public static DataUnit organizationDataset(OrganizationDatasetEdge value) {
+    DataUnit x = new DataUnit();
+    x.setOrganizationDataset(value);
+    return x;
+  }
+
+  public static DataUnit organizationProperty(OrganizationProperty value) {
+    DataUnit x = new DataUnit();
+    x.setOrganizationProperty(value);
+    return x;
+  }
+
   public static DataUnit recordProperty(RecordProperty value) {
     DataUnit x = new DataUnit();
     x.setRecordProperty(value);
@@ -124,6 +172,26 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
+      case DATASET_PROPERTY:
+        if (value instanceof DatasetProperty) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type DatasetProperty for field 'datasetProperty', but got " + value.getClass().getSimpleName());
+      case DATASET_RECORD:
+        if (value instanceof DatasetRecordEdge) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type DatasetRecordEdge for field 'datasetRecord', but got " + value.getClass().getSimpleName());
+      case ORGANIZATION_DATASET:
+        if (value instanceof OrganizationDatasetEdge) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type OrganizationDatasetEdge for field 'organizationDataset', but got " + value.getClass().getSimpleName());
+      case ORGANIZATION_PROPERTY:
+        if (value instanceof OrganizationProperty) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type OrganizationProperty for field 'organizationProperty', but got " + value.getClass().getSimpleName());
       case RECORD_PROPERTY:
         if (value instanceof RecordProperty) {
           break;
@@ -139,6 +207,46 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
+        case DATASET_PROPERTY:
+          if (field.type == DATASET_PROPERTY_FIELD_DESC.type) {
+            DatasetProperty datasetProperty;
+            datasetProperty = new DatasetProperty();
+            datasetProperty.read(iprot);
+            return datasetProperty;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case DATASET_RECORD:
+          if (field.type == DATASET_RECORD_FIELD_DESC.type) {
+            DatasetRecordEdge datasetRecord;
+            datasetRecord = new DatasetRecordEdge();
+            datasetRecord.read(iprot);
+            return datasetRecord;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ORGANIZATION_DATASET:
+          if (field.type == ORGANIZATION_DATASET_FIELD_DESC.type) {
+            OrganizationDatasetEdge organizationDataset;
+            organizationDataset = new OrganizationDatasetEdge();
+            organizationDataset.read(iprot);
+            return organizationDataset;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ORGANIZATION_PROPERTY:
+          if (field.type == ORGANIZATION_PROPERTY_FIELD_DESC.type) {
+            OrganizationProperty organizationProperty;
+            organizationProperty = new OrganizationProperty();
+            organizationProperty.read(iprot);
+            return organizationProperty;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         case RECORD_PROPERTY:
           if (field.type == RECORD_PROPERTY_FIELD_DESC.type) {
             RecordProperty recordProperty;
@@ -160,6 +268,22 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
+      case DATASET_PROPERTY:
+        DatasetProperty datasetProperty = (DatasetProperty)value_;
+        datasetProperty.write(oprot);
+        return;
+      case DATASET_RECORD:
+        DatasetRecordEdge datasetRecord = (DatasetRecordEdge)value_;
+        datasetRecord.write(oprot);
+        return;
+      case ORGANIZATION_DATASET:
+        OrganizationDatasetEdge organizationDataset = (OrganizationDatasetEdge)value_;
+        organizationDataset.write(oprot);
+        return;
+      case ORGANIZATION_PROPERTY:
+        OrganizationProperty organizationProperty = (OrganizationProperty)value_;
+        organizationProperty.write(oprot);
+        return;
       case RECORD_PROPERTY:
         RecordProperty recordProperty = (RecordProperty)value_;
         recordProperty.write(oprot);
@@ -174,6 +298,26 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
+        case DATASET_PROPERTY:
+          DatasetProperty datasetProperty;
+          datasetProperty = new DatasetProperty();
+          datasetProperty.read(iprot);
+          return datasetProperty;
+        case DATASET_RECORD:
+          DatasetRecordEdge datasetRecord;
+          datasetRecord = new DatasetRecordEdge();
+          datasetRecord.read(iprot);
+          return datasetRecord;
+        case ORGANIZATION_DATASET:
+          OrganizationDatasetEdge organizationDataset;
+          organizationDataset = new OrganizationDatasetEdge();
+          organizationDataset.read(iprot);
+          return organizationDataset;
+        case ORGANIZATION_PROPERTY:
+          OrganizationProperty organizationProperty;
+          organizationProperty = new OrganizationProperty();
+          organizationProperty.read(iprot);
+          return organizationProperty;
         case RECORD_PROPERTY:
           RecordProperty recordProperty;
           recordProperty = new RecordProperty();
@@ -190,6 +334,22 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
+      case DATASET_PROPERTY:
+        DatasetProperty datasetProperty = (DatasetProperty)value_;
+        datasetProperty.write(oprot);
+        return;
+      case DATASET_RECORD:
+        DatasetRecordEdge datasetRecord = (DatasetRecordEdge)value_;
+        datasetRecord.write(oprot);
+        return;
+      case ORGANIZATION_DATASET:
+        OrganizationDatasetEdge organizationDataset = (OrganizationDatasetEdge)value_;
+        organizationDataset.write(oprot);
+        return;
+      case ORGANIZATION_PROPERTY:
+        OrganizationProperty organizationProperty = (OrganizationProperty)value_;
+        organizationProperty.write(oprot);
+        return;
       case RECORD_PROPERTY:
         RecordProperty recordProperty = (RecordProperty)value_;
         recordProperty.write(oprot);
@@ -202,6 +362,14 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
+      case DATASET_PROPERTY:
+        return DATASET_PROPERTY_FIELD_DESC;
+      case DATASET_RECORD:
+        return DATASET_RECORD_FIELD_DESC;
+      case ORGANIZATION_DATASET:
+        return ORGANIZATION_DATASET_FIELD_DESC;
+      case ORGANIZATION_PROPERTY:
+        return ORGANIZATION_PROPERTY_FIELD_DESC;
       case RECORD_PROPERTY:
         return RECORD_PROPERTY_FIELD_DESC;
       default:
@@ -224,6 +392,62 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   }
 
 
+  public DatasetProperty getDatasetProperty() {
+    if (getSetField() == _Fields.DATASET_PROPERTY) {
+      return (DatasetProperty)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'datasetProperty' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setDatasetProperty(DatasetProperty value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.DATASET_PROPERTY;
+    value_ = value;
+  }
+
+  public DatasetRecordEdge getDatasetRecord() {
+    if (getSetField() == _Fields.DATASET_RECORD) {
+      return (DatasetRecordEdge)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'datasetRecord' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setDatasetRecord(DatasetRecordEdge value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.DATASET_RECORD;
+    value_ = value;
+  }
+
+  public OrganizationDatasetEdge getOrganizationDataset() {
+    if (getSetField() == _Fields.ORGANIZATION_DATASET) {
+      return (OrganizationDatasetEdge)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'organizationDataset' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOrganizationDataset(OrganizationDatasetEdge value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ORGANIZATION_DATASET;
+    value_ = value;
+  }
+
+  public OrganizationProperty getOrganizationProperty() {
+    if (getSetField() == _Fields.ORGANIZATION_PROPERTY) {
+      return (OrganizationProperty)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'organizationProperty' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOrganizationProperty(OrganizationProperty value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ORGANIZATION_PROPERTY;
+    value_ = value;
+  }
+
   public RecordProperty getRecordProperty() {
     if (getSetField() == _Fields.RECORD_PROPERTY) {
       return (RecordProperty)getFieldValue();
@@ -237,6 +461,26 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     setField_ = _Fields.RECORD_PROPERTY;
     value_ = value;
   }
+
+  public boolean isSetDatasetProperty() {
+    return setField_ == _Fields.DATASET_PROPERTY;
+  }
+
+
+  public boolean isSetDatasetRecord() {
+    return setField_ == _Fields.DATASET_RECORD;
+  }
+
+
+  public boolean isSetOrganizationDataset() {
+    return setField_ == _Fields.ORGANIZATION_DATASET;
+  }
+
+
+  public boolean isSetOrganizationProperty() {
+    return setField_ == _Fields.ORGANIZATION_PROPERTY;
+  }
+
 
   public boolean isSetRecordProperty() {
     return setField_ == _Fields.RECORD_PROPERTY;

@@ -28,13 +28,13 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Fields> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("RecordID");
-  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
+public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, OrganizationID._Fields> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OrganizationID");
+  private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ID((short)1, "id");
+    NAME((short)1, "name");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -49,8 +49,8 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ID
-          return ID;
+        case 1: // NAME
+          return NAME;
         default:
           return null;
       }
@@ -93,30 +93,30 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(RecordID.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OrganizationID.class, metaDataMap);
   }
 
-  public RecordID() {
+  public OrganizationID() {
     super();
   }
 
-  public RecordID(_Fields setField, Object value) {
+  public OrganizationID(_Fields setField, Object value) {
     super(setField, value);
   }
 
-  public RecordID(RecordID other) {
+  public OrganizationID(OrganizationID other) {
     super(other);
   }
-  public RecordID deepCopy() {
-    return new RecordID(this);
+  public OrganizationID deepCopy() {
+    return new OrganizationID(this);
   }
 
-  public static RecordID id(String value) {
-    RecordID x = new RecordID();
-    x.setId(value);
+  public static OrganizationID name(String value) {
+    OrganizationID x = new OrganizationID();
+    x.setName(value);
     return x;
   }
 
@@ -124,11 +124,11 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case ID:
+      case NAME:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'id', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'name', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -139,11 +139,11 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case ID:
-          if (field.type == ID_FIELD_DESC.type) {
-            String id;
-            id = iprot.readString();
-            return id;
+        case NAME:
+          if (field.type == NAME_FIELD_DESC.type) {
+            String name;
+            name = iprot.readString();
+            return name;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -159,9 +159,9 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ID:
-        String id = (String)value_;
-        oprot.writeString(id);
+      case NAME:
+        String name = (String)value_;
+        oprot.writeString(name);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -173,10 +173,10 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case ID:
-          String id;
-          id = iprot.readString();
-          return id;
+        case NAME:
+          String name;
+          name = iprot.readString();
+          return name;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -188,9 +188,9 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ID:
-        String id = (String)value_;
-        oprot.writeString(id);
+      case NAME:
+        String name = (String)value_;
+        oprot.writeString(name);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -200,8 +200,8 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case ID:
-        return ID_FIELD_DESC;
+      case NAME:
+        return NAME_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -222,39 +222,39 @@ public class RecordID extends org.apache.thrift.TUnion<RecordID, RecordID._Field
   }
 
 
-  public String getId() {
-    if (getSetField() == _Fields.ID) {
+  public String getName() {
+    if (getSetField() == _Fields.NAME) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'id' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'name' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setId(String value) {
+  public void setName(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.ID;
+    setField_ = _Fields.NAME;
     value_ = value;
   }
 
-  public boolean isSetId() {
-    return setField_ == _Fields.ID;
+  public boolean isSetName() {
+    return setField_ == _Fields.NAME;
   }
 
 
   public boolean equals(Object other) {
-    if (other instanceof RecordID) {
-      return equals((RecordID)other);
+    if (other instanceof OrganizationID) {
+      return equals((OrganizationID)other);
     } else {
       return false;
     }
   }
 
-  public boolean equals(RecordID other) {
+  public boolean equals(OrganizationID other) {
     return other != null && getSetField() == other.getSetField() && getFieldValue().equals(other.getFieldValue());
   }
 
   @Override
-  public int compareTo(RecordID other) {
+  public int compareTo(OrganizationID other) {
     int lastComparison = org.apache.thrift.TBaseHelper.compareTo(getSetField(), other.getSetField());
     if (lastComparison == 0) {
       return org.apache.thrift.TBaseHelper.compareTo(getFieldValue(), other.getFieldValue());

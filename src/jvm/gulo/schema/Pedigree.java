@@ -32,7 +32,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Pedigree");
 
   private static final org.apache.thrift.protocol.TField TRUE_AS_OF_SECS_FIELD_DESC = new org.apache.thrift.protocol.TField("trueAsOfSecs", org.apache.thrift.protocol.TType.I32, (short)1);
-  private static final org.apache.thrift.protocol.TField METADATA_FIELD_DESC = new org.apache.thrift.protocol.TField("metadata", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -41,12 +40,10 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
   }
 
   public int trueAsOfSecs; // required
-  public Metadata metadata; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    TRUE_AS_OF_SECS((short)1, "trueAsOfSecs"),
-    METADATA((short)2, "metadata");
+    TRUE_AS_OF_SECS((short)1, "trueAsOfSecs");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -63,8 +60,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
       switch(fieldId) {
         case 1: // TRUE_AS_OF_SECS
           return TRUE_AS_OF_SECS;
-        case 2: // METADATA
-          return METADATA;
         default:
           return null;
       }
@@ -112,8 +107,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TRUE_AS_OF_SECS, new org.apache.thrift.meta_data.FieldMetaData("trueAsOfSecs", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.METADATA, new org.apache.thrift.meta_data.FieldMetaData("metadata", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Metadata.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Pedigree.class, metaDataMap);
   }
@@ -122,13 +115,11 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
   }
 
   public Pedigree(
-    int trueAsOfSecs,
-    Metadata metadata)
+    int trueAsOfSecs)
   {
     this();
     this.trueAsOfSecs = trueAsOfSecs;
     setTrueAsOfSecsIsSet(true);
-    this.metadata = metadata;
   }
 
   /**
@@ -138,9 +129,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     __isset_bit_vector.clear();
     __isset_bit_vector.or(other.__isset_bit_vector);
     this.trueAsOfSecs = other.trueAsOfSecs;
-    if (other.isSetMetadata()) {
-      this.metadata = new Metadata(other.metadata);
-    }
   }
 
   public Pedigree deepCopy() {
@@ -151,7 +139,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
   public void clear() {
     setTrueAsOfSecsIsSet(false);
     this.trueAsOfSecs = 0;
-    this.metadata = null;
   }
 
   public int getTrueAsOfSecs() {
@@ -177,30 +164,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     __isset_bit_vector.set(__TRUEASOFSECS_ISSET_ID, value);
   }
 
-  public Metadata getMetadata() {
-    return this.metadata;
-  }
-
-  public Pedigree setMetadata(Metadata metadata) {
-    this.metadata = metadata;
-    return this;
-  }
-
-  public void unsetMetadata() {
-    this.metadata = null;
-  }
-
-  /** Returns true if field metadata is set (has been assigned a value) and false otherwise */
-  public boolean isSetMetadata() {
-    return this.metadata != null;
-  }
-
-  public void setMetadataIsSet(boolean value) {
-    if (!value) {
-      this.metadata = null;
-    }
-  }
-
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case TRUE_AS_OF_SECS:
@@ -211,14 +174,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
       }
       break;
 
-    case METADATA:
-      if (value == null) {
-        unsetMetadata();
-      } else {
-        setMetadata((Metadata)value);
-      }
-      break;
-
     }
   }
 
@@ -226,9 +181,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     switch (field) {
     case TRUE_AS_OF_SECS:
       return Integer.valueOf(getTrueAsOfSecs());
-
-    case METADATA:
-      return getMetadata();
 
     }
     throw new IllegalStateException();
@@ -243,8 +195,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     switch (field) {
     case TRUE_AS_OF_SECS:
       return isSetTrueAsOfSecs();
-    case METADATA:
-      return isSetMetadata();
     }
     throw new IllegalStateException();
   }
@@ -271,15 +221,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
         return false;
     }
 
-    boolean this_present_metadata = true && this.isSetMetadata();
-    boolean that_present_metadata = true && that.isSetMetadata();
-    if (this_present_metadata || that_present_metadata) {
-      if (!(this_present_metadata && that_present_metadata))
-        return false;
-      if (!this.metadata.equals(that.metadata))
-        return false;
-    }
-
     return true;
   }
 
@@ -291,11 +232,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     builder.append(present_trueAsOfSecs);
     if (present_trueAsOfSecs)
       builder.append(trueAsOfSecs);
-
-    boolean present_metadata = true && (isSetMetadata());
-    builder.append(present_metadata);
-    if (present_metadata)
-      builder.append(metadata);
 
     return builder.toHashCode();
   }
@@ -314,16 +250,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     }
     if (isSetTrueAsOfSecs()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.trueAsOfSecs, typedOther.trueAsOfSecs);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetMetadata()).compareTo(typedOther.isSetMetadata());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetMetadata()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.metadata, typedOther.metadata);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -351,14 +277,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     sb.append("trueAsOfSecs:");
     sb.append(this.trueAsOfSecs);
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("metadata:");
-    if (this.metadata == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.metadata);
-    }
-    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -366,9 +284,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // alas, we cannot check 'trueAsOfSecs' because it's a primitive and you chose the non-beans generator.
-    if (metadata == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'metadata' was not present! Struct: " + toString());
-    }
   }
 
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -415,15 +330,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // METADATA
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.metadata = new Metadata();
-              struct.metadata.read(iprot);
-              struct.setMetadataIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -445,11 +351,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
       oprot.writeFieldBegin(TRUE_AS_OF_SECS_FIELD_DESC);
       oprot.writeI32(struct.trueAsOfSecs);
       oprot.writeFieldEnd();
-      if (struct.metadata != null) {
-        oprot.writeFieldBegin(METADATA_FIELD_DESC);
-        struct.metadata.write(oprot);
-        oprot.writeFieldEnd();
-      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -468,7 +369,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
     public void write(org.apache.thrift.protocol.TProtocol prot, Pedigree struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeI32(struct.trueAsOfSecs);
-      struct.metadata.write(oprot);
     }
 
     @Override
@@ -476,9 +376,6 @@ public class Pedigree implements org.apache.thrift.TBase<Pedigree, Pedigree._Fie
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.trueAsOfSecs = iprot.readI32();
       struct.setTrueAsOfSecsIsSet(true);
-      struct.metadata = new Metadata();
-      struct.metadata.read(iprot);
-      struct.setMetadataIsSet(true);
     }
   }
 

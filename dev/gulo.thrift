@@ -1,8 +1,7 @@
 namespace java gulo.schema
 
-struct RecordID {
-  1: required string sourceID;
-  2: required string datasetUUID;
+union RecordID {
+  1: string id;
 }
 
 struct Occurrence {
@@ -220,27 +219,58 @@ struct RecordProperty {
   2: required RecordPropertyValue property;
 }
 
-struct DataSet {
-  1: required string abstractSummary;
-  2: required string datasetUUID;
-  3: required string intellectualRights;
-  4: required string language;
-  5: required string organizationName;
-  6: required string pubDate;
-  7: required string title;
+union DatasetID {
+  1: string uuid;
 }
 
-struct Metadata {
-  1: required DataSet dataSet;
+union DatasetPropertyValue {
+  1: string abstractSummary;
+  2: string datasetUUID;
+  3: string intellectualRights;
+  4: string language;
+  5: string organizationName;
+  6: string pubDate;
+  7: string title;
+}  
+
+struct DatasetProperty {
+  1: required DatasetID id;
+  2: required DatasetPropertyValue property;
+}
+
+struct DatasetRecordEdge {
+  1: required DatasetID dataSet;
+  2: required RecordID record;
+}
+
+union OrganizationID {
+  1: string name;
+}
+
+union OragnizationPropertyValue {
+  1: string url;
+}
+
+struct OrganizationProperty {
+  1: required OrganizationID id;
+  2: required OragnizationPropertyValue property;
+}
+
+struct OrganizationDatasetEdge {
+  1: required OrganizationID organization;
+  2: required DatasetID dataset;
 }
 
 struct Pedigree {
   1: required i32 trueAsOfSecs;
-  2: required Metadata metadata;
 }
 
 union DataUnit {
-  1: RecordProperty recordProperty;
+  1: DatasetProperty datasetProperty;
+  2: DatasetRecordEdge datasetRecord;
+  3: OrganizationDatasetEdge organizationDataset;
+  4: OrganizationProperty organizationProperty;
+  5: RecordProperty recordProperty;
 }
 
 struct Data {
