@@ -19,20 +19,24 @@
 
 (defmain Shred
   "Shred a CSV file containing Darwin Core records into the VertNet schema."
-  [harvest-path hfs-path]
-  (let [tax-out (str hfs-path "/tax")
+  [fossa-path hfs-path]
+  (let [tmp-loc "/tmp/data"
+        screened-occ (->> (hfs-seqfile fossa-path)
+                          (filter-infrequent)
+                          (?- (hfs-textline tmp-loc :sinkmode :replace)))
+        tax-out (str hfs-path "/tax")
         loc-out (str hfs-path "/loc")
         tax-loc-out (str hfs-path "/taxloc")
         occ-out (str hfs-path "/occ")]
-    (location-table (hfs-textline harvest-path)
+    (location-table (hfs-textline tmp-loc)
                     (hfs-textline loc-out :sinkmode :replace))
-    (taxon-table (hfs-textline harvest-path)
+    (taxon-table (hfs-textline tmp-loc)
                  (hfs-textline tax-out :sinkmode :replace))
-    (tax-loc-table (hfs-textline harvest-path)
+    (tax-loc-table (hfs-textline tmp-loc)
                    (hfs-textline tax-out)
                    (hfs-textline loc-out)
                    (hfs-textline tax-loc-out :sinkmode :replace))
-    (occ-table (hfs-textline harvest-path)
+    (occ-table (hfs-textline tmp-loc)
                (hfs-textline tax-out)
                (hfs-textline loc-out)
                (hfs-textline tax-loc-out)

@@ -4,13 +4,19 @@
         [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
+  (:require [cascalog.ops :as c])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
+;; Minimum number of values per species - anything *less than or equal*
+;; to this value will be handled by Fossa
+(def MIN-OBS 40000)
+
 ;; Position of values in a split texline.
-(def OCC-ID 0)
-(def LAT 22)
-(def LON 23)
-(def SCINAME 160)
+(def SCINAME 0)
+(def OCC-ID 1)
+(def LAT 2)
+(def LON 3)
+
 
 (defn- my-filter [& vals] (println (str "VAL--------------" vals)) true)
 
@@ -46,7 +52,8 @@
 (defn occ-table
   "Build occ and tax_loc tables."
   [occ-src tax-src loc-src tax-loc-src occ-sink]
-  (let [fields util/rec-fields
+  (let [fields ["?scientificname" "?occ-id" "?decimallatitude"
+                "?decimallongitude" "?precision" "?year" "?month" "?season"]
         result-vector (vec (cons "?tax-loc-id" fields))
         tax-loc-occ-src (<- [?taxon-id ?loc-id ?occ-id ?name ?lat ?lon]
                             (tax-src ?tax-line)
@@ -116,3 +123,21 @@
          (util/gen-uuid :> ?uuid)
          (makeline ?uuid ?lat ?lon ?wkt :> ?line)
          (:distinct true))))
+
+(defn obs-with-min
+  "Return list of scientific names with more observations than MIN-OBS"
+  [src]
+  (<- [?name]
+      (src ?name _ _ _ _ _ _ _)
+      (c/count ?count)
+      (< MIN-OBS ?count)
+      (:distinct true)))
+
+(defn filter-infrequent
+  "Filter out records for scientific names
+   that have fewer observations than MIN-OBS"
+  [occ-src]
+  (let [to-keep (set (ffirst (??- (obs-with-min occ-src))))]
+    (<- [?name ?occids ?lats ?lons ?precisions ?years ?months ?season]
+        (occ-src ?name ?occids ?lats ?lons ?precisions ?years ?months ?season)
+        (contains? to-keep ?name))))
