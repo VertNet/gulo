@@ -19,16 +19,28 @@
 
 (defmain Shred
   "Shred a CSV file containing Darwin Core records into the VertNet schema."
-  [harvest-path hfs-path tables-path]
-  (let [csv-file (str harvest-path "/dwc.csv")
-        hfs-tax (str hfs-path "/tax")
-        hfs-loc (str hfs-path "/loc")
-        hfs-tax-loc (str hfs-path "/taxloc")
-        hfs-occ (str hfs-path "/occ")]
-    (location-table (hfs-textline csv-file) hfs-loc)
-    (taxon-table (hfs-textline csv-file) hfs-tax)
-    (tax-loc-table csv-file hfs-tax hfs-loc hfs-tax-loc)
-    (occ-table csv-file hfs-tax hfs-loc hfs-tax-loc hfs-occ)))
+  [fossa-path hfs-path]
+  (let [tmp-loc "/tmp/data"
+        screened-occ (->> (hfs-seqfile fossa-path)
+                          (filter-infrequent)
+                          (?- (hfs-textline tmp-loc :sinkmode :replace)))
+        tax-out (str hfs-path "/tax")
+        loc-out (str hfs-path "/loc")
+        tax-loc-out (str hfs-path "/taxloc")
+        occ-out (str hfs-path "/occ")]
+    (location-table (hfs-textline tmp-loc)
+                    (hfs-textline loc-out :sinkmode :replace))
+    (taxon-table (hfs-textline tmp-loc)
+                 (hfs-textline tax-out :sinkmode :replace))
+    (tax-loc-table (hfs-textline tmp-loc)
+                   (hfs-textline tax-out)
+                   (hfs-textline loc-out)
+                   (hfs-textline tax-loc-out :sinkmode :replace))
+    (occ-table (hfs-textline tmp-loc)
+               (hfs-textline tax-out)
+               (hfs-textline loc-out)
+               (hfs-textline tax-loc-out)
+               (hfs-textline occ-out :sinkmode :replace))))
 
 (defn PrepareTables
   "Prepare table files for upload to CartoDB."

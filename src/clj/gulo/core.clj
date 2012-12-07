@@ -4,13 +4,19 @@
         [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
+  (:require [cascalog.ops :as c])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
+;; Minimum number of values per species - anything *less than or equal*
+;; to this value will be handled by Fossa
+(def MIN-OBS 40000)
+
 ;; Position of values in a split texline.
-(def OCC-ID 0)
-(def LAT 22)
-(def LON 23)
-(def SCINAME 160)
+(def SCINAME 0)
+(def OCC-ID 1)
+(def LAT 2)
+(def LON 3)
+
 
 (defn- my-filter [& vals] (println (str "VAL--------------" vals)) true)
 
@@ -45,49 +51,39 @@
 
 (defn occ-table
   "Build occ and tax_loc tables."
-  [occ-path tax-path loc-path tax-loc-path occ-sink-path]
-  (let [fields util/rec-fields
+  [occ-src tax-src loc-src tax-loc-src occ-sink]
+  (let [fields ["?scientificname" "?occ-id" "?decimallatitude"
+                "?decimallongitude" "?precision" "?year" "?month" "?season"]
         result-vector (vec (cons "?tax-loc-id" fields))
-        occ-tab (hfs-textline occ-path)
-        occ-source (hfs-textline occ-path)
-        tax (hfs-textline tax-path)
-        loc (hfs-textline loc-path)
-        tax-loc-source (hfs-textline tax-loc-path)
-        occ-sink (taps/hfs-delimited occ-sink-path :sinkmode :replace)        
-        tax-loc-occ (<- [?taxon-id ?loc-id ?occ-id ?name ?lat ?lon]
-                        (tax ?tax-line)
-                        (splitline ?tax-line :> ?taxon-id ?name)
-                        (loc ?loc-line)
-                        (splitline ?loc-line :> ?loc-id ?lat ?lon _)
-                        (occ-tab ?occ-line)
-                        (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name))]
-
+        tax-loc-occ-src (<- [?taxon-id ?loc-id ?occ-id ?name ?lat ?lon]
+                            (tax-src ?tax-line)
+                            (splitline ?tax-line :> ?taxon-id ?name)
+                            (loc-src ?loc-line)
+                            (splitline ?loc-line :> ?loc-id ?lat ?lon _)
+                            (occ-src ?occ-line)
+                            (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name))]
     (?<- occ-sink
          result-vector
-         (tax-loc-occ ?taxon-id ?loc-id ?occ-id ?scientificname ?decimallatitude ?decimallongitude)
-         (tax-loc-source ?tax-loc-line)
+         (tax-loc-occ-src ?taxon-id ?loc-id ?occ-id ?scientificname ?decimallatitude ?decimallongitude)
+         (tax-loc-src ?tax-loc-line)
          (splitline ?tax-loc-line :> ?tax-loc-id ?taxon-id ?loc-id)
-         (occ-tab ?occ-line)
+         (occ-src ?occ-line)
          (splitline ?occ-line :>> fields))))
 
 (defn tax-loc-table
   "Build tax_loc table."
-  [occ-path tax-path loc-path tax-loc-sink-path]
-  (let [occ-tab (hfs-textline occ-path)
-        tax (hfs-textline tax-path)
-        loc (hfs-textline loc-path)
-        tax-loc-sink (hfs-textline tax-loc-sink-path :sinkmode :replace)
-        tax-loc-occ (<- [?taxon-id ?loc-id]
-                        (tax ?tax-line)
-                        (splitline ?tax-line :> ?taxon-id ?name)
-                        (loc ?loc-line)
-                        (splitline ?loc-line :> ?loc-id ?lat ?lon _)
-                        (occ-tab ?occ-line)
-                        (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name)
-                        (:distinct true))]
+  [occ-src tax-src loc-src tax-loc-sink]
+  (let [tax-loc-occ-src (<- [?taxon-id ?loc-id]
+                            (tax-src ?tax-line)
+                            (splitline ?tax-line :> ?taxon-id ?name)
+                            (loc-src ?loc-line)
+                            (splitline ?loc-line :> ?loc-id ?lat ?lon _)
+                            (occ-src ?occ-line)
+                            (line->locname ?occ-line :> ?occ-id ?lat ?lon ?name)
+                            (:distinct true))]
     (?<- tax-loc-sink
          [?line]
-         (tax-loc-occ ?taxon-id ?loc-id)
+         (tax-loc-occ-src ?taxon-id ?loc-id)
          (util/gen-uuid :> ?tax-loc-id)
          (makeline ?tax-loc-id ?taxon-id ?loc-id :> ?line))))
 
@@ -99,13 +95,12 @@
 (defn taxon-table
   "Create taxon table with unique [uuid name] from supplied source of Darwin Core
   textlines."
-  [source sink-path]
-  (let [sink (hfs-textline sink-path :sinkmode :replace)
-        uniques (<- [?name]
-                     (source ?line)
-                     (line->name ?line :> _ ?name)
-                     (valid-name? ?name)
-                     (:distinct true))]
+  [source sink]
+  (let [uniques (<- [?name]
+                    (source ?line)
+                    (line->name ?line :> _ ?name)
+                    (valid-name? ?name)
+                    (:distinct true))]
     (?<- sink
          [?line]
          (uniques ?name)
@@ -115,9 +110,8 @@
 (defn location-table
   "Create location table with unique lines [uuid lat lon wkt] from supplied
   source of Darwin Core textlines."
-  [source sink-path]
-  (let [sink (hfs-textline sink-path :sinkmode :replace)
-        uniques (<- [?lat ?lon]
+  [source sink]
+  (let [uniques (<- [?lat ?lon]
                     (source ?line)
                     (line->loc ?line :> _ ?lat ?lon)
                     (util/latlon-valid? ?lat ?lon)
@@ -129,3 +123,21 @@
          (util/gen-uuid :> ?uuid)
          (makeline ?uuid ?lat ?lon ?wkt :> ?line)
          (:distinct true))))
+
+(defn obs-with-min
+  "Return list of scientific names with more observations than MIN-OBS"
+  [src]
+  (<- [?name]
+      (src ?name _ _ _ _ _ _ _)
+      (c/count ?count)
+      (< MIN-OBS ?count)
+      (:distinct true)))
+
+(defn filter-infrequent
+  "Filter out records for scientific names
+   that have fewer observations than MIN-OBS"
+  [occ-src]
+  (let [to-keep (set (ffirst (??- (obs-with-min occ-src))))]
+    (<- [?name ?occids ?lats ?lons ?precisions ?years ?months ?season]
+        (occ-src ?name ?occids ?lats ?lons ?precisions ?years ?months ?season)
+        (contains? to-keep ?name))))
