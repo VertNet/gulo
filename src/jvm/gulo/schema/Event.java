@@ -28,6 +28,11 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Darwin Core Event class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#eventindex
+ */
 public class Event implements org.apache.thrift.TBase<Event, Event._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Event");
 

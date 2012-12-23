@@ -28,25 +28,31 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The DatasetPropertyValue is the polymorphic representation of Dataset
+ * property values.
+ */
 public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetPropertyValue, DatasetPropertyValue._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DatasetPropertyValue");
-  private static final org.apache.thrift.protocol.TField ABSTRACT_SUMMARY_FIELD_DESC = new org.apache.thrift.protocol.TField("abstractSummary", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField DATASET_UUID_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetUUID", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField INTELLECTUAL_RIGHTS_FIELD_DESC = new org.apache.thrift.protocol.TField("intellectualRights", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField CREATOR_FIELD_DESC = new org.apache.thrift.protocol.TField("creator", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField METADATA_PROVIDER_FIELD_DESC = new org.apache.thrift.protocol.TField("metadataProvider", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("language", org.apache.thrift.protocol.TType.STRING, (short)4);
-  private static final org.apache.thrift.protocol.TField ORGANIZATION_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("organizationName", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField ASSOCIATED_PARTY_FIELD_DESC = new org.apache.thrift.protocol.TField("associatedParty", org.apache.thrift.protocol.TType.STRING, (short)5);
   private static final org.apache.thrift.protocol.TField PUB_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("pubDate", org.apache.thrift.protocol.TType.STRING, (short)6);
-  private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField CONTACT_FIELD_DESC = new org.apache.thrift.protocol.TField("contact", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField ADDITIONAL_INFO_FIELD_DESC = new org.apache.thrift.protocol.TField("additionalInfo", org.apache.thrift.protocol.TType.STRING, (short)8);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ABSTRACT_SUMMARY((short)1, "abstractSummary"),
-    DATASET_UUID((short)2, "datasetUUID"),
-    INTELLECTUAL_RIGHTS((short)3, "intellectualRights"),
+    TITLE((short)1, "title"),
+    CREATOR((short)2, "creator"),
+    METADATA_PROVIDER((short)3, "metadataProvider"),
     LANGUAGE((short)4, "language"),
-    ORGANIZATION_NAME((short)5, "organizationName"),
+    ASSOCIATED_PARTY((short)5, "associatedParty"),
     PUB_DATE((short)6, "pubDate"),
-    TITLE((short)7, "title");
+    CONTACT((short)7, "contact"),
+    ADDITIONAL_INFO((short)8, "additionalInfo");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,20 +67,22 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ABSTRACT_SUMMARY
-          return ABSTRACT_SUMMARY;
-        case 2: // DATASET_UUID
-          return DATASET_UUID;
-        case 3: // INTELLECTUAL_RIGHTS
-          return INTELLECTUAL_RIGHTS;
+        case 1: // TITLE
+          return TITLE;
+        case 2: // CREATOR
+          return CREATOR;
+        case 3: // METADATA_PROVIDER
+          return METADATA_PROVIDER;
         case 4: // LANGUAGE
           return LANGUAGE;
-        case 5: // ORGANIZATION_NAME
-          return ORGANIZATION_NAME;
+        case 5: // ASSOCIATED_PARTY
+          return ASSOCIATED_PARTY;
         case 6: // PUB_DATE
           return PUB_DATE;
-        case 7: // TITLE
-          return TITLE;
+        case 7: // CONTACT
+          return CONTACT;
+        case 8: // ADDITIONAL_INFO
+          return ADDITIONAL_INFO;
         default:
           return null;
       }
@@ -117,19 +125,21 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ABSTRACT_SUMMARY, new org.apache.thrift.meta_data.FieldMetaData("abstractSummary", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DATASET_UUID, new org.apache.thrift.meta_data.FieldMetaData("datasetUUID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.CREATOR, new org.apache.thrift.meta_data.FieldMetaData("creator", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INTELLECTUAL_RIGHTS, new org.apache.thrift.meta_data.FieldMetaData("intellectualRights", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.METADATA_PROVIDER, new org.apache.thrift.meta_data.FieldMetaData("metadataProvider", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("language", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ORGANIZATION_NAME, new org.apache.thrift.meta_data.FieldMetaData("organizationName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.ASSOCIATED_PARTY, new org.apache.thrift.meta_data.FieldMetaData("associatedParty", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.PUB_DATE, new org.apache.thrift.meta_data.FieldMetaData("pubDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.CONTACT, new org.apache.thrift.meta_data.FieldMetaData("contact", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ADDITIONAL_INFO, new org.apache.thrift.meta_data.FieldMetaData("additionalInfo", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DatasetPropertyValue.class, metaDataMap);
@@ -150,21 +160,21 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     return new DatasetPropertyValue(this);
   }
 
-  public static DatasetPropertyValue abstractSummary(String value) {
+  public static DatasetPropertyValue title(String value) {
     DatasetPropertyValue x = new DatasetPropertyValue();
-    x.setAbstractSummary(value);
+    x.setTitle(value);
     return x;
   }
 
-  public static DatasetPropertyValue datasetUUID(String value) {
+  public static DatasetPropertyValue creator(String value) {
     DatasetPropertyValue x = new DatasetPropertyValue();
-    x.setDatasetUUID(value);
+    x.setCreator(value);
     return x;
   }
 
-  public static DatasetPropertyValue intellectualRights(String value) {
+  public static DatasetPropertyValue metadataProvider(String value) {
     DatasetPropertyValue x = new DatasetPropertyValue();
-    x.setIntellectualRights(value);
+    x.setMetadataProvider(value);
     return x;
   }
 
@@ -174,9 +184,9 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     return x;
   }
 
-  public static DatasetPropertyValue organizationName(String value) {
+  public static DatasetPropertyValue associatedParty(String value) {
     DatasetPropertyValue x = new DatasetPropertyValue();
-    x.setOrganizationName(value);
+    x.setAssociatedParty(value);
     return x;
   }
 
@@ -186,9 +196,15 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     return x;
   }
 
-  public static DatasetPropertyValue title(String value) {
+  public static DatasetPropertyValue contact(String value) {
     DatasetPropertyValue x = new DatasetPropertyValue();
-    x.setTitle(value);
+    x.setContact(value);
+    return x;
+  }
+
+  public static DatasetPropertyValue additionalInfo(String value) {
+    DatasetPropertyValue x = new DatasetPropertyValue();
+    x.setAdditionalInfo(value);
     return x;
   }
 
@@ -196,41 +212,46 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case ABSTRACT_SUMMARY:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'abstractSummary', but got " + value.getClass().getSimpleName());
-      case DATASET_UUID:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'datasetUUID', but got " + value.getClass().getSimpleName());
-      case INTELLECTUAL_RIGHTS:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'intellectualRights', but got " + value.getClass().getSimpleName());
-      case LANGUAGE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'language', but got " + value.getClass().getSimpleName());
-      case ORGANIZATION_NAME:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'organizationName', but got " + value.getClass().getSimpleName());
-      case PUB_DATE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'pubDate', but got " + value.getClass().getSimpleName());
       case TITLE:
         if (value instanceof String) {
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'title', but got " + value.getClass().getSimpleName());
+      case CREATOR:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'creator', but got " + value.getClass().getSimpleName());
+      case METADATA_PROVIDER:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'metadataProvider', but got " + value.getClass().getSimpleName());
+      case LANGUAGE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'language', but got " + value.getClass().getSimpleName());
+      case ASSOCIATED_PARTY:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'associatedParty', but got " + value.getClass().getSimpleName());
+      case PUB_DATE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'pubDate', but got " + value.getClass().getSimpleName());
+      case CONTACT:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'contact', but got " + value.getClass().getSimpleName());
+      case ADDITIONAL_INFO:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'additionalInfo', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -241,29 +262,29 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case ABSTRACT_SUMMARY:
-          if (field.type == ABSTRACT_SUMMARY_FIELD_DESC.type) {
-            String abstractSummary;
-            abstractSummary = iprot.readString();
-            return abstractSummary;
+        case TITLE:
+          if (field.type == TITLE_FIELD_DESC.type) {
+            String title;
+            title = iprot.readString();
+            return title;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case DATASET_UUID:
-          if (field.type == DATASET_UUID_FIELD_DESC.type) {
-            String datasetUUID;
-            datasetUUID = iprot.readString();
-            return datasetUUID;
+        case CREATOR:
+          if (field.type == CREATOR_FIELD_DESC.type) {
+            String creator;
+            creator = iprot.readString();
+            return creator;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case INTELLECTUAL_RIGHTS:
-          if (field.type == INTELLECTUAL_RIGHTS_FIELD_DESC.type) {
-            String intellectualRights;
-            intellectualRights = iprot.readString();
-            return intellectualRights;
+        case METADATA_PROVIDER:
+          if (field.type == METADATA_PROVIDER_FIELD_DESC.type) {
+            String metadataProvider;
+            metadataProvider = iprot.readString();
+            return metadataProvider;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -277,11 +298,11 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case ORGANIZATION_NAME:
-          if (field.type == ORGANIZATION_NAME_FIELD_DESC.type) {
-            String organizationName;
-            organizationName = iprot.readString();
-            return organizationName;
+        case ASSOCIATED_PARTY:
+          if (field.type == ASSOCIATED_PARTY_FIELD_DESC.type) {
+            String associatedParty;
+            associatedParty = iprot.readString();
+            return associatedParty;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -295,11 +316,20 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case TITLE:
-          if (field.type == TITLE_FIELD_DESC.type) {
-            String title;
-            title = iprot.readString();
-            return title;
+        case CONTACT:
+          if (field.type == CONTACT_FIELD_DESC.type) {
+            String contact;
+            contact = iprot.readString();
+            return contact;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ADDITIONAL_INFO:
+          if (field.type == ADDITIONAL_INFO_FIELD_DESC.type) {
+            String additionalInfo;
+            additionalInfo = iprot.readString();
+            return additionalInfo;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -315,33 +345,37 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ABSTRACT_SUMMARY:
-        String abstractSummary = (String)value_;
-        oprot.writeString(abstractSummary);
+      case TITLE:
+        String title = (String)value_;
+        oprot.writeString(title);
         return;
-      case DATASET_UUID:
-        String datasetUUID = (String)value_;
-        oprot.writeString(datasetUUID);
+      case CREATOR:
+        String creator = (String)value_;
+        oprot.writeString(creator);
         return;
-      case INTELLECTUAL_RIGHTS:
-        String intellectualRights = (String)value_;
-        oprot.writeString(intellectualRights);
+      case METADATA_PROVIDER:
+        String metadataProvider = (String)value_;
+        oprot.writeString(metadataProvider);
         return;
       case LANGUAGE:
         String language = (String)value_;
         oprot.writeString(language);
         return;
-      case ORGANIZATION_NAME:
-        String organizationName = (String)value_;
-        oprot.writeString(organizationName);
+      case ASSOCIATED_PARTY:
+        String associatedParty = (String)value_;
+        oprot.writeString(associatedParty);
         return;
       case PUB_DATE:
         String pubDate = (String)value_;
         oprot.writeString(pubDate);
         return;
-      case TITLE:
-        String title = (String)value_;
-        oprot.writeString(title);
+      case CONTACT:
+        String contact = (String)value_;
+        oprot.writeString(contact);
+        return;
+      case ADDITIONAL_INFO:
+        String additionalInfo = (String)value_;
+        oprot.writeString(additionalInfo);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -353,34 +387,38 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case ABSTRACT_SUMMARY:
-          String abstractSummary;
-          abstractSummary = iprot.readString();
-          return abstractSummary;
-        case DATASET_UUID:
-          String datasetUUID;
-          datasetUUID = iprot.readString();
-          return datasetUUID;
-        case INTELLECTUAL_RIGHTS:
-          String intellectualRights;
-          intellectualRights = iprot.readString();
-          return intellectualRights;
-        case LANGUAGE:
-          String language;
-          language = iprot.readString();
-          return language;
-        case ORGANIZATION_NAME:
-          String organizationName;
-          organizationName = iprot.readString();
-          return organizationName;
-        case PUB_DATE:
-          String pubDate;
-          pubDate = iprot.readString();
-          return pubDate;
         case TITLE:
           String title;
           title = iprot.readString();
           return title;
+        case CREATOR:
+          String creator;
+          creator = iprot.readString();
+          return creator;
+        case METADATA_PROVIDER:
+          String metadataProvider;
+          metadataProvider = iprot.readString();
+          return metadataProvider;
+        case LANGUAGE:
+          String language;
+          language = iprot.readString();
+          return language;
+        case ASSOCIATED_PARTY:
+          String associatedParty;
+          associatedParty = iprot.readString();
+          return associatedParty;
+        case PUB_DATE:
+          String pubDate;
+          pubDate = iprot.readString();
+          return pubDate;
+        case CONTACT:
+          String contact;
+          contact = iprot.readString();
+          return contact;
+        case ADDITIONAL_INFO:
+          String additionalInfo;
+          additionalInfo = iprot.readString();
+          return additionalInfo;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -392,33 +430,37 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ABSTRACT_SUMMARY:
-        String abstractSummary = (String)value_;
-        oprot.writeString(abstractSummary);
+      case TITLE:
+        String title = (String)value_;
+        oprot.writeString(title);
         return;
-      case DATASET_UUID:
-        String datasetUUID = (String)value_;
-        oprot.writeString(datasetUUID);
+      case CREATOR:
+        String creator = (String)value_;
+        oprot.writeString(creator);
         return;
-      case INTELLECTUAL_RIGHTS:
-        String intellectualRights = (String)value_;
-        oprot.writeString(intellectualRights);
+      case METADATA_PROVIDER:
+        String metadataProvider = (String)value_;
+        oprot.writeString(metadataProvider);
         return;
       case LANGUAGE:
         String language = (String)value_;
         oprot.writeString(language);
         return;
-      case ORGANIZATION_NAME:
-        String organizationName = (String)value_;
-        oprot.writeString(organizationName);
+      case ASSOCIATED_PARTY:
+        String associatedParty = (String)value_;
+        oprot.writeString(associatedParty);
         return;
       case PUB_DATE:
         String pubDate = (String)value_;
         oprot.writeString(pubDate);
         return;
-      case TITLE:
-        String title = (String)value_;
-        oprot.writeString(title);
+      case CONTACT:
+        String contact = (String)value_;
+        oprot.writeString(contact);
+        return;
+      case ADDITIONAL_INFO:
+        String additionalInfo = (String)value_;
+        oprot.writeString(additionalInfo);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -428,20 +470,22 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case ABSTRACT_SUMMARY:
-        return ABSTRACT_SUMMARY_FIELD_DESC;
-      case DATASET_UUID:
-        return DATASET_UUID_FIELD_DESC;
-      case INTELLECTUAL_RIGHTS:
-        return INTELLECTUAL_RIGHTS_FIELD_DESC;
-      case LANGUAGE:
-        return LANGUAGE_FIELD_DESC;
-      case ORGANIZATION_NAME:
-        return ORGANIZATION_NAME_FIELD_DESC;
-      case PUB_DATE:
-        return PUB_DATE_FIELD_DESC;
       case TITLE:
         return TITLE_FIELD_DESC;
+      case CREATOR:
+        return CREATOR_FIELD_DESC;
+      case METADATA_PROVIDER:
+        return METADATA_PROVIDER_FIELD_DESC;
+      case LANGUAGE:
+        return LANGUAGE_FIELD_DESC;
+      case ASSOCIATED_PARTY:
+        return ASSOCIATED_PARTY_FIELD_DESC;
+      case PUB_DATE:
+        return PUB_DATE_FIELD_DESC;
+      case CONTACT:
+        return CONTACT_FIELD_DESC;
+      case ADDITIONAL_INFO:
+        return ADDITIONAL_INFO_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -462,45 +506,45 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   }
 
 
-  public String getAbstractSummary() {
-    if (getSetField() == _Fields.ABSTRACT_SUMMARY) {
+  public String getTitle() {
+    if (getSetField() == _Fields.TITLE) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'abstractSummary' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'title' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setAbstractSummary(String value) {
+  public void setTitle(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.ABSTRACT_SUMMARY;
+    setField_ = _Fields.TITLE;
     value_ = value;
   }
 
-  public String getDatasetUUID() {
-    if (getSetField() == _Fields.DATASET_UUID) {
+  public String getCreator() {
+    if (getSetField() == _Fields.CREATOR) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'datasetUUID' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'creator' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setDatasetUUID(String value) {
+  public void setCreator(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DATASET_UUID;
+    setField_ = _Fields.CREATOR;
     value_ = value;
   }
 
-  public String getIntellectualRights() {
-    if (getSetField() == _Fields.INTELLECTUAL_RIGHTS) {
+  public String getMetadataProvider() {
+    if (getSetField() == _Fields.METADATA_PROVIDER) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'intellectualRights' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'metadataProvider' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setIntellectualRights(String value) {
+  public void setMetadataProvider(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.INTELLECTUAL_RIGHTS;
+    setField_ = _Fields.METADATA_PROVIDER;
     value_ = value;
   }
 
@@ -518,17 +562,17 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     value_ = value;
   }
 
-  public String getOrganizationName() {
-    if (getSetField() == _Fields.ORGANIZATION_NAME) {
+  public String getAssociatedParty() {
+    if (getSetField() == _Fields.ASSOCIATED_PARTY) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'organizationName' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'associatedParty' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setOrganizationName(String value) {
+  public void setAssociatedParty(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.ORGANIZATION_NAME;
+    setField_ = _Fields.ASSOCIATED_PARTY;
     value_ = value;
   }
 
@@ -546,32 +590,46 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
     value_ = value;
   }
 
-  public String getTitle() {
-    if (getSetField() == _Fields.TITLE) {
+  public String getContact() {
+    if (getSetField() == _Fields.CONTACT) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'title' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'contact' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setTitle(String value) {
+  public void setContact(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.TITLE;
+    setField_ = _Fields.CONTACT;
     value_ = value;
   }
 
-  public boolean isSetAbstractSummary() {
-    return setField_ == _Fields.ABSTRACT_SUMMARY;
+  public String getAdditionalInfo() {
+    if (getSetField() == _Fields.ADDITIONAL_INFO) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'additionalInfo' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setAdditionalInfo(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ADDITIONAL_INFO;
+    value_ = value;
+  }
+
+  public boolean isSetTitle() {
+    return setField_ == _Fields.TITLE;
   }
 
 
-  public boolean isSetDatasetUUID() {
-    return setField_ == _Fields.DATASET_UUID;
+  public boolean isSetCreator() {
+    return setField_ == _Fields.CREATOR;
   }
 
 
-  public boolean isSetIntellectualRights() {
-    return setField_ == _Fields.INTELLECTUAL_RIGHTS;
+  public boolean isSetMetadataProvider() {
+    return setField_ == _Fields.METADATA_PROVIDER;
   }
 
 
@@ -580,8 +638,8 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   }
 
 
-  public boolean isSetOrganizationName() {
-    return setField_ == _Fields.ORGANIZATION_NAME;
+  public boolean isSetAssociatedParty() {
+    return setField_ == _Fields.ASSOCIATED_PARTY;
   }
 
 
@@ -590,8 +648,13 @@ public class DatasetPropertyValue extends org.apache.thrift.TUnion<DatasetProper
   }
 
 
-  public boolean isSetTitle() {
-    return setField_ == _Fields.TITLE;
+  public boolean isSetContact() {
+    return setField_ == _Fields.CONTACT;
+  }
+
+
+  public boolean isSetAdditionalInfo() {
+    return setField_ == _Fields.ADDITIONAL_INFO;
   }
 
 

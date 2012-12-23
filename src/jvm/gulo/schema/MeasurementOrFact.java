@@ -28,6 +28,11 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Darwin Core MeasurementOrFact class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#MeasurementOrFact
+ */
 public class MeasurementOrFact implements org.apache.thrift.TBase<MeasurementOrFact, MeasurementOrFact._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("MeasurementOrFact");
 

@@ -28,6 +28,10 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The DatasetID node uniquely identifies a Dataset. The UUID is the same as the
+ * Resource UUID.
+ */
 public class DatasetID extends org.apache.thrift.TUnion<DatasetID, DatasetID._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DatasetID");
   private static final org.apache.thrift.protocol.TField UUID_FIELD_DESC = new org.apache.thrift.protocol.TField("uuid", org.apache.thrift.protocol.TType.STRING, (short)1);

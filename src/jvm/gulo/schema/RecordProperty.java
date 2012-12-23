@@ -28,11 +28,15 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The RecordProperty represents a RecordPropertyValue and the RecordID to which
+ * it belongs.
+ */
 public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, RecordProperty._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("RecordProperty");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-  private static final org.apache.thrift.protocol.TField PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("property", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -41,12 +45,12 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
   }
 
   public RecordID id; // required
-  public RecordPropertyValue property; // required
+  public RecordPropertyValue value; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
-    PROPERTY((short)2, "property");
+    VALUE((short)2, "value");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -63,8 +67,8 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
       switch(fieldId) {
         case 1: // ID
           return ID;
-        case 2: // PROPERTY
-          return PROPERTY;
+        case 2: // VALUE
+          return VALUE;
         default:
           return null;
       }
@@ -108,9 +112,9 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RecordID.class)));
-    tmpMap.put(_Fields.PROPERTY, new org.apache.thrift.meta_data.FieldMetaData("property", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RecordPropertyValue.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(RecordProperty.class, metaDataMap);
@@ -121,11 +125,11 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
 
   public RecordProperty(
     RecordID id,
-    RecordPropertyValue property)
+    RecordPropertyValue value)
   {
     this();
     this.id = id;
-    this.property = property;
+    this.value = value;
   }
 
   /**
@@ -135,8 +139,8 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     if (other.isSetId()) {
       this.id = new RecordID(other.id);
     }
-    if (other.isSetProperty()) {
-      this.property = new RecordPropertyValue(other.property);
+    if (other.isSetValue()) {
+      this.value = new RecordPropertyValue(other.value);
     }
   }
 
@@ -147,7 +151,7 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
   @Override
   public void clear() {
     this.id = null;
-    this.property = null;
+    this.value = null;
   }
 
   public RecordID getId() {
@@ -174,27 +178,27 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     }
   }
 
-  public RecordPropertyValue getProperty() {
-    return this.property;
+  public RecordPropertyValue getValue() {
+    return this.value;
   }
 
-  public RecordProperty setProperty(RecordPropertyValue property) {
-    this.property = property;
+  public RecordProperty setValue(RecordPropertyValue value) {
+    this.value = value;
     return this;
   }
 
-  public void unsetProperty() {
-    this.property = null;
+  public void unsetValue() {
+    this.value = null;
   }
 
-  /** Returns true if field property is set (has been assigned a value) and false otherwise */
-  public boolean isSetProperty() {
-    return this.property != null;
+  /** Returns true if field value is set (has been assigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return this.value != null;
   }
 
-  public void setPropertyIsSet(boolean value) {
+  public void setValueIsSet(boolean value) {
     if (!value) {
-      this.property = null;
+      this.value = null;
     }
   }
 
@@ -208,11 +212,11 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
       }
       break;
 
-    case PROPERTY:
+    case VALUE:
       if (value == null) {
-        unsetProperty();
+        unsetValue();
       } else {
-        setProperty((RecordPropertyValue)value);
+        setValue((RecordPropertyValue)value);
       }
       break;
 
@@ -224,8 +228,8 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     case ID:
       return getId();
 
-    case PROPERTY:
-      return getProperty();
+    case VALUE:
+      return getValue();
 
     }
     throw new IllegalStateException();
@@ -240,8 +244,8 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     switch (field) {
     case ID:
       return isSetId();
-    case PROPERTY:
-      return isSetProperty();
+    case VALUE:
+      return isSetValue();
     }
     throw new IllegalStateException();
   }
@@ -268,12 +272,12 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
         return false;
     }
 
-    boolean this_present_property = true && this.isSetProperty();
-    boolean that_present_property = true && that.isSetProperty();
-    if (this_present_property || that_present_property) {
-      if (!(this_present_property && that_present_property))
+    boolean this_present_value = true && this.isSetValue();
+    boolean that_present_value = true && that.isSetValue();
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
         return false;
-      if (!this.property.equals(that.property))
+      if (!this.value.equals(that.value))
         return false;
     }
 
@@ -289,10 +293,10 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     if (present_id)
       builder.append(id);
 
-    boolean present_property = true && (isSetProperty());
-    builder.append(present_property);
-    if (present_property)
-      builder.append(property);
+    boolean present_value = true && (isSetValue());
+    builder.append(present_value);
+    if (present_value)
+      builder.append(value);
 
     return builder.toHashCode();
   }
@@ -315,12 +319,12 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetProperty()).compareTo(typedOther.isSetProperty());
+    lastComparison = Boolean.valueOf(isSetValue()).compareTo(typedOther.isSetValue());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetProperty()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.property, typedOther.property);
+    if (isSetValue()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.value, typedOther.value);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -353,11 +357,11 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("property:");
-    if (this.property == null) {
+    sb.append("value:");
+    if (this.value == null) {
       sb.append("null");
     } else {
-      sb.append(this.property);
+      sb.append(this.value);
     }
     first = false;
     sb.append(")");
@@ -366,12 +370,6 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (id == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not present! Struct: " + toString());
-    }
-    if (property == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'property' was not present! Struct: " + toString());
-    }
   }
 
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -417,11 +415,11 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // PROPERTY
+          case 2: // VALUE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.property = new RecordPropertyValue();
-              struct.property.read(iprot);
-              struct.setPropertyIsSet(true);
+              struct.value = new RecordPropertyValue();
+              struct.value.read(iprot);
+              struct.setValueIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -446,9 +444,9 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
         struct.id.write(oprot);
         oprot.writeFieldEnd();
       }
-      if (struct.property != null) {
-        oprot.writeFieldBegin(PROPERTY_FIELD_DESC);
-        struct.property.write(oprot);
+      if (struct.value != null) {
+        oprot.writeFieldBegin(VALUE_FIELD_DESC);
+        struct.value.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -468,19 +466,36 @@ public class RecordProperty implements org.apache.thrift.TBase<RecordProperty, R
     @Override
     public void write(org.apache.thrift.protocol.TProtocol prot, RecordProperty struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      struct.id.write(oprot);
-      struct.property.write(oprot);
+      BitSet optionals = new BitSet();
+      if (struct.isSetId()) {
+        optionals.set(0);
+      }
+      if (struct.isSetValue()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetId()) {
+        struct.id.write(oprot);
+      }
+      if (struct.isSetValue()) {
+        struct.value.write(oprot);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, RecordProperty struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.id = new RecordID();
-      struct.id.read(iprot);
-      struct.setIdIsSet(true);
-      struct.property = new RecordPropertyValue();
-      struct.property.read(iprot);
-      struct.setPropertyIsSet(true);
+      BitSet incoming = iprot.readBitSet(2);
+      if (incoming.get(0)) {
+        struct.id = new RecordID();
+        struct.id.read(iprot);
+        struct.setIdIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.value = new RecordPropertyValue();
+        struct.value.read(iprot);
+        struct.setValueIsSet(true);
+      }
     }
   }
 

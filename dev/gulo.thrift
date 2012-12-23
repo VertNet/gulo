@@ -1,9 +1,44 @@
+/**
+ * This file contains the Gulo graph-based schema using Thrift. It contains nodes,
+ * edges, and properties. For background and rational for why we are going with
+ * a graph-based schema, see: 
+ * 
+ *   http://nathanmarz.com/blog/thrift-graphs-strong-flexible-schemas-on-hadoop.html
+ * 
+ * The basic nodes in our schema are Record, Resource, Dataset, and Organization.
+ *
+ *   +----------+    +----------+    +----------+    +--------------+
+ *   |          |    |          |    |          |    |              |
+ *   | Record   +----+ Dataset  +----+ Resource +----+ Organization |
+ *   |          |    |          |    |          |    |              |
+ *   +----------+    +----------+    +----------+    +--------------+
+ */
+
 namespace java gulo.schema
 
-union RecordID {
-  1: string id;
+/**
+ * The RecordSource uniquely identifies a Darwin Core Record node. The sourceID 
+ * comes from source_id column in a Darwin Core Archive.
+ */
+struct RecordSource {
+  1: required string sourceID; // source_id from DwCA.
+  2: required string datasetUUID;
 }
 
+/**
+ * The RecordID node uniquely identifies a Darwin Core Record by one of 
+ * RecordSource or GUID.
+ */
+union RecordID {
+  1: RecordSource recordSource;
+  2: string guid;
+}
+
+/**
+ * The Darwin Core Occurrence class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#occurrenceindex
+ */
 struct Occurrence {
   1: string associatedMedia;
   2: string associatedOccurrences;
@@ -29,6 +64,11 @@ struct Occurrence {
   22: string sex;
 }
 
+/**
+ * The Darwin Core Event class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#eventindex
+ */
 struct Event {
   1: string day;
   2: string endDayOfYear;
@@ -47,6 +87,11 @@ struct Event {
   15: string year;
 }
 
+/**
+ * The Darwin Core Location class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#locationindex
+ */
 struct Location {
   1: string continent;
   2: string coordinatePrecision;
@@ -94,6 +139,11 @@ struct Location {
   44: string waterBody;
 }
 
+/**
+ * The Darwin Core GeologicalContext class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#geologicalindex
+ */
 struct GeologicalContext {
   1: string bed;
   2: string earliestAgeOrLowestStage;
@@ -115,6 +165,11 @@ struct GeologicalContext {
   18: string member;
 }
 
+/**
+ * The Darwin Core Identification class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#Identification
+ */
 struct Identification {
   1: string identificationID;
   2: string identifiedBy;
@@ -126,6 +181,11 @@ struct Identification {
   8: string typeStatus;
 }
 
+/**
+ * The Darwin Core Taxon class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#Taxon
+ */
 struct Taxon {
   1: string acceptedNameUsage;
   2: string acceptedNameUsageID;
@@ -162,6 +222,11 @@ struct Taxon {
   33: string vernacularName;
 }
 
+/**
+ * The Darwin Core ResourceRelationship class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#ResourceRelationship
+ */
 struct ResourceRelationship {
   1: string relatedResourceID;
   2: string relationshipAccordingTo;
@@ -172,6 +237,11 @@ struct ResourceRelationship {
   7: string resourceRelationshipID;
 }
 
+/**
+ * The Darwin Core MeasurementOrFact class structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#MeasurementOrFact
+ */
 struct MeasurementOrFact {
   1: string measurementAccuracy;
   2: string measurementDeterminedBy;
@@ -184,7 +254,12 @@ struct MeasurementOrFact {
   9: string measurementValue;
 }
 
-union RecordPropertyValue {
+/**
+ * The Darwin Core Record-level structure.
+ * 
+ * http://rs.tdwg.org/dwc/terms/index.htm#MeasurementOrFact
+ */
+struct RecordLevel {
   1: string accessRights;
   2: string basisOfRecord;
   3: string bibliographicCitation;
@@ -204,76 +279,181 @@ union RecordPropertyValue {
   17: string rights;
   18: string rightsHolder;
   19: string type;
-  20: Occurrence occurrence;
-  21: Event event;
-  22: Location location;
-  23: GeologicalContext geologicalContext;
-  24: Identification identification;
-  25: Taxon taxon;
-  26: ResourceRelationship resourceRelationship;
-  27: MeasurementOrFact measurementOrFact;
 }
 
+/**
+ * The RecordPropertyValue is the polymorphic representation of a Darwin Core 
+ * class structure, which is either RecordLevel, Occurrence, Event, Location,
+ * GeologicalContext, Identification, Taxon, ResourceRelationship, or 
+ * MeasurementOrFact.
+ */
+union RecordPropertyValue {
+  1: RecordLevel recordLevel;
+  2: Occurrence occurrence;
+  3: Event event;
+  4: Location location;
+  5: GeologicalContext geologicalContext;
+  6: Identification identification;
+  7: Taxon taxon;
+  8: ResourceRelationship resourceRelationship;
+  9: MeasurementOrFact measurementOrFact;
+}
+
+/**
+ * The RecordProperty represents a RecordPropertyValue and the RecordID to which
+ * it belongs.
+ */
 struct RecordProperty {
-  1: required RecordID id;
-  2: required RecordPropertyValue property;
+  1: RecordID id;
+  2: RecordPropertyValue value;
 }
 
+/**
+ * The ResourceID node uniquely identifies a Resource. The UUID comes from the 
+ * <item><guid> element in the IPT /ipt/rss.do RSS feed.
+ */
+union ResourceID {
+  1: string uuid;
+}
+
+/**
+ * The ResourcePropertyValue is the polymorphic representation of Resource 
+ * property values. 
+ */
+union ResourcePropertyValue {
+  1: string title;
+  2: string url;
+  3: string description;
+  4: string author;
+  5: string emlUrl;
+  6: string publisher;
+  7: string creator;
+  8: string dwcaUrl;
+  9: string pubDate;
+}
+
+/**
+ * The ResourceProperty represents a ResourcePropertyValue and the ResourceID to
+ * which it belongs.
+ */
+struct ResourceProperty {
+  1: ResourceID id;
+  2: ResourcePropertyValue value;
+}
+
+/**
+ * The DatasetID node uniquely identifies a Dataset. The UUID is the same as the
+ * Resource UUID.
+ */
 union DatasetID {
   1: string uuid;
 }
 
+/**
+ * The DatasetPropertyValue is the polymorphic representation of Dataset 
+ * property values.
+ */
 union DatasetPropertyValue {
-  1: string abstractSummary;
-  2: string datasetUUID;
-  3: string intellectualRights;
+  1: string title;
+  2: string creator;
+  3: string metadataProvider;
   4: string language;
-  5: string organizationName;
+  5: string associatedParty;
   6: string pubDate;
-  7: string title;
+  7: string contact;
+  8: string additionalInfo;
 }  
 
+/**
+ * The DatasetProperty represents a DatasetPropertyValue and the DatasetID to 
+ * which it belongs.
+ */
 struct DatasetProperty {
   1: required DatasetID id;
   2: required DatasetPropertyValue property;
 }
 
+/**
+ * The OrganizationID node uniquely identifies an Organization. The UUID comes
+ * from the following feed:
+ *
+ *  http://gbrds.gbif.org/registry/organisation.json
+ *
+ * To get the UUID you need the organization name.
+ */
+union OrganizationID {
+  1: string uuid;
+}
+
+/**
+ * The OrganizationPropertyValue is the polymorphic representation of 
+ * Organization property values.
+ */
+union OrganizationPropertyValue {
+  1: string primaryContact; // description, email, phone, address, type, name
+  2: string url;
+  3: string node; // name, key
+  4: string language;
+  5: string description;
+}
+
+/**
+ * The OrganizationProperty represents a OrganizationPropertyValue and the 
+ * OrganizationID to which it belongs.
+ */
+struct OrganizationProperty {
+  1: required OrganizationID id;
+  2: required OrganizationPropertyValue property;
+}
+
+/**
+ * Edge between a Dataset and one of its Records.
+ */
 struct DatasetRecordEdge {
   1: required DatasetID dataSet;
   2: required RecordID record;
 }
 
-union OrganizationID {
-  1: string name;
-}
-
-union OragnizationPropertyValue {
-  1: string url;
-}
-
-struct OrganizationProperty {
-  1: required OrganizationID id;
-  2: required OragnizationPropertyValue property;
-}
-
-struct OrganizationDatasetEdge {
-  1: required OrganizationID organization;
+/**
+ * Edge between a Resource and its Dataset.
+ */
+struct ResourceDatasetEdge {
+  1: required ResourceID resource;
   2: required DatasetID dataset;
+} 
+
+/**
+ * Edge between a Resource and its Organization.
+ */
+struct ResourceOrganizationEdge {
+  1: required ResourceID resource;
+  2: required OrganizationID organization;
 }
 
+/**
+ * Pedigree for the DataUnit.
+ */
 struct Pedigree {
   1: required i32 trueAsOfSecs;
 }
 
+/**
+ * The DataUnit is a polymorphic representation of properties and edges.
+ */
 union DataUnit {
-  1: DatasetProperty datasetProperty;
-  2: DatasetRecordEdge datasetRecord;
-  3: OrganizationDatasetEdge organizationDataset;
+  1: RecordProperty recordProperty;
+  2: DatasetProperty datasetProperty;
+  3: ResourceProperty resourceProperty;
   4: OrganizationProperty organizationProperty;
-  5: RecordProperty recordProperty;
+  5: DatasetRecordEdge datasetRecord;
+  6: ResourceDatasetEdge resourceDataset;
+  7: ResourceOrganizationEdge resourceOrganization;
 }
 
+/**
+ * The Data struct is the root object that combines a DataUnit with its Pedigree.
+ */
 struct Data {
   1: required Pedigree pedigree;
-  2: required DataUnit dataunit;
+  2: required DataUnit dataUnit;
 }

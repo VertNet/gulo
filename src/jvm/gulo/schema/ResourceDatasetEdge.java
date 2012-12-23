@@ -28,24 +28,27 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OrganizationDatasetEdge implements org.apache.thrift.TBase<OrganizationDatasetEdge, OrganizationDatasetEdge._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OrganizationDatasetEdge");
+/**
+ * Edge between a Resource and its Dataset.
+ */
+public class ResourceDatasetEdge implements org.apache.thrift.TBase<ResourceDatasetEdge, ResourceDatasetEdge._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ResourceDatasetEdge");
 
-  private static final org.apache.thrift.protocol.TField ORGANIZATION_FIELD_DESC = new org.apache.thrift.protocol.TField("organization", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField RESOURCE_FIELD_DESC = new org.apache.thrift.protocol.TField("resource", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField DATASET_FIELD_DESC = new org.apache.thrift.protocol.TField("dataset", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new OrganizationDatasetEdgeStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new OrganizationDatasetEdgeTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new ResourceDatasetEdgeStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new ResourceDatasetEdgeTupleSchemeFactory());
   }
 
-  public OrganizationID organization; // required
+  public ResourceID resource; // required
   public DatasetID dataset; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ORGANIZATION((short)1, "organization"),
+    RESOURCE((short)1, "resource"),
     DATASET((short)2, "dataset");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -61,8 +64,8 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ORGANIZATION
-          return ORGANIZATION;
+        case 1: // RESOURCE
+          return RESOURCE;
         case 2: // DATASET
           return DATASET;
         default:
@@ -108,69 +111,69 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ORGANIZATION, new org.apache.thrift.meta_data.FieldMetaData("organization", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OrganizationID.class)));
+    tmpMap.put(_Fields.RESOURCE, new org.apache.thrift.meta_data.FieldMetaData("resource", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ResourceID.class)));
     tmpMap.put(_Fields.DATASET, new org.apache.thrift.meta_data.FieldMetaData("dataset", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DatasetID.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OrganizationDatasetEdge.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResourceDatasetEdge.class, metaDataMap);
   }
 
-  public OrganizationDatasetEdge() {
+  public ResourceDatasetEdge() {
   }
 
-  public OrganizationDatasetEdge(
-    OrganizationID organization,
+  public ResourceDatasetEdge(
+    ResourceID resource,
     DatasetID dataset)
   {
     this();
-    this.organization = organization;
+    this.resource = resource;
     this.dataset = dataset;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public OrganizationDatasetEdge(OrganizationDatasetEdge other) {
-    if (other.isSetOrganization()) {
-      this.organization = new OrganizationID(other.organization);
+  public ResourceDatasetEdge(ResourceDatasetEdge other) {
+    if (other.isSetResource()) {
+      this.resource = new ResourceID(other.resource);
     }
     if (other.isSetDataset()) {
       this.dataset = new DatasetID(other.dataset);
     }
   }
 
-  public OrganizationDatasetEdge deepCopy() {
-    return new OrganizationDatasetEdge(this);
+  public ResourceDatasetEdge deepCopy() {
+    return new ResourceDatasetEdge(this);
   }
 
   @Override
   public void clear() {
-    this.organization = null;
+    this.resource = null;
     this.dataset = null;
   }
 
-  public OrganizationID getOrganization() {
-    return this.organization;
+  public ResourceID getResource() {
+    return this.resource;
   }
 
-  public OrganizationDatasetEdge setOrganization(OrganizationID organization) {
-    this.organization = organization;
+  public ResourceDatasetEdge setResource(ResourceID resource) {
+    this.resource = resource;
     return this;
   }
 
-  public void unsetOrganization() {
-    this.organization = null;
+  public void unsetResource() {
+    this.resource = null;
   }
 
-  /** Returns true if field organization is set (has been assigned a value) and false otherwise */
-  public boolean isSetOrganization() {
-    return this.organization != null;
+  /** Returns true if field resource is set (has been assigned a value) and false otherwise */
+  public boolean isSetResource() {
+    return this.resource != null;
   }
 
-  public void setOrganizationIsSet(boolean value) {
+  public void setResourceIsSet(boolean value) {
     if (!value) {
-      this.organization = null;
+      this.resource = null;
     }
   }
 
@@ -178,7 +181,7 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
     return this.dataset;
   }
 
-  public OrganizationDatasetEdge setDataset(DatasetID dataset) {
+  public ResourceDatasetEdge setDataset(DatasetID dataset) {
     this.dataset = dataset;
     return this;
   }
@@ -200,11 +203,11 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case ORGANIZATION:
+    case RESOURCE:
       if (value == null) {
-        unsetOrganization();
+        unsetResource();
       } else {
-        setOrganization((OrganizationID)value);
+        setResource((ResourceID)value);
       }
       break;
 
@@ -221,8 +224,8 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case ORGANIZATION:
-      return getOrganization();
+    case RESOURCE:
+      return getResource();
 
     case DATASET:
       return getDataset();
@@ -238,8 +241,8 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
     }
 
     switch (field) {
-    case ORGANIZATION:
-      return isSetOrganization();
+    case RESOURCE:
+      return isSetResource();
     case DATASET:
       return isSetDataset();
     }
@@ -250,21 +253,21 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof OrganizationDatasetEdge)
-      return this.equals((OrganizationDatasetEdge)that);
+    if (that instanceof ResourceDatasetEdge)
+      return this.equals((ResourceDatasetEdge)that);
     return false;
   }
 
-  public boolean equals(OrganizationDatasetEdge that) {
+  public boolean equals(ResourceDatasetEdge that) {
     if (that == null)
       return false;
 
-    boolean this_present_organization = true && this.isSetOrganization();
-    boolean that_present_organization = true && that.isSetOrganization();
-    if (this_present_organization || that_present_organization) {
-      if (!(this_present_organization && that_present_organization))
+    boolean this_present_resource = true && this.isSetResource();
+    boolean that_present_resource = true && that.isSetResource();
+    if (this_present_resource || that_present_resource) {
+      if (!(this_present_resource && that_present_resource))
         return false;
-      if (!this.organization.equals(that.organization))
+      if (!this.resource.equals(that.resource))
         return false;
     }
 
@@ -284,10 +287,10 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_organization = true && (isSetOrganization());
-    builder.append(present_organization);
-    if (present_organization)
-      builder.append(organization);
+    boolean present_resource = true && (isSetResource());
+    builder.append(present_resource);
+    if (present_resource)
+      builder.append(resource);
 
     boolean present_dataset = true && (isSetDataset());
     builder.append(present_dataset);
@@ -297,20 +300,20 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
     return builder.toHashCode();
   }
 
-  public int compareTo(OrganizationDatasetEdge other) {
+  public int compareTo(ResourceDatasetEdge other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    OrganizationDatasetEdge typedOther = (OrganizationDatasetEdge)other;
+    ResourceDatasetEdge typedOther = (ResourceDatasetEdge)other;
 
-    lastComparison = Boolean.valueOf(isSetOrganization()).compareTo(typedOther.isSetOrganization());
+    lastComparison = Boolean.valueOf(isSetResource()).compareTo(typedOther.isSetResource());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetOrganization()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.organization, typedOther.organization);
+    if (isSetResource()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.resource, typedOther.resource);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -342,14 +345,14 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("OrganizationDatasetEdge(");
+    StringBuilder sb = new StringBuilder("ResourceDatasetEdge(");
     boolean first = true;
 
-    sb.append("organization:");
-    if (this.organization == null) {
+    sb.append("resource:");
+    if (this.resource == null) {
       sb.append("null");
     } else {
-      sb.append(this.organization);
+      sb.append(this.resource);
     }
     first = false;
     if (!first) sb.append(", ");
@@ -366,8 +369,8 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (organization == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'organization' was not present! Struct: " + toString());
+    if (resource == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'resource' was not present! Struct: " + toString());
     }
     if (dataset == null) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'dataset' was not present! Struct: " + toString());
@@ -390,15 +393,15 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
     }
   }
 
-  private static class OrganizationDatasetEdgeStandardSchemeFactory implements SchemeFactory {
-    public OrganizationDatasetEdgeStandardScheme getScheme() {
-      return new OrganizationDatasetEdgeStandardScheme();
+  private static class ResourceDatasetEdgeStandardSchemeFactory implements SchemeFactory {
+    public ResourceDatasetEdgeStandardScheme getScheme() {
+      return new ResourceDatasetEdgeStandardScheme();
     }
   }
 
-  private static class OrganizationDatasetEdgeStandardScheme extends StandardScheme<OrganizationDatasetEdge> {
+  private static class ResourceDatasetEdgeStandardScheme extends StandardScheme<ResourceDatasetEdge> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, OrganizationDatasetEdge struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, ResourceDatasetEdge struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -408,11 +411,11 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
           break;
         }
         switch (schemeField.id) {
-          case 1: // ORGANIZATION
+          case 1: // RESOURCE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.organization = new OrganizationID();
-              struct.organization.read(iprot);
-              struct.setOrganizationIsSet(true);
+              struct.resource = new ResourceID();
+              struct.resource.read(iprot);
+              struct.setResourceIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -437,13 +440,13 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, OrganizationDatasetEdge struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, ResourceDatasetEdge struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.organization != null) {
-        oprot.writeFieldBegin(ORGANIZATION_FIELD_DESC);
-        struct.organization.write(oprot);
+      if (struct.resource != null) {
+        oprot.writeFieldBegin(RESOURCE_FIELD_DESC);
+        struct.resource.write(oprot);
         oprot.writeFieldEnd();
       }
       if (struct.dataset != null) {
@@ -457,27 +460,27 @@ public class OrganizationDatasetEdge implements org.apache.thrift.TBase<Organiza
 
   }
 
-  private static class OrganizationDatasetEdgeTupleSchemeFactory implements SchemeFactory {
-    public OrganizationDatasetEdgeTupleScheme getScheme() {
-      return new OrganizationDatasetEdgeTupleScheme();
+  private static class ResourceDatasetEdgeTupleSchemeFactory implements SchemeFactory {
+    public ResourceDatasetEdgeTupleScheme getScheme() {
+      return new ResourceDatasetEdgeTupleScheme();
     }
   }
 
-  private static class OrganizationDatasetEdgeTupleScheme extends TupleScheme<OrganizationDatasetEdge> {
+  private static class ResourceDatasetEdgeTupleScheme extends TupleScheme<ResourceDatasetEdge> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, OrganizationDatasetEdge struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, ResourceDatasetEdge struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      struct.organization.write(oprot);
+      struct.resource.write(oprot);
       struct.dataset.write(oprot);
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, OrganizationDatasetEdge struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, ResourceDatasetEdge struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.organization = new OrganizationID();
-      struct.organization.read(iprot);
-      struct.setOrganizationIsSet(true);
+      struct.resource = new ResourceID();
+      struct.resource.read(iprot);
+      struct.setResourceIsSet(true);
       struct.dataset = new DatasetID();
       struct.dataset.read(iprot);
       struct.setDatasetIsSet(true);

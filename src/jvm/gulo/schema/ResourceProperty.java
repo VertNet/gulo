@@ -29,27 +29,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The Data struct is the root object that combines a DataUnit with its Pedigree.
+ * The ResourceProperty represents a ResourcePropertyValue and the ResourceID to
+ * which it belongs.
  */
-public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Data");
+public class ResourceProperty implements org.apache.thrift.TBase<ResourceProperty, ResourceProperty._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ResourceProperty");
 
-  private static final org.apache.thrift.protocol.TField PEDIGREE_FIELD_DESC = new org.apache.thrift.protocol.TField("pedigree", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-  private static final org.apache.thrift.protocol.TField DATA_UNIT_FIELD_DESC = new org.apache.thrift.protocol.TField("dataUnit", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new DataStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new DataTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new ResourcePropertyStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new ResourcePropertyTupleSchemeFactory());
   }
 
-  public Pedigree pedigree; // required
-  public DataUnit dataUnit; // required
+  public ResourceID id; // required
+  public ResourcePropertyValue value; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PEDIGREE((short)1, "pedigree"),
-    DATA_UNIT((short)2, "dataUnit");
+    ID((short)1, "id"),
+    VALUE((short)2, "value");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -64,10 +65,10 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PEDIGREE
-          return PEDIGREE;
-        case 2: // DATA_UNIT
-          return DATA_UNIT;
+        case 1: // ID
+          return ID;
+        case 2: // VALUE
+          return VALUE;
         default:
           return null;
       }
@@ -111,111 +112,111 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PEDIGREE, new org.apache.thrift.meta_data.FieldMetaData("pedigree", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Pedigree.class)));
-    tmpMap.put(_Fields.DATA_UNIT, new org.apache.thrift.meta_data.FieldMetaData("dataUnit", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DataUnit.class)));
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ResourceID.class)));
+    tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ResourcePropertyValue.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Data.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResourceProperty.class, metaDataMap);
   }
 
-  public Data() {
+  public ResourceProperty() {
   }
 
-  public Data(
-    Pedigree pedigree,
-    DataUnit dataUnit)
+  public ResourceProperty(
+    ResourceID id,
+    ResourcePropertyValue value)
   {
     this();
-    this.pedigree = pedigree;
-    this.dataUnit = dataUnit;
+    this.id = id;
+    this.value = value;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Data(Data other) {
-    if (other.isSetPedigree()) {
-      this.pedigree = new Pedigree(other.pedigree);
+  public ResourceProperty(ResourceProperty other) {
+    if (other.isSetId()) {
+      this.id = new ResourceID(other.id);
     }
-    if (other.isSetDataUnit()) {
-      this.dataUnit = new DataUnit(other.dataUnit);
+    if (other.isSetValue()) {
+      this.value = new ResourcePropertyValue(other.value);
     }
   }
 
-  public Data deepCopy() {
-    return new Data(this);
+  public ResourceProperty deepCopy() {
+    return new ResourceProperty(this);
   }
 
   @Override
   public void clear() {
-    this.pedigree = null;
-    this.dataUnit = null;
+    this.id = null;
+    this.value = null;
   }
 
-  public Pedigree getPedigree() {
-    return this.pedigree;
+  public ResourceID getId() {
+    return this.id;
   }
 
-  public Data setPedigree(Pedigree pedigree) {
-    this.pedigree = pedigree;
+  public ResourceProperty setId(ResourceID id) {
+    this.id = id;
     return this;
   }
 
-  public void unsetPedigree() {
-    this.pedigree = null;
+  public void unsetId() {
+    this.id = null;
   }
 
-  /** Returns true if field pedigree is set (has been assigned a value) and false otherwise */
-  public boolean isSetPedigree() {
-    return this.pedigree != null;
+  /** Returns true if field id is set (has been assigned a value) and false otherwise */
+  public boolean isSetId() {
+    return this.id != null;
   }
 
-  public void setPedigreeIsSet(boolean value) {
+  public void setIdIsSet(boolean value) {
     if (!value) {
-      this.pedigree = null;
+      this.id = null;
     }
   }
 
-  public DataUnit getDataUnit() {
-    return this.dataUnit;
+  public ResourcePropertyValue getValue() {
+    return this.value;
   }
 
-  public Data setDataUnit(DataUnit dataUnit) {
-    this.dataUnit = dataUnit;
+  public ResourceProperty setValue(ResourcePropertyValue value) {
+    this.value = value;
     return this;
   }
 
-  public void unsetDataUnit() {
-    this.dataUnit = null;
+  public void unsetValue() {
+    this.value = null;
   }
 
-  /** Returns true if field dataUnit is set (has been assigned a value) and false otherwise */
-  public boolean isSetDataUnit() {
-    return this.dataUnit != null;
+  /** Returns true if field value is set (has been assigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return this.value != null;
   }
 
-  public void setDataUnitIsSet(boolean value) {
+  public void setValueIsSet(boolean value) {
     if (!value) {
-      this.dataUnit = null;
+      this.value = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case PEDIGREE:
+    case ID:
       if (value == null) {
-        unsetPedigree();
+        unsetId();
       } else {
-        setPedigree((Pedigree)value);
+        setId((ResourceID)value);
       }
       break;
 
-    case DATA_UNIT:
+    case VALUE:
       if (value == null) {
-        unsetDataUnit();
+        unsetValue();
       } else {
-        setDataUnit((DataUnit)value);
+        setValue((ResourcePropertyValue)value);
       }
       break;
 
@@ -224,11 +225,11 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case PEDIGREE:
-      return getPedigree();
+    case ID:
+      return getId();
 
-    case DATA_UNIT:
-      return getDataUnit();
+    case VALUE:
+      return getValue();
 
     }
     throw new IllegalStateException();
@@ -241,10 +242,10 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
     }
 
     switch (field) {
-    case PEDIGREE:
-      return isSetPedigree();
-    case DATA_UNIT:
-      return isSetDataUnit();
+    case ID:
+      return isSetId();
+    case VALUE:
+      return isSetValue();
     }
     throw new IllegalStateException();
   }
@@ -253,30 +254,30 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Data)
-      return this.equals((Data)that);
+    if (that instanceof ResourceProperty)
+      return this.equals((ResourceProperty)that);
     return false;
   }
 
-  public boolean equals(Data that) {
+  public boolean equals(ResourceProperty that) {
     if (that == null)
       return false;
 
-    boolean this_present_pedigree = true && this.isSetPedigree();
-    boolean that_present_pedigree = true && that.isSetPedigree();
-    if (this_present_pedigree || that_present_pedigree) {
-      if (!(this_present_pedigree && that_present_pedigree))
+    boolean this_present_id = true && this.isSetId();
+    boolean that_present_id = true && that.isSetId();
+    if (this_present_id || that_present_id) {
+      if (!(this_present_id && that_present_id))
         return false;
-      if (!this.pedigree.equals(that.pedigree))
+      if (!this.id.equals(that.id))
         return false;
     }
 
-    boolean this_present_dataUnit = true && this.isSetDataUnit();
-    boolean that_present_dataUnit = true && that.isSetDataUnit();
-    if (this_present_dataUnit || that_present_dataUnit) {
-      if (!(this_present_dataUnit && that_present_dataUnit))
+    boolean this_present_value = true && this.isSetValue();
+    boolean that_present_value = true && that.isSetValue();
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
         return false;
-      if (!this.dataUnit.equals(that.dataUnit))
+      if (!this.value.equals(that.value))
         return false;
     }
 
@@ -287,43 +288,43 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder();
 
-    boolean present_pedigree = true && (isSetPedigree());
-    builder.append(present_pedigree);
-    if (present_pedigree)
-      builder.append(pedigree);
+    boolean present_id = true && (isSetId());
+    builder.append(present_id);
+    if (present_id)
+      builder.append(id);
 
-    boolean present_dataUnit = true && (isSetDataUnit());
-    builder.append(present_dataUnit);
-    if (present_dataUnit)
-      builder.append(dataUnit);
+    boolean present_value = true && (isSetValue());
+    builder.append(present_value);
+    if (present_value)
+      builder.append(value);
 
     return builder.toHashCode();
   }
 
-  public int compareTo(Data other) {
+  public int compareTo(ResourceProperty other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    Data typedOther = (Data)other;
+    ResourceProperty typedOther = (ResourceProperty)other;
 
-    lastComparison = Boolean.valueOf(isSetPedigree()).compareTo(typedOther.isSetPedigree());
+    lastComparison = Boolean.valueOf(isSetId()).compareTo(typedOther.isSetId());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetPedigree()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.pedigree, typedOther.pedigree);
+    if (isSetId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.id, typedOther.id);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetDataUnit()).compareTo(typedOther.isSetDataUnit());
+    lastComparison = Boolean.valueOf(isSetValue()).compareTo(typedOther.isSetValue());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetDataUnit()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dataUnit, typedOther.dataUnit);
+    if (isSetValue()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.value, typedOther.value);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -345,22 +346,22 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Data(");
+    StringBuilder sb = new StringBuilder("ResourceProperty(");
     boolean first = true;
 
-    sb.append("pedigree:");
-    if (this.pedigree == null) {
+    sb.append("id:");
+    if (this.id == null) {
       sb.append("null");
     } else {
-      sb.append(this.pedigree);
+      sb.append(this.id);
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("dataUnit:");
-    if (this.dataUnit == null) {
+    sb.append("value:");
+    if (this.value == null) {
       sb.append("null");
     } else {
-      sb.append(this.dataUnit);
+      sb.append(this.value);
     }
     first = false;
     sb.append(")");
@@ -369,12 +370,6 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (pedigree == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'pedigree' was not present! Struct: " + toString());
-    }
-    if (dataUnit == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'dataUnit' was not present! Struct: " + toString());
-    }
   }
 
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -393,15 +388,15 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
     }
   }
 
-  private static class DataStandardSchemeFactory implements SchemeFactory {
-    public DataStandardScheme getScheme() {
-      return new DataStandardScheme();
+  private static class ResourcePropertyStandardSchemeFactory implements SchemeFactory {
+    public ResourcePropertyStandardScheme getScheme() {
+      return new ResourcePropertyStandardScheme();
     }
   }
 
-  private static class DataStandardScheme extends StandardScheme<Data> {
+  private static class ResourcePropertyStandardScheme extends StandardScheme<ResourceProperty> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Data struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, ResourceProperty struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -411,20 +406,20 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
           break;
         }
         switch (schemeField.id) {
-          case 1: // PEDIGREE
+          case 1: // ID
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.pedigree = new Pedigree();
-              struct.pedigree.read(iprot);
-              struct.setPedigreeIsSet(true);
+              struct.id = new ResourceID();
+              struct.id.read(iprot);
+              struct.setIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // DATA_UNIT
+          case 2: // VALUE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.dataUnit = new DataUnit();
-              struct.dataUnit.read(iprot);
-              struct.setDataUnitIsSet(true);
+              struct.value = new ResourcePropertyValue();
+              struct.value.read(iprot);
+              struct.setValueIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -440,18 +435,18 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Data struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, ResourceProperty struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.pedigree != null) {
-        oprot.writeFieldBegin(PEDIGREE_FIELD_DESC);
-        struct.pedigree.write(oprot);
+      if (struct.id != null) {
+        oprot.writeFieldBegin(ID_FIELD_DESC);
+        struct.id.write(oprot);
         oprot.writeFieldEnd();
       }
-      if (struct.dataUnit != null) {
-        oprot.writeFieldBegin(DATA_UNIT_FIELD_DESC);
-        struct.dataUnit.write(oprot);
+      if (struct.value != null) {
+        oprot.writeFieldBegin(VALUE_FIELD_DESC);
+        struct.value.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -460,30 +455,47 @@ public class Data implements org.apache.thrift.TBase<Data, Data._Fields>, java.i
 
   }
 
-  private static class DataTupleSchemeFactory implements SchemeFactory {
-    public DataTupleScheme getScheme() {
-      return new DataTupleScheme();
+  private static class ResourcePropertyTupleSchemeFactory implements SchemeFactory {
+    public ResourcePropertyTupleScheme getScheme() {
+      return new ResourcePropertyTupleScheme();
     }
   }
 
-  private static class DataTupleScheme extends TupleScheme<Data> {
+  private static class ResourcePropertyTupleScheme extends TupleScheme<ResourceProperty> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Data struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, ResourceProperty struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      struct.pedigree.write(oprot);
-      struct.dataUnit.write(oprot);
+      BitSet optionals = new BitSet();
+      if (struct.isSetId()) {
+        optionals.set(0);
+      }
+      if (struct.isSetValue()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetId()) {
+        struct.id.write(oprot);
+      }
+      if (struct.isSetValue()) {
+        struct.value.write(oprot);
+      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Data struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, ResourceProperty struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.pedigree = new Pedigree();
-      struct.pedigree.read(iprot);
-      struct.setPedigreeIsSet(true);
-      struct.dataUnit = new DataUnit();
-      struct.dataUnit.read(iprot);
-      struct.setDataUnitIsSet(true);
+      BitSet incoming = iprot.readBitSet(2);
+      if (incoming.get(0)) {
+        struct.id = new ResourceID();
+        struct.id.read(iprot);
+        struct.setIdIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.value = new ResourcePropertyValue();
+        struct.value.read(iprot);
+        struct.setValueIsSet(true);
+      }
     }
   }
 

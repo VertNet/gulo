@@ -28,13 +28,21 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The OrganizationID node uniquely identifies an Organization. The UUID comes
+ * from the following feed:
+ * 
+ *  http://gbrds.gbif.org/registry/organisation.json
+ * 
+ * To get the UUID you need the organization name.
+ */
 public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, OrganizationID._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OrganizationID");
-  private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField UUID_FIELD_DESC = new org.apache.thrift.protocol.TField("uuid", org.apache.thrift.protocol.TType.STRING, (short)1);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    NAME((short)1, "name");
+    UUID((short)1, "uuid");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -49,8 +57,8 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // NAME
-          return NAME;
+        case 1: // UUID
+          return UUID;
         default:
           return null;
       }
@@ -93,7 +101,7 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.UUID, new org.apache.thrift.meta_data.FieldMetaData("uuid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OrganizationID.class, metaDataMap);
@@ -114,9 +122,9 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
     return new OrganizationID(this);
   }
 
-  public static OrganizationID name(String value) {
+  public static OrganizationID uuid(String value) {
     OrganizationID x = new OrganizationID();
-    x.setName(value);
+    x.setUuid(value);
     return x;
   }
 
@@ -124,11 +132,11 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case NAME:
+      case UUID:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'name', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'uuid', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -139,11 +147,11 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case NAME:
-          if (field.type == NAME_FIELD_DESC.type) {
-            String name;
-            name = iprot.readString();
-            return name;
+        case UUID:
+          if (field.type == UUID_FIELD_DESC.type) {
+            String uuid;
+            uuid = iprot.readString();
+            return uuid;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -159,9 +167,9 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case NAME:
-        String name = (String)value_;
-        oprot.writeString(name);
+      case UUID:
+        String uuid = (String)value_;
+        oprot.writeString(uuid);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -173,10 +181,10 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case NAME:
-          String name;
-          name = iprot.readString();
-          return name;
+        case UUID:
+          String uuid;
+          uuid = iprot.readString();
+          return uuid;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -188,9 +196,9 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case NAME:
-        String name = (String)value_;
-        oprot.writeString(name);
+      case UUID:
+        String uuid = (String)value_;
+        oprot.writeString(uuid);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -200,8 +208,8 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case NAME:
-        return NAME_FIELD_DESC;
+      case UUID:
+        return UUID_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -222,22 +230,22 @@ public class OrganizationID extends org.apache.thrift.TUnion<OrganizationID, Org
   }
 
 
-  public String getName() {
-    if (getSetField() == _Fields.NAME) {
+  public String getUuid() {
+    if (getSetField() == _Fields.UUID) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'name' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'uuid' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setName(String value) {
+  public void setUuid(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.NAME;
+    setField_ = _Fields.UUID;
     value_ = value;
   }
 
-  public boolean isSetName() {
-    return setField_ == _Fields.NAME;
+  public boolean isSetUuid() {
+    return setField_ == _Fields.UUID;
   }
 
 

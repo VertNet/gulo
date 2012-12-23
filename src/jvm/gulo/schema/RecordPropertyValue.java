@@ -28,65 +28,35 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The RecordPropertyValue is the polymorphic representation of a Darwin Core
+ * class structure, which is either RecordLevel, Occurrence, Event, Location,
+ * GeologicalContext, Identification, Taxon, ResourceRelationship, or
+ * MeasurementOrFact.
+ */
 public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordPropertyValue, RecordPropertyValue._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("RecordPropertyValue");
-  private static final org.apache.thrift.protocol.TField ACCESS_RIGHTS_FIELD_DESC = new org.apache.thrift.protocol.TField("accessRights", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField BASIS_OF_RECORD_FIELD_DESC = new org.apache.thrift.protocol.TField("basisOfRecord", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField BIBLIOGRAPHIC_CITATION_FIELD_DESC = new org.apache.thrift.protocol.TField("bibliographicCitation", org.apache.thrift.protocol.TType.STRING, (short)3);
-  private static final org.apache.thrift.protocol.TField COLLECTION_CODE_FIELD_DESC = new org.apache.thrift.protocol.TField("collectionCode", org.apache.thrift.protocol.TType.STRING, (short)4);
-  private static final org.apache.thrift.protocol.TField COLLECTION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("collectionID", org.apache.thrift.protocol.TType.STRING, (short)5);
-  private static final org.apache.thrift.protocol.TField DATA_GENERALIZATIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("dataGeneralizations", org.apache.thrift.protocol.TType.STRING, (short)6);
-  private static final org.apache.thrift.protocol.TField DATASET_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetID", org.apache.thrift.protocol.TType.STRING, (short)7);
-  private static final org.apache.thrift.protocol.TField DATASET_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("datasetName", org.apache.thrift.protocol.TType.STRING, (short)8);
-  private static final org.apache.thrift.protocol.TField DYNAMIC_PROPERTIES_FIELD_DESC = new org.apache.thrift.protocol.TField("dynamicProperties", org.apache.thrift.protocol.TType.STRING, (short)9);
-  private static final org.apache.thrift.protocol.TField INFORMATION_WITHHELD_FIELD_DESC = new org.apache.thrift.protocol.TField("informationWithheld", org.apache.thrift.protocol.TType.STRING, (short)10);
-  private static final org.apache.thrift.protocol.TField INSTITUTION_CODE_FIELD_DESC = new org.apache.thrift.protocol.TField("institutionCode", org.apache.thrift.protocol.TType.STRING, (short)11);
-  private static final org.apache.thrift.protocol.TField INSTITUTION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("institutionID", org.apache.thrift.protocol.TType.STRING, (short)12);
-  private static final org.apache.thrift.protocol.TField LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("language", org.apache.thrift.protocol.TType.STRING, (short)13);
-  private static final org.apache.thrift.protocol.TField MODIFIED_FIELD_DESC = new org.apache.thrift.protocol.TField("modified", org.apache.thrift.protocol.TType.STRING, (short)14);
-  private static final org.apache.thrift.protocol.TField OWNER_INSTITUTION_CODE_FIELD_DESC = new org.apache.thrift.protocol.TField("ownerInstitutionCode", org.apache.thrift.protocol.TType.STRING, (short)15);
-  private static final org.apache.thrift.protocol.TField REFERENCES_FIELD_DESC = new org.apache.thrift.protocol.TField("references", org.apache.thrift.protocol.TType.STRING, (short)16);
-  private static final org.apache.thrift.protocol.TField RIGHTS_FIELD_DESC = new org.apache.thrift.protocol.TField("rights", org.apache.thrift.protocol.TType.STRING, (short)17);
-  private static final org.apache.thrift.protocol.TField RIGHTS_HOLDER_FIELD_DESC = new org.apache.thrift.protocol.TField("rightsHolder", org.apache.thrift.protocol.TType.STRING, (short)18);
-  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.STRING, (short)19);
-  private static final org.apache.thrift.protocol.TField OCCURRENCE_FIELD_DESC = new org.apache.thrift.protocol.TField("occurrence", org.apache.thrift.protocol.TType.STRUCT, (short)20);
-  private static final org.apache.thrift.protocol.TField EVENT_FIELD_DESC = new org.apache.thrift.protocol.TField("event", org.apache.thrift.protocol.TType.STRUCT, (short)21);
-  private static final org.apache.thrift.protocol.TField LOCATION_FIELD_DESC = new org.apache.thrift.protocol.TField("location", org.apache.thrift.protocol.TType.STRUCT, (short)22);
-  private static final org.apache.thrift.protocol.TField GEOLOGICAL_CONTEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("geologicalContext", org.apache.thrift.protocol.TType.STRUCT, (short)23);
-  private static final org.apache.thrift.protocol.TField IDENTIFICATION_FIELD_DESC = new org.apache.thrift.protocol.TField("identification", org.apache.thrift.protocol.TType.STRUCT, (short)24);
-  private static final org.apache.thrift.protocol.TField TAXON_FIELD_DESC = new org.apache.thrift.protocol.TField("taxon", org.apache.thrift.protocol.TType.STRUCT, (short)25);
-  private static final org.apache.thrift.protocol.TField RESOURCE_RELATIONSHIP_FIELD_DESC = new org.apache.thrift.protocol.TField("resourceRelationship", org.apache.thrift.protocol.TType.STRUCT, (short)26);
-  private static final org.apache.thrift.protocol.TField MEASUREMENT_OR_FACT_FIELD_DESC = new org.apache.thrift.protocol.TField("measurementOrFact", org.apache.thrift.protocol.TType.STRUCT, (short)27);
+  private static final org.apache.thrift.protocol.TField RECORD_LEVEL_FIELD_DESC = new org.apache.thrift.protocol.TField("recordLevel", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField OCCURRENCE_FIELD_DESC = new org.apache.thrift.protocol.TField("occurrence", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField EVENT_FIELD_DESC = new org.apache.thrift.protocol.TField("event", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField LOCATION_FIELD_DESC = new org.apache.thrift.protocol.TField("location", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField GEOLOGICAL_CONTEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("geologicalContext", org.apache.thrift.protocol.TType.STRUCT, (short)5);
+  private static final org.apache.thrift.protocol.TField IDENTIFICATION_FIELD_DESC = new org.apache.thrift.protocol.TField("identification", org.apache.thrift.protocol.TType.STRUCT, (short)6);
+  private static final org.apache.thrift.protocol.TField TAXON_FIELD_DESC = new org.apache.thrift.protocol.TField("taxon", org.apache.thrift.protocol.TType.STRUCT, (short)7);
+  private static final org.apache.thrift.protocol.TField RESOURCE_RELATIONSHIP_FIELD_DESC = new org.apache.thrift.protocol.TField("resourceRelationship", org.apache.thrift.protocol.TType.STRUCT, (short)8);
+  private static final org.apache.thrift.protocol.TField MEASUREMENT_OR_FACT_FIELD_DESC = new org.apache.thrift.protocol.TField("measurementOrFact", org.apache.thrift.protocol.TType.STRUCT, (short)9);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ACCESS_RIGHTS((short)1, "accessRights"),
-    BASIS_OF_RECORD((short)2, "basisOfRecord"),
-    BIBLIOGRAPHIC_CITATION((short)3, "bibliographicCitation"),
-    COLLECTION_CODE((short)4, "collectionCode"),
-    COLLECTION_ID((short)5, "collectionID"),
-    DATA_GENERALIZATIONS((short)6, "dataGeneralizations"),
-    DATASET_ID((short)7, "datasetID"),
-    DATASET_NAME((short)8, "datasetName"),
-    DYNAMIC_PROPERTIES((short)9, "dynamicProperties"),
-    INFORMATION_WITHHELD((short)10, "informationWithheld"),
-    INSTITUTION_CODE((short)11, "institutionCode"),
-    INSTITUTION_ID((short)12, "institutionID"),
-    LANGUAGE((short)13, "language"),
-    MODIFIED((short)14, "modified"),
-    OWNER_INSTITUTION_CODE((short)15, "ownerInstitutionCode"),
-    REFERENCES((short)16, "references"),
-    RIGHTS((short)17, "rights"),
-    RIGHTS_HOLDER((short)18, "rightsHolder"),
-    TYPE((short)19, "type"),
-    OCCURRENCE((short)20, "occurrence"),
-    EVENT((short)21, "event"),
-    LOCATION((short)22, "location"),
-    GEOLOGICAL_CONTEXT((short)23, "geologicalContext"),
-    IDENTIFICATION((short)24, "identification"),
-    TAXON((short)25, "taxon"),
-    RESOURCE_RELATIONSHIP((short)26, "resourceRelationship"),
-    MEASUREMENT_OR_FACT((short)27, "measurementOrFact");
+    RECORD_LEVEL((short)1, "recordLevel"),
+    OCCURRENCE((short)2, "occurrence"),
+    EVENT((short)3, "event"),
+    LOCATION((short)4, "location"),
+    GEOLOGICAL_CONTEXT((short)5, "geologicalContext"),
+    IDENTIFICATION((short)6, "identification"),
+    TAXON((short)7, "taxon"),
+    RESOURCE_RELATIONSHIP((short)8, "resourceRelationship"),
+    MEASUREMENT_OR_FACT((short)9, "measurementOrFact");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -101,59 +71,23 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ACCESS_RIGHTS
-          return ACCESS_RIGHTS;
-        case 2: // BASIS_OF_RECORD
-          return BASIS_OF_RECORD;
-        case 3: // BIBLIOGRAPHIC_CITATION
-          return BIBLIOGRAPHIC_CITATION;
-        case 4: // COLLECTION_CODE
-          return COLLECTION_CODE;
-        case 5: // COLLECTION_ID
-          return COLLECTION_ID;
-        case 6: // DATA_GENERALIZATIONS
-          return DATA_GENERALIZATIONS;
-        case 7: // DATASET_ID
-          return DATASET_ID;
-        case 8: // DATASET_NAME
-          return DATASET_NAME;
-        case 9: // DYNAMIC_PROPERTIES
-          return DYNAMIC_PROPERTIES;
-        case 10: // INFORMATION_WITHHELD
-          return INFORMATION_WITHHELD;
-        case 11: // INSTITUTION_CODE
-          return INSTITUTION_CODE;
-        case 12: // INSTITUTION_ID
-          return INSTITUTION_ID;
-        case 13: // LANGUAGE
-          return LANGUAGE;
-        case 14: // MODIFIED
-          return MODIFIED;
-        case 15: // OWNER_INSTITUTION_CODE
-          return OWNER_INSTITUTION_CODE;
-        case 16: // REFERENCES
-          return REFERENCES;
-        case 17: // RIGHTS
-          return RIGHTS;
-        case 18: // RIGHTS_HOLDER
-          return RIGHTS_HOLDER;
-        case 19: // TYPE
-          return TYPE;
-        case 20: // OCCURRENCE
+        case 1: // RECORD_LEVEL
+          return RECORD_LEVEL;
+        case 2: // OCCURRENCE
           return OCCURRENCE;
-        case 21: // EVENT
+        case 3: // EVENT
           return EVENT;
-        case 22: // LOCATION
+        case 4: // LOCATION
           return LOCATION;
-        case 23: // GEOLOGICAL_CONTEXT
+        case 5: // GEOLOGICAL_CONTEXT
           return GEOLOGICAL_CONTEXT;
-        case 24: // IDENTIFICATION
+        case 6: // IDENTIFICATION
           return IDENTIFICATION;
-        case 25: // TAXON
+        case 7: // TAXON
           return TAXON;
-        case 26: // RESOURCE_RELATIONSHIP
+        case 8: // RESOURCE_RELATIONSHIP
           return RESOURCE_RELATIONSHIP;
-        case 27: // MEASUREMENT_OR_FACT
+        case 9: // MEASUREMENT_OR_FACT
           return MEASUREMENT_OR_FACT;
         default:
           return null;
@@ -197,44 +131,8 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ACCESS_RIGHTS, new org.apache.thrift.meta_data.FieldMetaData("accessRights", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.BASIS_OF_RECORD, new org.apache.thrift.meta_data.FieldMetaData("basisOfRecord", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.BIBLIOGRAPHIC_CITATION, new org.apache.thrift.meta_data.FieldMetaData("bibliographicCitation", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COLLECTION_CODE, new org.apache.thrift.meta_data.FieldMetaData("collectionCode", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COLLECTION_ID, new org.apache.thrift.meta_data.FieldMetaData("collectionID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DATA_GENERALIZATIONS, new org.apache.thrift.meta_data.FieldMetaData("dataGeneralizations", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DATASET_ID, new org.apache.thrift.meta_data.FieldMetaData("datasetID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DATASET_NAME, new org.apache.thrift.meta_data.FieldMetaData("datasetName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DYNAMIC_PROPERTIES, new org.apache.thrift.meta_data.FieldMetaData("dynamicProperties", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INFORMATION_WITHHELD, new org.apache.thrift.meta_data.FieldMetaData("informationWithheld", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INSTITUTION_CODE, new org.apache.thrift.meta_data.FieldMetaData("institutionCode", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.INSTITUTION_ID, new org.apache.thrift.meta_data.FieldMetaData("institutionID", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("language", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MODIFIED, new org.apache.thrift.meta_data.FieldMetaData("modified", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.OWNER_INSTITUTION_CODE, new org.apache.thrift.meta_data.FieldMetaData("ownerInstitutionCode", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.REFERENCES, new org.apache.thrift.meta_data.FieldMetaData("references", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RIGHTS, new org.apache.thrift.meta_data.FieldMetaData("rights", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.RIGHTS_HOLDER, new org.apache.thrift.meta_data.FieldMetaData("rightsHolder", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.RECORD_LEVEL, new org.apache.thrift.meta_data.FieldMetaData("recordLevel", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RecordLevel.class)));
     tmpMap.put(_Fields.OCCURRENCE, new org.apache.thrift.meta_data.FieldMetaData("occurrence", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Occurrence.class)));
     tmpMap.put(_Fields.EVENT, new org.apache.thrift.meta_data.FieldMetaData("event", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -270,117 +168,9 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
     return new RecordPropertyValue(this);
   }
 
-  public static RecordPropertyValue accessRights(String value) {
+  public static RecordPropertyValue recordLevel(RecordLevel value) {
     RecordPropertyValue x = new RecordPropertyValue();
-    x.setAccessRights(value);
-    return x;
-  }
-
-  public static RecordPropertyValue basisOfRecord(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setBasisOfRecord(value);
-    return x;
-  }
-
-  public static RecordPropertyValue bibliographicCitation(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setBibliographicCitation(value);
-    return x;
-  }
-
-  public static RecordPropertyValue collectionCode(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setCollectionCode(value);
-    return x;
-  }
-
-  public static RecordPropertyValue collectionID(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setCollectionID(value);
-    return x;
-  }
-
-  public static RecordPropertyValue dataGeneralizations(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setDataGeneralizations(value);
-    return x;
-  }
-
-  public static RecordPropertyValue datasetID(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setDatasetID(value);
-    return x;
-  }
-
-  public static RecordPropertyValue datasetName(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setDatasetName(value);
-    return x;
-  }
-
-  public static RecordPropertyValue dynamicProperties(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setDynamicProperties(value);
-    return x;
-  }
-
-  public static RecordPropertyValue informationWithheld(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setInformationWithheld(value);
-    return x;
-  }
-
-  public static RecordPropertyValue institutionCode(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setInstitutionCode(value);
-    return x;
-  }
-
-  public static RecordPropertyValue institutionID(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setInstitutionID(value);
-    return x;
-  }
-
-  public static RecordPropertyValue language(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setLanguage(value);
-    return x;
-  }
-
-  public static RecordPropertyValue modified(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setModified(value);
-    return x;
-  }
-
-  public static RecordPropertyValue ownerInstitutionCode(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setOwnerInstitutionCode(value);
-    return x;
-  }
-
-  public static RecordPropertyValue references(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setReferences(value);
-    return x;
-  }
-
-  public static RecordPropertyValue rights(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setRights(value);
-    return x;
-  }
-
-  public static RecordPropertyValue rightsHolder(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setRightsHolder(value);
-    return x;
-  }
-
-  public static RecordPropertyValue type(String value) {
-    RecordPropertyValue x = new RecordPropertyValue();
-    x.setType(value);
+    x.setRecordLevel(value);
     return x;
   }
 
@@ -436,101 +226,11 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case ACCESS_RIGHTS:
-        if (value instanceof String) {
+      case RECORD_LEVEL:
+        if (value instanceof RecordLevel) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'accessRights', but got " + value.getClass().getSimpleName());
-      case BASIS_OF_RECORD:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'basisOfRecord', but got " + value.getClass().getSimpleName());
-      case BIBLIOGRAPHIC_CITATION:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'bibliographicCitation', but got " + value.getClass().getSimpleName());
-      case COLLECTION_CODE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'collectionCode', but got " + value.getClass().getSimpleName());
-      case COLLECTION_ID:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'collectionID', but got " + value.getClass().getSimpleName());
-      case DATA_GENERALIZATIONS:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'dataGeneralizations', but got " + value.getClass().getSimpleName());
-      case DATASET_ID:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'datasetID', but got " + value.getClass().getSimpleName());
-      case DATASET_NAME:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'datasetName', but got " + value.getClass().getSimpleName());
-      case DYNAMIC_PROPERTIES:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'dynamicProperties', but got " + value.getClass().getSimpleName());
-      case INFORMATION_WITHHELD:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'informationWithheld', but got " + value.getClass().getSimpleName());
-      case INSTITUTION_CODE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'institutionCode', but got " + value.getClass().getSimpleName());
-      case INSTITUTION_ID:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'institutionID', but got " + value.getClass().getSimpleName());
-      case LANGUAGE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'language', but got " + value.getClass().getSimpleName());
-      case MODIFIED:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'modified', but got " + value.getClass().getSimpleName());
-      case OWNER_INSTITUTION_CODE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'ownerInstitutionCode', but got " + value.getClass().getSimpleName());
-      case REFERENCES:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'references', but got " + value.getClass().getSimpleName());
-      case RIGHTS:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'rights', but got " + value.getClass().getSimpleName());
-      case RIGHTS_HOLDER:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'rightsHolder', but got " + value.getClass().getSimpleName());
-      case TYPE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'type', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type RecordLevel for field 'recordLevel', but got " + value.getClass().getSimpleName());
       case OCCURRENCE:
         if (value instanceof Occurrence) {
           break;
@@ -581,173 +281,12 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case ACCESS_RIGHTS:
-          if (field.type == ACCESS_RIGHTS_FIELD_DESC.type) {
-            String accessRights;
-            accessRights = iprot.readString();
-            return accessRights;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case BASIS_OF_RECORD:
-          if (field.type == BASIS_OF_RECORD_FIELD_DESC.type) {
-            String basisOfRecord;
-            basisOfRecord = iprot.readString();
-            return basisOfRecord;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case BIBLIOGRAPHIC_CITATION:
-          if (field.type == BIBLIOGRAPHIC_CITATION_FIELD_DESC.type) {
-            String bibliographicCitation;
-            bibliographicCitation = iprot.readString();
-            return bibliographicCitation;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case COLLECTION_CODE:
-          if (field.type == COLLECTION_CODE_FIELD_DESC.type) {
-            String collectionCode;
-            collectionCode = iprot.readString();
-            return collectionCode;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case COLLECTION_ID:
-          if (field.type == COLLECTION_ID_FIELD_DESC.type) {
-            String collectionID;
-            collectionID = iprot.readString();
-            return collectionID;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case DATA_GENERALIZATIONS:
-          if (field.type == DATA_GENERALIZATIONS_FIELD_DESC.type) {
-            String dataGeneralizations;
-            dataGeneralizations = iprot.readString();
-            return dataGeneralizations;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case DATASET_ID:
-          if (field.type == DATASET_ID_FIELD_DESC.type) {
-            String datasetID;
-            datasetID = iprot.readString();
-            return datasetID;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case DATASET_NAME:
-          if (field.type == DATASET_NAME_FIELD_DESC.type) {
-            String datasetName;
-            datasetName = iprot.readString();
-            return datasetName;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case DYNAMIC_PROPERTIES:
-          if (field.type == DYNAMIC_PROPERTIES_FIELD_DESC.type) {
-            String dynamicProperties;
-            dynamicProperties = iprot.readString();
-            return dynamicProperties;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case INFORMATION_WITHHELD:
-          if (field.type == INFORMATION_WITHHELD_FIELD_DESC.type) {
-            String informationWithheld;
-            informationWithheld = iprot.readString();
-            return informationWithheld;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case INSTITUTION_CODE:
-          if (field.type == INSTITUTION_CODE_FIELD_DESC.type) {
-            String institutionCode;
-            institutionCode = iprot.readString();
-            return institutionCode;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case INSTITUTION_ID:
-          if (field.type == INSTITUTION_ID_FIELD_DESC.type) {
-            String institutionID;
-            institutionID = iprot.readString();
-            return institutionID;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case LANGUAGE:
-          if (field.type == LANGUAGE_FIELD_DESC.type) {
-            String language;
-            language = iprot.readString();
-            return language;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case MODIFIED:
-          if (field.type == MODIFIED_FIELD_DESC.type) {
-            String modified;
-            modified = iprot.readString();
-            return modified;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case OWNER_INSTITUTION_CODE:
-          if (field.type == OWNER_INSTITUTION_CODE_FIELD_DESC.type) {
-            String ownerInstitutionCode;
-            ownerInstitutionCode = iprot.readString();
-            return ownerInstitutionCode;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case REFERENCES:
-          if (field.type == REFERENCES_FIELD_DESC.type) {
-            String references;
-            references = iprot.readString();
-            return references;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case RIGHTS:
-          if (field.type == RIGHTS_FIELD_DESC.type) {
-            String rights;
-            rights = iprot.readString();
-            return rights;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case RIGHTS_HOLDER:
-          if (field.type == RIGHTS_HOLDER_FIELD_DESC.type) {
-            String rightsHolder;
-            rightsHolder = iprot.readString();
-            return rightsHolder;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case TYPE:
-          if (field.type == TYPE_FIELD_DESC.type) {
-            String type;
-            type = iprot.readString();
-            return type;
+        case RECORD_LEVEL:
+          if (field.type == RECORD_LEVEL_FIELD_DESC.type) {
+            RecordLevel recordLevel;
+            recordLevel = new RecordLevel();
+            recordLevel.read(iprot);
+            return recordLevel;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -843,81 +382,9 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ACCESS_RIGHTS:
-        String accessRights = (String)value_;
-        oprot.writeString(accessRights);
-        return;
-      case BASIS_OF_RECORD:
-        String basisOfRecord = (String)value_;
-        oprot.writeString(basisOfRecord);
-        return;
-      case BIBLIOGRAPHIC_CITATION:
-        String bibliographicCitation = (String)value_;
-        oprot.writeString(bibliographicCitation);
-        return;
-      case COLLECTION_CODE:
-        String collectionCode = (String)value_;
-        oprot.writeString(collectionCode);
-        return;
-      case COLLECTION_ID:
-        String collectionID = (String)value_;
-        oprot.writeString(collectionID);
-        return;
-      case DATA_GENERALIZATIONS:
-        String dataGeneralizations = (String)value_;
-        oprot.writeString(dataGeneralizations);
-        return;
-      case DATASET_ID:
-        String datasetID = (String)value_;
-        oprot.writeString(datasetID);
-        return;
-      case DATASET_NAME:
-        String datasetName = (String)value_;
-        oprot.writeString(datasetName);
-        return;
-      case DYNAMIC_PROPERTIES:
-        String dynamicProperties = (String)value_;
-        oprot.writeString(dynamicProperties);
-        return;
-      case INFORMATION_WITHHELD:
-        String informationWithheld = (String)value_;
-        oprot.writeString(informationWithheld);
-        return;
-      case INSTITUTION_CODE:
-        String institutionCode = (String)value_;
-        oprot.writeString(institutionCode);
-        return;
-      case INSTITUTION_ID:
-        String institutionID = (String)value_;
-        oprot.writeString(institutionID);
-        return;
-      case LANGUAGE:
-        String language = (String)value_;
-        oprot.writeString(language);
-        return;
-      case MODIFIED:
-        String modified = (String)value_;
-        oprot.writeString(modified);
-        return;
-      case OWNER_INSTITUTION_CODE:
-        String ownerInstitutionCode = (String)value_;
-        oprot.writeString(ownerInstitutionCode);
-        return;
-      case REFERENCES:
-        String references = (String)value_;
-        oprot.writeString(references);
-        return;
-      case RIGHTS:
-        String rights = (String)value_;
-        oprot.writeString(rights);
-        return;
-      case RIGHTS_HOLDER:
-        String rightsHolder = (String)value_;
-        oprot.writeString(rightsHolder);
-        return;
-      case TYPE:
-        String type = (String)value_;
-        oprot.writeString(type);
+      case RECORD_LEVEL:
+        RecordLevel recordLevel = (RecordLevel)value_;
+        recordLevel.write(oprot);
         return;
       case OCCURRENCE:
         Occurrence occurrence = (Occurrence)value_;
@@ -961,82 +428,11 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case ACCESS_RIGHTS:
-          String accessRights;
-          accessRights = iprot.readString();
-          return accessRights;
-        case BASIS_OF_RECORD:
-          String basisOfRecord;
-          basisOfRecord = iprot.readString();
-          return basisOfRecord;
-        case BIBLIOGRAPHIC_CITATION:
-          String bibliographicCitation;
-          bibliographicCitation = iprot.readString();
-          return bibliographicCitation;
-        case COLLECTION_CODE:
-          String collectionCode;
-          collectionCode = iprot.readString();
-          return collectionCode;
-        case COLLECTION_ID:
-          String collectionID;
-          collectionID = iprot.readString();
-          return collectionID;
-        case DATA_GENERALIZATIONS:
-          String dataGeneralizations;
-          dataGeneralizations = iprot.readString();
-          return dataGeneralizations;
-        case DATASET_ID:
-          String datasetID;
-          datasetID = iprot.readString();
-          return datasetID;
-        case DATASET_NAME:
-          String datasetName;
-          datasetName = iprot.readString();
-          return datasetName;
-        case DYNAMIC_PROPERTIES:
-          String dynamicProperties;
-          dynamicProperties = iprot.readString();
-          return dynamicProperties;
-        case INFORMATION_WITHHELD:
-          String informationWithheld;
-          informationWithheld = iprot.readString();
-          return informationWithheld;
-        case INSTITUTION_CODE:
-          String institutionCode;
-          institutionCode = iprot.readString();
-          return institutionCode;
-        case INSTITUTION_ID:
-          String institutionID;
-          institutionID = iprot.readString();
-          return institutionID;
-        case LANGUAGE:
-          String language;
-          language = iprot.readString();
-          return language;
-        case MODIFIED:
-          String modified;
-          modified = iprot.readString();
-          return modified;
-        case OWNER_INSTITUTION_CODE:
-          String ownerInstitutionCode;
-          ownerInstitutionCode = iprot.readString();
-          return ownerInstitutionCode;
-        case REFERENCES:
-          String references;
-          references = iprot.readString();
-          return references;
-        case RIGHTS:
-          String rights;
-          rights = iprot.readString();
-          return rights;
-        case RIGHTS_HOLDER:
-          String rightsHolder;
-          rightsHolder = iprot.readString();
-          return rightsHolder;
-        case TYPE:
-          String type;
-          type = iprot.readString();
-          return type;
+        case RECORD_LEVEL:
+          RecordLevel recordLevel;
+          recordLevel = new RecordLevel();
+          recordLevel.read(iprot);
+          return recordLevel;
         case OCCURRENCE:
           Occurrence occurrence;
           occurrence = new Occurrence();
@@ -1088,81 +484,9 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case ACCESS_RIGHTS:
-        String accessRights = (String)value_;
-        oprot.writeString(accessRights);
-        return;
-      case BASIS_OF_RECORD:
-        String basisOfRecord = (String)value_;
-        oprot.writeString(basisOfRecord);
-        return;
-      case BIBLIOGRAPHIC_CITATION:
-        String bibliographicCitation = (String)value_;
-        oprot.writeString(bibliographicCitation);
-        return;
-      case COLLECTION_CODE:
-        String collectionCode = (String)value_;
-        oprot.writeString(collectionCode);
-        return;
-      case COLLECTION_ID:
-        String collectionID = (String)value_;
-        oprot.writeString(collectionID);
-        return;
-      case DATA_GENERALIZATIONS:
-        String dataGeneralizations = (String)value_;
-        oprot.writeString(dataGeneralizations);
-        return;
-      case DATASET_ID:
-        String datasetID = (String)value_;
-        oprot.writeString(datasetID);
-        return;
-      case DATASET_NAME:
-        String datasetName = (String)value_;
-        oprot.writeString(datasetName);
-        return;
-      case DYNAMIC_PROPERTIES:
-        String dynamicProperties = (String)value_;
-        oprot.writeString(dynamicProperties);
-        return;
-      case INFORMATION_WITHHELD:
-        String informationWithheld = (String)value_;
-        oprot.writeString(informationWithheld);
-        return;
-      case INSTITUTION_CODE:
-        String institutionCode = (String)value_;
-        oprot.writeString(institutionCode);
-        return;
-      case INSTITUTION_ID:
-        String institutionID = (String)value_;
-        oprot.writeString(institutionID);
-        return;
-      case LANGUAGE:
-        String language = (String)value_;
-        oprot.writeString(language);
-        return;
-      case MODIFIED:
-        String modified = (String)value_;
-        oprot.writeString(modified);
-        return;
-      case OWNER_INSTITUTION_CODE:
-        String ownerInstitutionCode = (String)value_;
-        oprot.writeString(ownerInstitutionCode);
-        return;
-      case REFERENCES:
-        String references = (String)value_;
-        oprot.writeString(references);
-        return;
-      case RIGHTS:
-        String rights = (String)value_;
-        oprot.writeString(rights);
-        return;
-      case RIGHTS_HOLDER:
-        String rightsHolder = (String)value_;
-        oprot.writeString(rightsHolder);
-        return;
-      case TYPE:
-        String type = (String)value_;
-        oprot.writeString(type);
+      case RECORD_LEVEL:
+        RecordLevel recordLevel = (RecordLevel)value_;
+        recordLevel.write(oprot);
         return;
       case OCCURRENCE:
         Occurrence occurrence = (Occurrence)value_;
@@ -1204,44 +528,8 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case ACCESS_RIGHTS:
-        return ACCESS_RIGHTS_FIELD_DESC;
-      case BASIS_OF_RECORD:
-        return BASIS_OF_RECORD_FIELD_DESC;
-      case BIBLIOGRAPHIC_CITATION:
-        return BIBLIOGRAPHIC_CITATION_FIELD_DESC;
-      case COLLECTION_CODE:
-        return COLLECTION_CODE_FIELD_DESC;
-      case COLLECTION_ID:
-        return COLLECTION_ID_FIELD_DESC;
-      case DATA_GENERALIZATIONS:
-        return DATA_GENERALIZATIONS_FIELD_DESC;
-      case DATASET_ID:
-        return DATASET_ID_FIELD_DESC;
-      case DATASET_NAME:
-        return DATASET_NAME_FIELD_DESC;
-      case DYNAMIC_PROPERTIES:
-        return DYNAMIC_PROPERTIES_FIELD_DESC;
-      case INFORMATION_WITHHELD:
-        return INFORMATION_WITHHELD_FIELD_DESC;
-      case INSTITUTION_CODE:
-        return INSTITUTION_CODE_FIELD_DESC;
-      case INSTITUTION_ID:
-        return INSTITUTION_ID_FIELD_DESC;
-      case LANGUAGE:
-        return LANGUAGE_FIELD_DESC;
-      case MODIFIED:
-        return MODIFIED_FIELD_DESC;
-      case OWNER_INSTITUTION_CODE:
-        return OWNER_INSTITUTION_CODE_FIELD_DESC;
-      case REFERENCES:
-        return REFERENCES_FIELD_DESC;
-      case RIGHTS:
-        return RIGHTS_FIELD_DESC;
-      case RIGHTS_HOLDER:
-        return RIGHTS_HOLDER_FIELD_DESC;
-      case TYPE:
-        return TYPE_FIELD_DESC;
+      case RECORD_LEVEL:
+        return RECORD_LEVEL_FIELD_DESC;
       case OCCURRENCE:
         return OCCURRENCE_FIELD_DESC;
       case EVENT:
@@ -1278,269 +566,17 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
   }
 
 
-  public String getAccessRights() {
-    if (getSetField() == _Fields.ACCESS_RIGHTS) {
-      return (String)getFieldValue();
+  public RecordLevel getRecordLevel() {
+    if (getSetField() == _Fields.RECORD_LEVEL) {
+      return (RecordLevel)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'accessRights' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'recordLevel' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setAccessRights(String value) {
+  public void setRecordLevel(RecordLevel value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.ACCESS_RIGHTS;
-    value_ = value;
-  }
-
-  public String getBasisOfRecord() {
-    if (getSetField() == _Fields.BASIS_OF_RECORD) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'basisOfRecord' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setBasisOfRecord(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.BASIS_OF_RECORD;
-    value_ = value;
-  }
-
-  public String getBibliographicCitation() {
-    if (getSetField() == _Fields.BIBLIOGRAPHIC_CITATION) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'bibliographicCitation' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setBibliographicCitation(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.BIBLIOGRAPHIC_CITATION;
-    value_ = value;
-  }
-
-  public String getCollectionCode() {
-    if (getSetField() == _Fields.COLLECTION_CODE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'collectionCode' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setCollectionCode(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.COLLECTION_CODE;
-    value_ = value;
-  }
-
-  public String getCollectionID() {
-    if (getSetField() == _Fields.COLLECTION_ID) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'collectionID' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setCollectionID(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.COLLECTION_ID;
-    value_ = value;
-  }
-
-  public String getDataGeneralizations() {
-    if (getSetField() == _Fields.DATA_GENERALIZATIONS) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'dataGeneralizations' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setDataGeneralizations(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DATA_GENERALIZATIONS;
-    value_ = value;
-  }
-
-  public String getDatasetID() {
-    if (getSetField() == _Fields.DATASET_ID) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'datasetID' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setDatasetID(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DATASET_ID;
-    value_ = value;
-  }
-
-  public String getDatasetName() {
-    if (getSetField() == _Fields.DATASET_NAME) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'datasetName' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setDatasetName(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DATASET_NAME;
-    value_ = value;
-  }
-
-  public String getDynamicProperties() {
-    if (getSetField() == _Fields.DYNAMIC_PROPERTIES) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'dynamicProperties' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setDynamicProperties(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DYNAMIC_PROPERTIES;
-    value_ = value;
-  }
-
-  public String getInformationWithheld() {
-    if (getSetField() == _Fields.INFORMATION_WITHHELD) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'informationWithheld' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setInformationWithheld(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.INFORMATION_WITHHELD;
-    value_ = value;
-  }
-
-  public String getInstitutionCode() {
-    if (getSetField() == _Fields.INSTITUTION_CODE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'institutionCode' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setInstitutionCode(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.INSTITUTION_CODE;
-    value_ = value;
-  }
-
-  public String getInstitutionID() {
-    if (getSetField() == _Fields.INSTITUTION_ID) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'institutionID' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setInstitutionID(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.INSTITUTION_ID;
-    value_ = value;
-  }
-
-  public String getLanguage() {
-    if (getSetField() == _Fields.LANGUAGE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'language' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setLanguage(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.LANGUAGE;
-    value_ = value;
-  }
-
-  public String getModified() {
-    if (getSetField() == _Fields.MODIFIED) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'modified' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setModified(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.MODIFIED;
-    value_ = value;
-  }
-
-  public String getOwnerInstitutionCode() {
-    if (getSetField() == _Fields.OWNER_INSTITUTION_CODE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'ownerInstitutionCode' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setOwnerInstitutionCode(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.OWNER_INSTITUTION_CODE;
-    value_ = value;
-  }
-
-  public String getReferences() {
-    if (getSetField() == _Fields.REFERENCES) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'references' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setReferences(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.REFERENCES;
-    value_ = value;
-  }
-
-  public String getRights() {
-    if (getSetField() == _Fields.RIGHTS) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'rights' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setRights(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.RIGHTS;
-    value_ = value;
-  }
-
-  public String getRightsHolder() {
-    if (getSetField() == _Fields.RIGHTS_HOLDER) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'rightsHolder' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setRightsHolder(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.RIGHTS_HOLDER;
-    value_ = value;
-  }
-
-  public String getType() {
-    if (getSetField() == _Fields.TYPE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'type' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setType(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.TYPE;
+    setField_ = _Fields.RECORD_LEVEL;
     value_ = value;
   }
 
@@ -1656,98 +692,8 @@ public class RecordPropertyValue extends org.apache.thrift.TUnion<RecordProperty
     value_ = value;
   }
 
-  public boolean isSetAccessRights() {
-    return setField_ == _Fields.ACCESS_RIGHTS;
-  }
-
-
-  public boolean isSetBasisOfRecord() {
-    return setField_ == _Fields.BASIS_OF_RECORD;
-  }
-
-
-  public boolean isSetBibliographicCitation() {
-    return setField_ == _Fields.BIBLIOGRAPHIC_CITATION;
-  }
-
-
-  public boolean isSetCollectionCode() {
-    return setField_ == _Fields.COLLECTION_CODE;
-  }
-
-
-  public boolean isSetCollectionID() {
-    return setField_ == _Fields.COLLECTION_ID;
-  }
-
-
-  public boolean isSetDataGeneralizations() {
-    return setField_ == _Fields.DATA_GENERALIZATIONS;
-  }
-
-
-  public boolean isSetDatasetID() {
-    return setField_ == _Fields.DATASET_ID;
-  }
-
-
-  public boolean isSetDatasetName() {
-    return setField_ == _Fields.DATASET_NAME;
-  }
-
-
-  public boolean isSetDynamicProperties() {
-    return setField_ == _Fields.DYNAMIC_PROPERTIES;
-  }
-
-
-  public boolean isSetInformationWithheld() {
-    return setField_ == _Fields.INFORMATION_WITHHELD;
-  }
-
-
-  public boolean isSetInstitutionCode() {
-    return setField_ == _Fields.INSTITUTION_CODE;
-  }
-
-
-  public boolean isSetInstitutionID() {
-    return setField_ == _Fields.INSTITUTION_ID;
-  }
-
-
-  public boolean isSetLanguage() {
-    return setField_ == _Fields.LANGUAGE;
-  }
-
-
-  public boolean isSetModified() {
-    return setField_ == _Fields.MODIFIED;
-  }
-
-
-  public boolean isSetOwnerInstitutionCode() {
-    return setField_ == _Fields.OWNER_INSTITUTION_CODE;
-  }
-
-
-  public boolean isSetReferences() {
-    return setField_ == _Fields.REFERENCES;
-  }
-
-
-  public boolean isSetRights() {
-    return setField_ == _Fields.RIGHTS;
-  }
-
-
-  public boolean isSetRightsHolder() {
-    return setField_ == _Fields.RIGHTS_HOLDER;
-  }
-
-
-  public boolean isSetType() {
-    return setField_ == _Fields.TYPE;
+  public boolean isSetRecordLevel() {
+    return setField_ == _Fields.RECORD_LEVEL;
   }
 
 

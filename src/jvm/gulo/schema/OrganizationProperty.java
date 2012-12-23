@@ -28,6 +28,10 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The OrganizationProperty represents a OrganizationPropertyValue and the
+ * OrganizationID to which it belongs.
+ */
 public class OrganizationProperty implements org.apache.thrift.TBase<OrganizationProperty, OrganizationProperty._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OrganizationProperty");
 
@@ -41,7 +45,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
   }
 
   public OrganizationID id; // required
-  public OragnizationPropertyValue property; // required
+  public OrganizationPropertyValue property; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -111,7 +115,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
     tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OrganizationID.class)));
     tmpMap.put(_Fields.PROPERTY, new org.apache.thrift.meta_data.FieldMetaData("property", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OragnizationPropertyValue.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OrganizationPropertyValue.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OrganizationProperty.class, metaDataMap);
   }
@@ -121,7 +125,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
 
   public OrganizationProperty(
     OrganizationID id,
-    OragnizationPropertyValue property)
+    OrganizationPropertyValue property)
   {
     this();
     this.id = id;
@@ -136,7 +140,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
       this.id = new OrganizationID(other.id);
     }
     if (other.isSetProperty()) {
-      this.property = new OragnizationPropertyValue(other.property);
+      this.property = new OrganizationPropertyValue(other.property);
     }
   }
 
@@ -174,11 +178,11 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
     }
   }
 
-  public OragnizationPropertyValue getProperty() {
+  public OrganizationPropertyValue getProperty() {
     return this.property;
   }
 
-  public OrganizationProperty setProperty(OragnizationPropertyValue property) {
+  public OrganizationProperty setProperty(OrganizationPropertyValue property) {
     this.property = property;
     return this;
   }
@@ -212,7 +216,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
       if (value == null) {
         unsetProperty();
       } else {
-        setProperty((OragnizationPropertyValue)value);
+        setProperty((OrganizationPropertyValue)value);
       }
       break;
 
@@ -419,7 +423,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
             break;
           case 2: // PROPERTY
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.property = new OragnizationPropertyValue();
+              struct.property = new OrganizationPropertyValue();
               struct.property.read(iprot);
               struct.setPropertyIsSet(true);
             } else { 
@@ -478,7 +482,7 @@ public class OrganizationProperty implements org.apache.thrift.TBase<Organizatio
       struct.id = new OrganizationID();
       struct.id.read(iprot);
       struct.setIdIsSet(true);
-      struct.property = new OragnizationPropertyValue();
+      struct.property = new OrganizationPropertyValue();
       struct.property.read(iprot);
       struct.setPropertyIsSet(true);
     }

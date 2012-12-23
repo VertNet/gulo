@@ -28,13 +28,17 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OragnizationPropertyValue extends org.apache.thrift.TUnion<OragnizationPropertyValue, OragnizationPropertyValue._Fields> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OragnizationPropertyValue");
-  private static final org.apache.thrift.protocol.TField URL_FIELD_DESC = new org.apache.thrift.protocol.TField("url", org.apache.thrift.protocol.TType.STRING, (short)1);
+/**
+ * The ResourceID node uniquely identifies a Resource. The UUID comes from the
+ * <item><guid> element in the IPT /ipt/rss.do RSS feed.
+ */
+public class ResourceID extends org.apache.thrift.TUnion<ResourceID, ResourceID._Fields> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ResourceID");
+  private static final org.apache.thrift.protocol.TField UUID_FIELD_DESC = new org.apache.thrift.protocol.TField("uuid", org.apache.thrift.protocol.TType.STRING, (short)1);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    URL((short)1, "url");
+    UUID((short)1, "uuid");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -49,8 +53,8 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // URL
-          return URL;
+        case 1: // UUID
+          return UUID;
         default:
           return null;
       }
@@ -93,30 +97,30 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.URL, new org.apache.thrift.meta_data.FieldMetaData("url", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.UUID, new org.apache.thrift.meta_data.FieldMetaData("uuid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OragnizationPropertyValue.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResourceID.class, metaDataMap);
   }
 
-  public OragnizationPropertyValue() {
+  public ResourceID() {
     super();
   }
 
-  public OragnizationPropertyValue(_Fields setField, Object value) {
+  public ResourceID(_Fields setField, Object value) {
     super(setField, value);
   }
 
-  public OragnizationPropertyValue(OragnizationPropertyValue other) {
+  public ResourceID(ResourceID other) {
     super(other);
   }
-  public OragnizationPropertyValue deepCopy() {
-    return new OragnizationPropertyValue(this);
+  public ResourceID deepCopy() {
+    return new ResourceID(this);
   }
 
-  public static OragnizationPropertyValue url(String value) {
-    OragnizationPropertyValue x = new OragnizationPropertyValue();
-    x.setUrl(value);
+  public static ResourceID uuid(String value) {
+    ResourceID x = new ResourceID();
+    x.setUuid(value);
     return x;
   }
 
@@ -124,11 +128,11 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case URL:
+      case UUID:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'url', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'uuid', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -139,11 +143,11 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case URL:
-          if (field.type == URL_FIELD_DESC.type) {
-            String url;
-            url = iprot.readString();
-            return url;
+        case UUID:
+          if (field.type == UUID_FIELD_DESC.type) {
+            String uuid;
+            uuid = iprot.readString();
+            return uuid;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -159,9 +163,9 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
+      case UUID:
+        String uuid = (String)value_;
+        oprot.writeString(uuid);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -173,10 +177,10 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case URL:
-          String url;
-          url = iprot.readString();
-          return url;
+        case UUID:
+          String uuid;
+          uuid = iprot.readString();
+          return uuid;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -188,9 +192,9 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
+      case UUID:
+        String uuid = (String)value_;
+        oprot.writeString(uuid);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -200,8 +204,8 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case URL:
-        return URL_FIELD_DESC;
+      case UUID:
+        return UUID_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -222,39 +226,39 @@ public class OragnizationPropertyValue extends org.apache.thrift.TUnion<Oragniza
   }
 
 
-  public String getUrl() {
-    if (getSetField() == _Fields.URL) {
+  public String getUuid() {
+    if (getSetField() == _Fields.UUID) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'url' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'uuid' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setUrl(String value) {
+  public void setUuid(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.URL;
+    setField_ = _Fields.UUID;
     value_ = value;
   }
 
-  public boolean isSetUrl() {
-    return setField_ == _Fields.URL;
+  public boolean isSetUuid() {
+    return setField_ == _Fields.UUID;
   }
 
 
   public boolean equals(Object other) {
-    if (other instanceof OragnizationPropertyValue) {
-      return equals((OragnizationPropertyValue)other);
+    if (other instanceof ResourceID) {
+      return equals((ResourceID)other);
     } else {
       return false;
     }
   }
 
-  public boolean equals(OragnizationPropertyValue other) {
+  public boolean equals(ResourceID other) {
     return other != null && getSetField() == other.getSetField() && getFieldValue().equals(other.getFieldValue());
   }
 
   @Override
-  public int compareTo(OragnizationPropertyValue other) {
+  public int compareTo(ResourceID other) {
     int lastComparison = org.apache.thrift.TBaseHelper.compareTo(getSetField(), other.getSetField());
     if (lastComparison == 0) {
       return org.apache.thrift.TBaseHelper.compareTo(getFieldValue(), other.getFieldValue());

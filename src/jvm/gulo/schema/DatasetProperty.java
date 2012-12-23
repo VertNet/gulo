@@ -28,6 +28,10 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The DatasetProperty represents a DatasetPropertyValue and the DatasetID to
+ * which it belongs.
+ */
 public class DatasetProperty implements org.apache.thrift.TBase<DatasetProperty, DatasetProperty._Fields>, java.io.Serializable, Cloneable {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DatasetProperty");
 
