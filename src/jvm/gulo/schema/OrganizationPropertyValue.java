@@ -34,19 +34,39 @@ import org.slf4j.LoggerFactory;
  */
 public class OrganizationPropertyValue extends org.apache.thrift.TUnion<OrganizationPropertyValue, OrganizationPropertyValue._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OrganizationPropertyValue");
-  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContact", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField URL_FIELD_DESC = new org.apache.thrift.protocol.TField("url", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField NODE_FIELD_DESC = new org.apache.thrift.protocol.TField("node", org.apache.thrift.protocol.TType.STRING, (short)3);
-  private static final org.apache.thrift.protocol.TField LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("language", org.apache.thrift.protocol.TType.STRING, (short)4);
-  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField DESCRIPTION_LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("descriptionLanguage", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField HOMEPAGE_URL_FIELD_DESC = new org.apache.thrift.protocol.TField("homepageURL", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField KEY_FIELD_DESC = new org.apache.thrift.protocol.TField("key", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField NAME_LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("nameLanguage", org.apache.thrift.protocol.TType.STRING, (short)6);
+  private static final org.apache.thrift.protocol.TField NODE_CONTACT_EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("nodeContactEmail", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField NODE_KEY_FIELD_DESC = new org.apache.thrift.protocol.TField("nodeKey", org.apache.thrift.protocol.TType.STRING, (short)8);
+  private static final org.apache.thrift.protocol.TField NODE_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("nodeName", org.apache.thrift.protocol.TType.STRING, (short)9);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_ADDRESS_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactAddress", org.apache.thrift.protocol.TType.STRING, (short)10);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactDescription", org.apache.thrift.protocol.TType.STRING, (short)11);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactEmail", org.apache.thrift.protocol.TType.STRING, (short)12);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactName", org.apache.thrift.protocol.TType.STRING, (short)13);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_PHONE_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactPhone", org.apache.thrift.protocol.TType.STRING, (short)14);
+  private static final org.apache.thrift.protocol.TField PRIMARY_CONTACT_TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("primaryContactType", org.apache.thrift.protocol.TType.STRING, (short)15);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PRIMARY_CONTACT((short)1, "primaryContact"),
-    URL((short)2, "url"),
-    NODE((short)3, "node"),
-    LANGUAGE((short)4, "language"),
-    DESCRIPTION((short)5, "description");
+    DESCRIPTION((short)1, "description"),
+    DESCRIPTION_LANGUAGE((short)2, "descriptionLanguage"),
+    HOMEPAGE_URL((short)3, "homepageURL"),
+    KEY((short)4, "key"),
+    NAME((short)5, "name"),
+    NAME_LANGUAGE((short)6, "nameLanguage"),
+    NODE_CONTACT_EMAIL((short)7, "nodeContactEmail"),
+    NODE_KEY((short)8, "nodeKey"),
+    NODE_NAME((short)9, "nodeName"),
+    PRIMARY_CONTACT_ADDRESS((short)10, "primaryContactAddress"),
+    PRIMARY_CONTACT_DESCRIPTION((short)11, "primaryContactDescription"),
+    PRIMARY_CONTACT_EMAIL((short)12, "primaryContactEmail"),
+    PRIMARY_CONTACT_NAME((short)13, "primaryContactName"),
+    PRIMARY_CONTACT_PHONE((short)14, "primaryContactPhone"),
+    PRIMARY_CONTACT_TYPE((short)15, "primaryContactType");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,16 +81,36 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PRIMARY_CONTACT
-          return PRIMARY_CONTACT;
-        case 2: // URL
-          return URL;
-        case 3: // NODE
-          return NODE;
-        case 4: // LANGUAGE
-          return LANGUAGE;
-        case 5: // DESCRIPTION
+        case 1: // DESCRIPTION
           return DESCRIPTION;
+        case 2: // DESCRIPTION_LANGUAGE
+          return DESCRIPTION_LANGUAGE;
+        case 3: // HOMEPAGE_URL
+          return HOMEPAGE_URL;
+        case 4: // KEY
+          return KEY;
+        case 5: // NAME
+          return NAME;
+        case 6: // NAME_LANGUAGE
+          return NAME_LANGUAGE;
+        case 7: // NODE_CONTACT_EMAIL
+          return NODE_CONTACT_EMAIL;
+        case 8: // NODE_KEY
+          return NODE_KEY;
+        case 9: // NODE_NAME
+          return NODE_NAME;
+        case 10: // PRIMARY_CONTACT_ADDRESS
+          return PRIMARY_CONTACT_ADDRESS;
+        case 11: // PRIMARY_CONTACT_DESCRIPTION
+          return PRIMARY_CONTACT_DESCRIPTION;
+        case 12: // PRIMARY_CONTACT_EMAIL
+          return PRIMARY_CONTACT_EMAIL;
+        case 13: // PRIMARY_CONTACT_NAME
+          return PRIMARY_CONTACT_NAME;
+        case 14: // PRIMARY_CONTACT_PHONE
+          return PRIMARY_CONTACT_PHONE;
+        case 15: // PRIMARY_CONTACT_TYPE
+          return PRIMARY_CONTACT_TYPE;
         default:
           return null;
       }
@@ -113,15 +153,35 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PRIMARY_CONTACT, new org.apache.thrift.meta_data.FieldMetaData("primaryContact", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.URL, new org.apache.thrift.meta_data.FieldMetaData("url", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NODE, new org.apache.thrift.meta_data.FieldMetaData("node", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("language", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.DESCRIPTION_LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("descriptionLanguage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.HOMEPAGE_URL, new org.apache.thrift.meta_data.FieldMetaData("homepageURL", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.KEY, new org.apache.thrift.meta_data.FieldMetaData("key", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.NAME_LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("nameLanguage", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.NODE_CONTACT_EMAIL, new org.apache.thrift.meta_data.FieldMetaData("nodeContactEmail", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.NODE_KEY, new org.apache.thrift.meta_data.FieldMetaData("nodeKey", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.NODE_NAME, new org.apache.thrift.meta_data.FieldMetaData("nodeName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_ADDRESS, new org.apache.thrift.meta_data.FieldMetaData("primaryContactAddress", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("primaryContactDescription", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_EMAIL, new org.apache.thrift.meta_data.FieldMetaData("primaryContactEmail", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_NAME, new org.apache.thrift.meta_data.FieldMetaData("primaryContactName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_PHONE, new org.apache.thrift.meta_data.FieldMetaData("primaryContactPhone", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PRIMARY_CONTACT_TYPE, new org.apache.thrift.meta_data.FieldMetaData("primaryContactType", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OrganizationPropertyValue.class, metaDataMap);
@@ -142,33 +202,93 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
     return new OrganizationPropertyValue(this);
   }
 
-  public static OrganizationPropertyValue primaryContact(String value) {
-    OrganizationPropertyValue x = new OrganizationPropertyValue();
-    x.setPrimaryContact(value);
-    return x;
-  }
-
-  public static OrganizationPropertyValue url(String value) {
-    OrganizationPropertyValue x = new OrganizationPropertyValue();
-    x.setUrl(value);
-    return x;
-  }
-
-  public static OrganizationPropertyValue node(String value) {
-    OrganizationPropertyValue x = new OrganizationPropertyValue();
-    x.setNode(value);
-    return x;
-  }
-
-  public static OrganizationPropertyValue language(String value) {
-    OrganizationPropertyValue x = new OrganizationPropertyValue();
-    x.setLanguage(value);
-    return x;
-  }
-
   public static OrganizationPropertyValue description(String value) {
     OrganizationPropertyValue x = new OrganizationPropertyValue();
     x.setDescription(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue descriptionLanguage(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setDescriptionLanguage(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue homepageURL(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setHomepageURL(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue key(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setKey(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue name(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setName(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue nameLanguage(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setNameLanguage(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue nodeContactEmail(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setNodeContactEmail(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue nodeKey(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setNodeKey(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue nodeName(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setNodeName(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactAddress(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactAddress(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactDescription(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactDescription(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactEmail(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactEmail(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactName(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactName(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactPhone(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactPhone(value);
+    return x;
+  }
+
+  public static OrganizationPropertyValue primaryContactType(String value) {
+    OrganizationPropertyValue x = new OrganizationPropertyValue();
+    x.setPrimaryContactType(value);
     return x;
   }
 
@@ -176,31 +296,81 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case PRIMARY_CONTACT:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'primaryContact', but got " + value.getClass().getSimpleName());
-      case URL:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'url', but got " + value.getClass().getSimpleName());
-      case NODE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'node', but got " + value.getClass().getSimpleName());
-      case LANGUAGE:
-        if (value instanceof String) {
-          break;
-        }
-        throw new ClassCastException("Was expecting value of type String for field 'language', but got " + value.getClass().getSimpleName());
       case DESCRIPTION:
         if (value instanceof String) {
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'description', but got " + value.getClass().getSimpleName());
+      case DESCRIPTION_LANGUAGE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'descriptionLanguage', but got " + value.getClass().getSimpleName());
+      case HOMEPAGE_URL:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'homepageURL', but got " + value.getClass().getSimpleName());
+      case KEY:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'key', but got " + value.getClass().getSimpleName());
+      case NAME:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'name', but got " + value.getClass().getSimpleName());
+      case NAME_LANGUAGE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'nameLanguage', but got " + value.getClass().getSimpleName());
+      case NODE_CONTACT_EMAIL:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'nodeContactEmail', but got " + value.getClass().getSimpleName());
+      case NODE_KEY:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'nodeKey', but got " + value.getClass().getSimpleName());
+      case NODE_NAME:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'nodeName', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_ADDRESS:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactAddress', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_DESCRIPTION:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactDescription', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_EMAIL:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactEmail', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_NAME:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactName', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_PHONE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactPhone', but got " + value.getClass().getSimpleName());
+      case PRIMARY_CONTACT_TYPE:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'primaryContactType', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -211,47 +381,137 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case PRIMARY_CONTACT:
-          if (field.type == PRIMARY_CONTACT_FIELD_DESC.type) {
-            String primaryContact;
-            primaryContact = iprot.readString();
-            return primaryContact;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case URL:
-          if (field.type == URL_FIELD_DESC.type) {
-            String url;
-            url = iprot.readString();
-            return url;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case NODE:
-          if (field.type == NODE_FIELD_DESC.type) {
-            String node;
-            node = iprot.readString();
-            return node;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case LANGUAGE:
-          if (field.type == LANGUAGE_FIELD_DESC.type) {
-            String language;
-            language = iprot.readString();
-            return language;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
         case DESCRIPTION:
           if (field.type == DESCRIPTION_FIELD_DESC.type) {
             String description;
             description = iprot.readString();
             return description;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case DESCRIPTION_LANGUAGE:
+          if (field.type == DESCRIPTION_LANGUAGE_FIELD_DESC.type) {
+            String descriptionLanguage;
+            descriptionLanguage = iprot.readString();
+            return descriptionLanguage;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case HOMEPAGE_URL:
+          if (field.type == HOMEPAGE_URL_FIELD_DESC.type) {
+            String homepageURL;
+            homepageURL = iprot.readString();
+            return homepageURL;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case KEY:
+          if (field.type == KEY_FIELD_DESC.type) {
+            String key;
+            key = iprot.readString();
+            return key;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case NAME:
+          if (field.type == NAME_FIELD_DESC.type) {
+            String name;
+            name = iprot.readString();
+            return name;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case NAME_LANGUAGE:
+          if (field.type == NAME_LANGUAGE_FIELD_DESC.type) {
+            String nameLanguage;
+            nameLanguage = iprot.readString();
+            return nameLanguage;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case NODE_CONTACT_EMAIL:
+          if (field.type == NODE_CONTACT_EMAIL_FIELD_DESC.type) {
+            String nodeContactEmail;
+            nodeContactEmail = iprot.readString();
+            return nodeContactEmail;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case NODE_KEY:
+          if (field.type == NODE_KEY_FIELD_DESC.type) {
+            String nodeKey;
+            nodeKey = iprot.readString();
+            return nodeKey;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case NODE_NAME:
+          if (field.type == NODE_NAME_FIELD_DESC.type) {
+            String nodeName;
+            nodeName = iprot.readString();
+            return nodeName;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_ADDRESS:
+          if (field.type == PRIMARY_CONTACT_ADDRESS_FIELD_DESC.type) {
+            String primaryContactAddress;
+            primaryContactAddress = iprot.readString();
+            return primaryContactAddress;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_DESCRIPTION:
+          if (field.type == PRIMARY_CONTACT_DESCRIPTION_FIELD_DESC.type) {
+            String primaryContactDescription;
+            primaryContactDescription = iprot.readString();
+            return primaryContactDescription;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_EMAIL:
+          if (field.type == PRIMARY_CONTACT_EMAIL_FIELD_DESC.type) {
+            String primaryContactEmail;
+            primaryContactEmail = iprot.readString();
+            return primaryContactEmail;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_NAME:
+          if (field.type == PRIMARY_CONTACT_NAME_FIELD_DESC.type) {
+            String primaryContactName;
+            primaryContactName = iprot.readString();
+            return primaryContactName;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_PHONE:
+          if (field.type == PRIMARY_CONTACT_PHONE_FIELD_DESC.type) {
+            String primaryContactPhone;
+            primaryContactPhone = iprot.readString();
+            return primaryContactPhone;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case PRIMARY_CONTACT_TYPE:
+          if (field.type == PRIMARY_CONTACT_TYPE_FIELD_DESC.type) {
+            String primaryContactType;
+            primaryContactType = iprot.readString();
+            return primaryContactType;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -267,25 +527,65 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case PRIMARY_CONTACT:
-        String primaryContact = (String)value_;
-        oprot.writeString(primaryContact);
-        return;
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
-        return;
-      case NODE:
-        String node = (String)value_;
-        oprot.writeString(node);
-        return;
-      case LANGUAGE:
-        String language = (String)value_;
-        oprot.writeString(language);
-        return;
       case DESCRIPTION:
         String description = (String)value_;
         oprot.writeString(description);
+        return;
+      case DESCRIPTION_LANGUAGE:
+        String descriptionLanguage = (String)value_;
+        oprot.writeString(descriptionLanguage);
+        return;
+      case HOMEPAGE_URL:
+        String homepageURL = (String)value_;
+        oprot.writeString(homepageURL);
+        return;
+      case KEY:
+        String key = (String)value_;
+        oprot.writeString(key);
+        return;
+      case NAME:
+        String name = (String)value_;
+        oprot.writeString(name);
+        return;
+      case NAME_LANGUAGE:
+        String nameLanguage = (String)value_;
+        oprot.writeString(nameLanguage);
+        return;
+      case NODE_CONTACT_EMAIL:
+        String nodeContactEmail = (String)value_;
+        oprot.writeString(nodeContactEmail);
+        return;
+      case NODE_KEY:
+        String nodeKey = (String)value_;
+        oprot.writeString(nodeKey);
+        return;
+      case NODE_NAME:
+        String nodeName = (String)value_;
+        oprot.writeString(nodeName);
+        return;
+      case PRIMARY_CONTACT_ADDRESS:
+        String primaryContactAddress = (String)value_;
+        oprot.writeString(primaryContactAddress);
+        return;
+      case PRIMARY_CONTACT_DESCRIPTION:
+        String primaryContactDescription = (String)value_;
+        oprot.writeString(primaryContactDescription);
+        return;
+      case PRIMARY_CONTACT_EMAIL:
+        String primaryContactEmail = (String)value_;
+        oprot.writeString(primaryContactEmail);
+        return;
+      case PRIMARY_CONTACT_NAME:
+        String primaryContactName = (String)value_;
+        oprot.writeString(primaryContactName);
+        return;
+      case PRIMARY_CONTACT_PHONE:
+        String primaryContactPhone = (String)value_;
+        oprot.writeString(primaryContactPhone);
+        return;
+      case PRIMARY_CONTACT_TYPE:
+        String primaryContactType = (String)value_;
+        oprot.writeString(primaryContactType);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -297,26 +597,66 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case PRIMARY_CONTACT:
-          String primaryContact;
-          primaryContact = iprot.readString();
-          return primaryContact;
-        case URL:
-          String url;
-          url = iprot.readString();
-          return url;
-        case NODE:
-          String node;
-          node = iprot.readString();
-          return node;
-        case LANGUAGE:
-          String language;
-          language = iprot.readString();
-          return language;
         case DESCRIPTION:
           String description;
           description = iprot.readString();
           return description;
+        case DESCRIPTION_LANGUAGE:
+          String descriptionLanguage;
+          descriptionLanguage = iprot.readString();
+          return descriptionLanguage;
+        case HOMEPAGE_URL:
+          String homepageURL;
+          homepageURL = iprot.readString();
+          return homepageURL;
+        case KEY:
+          String key;
+          key = iprot.readString();
+          return key;
+        case NAME:
+          String name;
+          name = iprot.readString();
+          return name;
+        case NAME_LANGUAGE:
+          String nameLanguage;
+          nameLanguage = iprot.readString();
+          return nameLanguage;
+        case NODE_CONTACT_EMAIL:
+          String nodeContactEmail;
+          nodeContactEmail = iprot.readString();
+          return nodeContactEmail;
+        case NODE_KEY:
+          String nodeKey;
+          nodeKey = iprot.readString();
+          return nodeKey;
+        case NODE_NAME:
+          String nodeName;
+          nodeName = iprot.readString();
+          return nodeName;
+        case PRIMARY_CONTACT_ADDRESS:
+          String primaryContactAddress;
+          primaryContactAddress = iprot.readString();
+          return primaryContactAddress;
+        case PRIMARY_CONTACT_DESCRIPTION:
+          String primaryContactDescription;
+          primaryContactDescription = iprot.readString();
+          return primaryContactDescription;
+        case PRIMARY_CONTACT_EMAIL:
+          String primaryContactEmail;
+          primaryContactEmail = iprot.readString();
+          return primaryContactEmail;
+        case PRIMARY_CONTACT_NAME:
+          String primaryContactName;
+          primaryContactName = iprot.readString();
+          return primaryContactName;
+        case PRIMARY_CONTACT_PHONE:
+          String primaryContactPhone;
+          primaryContactPhone = iprot.readString();
+          return primaryContactPhone;
+        case PRIMARY_CONTACT_TYPE:
+          String primaryContactType;
+          primaryContactType = iprot.readString();
+          return primaryContactType;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -328,25 +668,65 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case PRIMARY_CONTACT:
-        String primaryContact = (String)value_;
-        oprot.writeString(primaryContact);
-        return;
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
-        return;
-      case NODE:
-        String node = (String)value_;
-        oprot.writeString(node);
-        return;
-      case LANGUAGE:
-        String language = (String)value_;
-        oprot.writeString(language);
-        return;
       case DESCRIPTION:
         String description = (String)value_;
         oprot.writeString(description);
+        return;
+      case DESCRIPTION_LANGUAGE:
+        String descriptionLanguage = (String)value_;
+        oprot.writeString(descriptionLanguage);
+        return;
+      case HOMEPAGE_URL:
+        String homepageURL = (String)value_;
+        oprot.writeString(homepageURL);
+        return;
+      case KEY:
+        String key = (String)value_;
+        oprot.writeString(key);
+        return;
+      case NAME:
+        String name = (String)value_;
+        oprot.writeString(name);
+        return;
+      case NAME_LANGUAGE:
+        String nameLanguage = (String)value_;
+        oprot.writeString(nameLanguage);
+        return;
+      case NODE_CONTACT_EMAIL:
+        String nodeContactEmail = (String)value_;
+        oprot.writeString(nodeContactEmail);
+        return;
+      case NODE_KEY:
+        String nodeKey = (String)value_;
+        oprot.writeString(nodeKey);
+        return;
+      case NODE_NAME:
+        String nodeName = (String)value_;
+        oprot.writeString(nodeName);
+        return;
+      case PRIMARY_CONTACT_ADDRESS:
+        String primaryContactAddress = (String)value_;
+        oprot.writeString(primaryContactAddress);
+        return;
+      case PRIMARY_CONTACT_DESCRIPTION:
+        String primaryContactDescription = (String)value_;
+        oprot.writeString(primaryContactDescription);
+        return;
+      case PRIMARY_CONTACT_EMAIL:
+        String primaryContactEmail = (String)value_;
+        oprot.writeString(primaryContactEmail);
+        return;
+      case PRIMARY_CONTACT_NAME:
+        String primaryContactName = (String)value_;
+        oprot.writeString(primaryContactName);
+        return;
+      case PRIMARY_CONTACT_PHONE:
+        String primaryContactPhone = (String)value_;
+        oprot.writeString(primaryContactPhone);
+        return;
+      case PRIMARY_CONTACT_TYPE:
+        String primaryContactType = (String)value_;
+        oprot.writeString(primaryContactType);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -356,16 +736,36 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case PRIMARY_CONTACT:
-        return PRIMARY_CONTACT_FIELD_DESC;
-      case URL:
-        return URL_FIELD_DESC;
-      case NODE:
-        return NODE_FIELD_DESC;
-      case LANGUAGE:
-        return LANGUAGE_FIELD_DESC;
       case DESCRIPTION:
         return DESCRIPTION_FIELD_DESC;
+      case DESCRIPTION_LANGUAGE:
+        return DESCRIPTION_LANGUAGE_FIELD_DESC;
+      case HOMEPAGE_URL:
+        return HOMEPAGE_URL_FIELD_DESC;
+      case KEY:
+        return KEY_FIELD_DESC;
+      case NAME:
+        return NAME_FIELD_DESC;
+      case NAME_LANGUAGE:
+        return NAME_LANGUAGE_FIELD_DESC;
+      case NODE_CONTACT_EMAIL:
+        return NODE_CONTACT_EMAIL_FIELD_DESC;
+      case NODE_KEY:
+        return NODE_KEY_FIELD_DESC;
+      case NODE_NAME:
+        return NODE_NAME_FIELD_DESC;
+      case PRIMARY_CONTACT_ADDRESS:
+        return PRIMARY_CONTACT_ADDRESS_FIELD_DESC;
+      case PRIMARY_CONTACT_DESCRIPTION:
+        return PRIMARY_CONTACT_DESCRIPTION_FIELD_DESC;
+      case PRIMARY_CONTACT_EMAIL:
+        return PRIMARY_CONTACT_EMAIL_FIELD_DESC;
+      case PRIMARY_CONTACT_NAME:
+        return PRIMARY_CONTACT_NAME_FIELD_DESC;
+      case PRIMARY_CONTACT_PHONE:
+        return PRIMARY_CONTACT_PHONE_FIELD_DESC;
+      case PRIMARY_CONTACT_TYPE:
+        return PRIMARY_CONTACT_TYPE_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -386,62 +786,6 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
   }
 
 
-  public String getPrimaryContact() {
-    if (getSetField() == _Fields.PRIMARY_CONTACT) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'primaryContact' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setPrimaryContact(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.PRIMARY_CONTACT;
-    value_ = value;
-  }
-
-  public String getUrl() {
-    if (getSetField() == _Fields.URL) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'url' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setUrl(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.URL;
-    value_ = value;
-  }
-
-  public String getNode() {
-    if (getSetField() == _Fields.NODE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'node' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setNode(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.NODE;
-    value_ = value;
-  }
-
-  public String getLanguage() {
-    if (getSetField() == _Fields.LANGUAGE) {
-      return (String)getFieldValue();
-    } else {
-      throw new RuntimeException("Cannot get field 'language' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setLanguage(String value) {
-    if (value == null) throw new NullPointerException();
-    setField_ = _Fields.LANGUAGE;
-    value_ = value;
-  }
-
   public String getDescription() {
     if (getSetField() == _Fields.DESCRIPTION) {
       return (String)getFieldValue();
@@ -456,28 +800,274 @@ public class OrganizationPropertyValue extends org.apache.thrift.TUnion<Organiza
     value_ = value;
   }
 
-  public boolean isSetPrimaryContact() {
-    return setField_ == _Fields.PRIMARY_CONTACT;
+  public String getDescriptionLanguage() {
+    if (getSetField() == _Fields.DESCRIPTION_LANGUAGE) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'descriptionLanguage' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
   }
 
-
-  public boolean isSetUrl() {
-    return setField_ == _Fields.URL;
+  public void setDescriptionLanguage(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.DESCRIPTION_LANGUAGE;
+    value_ = value;
   }
 
-
-  public boolean isSetNode() {
-    return setField_ == _Fields.NODE;
+  public String getHomepageURL() {
+    if (getSetField() == _Fields.HOMEPAGE_URL) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'homepageURL' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
   }
 
-
-  public boolean isSetLanguage() {
-    return setField_ == _Fields.LANGUAGE;
+  public void setHomepageURL(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.HOMEPAGE_URL;
+    value_ = value;
   }
 
+  public String getKey() {
+    if (getSetField() == _Fields.KEY) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'key' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setKey(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.KEY;
+    value_ = value;
+  }
+
+  public String getName() {
+    if (getSetField() == _Fields.NAME) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'name' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setName(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.NAME;
+    value_ = value;
+  }
+
+  public String getNameLanguage() {
+    if (getSetField() == _Fields.NAME_LANGUAGE) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'nameLanguage' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setNameLanguage(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.NAME_LANGUAGE;
+    value_ = value;
+  }
+
+  public String getNodeContactEmail() {
+    if (getSetField() == _Fields.NODE_CONTACT_EMAIL) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'nodeContactEmail' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setNodeContactEmail(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.NODE_CONTACT_EMAIL;
+    value_ = value;
+  }
+
+  public String getNodeKey() {
+    if (getSetField() == _Fields.NODE_KEY) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'nodeKey' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setNodeKey(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.NODE_KEY;
+    value_ = value;
+  }
+
+  public String getNodeName() {
+    if (getSetField() == _Fields.NODE_NAME) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'nodeName' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setNodeName(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.NODE_NAME;
+    value_ = value;
+  }
+
+  public String getPrimaryContactAddress() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_ADDRESS) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactAddress' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactAddress(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_ADDRESS;
+    value_ = value;
+  }
+
+  public String getPrimaryContactDescription() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_DESCRIPTION) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactDescription' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactDescription(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_DESCRIPTION;
+    value_ = value;
+  }
+
+  public String getPrimaryContactEmail() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_EMAIL) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactEmail' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactEmail(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_EMAIL;
+    value_ = value;
+  }
+
+  public String getPrimaryContactName() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_NAME) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactName' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactName(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_NAME;
+    value_ = value;
+  }
+
+  public String getPrimaryContactPhone() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_PHONE) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactPhone' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactPhone(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_PHONE;
+    value_ = value;
+  }
+
+  public String getPrimaryContactType() {
+    if (getSetField() == _Fields.PRIMARY_CONTACT_TYPE) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'primaryContactType' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPrimaryContactType(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PRIMARY_CONTACT_TYPE;
+    value_ = value;
+  }
 
   public boolean isSetDescription() {
     return setField_ == _Fields.DESCRIPTION;
+  }
+
+
+  public boolean isSetDescriptionLanguage() {
+    return setField_ == _Fields.DESCRIPTION_LANGUAGE;
+  }
+
+
+  public boolean isSetHomepageURL() {
+    return setField_ == _Fields.HOMEPAGE_URL;
+  }
+
+
+  public boolean isSetKey() {
+    return setField_ == _Fields.KEY;
+  }
+
+
+  public boolean isSetName() {
+    return setField_ == _Fields.NAME;
+  }
+
+
+  public boolean isSetNameLanguage() {
+    return setField_ == _Fields.NAME_LANGUAGE;
+  }
+
+
+  public boolean isSetNodeContactEmail() {
+    return setField_ == _Fields.NODE_CONTACT_EMAIL;
+  }
+
+
+  public boolean isSetNodeKey() {
+    return setField_ == _Fields.NODE_KEY;
+  }
+
+
+  public boolean isSetNodeName() {
+    return setField_ == _Fields.NODE_NAME;
+  }
+
+
+  public boolean isSetPrimaryContactAddress() {
+    return setField_ == _Fields.PRIMARY_CONTACT_ADDRESS;
+  }
+
+
+  public boolean isSetPrimaryContactDescription() {
+    return setField_ == _Fields.PRIMARY_CONTACT_DESCRIPTION;
+  }
+
+
+  public boolean isSetPrimaryContactEmail() {
+    return setField_ == _Fields.PRIMARY_CONTACT_EMAIL;
+  }
+
+
+  public boolean isSetPrimaryContactName() {
+    return setField_ == _Fields.PRIMARY_CONTACT_NAME;
+  }
+
+
+  public boolean isSetPrimaryContactPhone() {
+    return setField_ == _Fields.PRIMARY_CONTACT_PHONE;
+  }
+
+
+  public boolean isSetPrimaryContactType() {
+    return setField_ == _Fields.PRIMARY_CONTACT_TYPE;
   }
 
 

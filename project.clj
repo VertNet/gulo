@@ -31,7 +31,7 @@
                  [ratel/gdal "1.9.1"]
                  [clj-aws-s3 "0.3.2"]
                  [org.gbif/gbif-metadata-profile "1.1-SNAPSHOT"]
-                 [org.clojars.scsibug/feedparser-clj "0.4.0"]
+                 [enlive "1.0.1"]
                  [org.apache.thrift/libthrift "0.8.0"
                   :exclusions [org.slf4j/slf4j-api]]]
   :min-lein-version "2.0.0"

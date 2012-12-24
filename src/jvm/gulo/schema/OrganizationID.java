@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * The OrganizationID node uniquely identifies an Organization. The UUID comes
  * from the following feed:
  * 
- *  http://gbrds.gbif.org/registry/organisation.json
+ *   http://gbrds.gbif.org/registry/organisation.json
  * 
  * To get the UUID you need the organization name.
  */

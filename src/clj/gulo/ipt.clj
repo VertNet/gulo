@@ -1,7 +1,8 @@
 (ns gulo.ipt
   "This namespace handles working with IPT."
-  (:use [feedparser-clj.core :as rss]
-        [clojure.java.io :as io])
+  (:use [clojure.java.io :as io]
+        [net.cgrand.enlive-html :as html]
+        [clojure.data.json :only (read-json)])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -27,6 +28,12 @@
    :contact (.getEmail (.getContact eml))
    :additionalInfo (.getAdditionalInfo eml)})
 
+(defn beast-mode [m]
+  (let [zip (partial map vector)
+        [ks v-colls] (apply zip m)]
+    (for [vs (apply zip v-colls)]
+      (zipmap ks vs))))
+
 (defn get-feed
   "Return map representation of RSS feed from supplied URL."
   [url]  
@@ -41,19 +48,6 @@
   "Return feed values for supplied tags."
   (apply z/xml-> feed (conj (vec tags) z/text)))
 
-(defn beast-mode
-  "Return sequence of maps that transpose the supplied vertical partitions."
-  [partitions]
-  (let [n (count partitions)
-        keys (keys partitions)
-        vals (vals partitions)
-        keywords (for [k keys] (for [x (range (+ n 1))] k))
-        allkeys (apply interleave keywords)
-        allvals (apply interleave vals)
-        all (interleave allkeys allvals)
-        maps (map #(apply hash-map %) (partition-all (* 2) all))]
-    (map #(apply merge %) (partition-all (+ n 1) maps))))
-
 (defn feed->resource-property-value-maps
   "Return sequence of ResourcePropertyValue maps from supplied feed."
   [feed]
@@ -66,7 +60,22 @@
         partitions (apply hash-map (interleave props vals))]
     (beast-mode partitions)))
 
-(defn get-dataset
+(defn get-organization-uuid
+  "Return organization UUID scraped from GBIF registry page at supplied URL:
+   http://gbrds.gbif.org/browse/agent?uuid={resource-uuid}"
+  [url]
+  (let [nodes (html/select (fetch-url url) [:div.listItem :a])
+        urls (map #(html/attr-values % :href) nodes)
+        path (first (first urls))
+        uuid (second (s/split path #"="))]
+    uuid))
+
+(defn uuid->organization
+  [uuid]
+  (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
+    (read-json (slurp (io/input-stream url)))))
+
+(defn url->dataset
   "Return DatasetPropertyValue map from supplied IPT resource URL."
   [url]
   (let [title (second (s/split url #"="))
@@ -75,23 +84,30 @@
         dataset (eml->dataset-property-value-map eml)]
     dataset))
 
-(defn get-resource
+(defn url->resource
   "Return map with :dataset => DatasetPropertyValue map and :resource =>
    ResourcePropertyValue map from supplied IPT resource URL."
   [url]
   (let [title (second (s/split url #"="))
-        rss_url (s/replace url "resource" "rss")
-        feed (get-feed rss_url)
+        rss-url (s/replace url "resource" "rss")
+        feed (get-feed rss-url)
         resources (feed->resource-property-value-maps feed)
         resource (first (filter #(= url (:url %)) resources))
-        dataset (get-dataset url)]
-    {:resource resource :dataset dataset}))
+        dataset (url->dataset url)
+        guid (:guid resource)
+        gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)
+        organization (uuid->organization (get-organization-uuid gbif-url))]
+    {:resource resource :dataset dataset :organization organization}))
 
 (defn get-resources
-  "Return sequence of resource maps {:resource :dataset} from supplied sequence
-   of IPT resource URLs."
+  "Return sequence of resource maps {:resource :dataset :organization} from
+   supplied sequence of IPT resource URLs of the form:
+   http://{host}/ipt/resource.do?r={resource_name}"
   [urls]
-  (map #(get-resource %) urls))
+  (map #(url->resource %) urls))
+
+(defn fetch-url [url]
+  (html/html-resource (java.net.URL. url)))
 
 (comment
   (let [f (get-feed "http://ipt.vertnet.org:8080/ipt/rss.do")
@@ -99,6 +115,6 @@
     (prn titles)))
 
 (comment
-  (let [partitions {:title ["a" "b" "c"] :links [1 2 3]}]
-    (beast-mode partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
+  (let [partitions {:title ["a" "b" "c"] :links [1 2 3] :names [:aaron :noa :tina]}]
+    (beast-mode2 partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
 

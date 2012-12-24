@@ -377,7 +377,7 @@ struct DatasetProperty {
  * The OrganizationID node uniquely identifies an Organization. The UUID comes
  * from the following feed:
  *
- *  http://gbrds.gbif.org/registry/organisation.json
+ *   http://gbrds.gbif.org/registry/organisation.json
  *
  * To get the UUID you need the organization name.
  */
@@ -390,11 +390,21 @@ union OrganizationID {
  * Organization property values.
  */
 union OrganizationPropertyValue {
-  1: string primaryContact; // description, email, phone, address, type, name
-  2: string url;
-  3: string node; // name, key
-  4: string language;
-  5: string description;
+  1: string description;
+  2: string descriptionLanguage;
+  3: string homepageURL;
+  4: string key;
+  5: string name;
+  6: string nameLanguage;
+  7: string nodeContactEmail;
+  8: string nodeKey;
+  9: string nodeName;
+  10: string primaryContactAddress;
+  11: string primaryContactDescription;
+  12: string primaryContactEmail;
+  13: string primaryContactName;
+  14: string primaryContactPhone;
+  15: string primaryContactType;
 }
 
 /**

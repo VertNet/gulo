@@ -1,0 +1,734 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0076)http://gbrds.gbif.org/browse/agent?uuid=2f897875-210a-43a9-bab3-a724bea8e400 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>GBRDS-Registry</title>
+		
+
+
+<!-- Dependencies -->
+<script type="text/javascript" src="./agent_files/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="./agent_files/datasource-min.js"></script>
+<!-- OPTIONAL: Connection (required only if using XHRDataSource) -->
+<script type="text/javascript" src="./agent_files/connection-min.js"></script>
+<!-- OPTIONAL: Animation (required only if enabling animation) -->
+<script type="text/javascript" src="./agent_files/animation-min.js"></script>
+<!-- Source file -->
+<script type="text/javascript" src="./agent_files/autocomplete-min.js"></script>
+<script type="text/javascript" src="./agent_files/js"></script><script src="./agent_files/main.js" type="text/javascript"></script>
+<script type="text/javascript" src="./agent_files/jsapi"></script>
+
+
+<!-- Custom Javascript -->
+<script type="text/javascript" src="./agent_files/geomaps.js"></script><script src="./agent_files/saved_resource" type="text/javascript"></script><script src="./agent_files/format+en,default,geomap.I.js" type="text/javascript"></script>
+<script type="text/javascript" src="./agent_files/googlemaps.js"></script>
+<script type="text/javascript" src="./agent_files/util.js"></script>  
+<script type="text/javascript" src="./agent_files/popups.js"></script>
+<script type="text/javascript" src="./agent_files/connection.js"></script>
+<script type="text/javascript" src="./agent_files/admin.js"></script>
+<script type="text/javascript" src="./agent_files/metadatasync.js"></script>
+
+<!-- the JIT -->
+<script type="text/javascript" src="./agent_files/jit.js"></script>
+<script type="text/javascript" src="./agent_files/graph.js"></script>    
+<!-- JQuery -->
+<script type="text/javascript" src="./agent_files/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="./agent_files/jquery-ui.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+
+	// language selector
+	$("#flagContainer").click(function () {
+		$("#switchLocale").slideToggle("fast");
+	});
+	
+	//LOADING POPUP  
+	//Click the button event!  
+	$("#popupAgent").click(function(){  
+		//centering with css  
+		centerPopup();  
+		//load popup  
+		loadPopup();  
+	});  
+
+	//CLOSING POPUP  
+	//Click the x event!  
+	$("#popupContentClose").click(function(){disablePopup();});  
+	//Click out event!  
+	$("#backgroundPopup").click(function(){disablePopup();});  
+	//Press Escape event!  
+		
+	//$(document).keypress(function(e){  
+	//	if(e.keyCode==27 &amp;amp;amp;amp;&amp;amp;amp;amp; popupStatus==1){  
+	//		disablePopup();  
+	//	}  
+	//});
+
+
+});
+
+
+	function loadMainTab() {
+		document.getElementById("fragment-1").innerHTML="<center><img src=\"/images/bar-ajax-loader.gif\" height=\"25\"></center>";
+			var countCallback = {
+				success:function(o){document.getElementById("fragment-1").innerHTML=o.responseText;},	
+				failure: function(o){}
+			}	
+			YAHOO.util.Connect.asyncRequest(
+					'GET',
+					"/create/agent", 
+					countCallback,	 
+					null); 	
+			};
+	
+
+</script>
+
+<script type="text/javascript"> 
+function doAjaxCall() {
+	alert('dddd');
+    $.ajax({ type : "post",
+        url : $(form).attr('action'), success: function(){
+        alert('success! insert success javascript code here');
+    }});
+}
+
+//load the dynamic list of country counts
+
+
+
+/**
+ * Function to be called when a user clicks on the map
+ * Loads a popup on the screen with important information for the user
+ * 
+ * @param e the event
+ */
+function selectHandler(e) {
+	var selection = geomap.getSelection();
+	var item = selection[0];
+
+	centerPopup();  
+	// load popup
+	loadPopup();  
+
+	document.getElementById("popupContentInnerBox").innerHTML="<center>Loading data...<p><img src=\"/images/bar-ajax-loader.gif\" height=\"25\"></p></center>";
+	var countCallback = {
+			success:function(o){document.getElementById("popupContentInnerBox").innerHTML=o.responseText;},	
+			failure: function(o){}
+	}	
+	YAHOO.util.Connect.asyncRequest(
+			'GET',
+			"/browse/reducedagent?agentType="+agentType+"&country="+data.getFormattedValue(item.row, 0),
+			countCallback,	 
+			null); 		
+}
+
+
+
+
+var timeout    = 500;
+var closetimer = 0;
+var ddmenuitem = 0;
+
+function jsddm_open()
+{  jsddm_canceltimer();
+   jsddm_close();
+   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
+
+function jsddm_close()
+{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+
+function jsddm_timer()
+{  closetimer = window.setTimeout(jsddm_close, timeout);}
+
+function jsddm_canceltimer()
+{  if(closetimer)
+   {  window.clearTimeout(closetimer);
+      closetimer = null;}}
+
+$(document).ready(function()
+{  $('#localeChange > li').bind('mouseover', jsddm_open)
+   $('#localeChange > li').bind('mouseout',  jsddm_timer)});
+
+document.onclick = jsddm_close;
+
+
+
+</script> 
+		<script type="text/javascript">
+		$(document).ready(function(){
+		
+			$('#j_username').one('click', function() {
+				clearComponentValue('j_username');
+			});
+			$('#j_password').one('click', function() {
+				clearComponentValue('j_password');
+			});	
+			$('#filterValue').one('click', function() {
+				clearComponentValue('filterValue');
+			});				
+		});
+		</script>			
+		<link rel="stylesheet" type="text/css" href="./agent_files/main.css">
+		<link rel="stylesheet" type="text/css" href="./agent_files/tables.css">
+		<link rel="stylesheet" type="text/css" href="./agent_files/popups.css">
+		<link rel="stylesheet" type="text/css" href="./agent_files/autocomplete.css">
+	<script type="text/javascript" charset="UTF-8" src="./agent_files/{common,util,stats}.js"></script></head>
+	<body class=" hasGoogleVoiceExt">
+	
+	<!-- For any light box to be displayed -->
+    <div id="backgroundPopup"></div>
+    <div id="popupContent">  
+        <a id="popupContentClose">[Close window]</a>  
+        	<div id="popupContentInnerBox"></div>
+    </div>  
+    
+		<div id="wrapper">
+			<div id="header">
+	<p>
+
+        </p><div class="right" style="padding-right: 23px;">
+        	<div id="login">
+				<ul id="localeChange">
+				    <li><a href="http://gbrds.gbif.org/browse/agent?uuid=2f897875-210a-43a9-bab3-a724bea8e400#"><img src="./agent_files/flag_en.gif"></a>
+				        <ul>
+							<li><a href="http://gbrds.gbif.org/browse/agent?request_locale=en"><img src="./agent_files/flag_en.gif"></a></li>
+							<li><a href="http://gbrds.gbif.org/browse/agent?request_locale=es"><img src="./agent_files/flag_es.gif"></a></li>
+							<li><a href="http://gbrds.gbif.org/browse/agent?request_locale=de"><img src="./agent_files/flag_de.gif"></a></li>
+							<li><a href="http://gbrds.gbif.org/browse/agent?request_locale=fr"><img src="./agent_files/flag_fr.gif"></a></li>
+				        </ul>
+				    </li>
+				</ul>       
+				
+					
+					
+						<form action="http://gbrds.gbif.org/j_spring_security_check" method="POST">
+				            <input type="text" size="15" name="j_username" value="username" class="form-reset" id="j_username" x-webkit-speech="">
+				            <input type="password" size="15" name="j_password" value="password" class="form-reset" id="j_password" x-webkit-speech="">
+				            <input type="submit" value="Login" id="login-submit" x-webkit-speech="">  
+			            </form> 			
+					
+								
+				   	
+		
+	            
+	            <div id="justAdmin"><span id="smallFont">Just an admin account exists at the moment</span></div>  	
+			</div> 
+			
+		</div>
+
+		<a href="http://gbrds.gbif.org/"><img src="./agent_files/logo.jpg"></a>
+	<p></p>
+		<div id="menu">
+			<ul>
+				<li id="current"><a href="http://gbrds.gbif.org/">Home</a></li>
+				<li><a href="http://gbrds.gbif.org/browse/">Browse</a></li>
+				<li><a href="http://gbrds.gbif.org/search/">Search</a></li>
+				
+					<li><a href="http://gbrds.gbif.org/signup/">Sign up</a></li>
+				<!--
+				
+				-->
+								
+			</ul>
+		</div>
+</div>
+<div id="content">
+			<div id="main">
+				<!-- Dependencies -->
+<script type="text/javascript" src="./agent_files/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="./agent_files/datasource-min.js"></script>
+<!-- OPTIONAL: Connection (required only if using XHRDataSource) -->
+<script type="text/javascript" src="./agent_files/connection-min.js"></script>
+<!-- OPTIONAL: Animation (required only if enabling animation) -->
+<script type="text/javascript" src="./agent_files/animation-min.js"></script>
+<!-- Source file -->
+<script type="text/javascript" src="./agent_files/autocomplete-min.js"></script>
+<script type="text/javascript" src="./agent_files/js"></script><script src="./agent_files/main.js" type="text/javascript"></script>
+<script type="text/javascript" src="./agent_files/jsapi"></script>
+
+
+<!-- Custom Javascript -->
+<script type="text/javascript" src="./agent_files/geomaps.js"></script>
+<script type="text/javascript" src="./agent_files/googlemaps.js"></script>
+<script type="text/javascript" src="./agent_files/util.js"></script>  
+<script type="text/javascript" src="./agent_files/popups.js"></script>
+<script type="text/javascript" src="./agent_files/connection.js"></script>
+<script type="text/javascript" src="./agent_files/admin.js"></script>
+<script type="text/javascript" src="./agent_files/metadatasync.js"></script>
+
+<!-- the JIT -->
+<script type="text/javascript" src="./agent_files/jit.js"></script>
+<script type="text/javascript" src="./agent_files/graph.js"></script>    
+<!-- JQuery -->
+<script type="text/javascript" src="./agent_files/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="./agent_files/jquery-ui.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+
+	// language selector
+	$("#flagContainer").click(function () {
+		$("#switchLocale").slideToggle("fast");
+	});
+	
+	//LOADING POPUP  
+	//Click the button event!  
+	$("#popupAgent").click(function(){  
+		//centering with css  
+		centerPopup();  
+		//load popup  
+		loadPopup();  
+	});  
+
+	//CLOSING POPUP  
+	//Click the x event!  
+	$("#popupContentClose").click(function(){disablePopup();});  
+	//Click out event!  
+	$("#backgroundPopup").click(function(){disablePopup();});  
+	//Press Escape event!  
+		
+	//$(document).keypress(function(e){  
+	//	if(e.keyCode==27 &amp;amp;amp;amp;&amp;amp;amp;amp; popupStatus==1){  
+	//		disablePopup();  
+	//	}  
+	//});
+
+
+});
+
+
+	function loadMainTab() {
+		document.getElementById("fragment-1").innerHTML="<center><img src=\"/images/bar-ajax-loader.gif\" height=\"25\"></center>";
+			var countCallback = {
+				success:function(o){document.getElementById("fragment-1").innerHTML=o.responseText;},	
+				failure: function(o){}
+			}	
+			YAHOO.util.Connect.asyncRequest(
+					'GET',
+					"/create/agent", 
+					countCallback,	 
+					null); 	
+			};
+	
+
+</script>
+
+<script type="text/javascript"> 
+function doAjaxCall() {
+	alert('dddd');
+    $.ajax({ type : "post",
+        url : $(form).attr('action'), success: function(){
+        alert('success! insert success javascript code here');
+    }});
+}
+
+//load the dynamic list of country counts
+
+
+
+/**
+ * Function to be called when a user clicks on the map
+ * Loads a popup on the screen with important information for the user
+ * 
+ * @param e the event
+ */
+function selectHandler(e) {
+	var selection = geomap.getSelection();
+	var item = selection[0];
+
+	centerPopup();  
+	// load popup
+	loadPopup();  
+
+	document.getElementById("popupContentInnerBox").innerHTML="<center>Loading data...<p><img src=\"/images/bar-ajax-loader.gif\" height=\"25\"></p></center>";
+	var countCallback = {
+			success:function(o){document.getElementById("popupContentInnerBox").innerHTML=o.responseText;},	
+			failure: function(o){}
+	}	
+	YAHOO.util.Connect.asyncRequest(
+			'GET',
+			"/browse/reducedagent?agentType="+agentType+"&country="+data.getFormattedValue(item.row, 0),
+			countCallback,	 
+			null); 		
+}
+
+
+
+
+var timeout    = 500;
+var closetimer = 0;
+var ddmenuitem = 0;
+
+function jsddm_open()
+{  jsddm_canceltimer();
+   jsddm_close();
+   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
+
+function jsddm_close()
+{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+
+function jsddm_timer()
+{  closetimer = window.setTimeout(jsddm_close, timeout);}
+
+function jsddm_canceltimer()
+{  if(closetimer)
+   {  window.clearTimeout(closetimer);
+      closetimer = null;}}
+
+$(document).ready(function()
+{  $('#localeChange > li').bind('mouseover', jsddm_open)
+   $('#localeChange > li').bind('mouseout',  jsddm_timer)});
+
+document.onclick = jsddm_close;
+
+
+
+</script> 
+
+<h1>TTRS Ornithology
+    
+<br>
+
+</h1>
+    
+<div class="horizontal_dotted_line_large_soft"></div>                     
+
+<!-- Main data for agent -->
+<h2>Description:</h2>      
+<table class="niceNotClickable">
+	<tbody><tr><th>UUID:</th><td>2f897875-210a-43a9-bab3-a724bea8e400</td></tr>
+	<tr><th>Type:</th><td>Dataset</td></tr>
+	<tr><th>Description:</th><td>Scientists, natural history students, artists, and others interested in the fauna and flora of the southeast are encouraged to visit The Natural History Museum and Scientific Collections at Tall Timbers. Special arrangements must be made to view and work with specimens, and the general hours of operation are 8:30 AM-4:30 PM. Loans are generally discouraged but are allowed occasionally and governed by formal agreements developed on an individual basis.</td></tr>
+	<tr><th>Language:</th><td></td></tr>
+	<tr><th>Homepage:</th><td><a href="http://www.talltimbers.org/museum.html" target="_blank" "="">http://www.talltimbers.org/museum.html</a></td></tr>
+	<tr><th>Address:</th><td></td></tr>
+	<tr><th>Zip:</th><td></td></tr>
+	<tr><th>City:</th><td></td></tr>
+	<tr><th>Country:</th><td></td></tr>
+	<tr><th>Email:</th><td></td></tr>
+	<tr><th>Phone:</th><td></td></tr>
+	<tr><th>Created:</th><td>May 1, 2012 8:28:00 PM</td></tr>
+        <tr><th>Modified:</th><td>May 21, 2012 4:54:26 PM</td></tr>
+</tbody></table>
+<!-- Primary Contacts data -->
+<h2>Contacts:</h2> 
+<h3>Primary Administrative Contact</h3> 
+
+<span id="contact_2584">
+ 
+	<table class="niceNotClickable"> 
+		<tbody><tr><th>Type:</th><td>administrative</td></tr>    
+		<tr><th>Position:</th><td></td></tr>
+		<tr><th>Description:</th><td></td></tr>                     
+		<tr><th>Salutation:</th><td></td></tr>
+		<tr><th>First Name:</th><td>Kevin Robertson</td></tr>
+		<tr><th>Last Name:</th><td></td></tr>     
+		<tr><th>Email:</th><td>krobertson@ttrs.org</td></tr>
+		<tr><th>Phone:</th><td></td></tr>
+		<tr><th>Address:</th><td></td></tr>
+		<tr><th>City:</th><td></td></tr>
+		<tr><th>Country:</th><td></td></tr>
+	</tbody></table>	
+	</span>
+
+	
+<h3>Primary Technical Contact</h3>    
+
+
+  		
+	<p class="resultDetails">No primary technical contact available.</p>
+	
+<div class="newline"></div>
+<div class="newline"></div>
+<h3>Other Contacts</h3>    
+  
+
+
+	<p class="resultDetails">No more contacts are available</p>
+	<div class="newline"></div>
+	<div class="newline"></div>
+
+
+<div class="horizontal_dotted_line_large_soft"></div> 
+<!--Relationships to/from other agents -->
+<h2>Relationships</h2> 	
+	 
+
+	
+	
+		<div class="listItem">
+			<span id="relation_2526"><a href="http://gbrds.gbif.org/browse/agent?uuid=132fe0d8-aa85-40a0-af20-52f48fae7bd6">Tall Timbers Research Station and Land Conservancy</a> <strong>owns</strong> <a href="./agent_files/agent.html">TTRS Ornithology</a></span>
+			 
+		</div>
+	
+		<div class="listItem">
+			<span id="relation_2527"><a href="http://gbrds.gbif.org/browse/agent?uuid=a957a663-2f17-415f-b1c8-5cf6398df8ed">VertNet Hosting</a> <strong>serves</strong> <a href="./agent_files/agent.html">TTRS Ornithology</a></span>
+			 
+		</div>
+	
+		<div class="listItem">
+			<span id="relation_27934"><a href="http://gbrds.gbif.org/browse/agent?uuid=7ddd1f14-a2b0-4838-95b0-785846f656f3">VertNet</a> <strong>has constituent</strong> <a href="./agent_files/agent.html">TTRS Ornithology</a></span>
+			 
+		</div>
+	
+
+
+<!--Service related to the agent -->
+<div class="newline"></div>
+<div class="newline"></div>
+<div class="horizontal_dotted_line_large_soft"></div> 
+<h2>Endpoints</h2>
+ 
+
+<div class="newline"></div>
+	<table>
+		 
+				<tbody><tr><td align="right">
+					<div id="searchResultCountf25c0579-d9ff-4273-84f5-453b354d692a"><img src="./agent_files/online_icon.gif"></div>
+					<script type="text/javascript">
+						
+						var countCallback = {
+							success:function(o){document.getElementById("searchResultCountf25c0579-d9ff-4273-84f5-453b354d692a").innerHTML=o.responseText;},	
+							failure: function(o){}
+						}	
+						YAHOO.util.Connect.asyncRequest('GET',
+							"/misc/serviceconnect?uuid=f25c0579-d9ff-4273-84f5-453b354d692a", 
+							countCallback, 
+							null); 	
+					</script>		
+				</td><td>	
+					<div class="listItem">
+						<span id="service_3211">EML - <a href="http://vertnet.nhm.ku.edu:8080/ipt/eml.do?r=ttrs_birds">http://vertnet.nhm.ku.edu:8080/ipt/eml.do?r=ttrs_birds</a></span> 
+					</div>
+				</td></tr>	
+		 
+				<tr><td align="right">
+					<div id="searchResultCount71ce0164-619f-436e-85ad-d4d71dd1a488"><img src="./agent_files/online_icon.gif"></div>
+					<script type="text/javascript">
+						
+						var countCallback = {
+							success:function(o){document.getElementById("searchResultCount71ce0164-619f-436e-85ad-d4d71dd1a488").innerHTML=o.responseText;},	
+							failure: function(o){}
+						}	
+						YAHOO.util.Connect.asyncRequest('GET',
+							"/misc/serviceconnect?uuid=71ce0164-619f-436e-85ad-d4d71dd1a488", 
+							countCallback, 
+							null); 	
+					</script>		
+				</td><td>	
+					<div class="listItem">
+						<span id="service_3212">DWC-ARCHIVE-OCCURRENCE - <a href="http://vertnet.nhm.ku.edu:8080/ipt/archive.do?r=ttrs_birds">http://vertnet.nhm.ku.edu:8080/ipt/archive.do?r=ttrs_birds</a></span> 
+					</div>
+				</td></tr>	
+		
+	</tbody></table>
+
+
+<!--Tags -->
+<div class="newline"></div>
+<div class="newline"></div>
+<div class="horizontal_dotted_line_large_soft"></div> 
+<h2>Namespaces / Tags</h2>
+ 
+	
+<div class="newline"></div>
+<div class="newline"></div>
+	<div id="tagsleft">
+		
+			<ul>
+				<li class="tagstyle">
+									
+					<span id="tag_42416"><a href="http://gbrds.gbif.org/search/tag?tagName=date" onmouseover="javascript:open_new_window();" onmouseout="javascript:close_window();">date=2012-06-03  </a></span>
+				</li>
+			</ul>
+		
+			<ul>
+				<li class="tagstyle">
+									
+					<span id="tag_42415"><a href="http://gbrds.gbif.org/search/tag?tagName=records" onmouseover="javascript:open_new_window();" onmouseout="javascript:close_window();">records=3945  </a></span>
+				</li>
+			</ul>
+		
+			<ul>
+				<li class="tagstyle">
+									
+					<span id="tag_42414"><a href="http://gbrds.gbif.org/search/tag?tagName=metadata" onmouseover="javascript:open_new_window();" onmouseout="javascript:close_window();">metadata=True  </a></span>
+				</li>
+			</ul>
+		
+			<ul>
+				<li class="tagstyle">
+									
+					<span id="tag_42413"><a href="http://gbrds.gbif.org/search/tag?tagName=online" onmouseover="javascript:open_new_window();" onmouseout="javascript:close_window();">online=True  </a></span>
+				</li>
+			</ul>
+		
+			<ul>
+				<li class="tagstyle">
+									
+					<span id="tag_42412"><a href="http://gbrds.gbif.org/search/tag?tagName=valid" onmouseover="javascript:open_new_window();" onmouseout="javascript:close_window();">valid=False  </a></span>
+				</li>
+			</ul>
+		
+	</div>
+
+
+<div class="newline"></div>
+<div class="newline"></div>
+			</div>
+			<div id="rgtColumn">
+				<!-- <script type="text/javascript">
+	function loginAjax(username,password) {
+		document.getElementById("login").innerHTML="<center><img src=\"/images/ajax-loader.gif\" height=\"20\"></center>";
+		var authString = "j_username="+username+"&j_password="+password;
+		var countCallback = {
+			success:function(o){document.getElementById("login").innerHTML=o.responseText;},	
+			failure: function(o){}
+		}	
+		YAHOO.util.Connect.asyncRequest(
+				'POST',
+				"/j_spring_security_check", 
+				countCallback,	 
+				authString); 	
+		}
+</script>	
+ <div id="login" class="rounded_STYLE_grey">
+	<div id="logsquare">
+		
+			
+			
+				<table class="login"><tr>
+				<td>User:</td><td><input type="text" name="loginUsername" id="loginUsername" /></td>
+				</tr><tr>
+				<td>Password:</td><td><input type="password" name="loginPassword" id="loginPassword" /></td>
+				</tr><tr>
+				<td colspan="2" align="right"><span id="smallFont" style="float:left;margin-top:7px;"><a href="#">Forgot my password</a></span><input name="submit" type="button" value="Log in" onclick="javascript:loginAjax(document.getElementById('loginUsername').value, document.getElementById('loginPassword').value);"/></td>
+				</tr></table>				
+			
+		
+	</div>
+ </div>
+ -->
+				<div id="tags" class="rounded_STYLE_grey">
+	<div>
+		<form id="tagSearch" name="tagSearch" action="http://gbrds.gbif.org/search/all" method="get">
+<table class="wwFormTable">
+		<tbody><tr>
+    <td class="tdLabel"></td>
+    <td><input type="text" name="filterValue" value="Search" id="filterValue" class="tagNameText" x-webkit-speech=""></td>
+</tr>
+
+		<tr>
+    <td colspan="2"><div align="right"><input type="submit" id="tagSearch_0" value="Search" class="buttonLeft" x-webkit-speech="">
+</div></td>
+</tr>
+
+		</tbody></table></form>
+
+
+
+
+	</div>
+	<!--Displaying top searches -->
+	<p>
+	
+		</p><h5>Top searches</h5>
+		<table class="top10tags">
+			
+				<tbody><tr>
+					<td><a href="http://gbrds.gbif.org/search/all?filterValue=IPT">IPT </a></td>
+				</tr>		
+			
+				<tr>
+					<td><a href="http://gbrds.gbif.org/search/all?filterValue=species">species </a></td>
+				</tr>		
+			
+				<tr>
+					<td><a href="http://gbrds.gbif.org/search/all?filterValue=india">india </a></td>
+				</tr>		
+			
+				<tr>
+					<td><a href="http://gbrds.gbif.org/search/all?filterValue=bioinformatics">bioinformatics </a></td>
+				</tr>		
+			
+				<tr>
+					<td><a href="http://gbrds.gbif.org/search/all?filterValue=Nordgen">Nordgen </a></td>
+				</tr>		
+			
+		</tbody></table>
+	
+	<p></p>
+	<p>
+	</p><h5>Top 10 tags</h5>
+	<table class="top10tags">
+	
+		<tbody><tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=online"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=online">online </a></td><td><b>1115</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=date"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=date">date </a></td><td><b>1109</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=valid"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=valid">valid </a></td><td><b>1050</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=metadata"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=metadata">metadata </a></td><td><b>1050</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=records"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=records">records </a></td><td><b>1045</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=dataset_id"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=dataset_id">dataset_id </a></td><td><b>118</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=checklist"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=checklist">checklist </a></td><td><b>72</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=isManuallyDeleted"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=isManuallyDeleted">isManuallyDeleted </a></td><td><b>44</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=taxonomy"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=taxonomy">taxonomy </a></td><td><b>11</b></td>
+		</tr>
+	
+		<tr>
+			<td align="right"><a href="http://gbrds.gbif.org/search/tag?tagName=CoL"><img src="./agent_files/green_square.gif"></a></td>
+			<td><a href="http://gbrds.gbif.org/search/tag?tagName=CoL">CoL </a></td><td><b>11</b></td>
+		</tr>
+	
+	</tbody></table>
+	<p></p>
+	
+</div>
+			</div>
+			        </div>
+			<div id="footer">
+                    <ul>
+                      <li><a href="http://code.google.com/p/gbif-registry/">GBRDS @ GoogleCode</a></li>
+                      <li><a href="http://www.gbif.org/">GBIF</a></li>
+                    </ul>        
+			</div>
+		</div>	
+		
+	
+
+</body></html>
