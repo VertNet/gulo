@@ -2,7 +2,8 @@
   "This namespace handles working with IPT."
   (:use [clojure.java.io :as io]
         [net.cgrand.enlive-html :as html]
-        [clojure.data.json :only (read-json)])
+        [clojure.data.json :only (read-json)]
+        [cartodb.core :as cartodb])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -10,6 +11,19 @@
             [clojure.contrib.zip-filter.xml :as z])
   (:import [java.io File ByteArrayInputStream]
              [org.gbif.metadata.eml EmlFactory]))
+
+(defn resource-urls
+  "Return sequence of IPT resource URLs from CartoDB resource table."
+  []
+  (let [sql "SELECT url FROM resource WHERE ipt = true"]
+    (map :url (:rows (cartodb/query sql "vertnet" :api-version "v1")))))
+
+;; TODO
+(defn check-resources
+  "Return sequence of IPT resource URLs that have changed by comparing the
+   pubDate in the RSS feed for supplied IPT resource URLs with the pubdate in
+   CartoDB resource table. Also update CartoDB resource.pubDate if needed."
+  [urls])
 
 (defn get-eml
   "Return org.gbif.metadata.eml.Eml object from supplied URL."
@@ -116,5 +130,5 @@
 
 (comment
   (let [partitions {:title ["a" "b" "c"] :links [1 2 3] :names [:aaron :noa :tina]}]
-    (beast-mode2 partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
+    (beast-mode partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
 
