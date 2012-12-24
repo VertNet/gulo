@@ -11,10 +11,8 @@
   :jvm-opts ["-XX:MaxPermSize=256M"
              "-XX:+UseConcMarkSweepGC"
              "-Xms1024M" "-Xmx1048M" "-server"]
-  :plugins [[lein-swank "1.4.4"]
-            [lein-emr "0.1.0-SNAPSHOT"]]
   :profiles {:dev {:dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
-                                  [midje-cascalog "0.4.0"]]
+                                  [eightysteele/midje-cascalog "0.5.0"]]
                    :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
              :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
   :dependencies [[org.clojure/clojure "1.4.0"]
@@ -32,6 +30,8 @@
                  [com.google.guava/guava "12.0"]
                  [ratel/gdal "1.9.1"]
                  [clj-aws-s3 "0.3.2"]
+                 [org.gbif/gbif-metadata-profile "1.1-SNAPSHOT"]
+                 [org.clojars.scsibug/feedparser-clj "0.4.0"]
                  [org.apache.thrift/libthrift "0.8.0"
                   :exclusions [org.slf4j/slf4j-api]]]
   :min-lein-version "2.0.0"

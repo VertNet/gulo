@@ -23,7 +23,7 @@
 (defn epoch  
   []
   "Return seconds since epoch."
-  (box-int (/ (System/currentTimeMillis) 1000)))
+  (int (/ (System/currentTimeMillis) 1000)))
 
 (defn create
   [type keys fields]
@@ -47,6 +47,76 @@
   (let [keys [(name key)]
         fields {(s/lower-case key) value}]
     (create type keys fields)))
+
+;; Multimethods for creating DataUnit unions based on class:
+(defmulti create-dataunit class)
+
+(defmethod create-dataunit RecordProperty
+  [x]
+  (DataUnit/recordProperty x))
+
+(defmethod create-dataunit DatasetProperty
+  [x]
+  (DataUnit/datasetProperty x))
+
+(defmethod create-dataunit ResourceProperty
+  [x]
+  (DataUnit/resourceProperty x))
+
+(defmethod create-dataunit OrganizationProperty
+  [x]
+  (DataUnit/organizationProperty x))
+
+(defmethod create-dataunit DatasetRecordEdge
+  [x]
+  (DataUnit/datasetRecord x))
+
+(defmethod create-dataunit ResourceDatasetEdge
+  [x]
+  (DataUnit/resourceDataset x))
+
+(defmethod create-dataunit ResourceOrganizationEdge
+  [x]
+  (DataUnit/resourceOrganization x))
+
+;; Multimethods for creating RecordPropertyValue unions based on class:
+(defmulti create-rec-prop-val class)
+
+(defmethod create-rec-prop-val RecordLevel
+  [x]
+  (RecordPropertyValue/recordLevel x))
+
+(defmethod create-rec-prop-val Occurrence
+  [x]
+  (RecordPropertyValue/occurrence x))
+
+(defmethod create-rec-prop-val Event
+  [x]
+  (RecordPropertyValue/event x))
+
+(defmethod create-rec-prop-val Location
+  [x]
+  (RecordPropertyValue/location x))
+
+(defmethod create-rec-prop-val GeologicalContext
+  [x]
+  (RecordPropertyValue/geologicalContext x))
+
+(defmethod create-rec-prop-val Identification
+  [x]
+  (RecordPropertyValue/identification x))
+
+(defmethod create-rec-prop-val Taxon
+  [x]
+  (RecordPropertyValue/taxon x))
+
+(defmethod create-rec-prop-val ResourceRelationship
+  [x]
+  (RecordPropertyValue/resourceRelationship x))
+
+(defmethod create-rec-prop-val MeasurementOrFact
+  [x]
+  (RecordPropertyValue/measurementOrFact x))
 
 (defn RecordSource-  
   [source-id dataset-uuid]
@@ -175,7 +245,6 @@
   (let [type DatasetID]
     (partial create-union-val type)))
 
-
 (def RecordPropertyValue-
   "Create a RecordPropertyValue Thrift object from supplied property name and
    map of Darwin Core field values."
@@ -186,17 +255,17 @@
   [fields]
   "Return vector of RecordPropertyValue Thrift objects from supplied map of
    Darwin Core record fields."
-  (let [objects {"occurrence" (Occurrence- fields)
-                 "event" (Event- fields)
-                 "location" (Location- fields)
-                 "geologicalContext" (GeologicalContext- fields)
-                 "identification" (Identification- fields)
-                 "taxon" (Taxon- fields)
-                 "resourceRelationship" (ResourceRelationship- fields)
-                 "measurementOrFact" (MeasurementOrFact- fields)
-                 "recordLevel" (RecordLevel- fields)}]
+  (let [objects [(Occurrence- fields)
+                 (Event- fields)
+                 (Location- fields)
+                 (GeologicalContext- fields)
+                 (Identification- fields)
+                 (Taxon- fields)
+                 (ResourceRelationship- fields)
+                 (MeasurementOrFact- fields)
+                 (RecordLevel- fields)]]
     (filter #(not= % nil)
-            (for [[property value] objects] (RecordPropertyValue- property value)))))
+            (map #(create-rec-prop-val %) objects))))
 
 (defn RecordProperty-
   [id value]
@@ -213,6 +282,7 @@
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
+
 (comment
   (def path (.getPath (io/resource "archive-occ")))
   (def recs (dwca/get-records path))

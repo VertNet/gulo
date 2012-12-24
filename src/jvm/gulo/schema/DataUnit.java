@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The DataUnit is a polymorphic representation of properties.
+ * The DataUnit is a polymorphic representation of properties and edges.
  */
 public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DataUnit");
