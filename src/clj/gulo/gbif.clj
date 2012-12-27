@@ -1,8 +1,6 @@
 (ns gulo.gbif
   "This namespace provides support for GBIF data."
-  (:use [gulo.core :as core]
-        [gulo.util :as util :only (latlon-valid? gen-uuid)]
-        [cascalog.api]
+  (:use [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
   (:require [clojure.string :as s]
@@ -22,7 +20,7 @@
                  "?coordinateprecision" "?geospatialissue" "?lastindexed"])
 
 ;; Ordered column names for MOL schema.
-(def mol-fields ["?occurrenceid" "?taxonid" "?dataresourceid" "?kingdom"
+(def mol-fields ["?uuid" "?occurrenceid" "?taxonid" "?dataresourceid" "?kingdom"
                  "?phylum" "?class" "?orderrank" "?family" "?genus"
                  "?scientificname" "?datecollected" "?year" "?month"
                  "?basisofrecord" "?countryisointerpreted" "?locality"
@@ -41,6 +39,11 @@
 (def SNAME 9)
 (def LATI 29)
 (def LONI 31)
+
+(defn makeline
+  "Returns a string line by joining a sequence of values on tab."
+  [& vals]
+  (clojure.string/join \tab vals))
 
 (defn split-line
   "Returns vector of line values by splitting on tab."
@@ -72,91 +75,147 @@
         [k p c o f g s] (tax line)]
     [lat lon k p c o f g s]))
 
-(defn occ-query
-  "Execute query against supplied source of occ, loc, tax, and taxloc textlines
-  for occurrence rows that include its taxloc uuid link. Sinks rows to supplied
-  sink path."
-  [occ-path tax-path loc-path taxloc-path sink-path & {:keys [fields] :or {fields occ-fields}}]
-  (let [result-vector (vec (cons "?taxloc-id" fields))
-        occ-source (hfs-textline occ-path)
-        tax-source (hfs-textline tax-path)
-        loc-source (hfs-textline loc-path)
-        taxloc-source (hfs-textline taxloc-path)
-        sink (taps/hfs-delimited sink-path :sinkmode :replace)        
-        uniques (<- [?tax-id ?loc-id ?occurrenceid ?k ?p ?c ?o ?f ?g ?s ?lat ?lon]
-                    (tax-source ?tax-line)
-                    (split-line ?tax-line :> ?tax-id ?k ?p ?c ?o ?f ?g ?s)
-                    (loc-source ?loc-line)
-                    (split-line ?loc-line :> ?loc-id ?lat ?lon _)
-                    (occ-source ?occ-line)
-                    (id ?occ-line :> ?occurrenceid)
-                    (locname ?occ-line :> ?lat ?lon ?k ?p ?c ?o ?f ?g ?s)
-                    (occ-source ?occ-line))]
+(defn gen-uuid
+  "Return a randomly generated UUID string."
+  [& x]
+  (str (java.util.UUID/randomUUID)))
 
-    (?<- sink
-         result-vector
-         (uniques ?tax-id ?loc-id ?occurrenceid ?kingdom ?phylum ?class ?orderrank
-                  ?family ?genus ?scientificname ?latitudeinterpreted
-                  ?longitudeinterpreted)
-         (taxloc-source ?taxloc-line)
-         (split-line ?taxloc-line :> ?taxloc-id ?tax-id ?loc-id)
-         (occ-source ?occ-line)
-         (split-line ?occ-line :>> occ-fields))))
+(defn valid-latlon?
+  "Return true if lat and lon are valid decimal degrees,
+   otherwise return false. Assumes that lat and lon are both either numeric
+   or string."
+  [lat lon]
+  (if (or (= "" lat)
+          (= "" lon))
+    false   
+    (try
+      (let [[lat lon] (if (number? lat)
+                        [lat lon]
+                        (map read-string [lat lon]))
+            latlon-range {:lat-min -90 :lat-max 90 :lon-min -180 :lon-max 180}
+            {:keys [lat-min lat-max lon-min lon-max]} latlon-range]
+        (and (<= lat lat-max)
+             (>= lat lat-min)
+             (<= lon lon-max)
+             (>= lon lon-min)))
+      (catch Exception e false))))
+
+(defn valid-name?
+  "Return true if name is valid, otherwise return false."
+  [name]
+  (and (not= name nil) (not= name "")))
+
+(defn read-occurrences
+  "Return Cascalog generator of GBIF tuples with valid Scientific name and
+   coordinates."
+  [path]
+  (let [src (hfs-textline path)]
+    (<- mol-fields
+        (src ?line)
+        (gen-uuid :> ?uuid)
+        (clojure.string/replace ?line "\\N" "" :> ?clean-line)
+        (split-line ?clean-line :>> occ-fields)
+        (valid-latlon? ?latitudeinterpreted ?longitudeinterpreted)
+        (valid-name? ?scientificname))))
+
+(defn occ-query
+  "Return generator of unique occurrences with a taxloc-id."
+  [tax-source loc-source taxloc-source occ-source]
+  (let [uniques (<- [?tax-uuid ?loc-uuid ?occurrenceid ?scientificname ?kingdom
+                     ?phylum ?class ?orderrank ?family ?genus ?latitudeinterpreted
+                     ?longitudeinterpreted]
+                    (tax-source ?tax-uuid ?scientificname ?kingdom ?phylum ?class ?orderrank ?family ?genus)
+                    (loc-source ?loc-uuid ?latitudeinterpreted ?longitudeinterpreted)
+                    (occ-source :>> mol-fields)
+                    (:distinct true))]
+    (<- (vec (cons "?taxloc-uuid" mol-fields))
+        (uniques ?tax-uuid ?loc-uuid ?occurrenceid ?scientificname ?kingdom
+                 ?phylum ?class ?orderrank ?family ?genus ?latitudeinterpreted
+                 ?longitudeinterpreted)
+        (taxloc-source ?taxloc-uuid ?tax-uuid ?loc-uuid)
+        (occ-source :>> mol-fields))))
 
 (defn taxloc-query
-  "Execute query against supplied source of loc, tax, and occurrence textlines
-  for unique links between taxonomies and their locations. Sinks tuples [uuid
-  taxid locid]."
-  [occ-path tax-path loc-path sink-path]
-  (let [occ-source (hfs-textline occ-path)
-        tax-source (hfs-textline tax-path)
-        loc-source (hfs-textline loc-path)
-        sink (hfs-textline sink-path :sinkmode :replace)
-        uniques (<- [?tax-id ?loc-id]
-                    (tax-source ?tax-line)
-                    (split-line ?tax-line :> ?tax-id ?k ?p ?c ?o ?f ?g ?s)
-                    (loc-source ?loc-line)
-                    (split-line ?loc-line :> ?loc-id ?lat ?lon _)
-                    (occ-source ?occ-line)
-                    (locname ?occ-line :> ?lat ?lon ?k ?p ?c ?o ?f ?g ?s)
+  "Return generator of unique taxonomy locations from supplied source of unique
+  taxonomies (via tax-query), unique locations (via loc-query), and occurrence
+  source of mol-fields."
+  [tax-source loc-source occ-source & {:keys [with-uuid] :or {with-uuid true}}]
+  (let [occ (<- [?latitudeinterpreted ?longitudeinterpreted ?scientificname
+                 ?kingdom ?phylum ?class ?orderrank ?family ?genus]
+                (occ-source :>> mol-fields))
+        uniques (<- [?tax-uuid ?loc-uuid]
+                    (tax-source ?tax-uuid ?s ?k ?p ?c ?o ?f ?g)
+                    (loc-source ?loc-uuid ?lat ?lon)
+                    (occ ?lat ?lon ?s ?k ?p ?c ?o ?f ?g)
                     (:distinct true))]
-    (?<- sink
-         [?line]
-         (uniques ?tax-id ?loc-id)
-         (util/gen-uuid :> ?taxloc-id)
-         (makeline ?taxloc-id ?tax-id ?loc-id :> ?line))))
+    (if with-uuid
+      (<- [?uuid ?tax-uuid ?loc-uuid]
+          (uniques ?tax-uuid ?loc-uuid)
+          (gen-uuid :> ?uuid))
+      uniques)))
 
 (defn tax-query
-  "Execute query against supplied source of occurrence textlines for unique
-  taxonomies. Sink tuples [uuid kingdom phylum class order family genus scientificname]
-  to sink-path."
-  [source sink-path]
-  (let [sink (hfs-textline sink-path :sinkmode :replace)
-        uniques (<- [?k ?p ?c ?o ?f ?g ?s]
-                     (source ?line)
-                     (tax ?line :> ?k ?p ?c ?o ?f ?g ?s)
-                     (core/valid-name? ?s)
-                     (:distinct true))]
-    (?<- sink
-         [?line]
-         (uniques ?k ?p ?c ?o ?f ?g ?s)
-         (util/gen-uuid :> ?uuid)
-         (makeline ?uuid ?k ?p ?c ?o ?f ?g ?s :> ?line))))
+  "Return generator of unique taxonomy tuples from supplied source of mol-fields.
+   Assumes sounce contains valid ?scientificname."
+  [source & {:keys [with-uuid] :or {with-uuid true}}]  
+  (let [uniques (<- [?scientificname ?kingdom ?phylum ?class ?orderrank ?family ?genus]
+                    (source :>> mol-fields)
+                    (:distinct true))]
+    (if with-uuid
+      (<- [?uuid ?s ?k ?p ?c ?o ?f ?g]
+          (uniques ?s ?k ?p ?c ?o ?f ?g)
+          (gen-uuid :> ?uuid))
+      uniques)))
 
 (defn loc-query
-  "Execute query against supplied source of occurrence textlines for unique
-  coordinates. Sink tuples [uuid lat lon wkt] to sink-path."
-  [source sink-path]
-  (let [sink (hfs-textline sink-path :sinkmode :replace)
-        uniques (<- [?lat ?lon]
-                    (source ?line)
-                    (loc ?line :> ?lat ?lon)
-                    (util/latlon-valid? ?lat ?lon)
+  "Return generator of unique coordinate tuples from supplied source of
+   mol-fields. Assumes source contains valid coordinates."
+  [source & {:keys [with-uuid] :or {with-uuid true}}]
+  (let [uniques (<- [?latitudeinterpreted ?longitudeinterpreted]
+                    (source :>> mol-fields)
                     (:distinct true))]
-    (?<- sink
-         [?line]
-         (uniques ?lat ?lon)
-         (util/wkt-point ?lat ?lon :> ?wkt)
-         (util/gen-uuid :> ?uuid)
-         (core/makeline ?uuid ?lat ?lon ?wkt :> ?line)
-         (:distinct true))))
+    (if with-uuid
+      (<- [?uuid ?lat ?lon]
+          (uniques ?lat ?lon)
+          (gen-uuid :> ?uuid))
+      uniques)))
+
+(defn shred
+  [& {:keys [source-path sink-path]
+      :or {source-path (.getPath (io/resource "occ-test.tsv"))
+           sink-path "/tmp"}}]
+  (let [dq (read-occurrences source-path)
+        lq (loc-query dq)
+        tq (tax-query dq)]
+    (?- (hfs-seqfile (format "%s/loc" sink-path) :sinkmode :replace) lq)
+    (?- (hfs-seqfile (format "%s/tax" sink-path) :sinkmode :replace) tq)
+    (?- (hfs-seqfile (format "%s/data" sink-path) :sinkmode :replace) dq)
+    (let [lq-source (hfs-seqfile (format "%s/loc" sink-path))
+          tq-source (hfs-seqfile (format "%s/tax" sink-path))
+          d-source (hfs-seqfile (format "%s/data" sink-path))
+          tlq (taxloc-query tq-source lq-source d-source)]
+      (?- (hfs-seqfile (format "%s/taxloc" sink-path) :sinkmode :replace) tlq)
+      (let [tlq-source (hfs-seqfile (format "%s/taxloc" sink-path))
+            occ-q (occ-query tq-source lq-source tlq-source d-source)]
+        (?- (hfs-seqfile (format "%s/occ" sink-path) :sinkmode :replace) occ-q)))))
+
+(defmain Shredder
+  [source-path sink-path]
+  (shred :source-path source-path :sink-path sink-path))
+
+(comment
+  (let [dq (read-occurrences (.getPath (io/resource "occ-test.tsv")))
+        lq (loc-query dq)
+        tq (tax-query dq)]
+    (?- (hfs-seqfile "/tmp/loc" :sinkmode :replace) lq)
+    (?- (hfs-seqfile "/tmp/tax" :sinkmode :replace) tq)
+    (?- (hfs-seqfile "/tmp/data" :sinkmode :replace) dq)
+    (let [lq-source (hfs-seqfile "/tmp/loc")
+          tq-source (hfs-seqfile "/tmp/tax")
+          d-source (hfs-seqfile "/tmp/data")
+          tlq (taxloc-query tq-source lq-source d-source)]
+      (?- (hfs-seqfile "/tmp/taxloc" :sinkmode :replace) tlq)
+      (let [tlq-source (hfs-seqfile "/tmp/taxloc")
+            occ-q (occ-query tq-source lq-source tlq-source d-source)]
+        (?- (hfs-seqfile "/tmp/occ" :sinkmode :replace) occ-q)))))
+
