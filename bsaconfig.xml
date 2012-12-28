@@ -1,0 +1,12 @@
+<bootstrapactions>
+    <action script="s3://elasticmapreduce/bootstrap-actions/configurations/latest/memory-intensive">
+    </action>
+    <action script="s3://elasticmapreduce/bootstrap-actions/add-swap">
+        <arg>2048</arg>
+    </action>
+    <action script="s3://elasticmapreduce/bootstrap-actions/configure-hadoop"
+        site-config-file="s3://gbifsource/bootstrap-actions/config_new.xml">
+    </action>
+    <action script="s3://gbifsource/bootstrap-actions/bootstrap.sh">
+    </action>
+</bootstrapactions>

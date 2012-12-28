@@ -180,28 +180,62 @@
           (gen-uuid :> ?uuid))
       uniques)))
 
-(defn shred
+(defn build-master-dataset
+  "Convert raw GBIF data into seqfiles in MoL schema with invalid records filtered
+   out."
   [& {:keys [source-path sink-path]
-      :or {source-path (.getPath (io/resource "occ-test.tsv"))
-           sink-path "/tmp"}}]
-  (let [dq (read-occurrences source-path)
-        lq (loc-query dq)
-        tq (tax-query dq)]
-    (?- (hfs-seqfile (format "%s/loc" sink-path) :sinkmode :replace) lq)
-    (?- (hfs-seqfile (format "%s/tax" sink-path) :sinkmode :replace) tq)
-    (?- (hfs-seqfile (format "%s/data" sink-path) :sinkmode :replace) dq)
-    (let [lq-source (hfs-seqfile (format "%s/loc" sink-path))
-          tq-source (hfs-seqfile (format "%s/tax" sink-path))
-          d-source (hfs-seqfile (format "%s/data" sink-path))
-          tlq (taxloc-query tq-source lq-source d-source)]
-      (?- (hfs-seqfile (format "%s/taxloc" sink-path) :sinkmode :replace) tlq)
-      (let [tlq-source (hfs-seqfile (format "%s/taxloc" sink-path))
-            occ-q (occ-query tq-source lq-source tlq-source d-source)]
-        (?- (hfs-seqfile (format "%s/occ" sink-path) :sinkmode :replace) occ-q)))))
+      :or {source-path (.getPath (io/resource "occ.txt"))
+           sink-path "/tmp/mds"}}]
+  (let [query (read-occurrences source-path)]
+    (?- (hfs-seqfile sink-path :sinkmode :replace) query)))
 
-(defmain Shredder
+(defn build-cartodb-schema
+  [& {:keys [source-path sink-path with-uuid]
+      :or {source-path "/tmp/mds"
+           sink-path "/tmp"
+           with-uuid true}}]
+  (let [source (hfs-seqfile source-path)
+        loc-path (format "%s/loc" sink-path)
+        loc-sink (hfs-seqfile loc-path :sinkmode :replace)
+        tax-path (format "%s/tax" sink-path)
+        tax-sink (hfs-seqfile tax-path :sinkmode :replace)
+        taxloc-path (format "%s/taxloc" sink-path)
+        taxloc-sink (hfs-seqfile taxloc-path :sinkmode :replace)
+        occ-path (format "%s/occ" sink-path)
+        occ-sink (hfs-seqfile occ-path :sinkmode :replace)]
+    (?- loc-sink (loc-query source))
+    (?- tax-sink (tax-query source))
+    (?- taxloc-sink (taxloc-query tax-sink loc-sink source))
+    (?- occ-sink (occ-query tax-sink loc-sink taxloc-sink source))))
+
+(defn build-cartodb-views
+  [& {:keys [source-path sink-path]
+      :or {source-path "/tmp"
+           sink-path "/tmp/cdb"}}]
+  (let [loc-sink (hfs-textline (format "%s/loc" sink-path) :sinkmode :replace)
+        loc-source (hfs-seqfile (format "%s/loc" source-path))
+        tax-sink (hfs-textline (format "%s/tax" sink-path) :sinkmode :replace)
+        tax-source (hfs-seqfile (format "%s/tax" source-path))
+        taxloc-sink (hfs-textline (format "%s/taxloc" sink-path) :sinkmode :replace)
+        taxloc-source (hfs-seqfile (format "%s/taxloc" source-path))
+        occ-sink (hfs-textline (format "%s/occ" sink-path) :sinkmode :replace)
+        occ-source (hfs-seqfile (format "%s/occ" source-path))]
+    (?- loc-sink loc-source)
+    (?- tax-sink tax-source)
+    (?- taxloc-sink taxloc-source)
+    (?- occ-sink occ-source)))
+
+(defmain BuildMasterDataset
   [source-path sink-path]
-  (shred :source-path source-path :sink-path sink-path))
+  (build-master-dataset :source-path source-path :sink-path sink-path))
+
+(defmain BuildCartoDBSchema
+  [source-path sink-path]
+  (build-cartodb-schema :source-path source-path :sink-path sink-path))
+
+(defmain BuildCartoDBViews
+  [source-path sink-path]
+  (build-cartodb-views :source-path source-path :sink-path sink-path))
 
 (comment
   (let [dq (read-occurrences (.getPath (io/resource "occ-test.tsv")))

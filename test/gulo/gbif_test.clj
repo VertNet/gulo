@@ -20,7 +20,8 @@
 
 (def occ-data [["" "" "" "" "" "" "" "" "" "Puma" "" "" "" "" "" "" "" "" "" "" "41.576233" "-70.6336" "" "" ""]
                ["" "" "" "" "" "" "" "" "" "Puma" "" "" "" "" "" "" "" "" "" "" "41.576233" "-70.6336""" "" ""]
-               ["" "" "" "" "" "" "" "" "Cat" "Puma" "" "" "" "" "" "" "" "" "" "" "41.576233" "-70.6336""" "" ""]])
+               ["" "" "" "" "" "" "" "" "Cat" "Puma" "" "" "" "" "" "" "" "" "" "" "41.576233" "-70.6336""" "" ""]
+               ["" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "41.576233" "-70.6336""" "" ""]])
 
 (fact?-
  "Duplicate locations should return a single location."
@@ -38,5 +39,9 @@
   (let [tax (tax-query name-data)
         loc (loc-query loc-data)
         results (??- (taxloc-query tax loc occ-data))]
-    (def foo results)
     (count (first results)) => 2))
+
+(fact?-
+ [["41.576233" "-70.6336"]]
+ (<- [?uuid ?lat ?lon]
+     (hfs-seqfile "/tmp/loc") ?uuid ?lat ?lon))
