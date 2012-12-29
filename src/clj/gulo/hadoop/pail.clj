@@ -5,9 +5,13 @@
   (:require [clojure.string :as s])
   (:import [java.util List]
            [gulo.schema
-            Data DataUnit Event GeologicalContext Identification Location
-            MeasurementOrFact Occurrence Pedigree RecordID RecordProperty
-            RecordPropertyValue ResourceRelationship Taxon]
+            Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
+            DatasetRecordEdge Event GeologicalContext Identification Location
+            MeasurementOrFact Occurrence OragnizationPropertyValue
+            OrganizationDatasetEdge OrganizationID OrganizationProperty Pedigree
+            RecordID RecordLevel RecordProperty RecordPropertyValue RecordSource
+            ResourceID ResourceDatasetEdge ResourceOrganizationEdge
+            ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]
            [backtype.cascading.tap PailTap PailTap$PailTapOptions]
            [backtype.hadoop.pail PailStructure Pail]
            [gulo.tap ThriftPailStructure]))
@@ -23,28 +27,24 @@
            :extends gulo.hadoop.pail.DataPailStructure
            :prefix "split-")
 
-(defn split-getTarget [this ^Data d]
-  (let [location   (-> d .getLocationProperty .getProperty .getFieldValue)
-        resolution (format "%s-%s"
-                           (.getResolution location)
-                           (.getTemporalRes d))]
-    [(.getDataset d) resolution]))
-
 (defn slugify
   [str]
   "Return supplied string lower case with whitespace replaced with dash."
   (let [clean (s/lower-case (s/trim str))]
     (s/replace clean #"\s+" "-")))
 
+(defmulti property-target class)
+
+(defmethod property-target ResourceProperty
+  [x]
+  ["prop" "ResourceProperty"])
+
 (defn split-getTarget
   [this ^Data d]
   "museum-of-vertebrate-zoology/nmmnh-mammal-uuid"
-  (let [dataset (-> d .getPedigree .getMetadata .getDataSet)
-        org (slugify (.getOrganizationName dataset))
-        title (slugify (.getTitle dataset))
-        uuid (.getDatasetUUID dataset)
-        ds (format "%s-%s" title uuid)]
-    [org ds]))
+  (let [prop (-> d .getDataUnit .getFieldValue)
+        target (property-target prop)]
+    target))
 
 (defn split-isValidTarget [this dirs]
   (boolean (#{2 3} (count dirs))))

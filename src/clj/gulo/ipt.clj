@@ -1,9 +1,12 @@
 (ns gulo.ipt
   "This namespace handles working with IPT."
   (:use [clojure.java.io :as io]
-        [net.cgrand.enlive-html :as html]
+        [cascalog.api]
+        ;;[net.cgrand.enlive-html :as html]
         [clojure.data.json :only (read-json)]
-        [cartodb.core :as cartodb])
+        [cartodb.core :as cartodb]
+        [gulo.thrift :as t]
+        [gulo.hadoop.pail :as p])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -11,6 +14,82 @@
             [clojure.contrib.zip-filter.xml :as z])
   (:import [java.io File ByteArrayInputStream]
              [org.gbif.metadata.eml EmlFactory]))
+(comment
+  "Pail layout:
+
+pail/edge/ResourceDatasetEdge/
+pail/edge/DatasetRecordEdge/
+pail/edge/ResourceOrganizationEdge/
+pail/prop/ResourceProperty/.../
+pail/prop/DatasetProperty/.../
+pail/prop/OrganizationProperty/.../
+pail/prop/RecordProperty/{Taxon | Location | ...}
+
+Algorithm:
+
+sync resource/dataset/organization properties
+- for each url in resource table, 
+"
+
+  ;; 
+  (let [res (:resource (url->resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"))
+        d (t/resource-data res)
+        a (vec (map vector d))
+        q (<- [?a]
+              (a ?a))]
+    (def d d)
+    (p/to-pail "/tmp/pail" q))
+
+  
+  
+  ;; TODO
+  (defn sync
+    []
+    (for [url (resource-urls)]
+      (let [{:keys [resource dataset organization]} (url->resource url)]
+        (if (not= (:pubDate resource) (get-pub-date url))
+          (sync-metadata resource dataset organization)
+          (sync-data resource)
+          (update-resource-table-pubdate resource)))))
+
+  
+  
+  (defn resource-data
+    "Return sequece of Data Thirft objects each representing a ResourceProperty."
+    [resource])
+
+  (defn dataset-data
+    "Return sequece of Data Thirft objects each representing a DatasetProperty."
+    [dataset])
+
+  (defn organization-data
+    "Return sequece of Data Thirft objects each representing a OrganizationProperty."
+    [organization])
+  
+
+  ;; NEXT STEP: Modify pail.clj to vertically partition according to
+  ;; pail layout above.
+  
+  ;; TODO
+  (defn sync-metadata
+    [resource dataset organization]
+    (let [r-data (t/resource-data resource)
+          ;;dp (t/dataset-properties (t/DatasetID) dataset)          
+          ;;op (t/organization-properties (t/OrganizationID) organization)
+          ;;pedigree (t/Pedigree-)
+          ]
+      (for [data [r-data]]
+        (for [x data]
+          (to-pail "/tmp/staging/pail" x)))))
+  
+
+  )
+
+
+(defn get-pub-date
+    [url]
+    (let [sql (format "SELECT pubdate FROM resource WHERE url = '%s'" url)]
+      (first (map :pubdate (:rows (cartodb/query sql "vertnet" :api-version "v1"))))))
 
 (defn resource-urls
   "Return sequence of IPT resource URLs from CartoDB resource table."
@@ -42,11 +121,13 @@
    :contact (.getEmail (.getContact eml))
    :additionalInfo (.getAdditionalInfo eml)})
 
-(defn beast-mode [m]
-  (let [zip (partial map vector)
-        [ks v-colls] (apply zip m)]
+(def zip (partial map vector))
+
+(defn beast-mode
+  [m]
+  (let [[ks v-colls] (apply zip m)]
     (for [vs (apply zip v-colls)]
-      (zipmap ks vs))))
+         (zipmap ks vs))))
 
 (defn get-feed
   "Return map representation of RSS feed from supplied URL."
@@ -67,12 +148,15 @@
   [feed]
   (let [f (fn [key] (feed-vals feed :channel :item key))
         keys [:title :link :description :author :ipt:eml :dc:publisher
-              :dc:creator :ipt:dwca :pubDate :guid]
+              :dc:creator :ipt:dwca :pubDate] ;; TODO add :giud
         props [:title :url :description :author :emlUrl :publisher
-               :creator :dwcaUrl :pubDate :guid]
-        vals (map #(f %) keys)        
+               :creator :dwcaUrl :pubDate] ;; TODO add :guid
+        vals (map #(f %) keys)
         partitions (apply hash-map (interleave props vals))]
     (beast-mode partitions)))
+
+(defn fetch-url [url]
+  (html/html-resource (java.net.URL. url)))
 
 (defn get-organization-uuid
   "Return organization UUID scraped from GBIF registry page at supplied URL:
@@ -106,22 +190,22 @@
         rss-url (s/replace url "resource" "rss")
         feed (get-feed rss-url)
         resources (feed->resource-property-value-maps feed)
+        x (def resources resources)
         resource (first (filter #(= url (:url %)) resources))
         dataset (url->dataset url)
-        guid (:guid resource)
-        gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)
-        organization (uuid->organization (get-organization-uuid gbif-url))]
+        guid (:guid resource)        
+        organization (if guid
+                       (do
+                         (let [gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)]
+                               (uuid->organization (get-organization-uuid gbif-url)))))]
     {:resource resource :dataset dataset :organization organization}))
 
 (defn get-resources
   "Return sequence of resource maps {:resource :dataset :organization} from
    supplied sequence of IPT resource URLs of the form:
    http://{host}/ipt/resource.do?r={resource_name}"
-  [urls]
+  [& {:keys [urls] :or {urls (resource-urls)}}]
   (map #(url->resource %) urls))
-
-(defn fetch-url [url]
-  (html/html-resource (java.net.URL. url)))
 
 (comment
   (let [f (get-feed "http://ipt.vertnet.org:8080/ipt/rss.do")
@@ -132,3 +216,4 @@
   (let [partitions {:title ["a" "b" "c"] :links [1 2 3] :names [:aaron :noa :tina]}]
     (beast-mode partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
 
+get

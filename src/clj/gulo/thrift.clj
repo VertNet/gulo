@@ -33,7 +33,6 @@
 (defn create-union
   [type property value]
   "Create Thrift union of supplied type using keys and fields map via reflection."
-  (prn type property value)
   (if value
     (Reflector/invokeStaticMethod type property (into-array Object [value]))))
 
@@ -118,6 +117,24 @@
   [x]
   (RecordPropertyValue/measurementOrFact x))
 
+;; Multimethods for creating RecordID union based on class:
+(defmulti create-rec-id class)
+
+(defmethod create-rec-id String
+  [x]
+  (RecordID/guid x))
+
+(defmethod create-rec-id RecordSource
+  [x]
+  (RecordID/recordSource x))
+
+;; Multimethods for creating ResourceID based on class:
+(defmulti create-resource-id class)
+
+(defmethod create-resource-id String
+  [x]
+  (ResourceID/uuid x))
+
 (defn RecordSource-  
   [source-id dataset-uuid]
   "Create RecordSource Thrift object from supplied sourceID and datasetUUID."
@@ -132,6 +149,7 @@
   "
   (let [type RecordID]
     (partial create-union-val type)))
+
 
 (def Occurrence-
   "Create an Occurrence Thrift object from supplied map of Darwin Core record
@@ -267,6 +285,19 @@
     (filter #(not= % nil)
             (map #(create-rec-prop-val %) objects))))
 
+(defn resource-property-values
+  [resource]  
+  (for [[k v] resource]
+    (create-union ResourcePropertyValue (name k) v)))
+
+(defn ResourceProperty-
+  [id value]
+  (ResourceProperty. id value))
+
+(defn resource-properties
+  [id resource]
+  (map #(ResourceProperty- id %) (resource-property-values resource)))
+
 (defn RecordProperty-
   [id value]
   "Create RecordProperty Thrift object from supplied RecordID and
@@ -282,6 +313,22 @@
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; API
+
+(defn resource-data
+  "Return generator of Data Thrift objects each representing a
+   ResourceDataProperty created from the supplied resource property value map."
+  [resource]
+  (let [id (create-resource-id (:url resource))
+        props (resource-properties id resource)
+        data (for [p props]
+               (Data. (Pedigree. (epoch)) (create-dataunit p)))]
+    (vec (map vector data))))
 
 (comment
   (def path (.getPath (io/resource "archive-occ")))
