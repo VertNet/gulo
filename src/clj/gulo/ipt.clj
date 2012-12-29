@@ -2,7 +2,7 @@
   "This namespace handles working with IPT."
   (:use [clojure.java.io :as io]
         [cascalog.api]
-        ;;[net.cgrand.enlive-html :as html]
+        [net.cgrand.enlive-html :as html :only (html-resource, select, attr-values)]
         [clojure.data.json :only (read-json)]
         [cartodb.core :as cartodb]
         [gulo.thrift :as t]
@@ -32,13 +32,17 @@ sync resource/dataset/organization properties
 "
 
   ;; 
-  (let [res (:resource (url->resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"))
-        d (t/resource-data res)
-        a (vec (map vector d))
-        q (<- [?a]
-              (a ?a))]
-    (def d d)
-    (p/to-pail "/tmp/pail" q))
+  (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"
+        {:keys [resource dataset organization]} (url->resource url)
+        resource-data (t/resource-data resource)
+        resource-q (<- [?d]
+                       (resource-data ?d))
+        dataset-data (t/dataset-data dataset)
+        dataset-q (<- [?d]
+                      (dataset-data ?d))]
+    (def dd dataset-data)
+    (p/to-pail "/tmp/pail" resource-q)
+    (p/to-pail "/tmp/pail" dataset-q))
 
   
   
@@ -116,7 +120,8 @@ sync resource/dataset/organization properties
    :creator (.getCreatorEmail eml)
    :metadataProvider (.getEmail (.getMetadataProvider eml))
    :language (.getLanguage eml)
-   :associatedParty (vec (for [x (.getAssociatedParties eml)] (.getEmail x)))
+   :associatedParty (reduce #(str %1 "," %2)
+                            (for [x (.getAssociatedParties eml)] (.getEmail x)))
    :pubDate (.toString (.getPubDate eml))
    :contact (.getEmail (.getContact eml))
    :additionalInfo (.getAdditionalInfo eml)})

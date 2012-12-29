@@ -124,6 +124,13 @@
   [x]
   (RecordID/guid x))
 
+;; Multimethods for creating DatasetID union based on class:
+(defmulti create-dataset-id class)
+
+(defmethod create-dataset-id String
+  [x]
+  (DatasetID/uuid x))
+
 (defmethod create-rec-id RecordSource
   [x]
   (RecordID/recordSource x))
@@ -269,6 +276,53 @@
   (let [type RecordPropertyValue]
     (partial create-union type)))
 
+
+
+
+(defn- dataset-property-values
+  [dataset]
+  (for [[k v] dataset :when (not= v nil)]
+    (create-union DatasetPropertyValue (name k) v)))
+
+(defn- dataset-properties
+  [id dataset]
+  (map #(DatasetProperty. id %) (dataset-property-values dataset)))
+
+(defn dataset-data
+  "Return generator of Data Thrift objects containing DatasetProperty values."
+  [dataset]
+  (let [id (create-dataset-id (:title dataset))
+        props (dataset-properties id dataset)
+        pedigree (Pedigree. (epoch))
+        units (map create-dataunit props)
+        data (map #(Data. pedigree %) units)]
+    (vec (map vector data))))
+
+(defn- resource-property-values
+  [resource]  
+  (for [[k v] resource :when (not= v nil)]
+    (create-union ResourcePropertyValue (name k) v)))
+
+(defn- resource-properties
+  [id resource]
+  (map #(ResourceProperty. id %) (resource-property-values resource)))
+
+(defn resource-data
+  "Return generator of Data Thrift objects containing ResourceProperty values."
+  [resource]
+  (let [id (create-resource-id (:url resource))
+        props (resource-properties id resource)
+        pedigree (Pedigree. (epoch))
+        units (map create-dataunit props)
+        data (map #(Data. pedigree %) units)]
+    (vec (map vector data))))
+
+(defn RecordProperty-
+  [id value]
+  "Create RecordProperty Thrift object from supplied RecordID and
+   RecordPropertyValue."
+  (RecordProperty. id value))
+
 (defn record-property-values
   [fields]
   "Return vector of RecordPropertyValue Thrift objects from supplied map of
@@ -284,25 +338,6 @@
                  (RecordLevel- fields)]]
     (filter #(not= % nil)
             (map #(create-rec-prop-val %) objects))))
-
-(defn resource-property-values
-  [resource]  
-  (for [[k v] resource]
-    (create-union ResourcePropertyValue (name k) v)))
-
-(defn ResourceProperty-
-  [id value]
-  (ResourceProperty. id value))
-
-(defn resource-properties
-  [id resource]
-  (map #(ResourceProperty- id %) (resource-property-values resource)))
-
-(defn RecordProperty-
-  [id value]
-  "Create RecordProperty Thrift object from supplied RecordID and
-   RecordPropertyValue."
-  (RecordProperty. id value))
 
 (defn record-properties
   [id fields]
@@ -320,15 +355,7 @@
 ;;
 ;; API
 
-(defn resource-data
-  "Return generator of Data Thrift objects each representing a
-   ResourceDataProperty created from the supplied resource property value map."
-  [resource]
-  (let [id (create-resource-id (:url resource))
-        props (resource-properties id resource)
-        data (for [p props]
-               (Data. (Pedigree. (epoch)) (create-dataunit p)))]
-    (vec (map vector data))))
+
 
 (comment
   (def path (.getPath (io/resource "archive-occ")))
