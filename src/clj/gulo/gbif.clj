@@ -7,8 +7,8 @@
             [clojure.java.io :as io])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
-;; Ordered column names from the occurrence_20120802.txt.gz dump.
-(def occ-fields ["?occurrenceid" "?taxonid" "?dataresourceid" "?kingdom"
+;; Ordered column names from the occurrence_20120802.txt.gz GBIF dump.
+(def gbif-fields ["?occurrenceid" "?taxonid" "?dataresourceid" "?kingdom"
                  "?phylum" "?class" "?orderrank" "?family" "?genus"
                  "?scientificname" "?kingdomoriginal" "?phylumoriginal"
                  "?classoriginal" "?orderrankoriginal" "?familyoriginal"
@@ -19,7 +19,7 @@
                  "?latitudeinterpreted" "?longitude" "?longitudeinterpreted"
                  "?coordinateprecision" "?geospatialissue" "?lastindexed"])
 
-;; Ordered column names for MOL schema.
+;; Ordered column names for MOL master dataset schema.
 (def mol-fields ["?uuid" "?occurrenceid" "?taxonid" "?dataresourceid" "?kingdom"
                  "?phylum" "?class" "?orderrank" "?family" "?genus"
                  "?scientificname" "?datecollected" "?year" "?month"
@@ -28,17 +28,12 @@
                  "?latitudeinterpreted" "?longitudeinterpreted"
                  "?coordinateprecision" "?geospatialissue" "?lastindexed"])
 
-;; Position of values in a texline.
-(def OCCID 0)
-(def KINGDOM 3)
-(def PHYLUM 4)
-(def CLASS 5)
-(def ORDER 6)
-(def FAMILY 7)
-(def GENUS 8)
-(def SNAME 9)
-(def LATI 29)
-(def LONI 31)
+;; Ordered column names for MOL occ table schema.
+(def occ-fields ["?taxloc-uuid" "?uuid" "?occurrenceid" "?taxonid"
+                 "?dataresourceid" "?datecollected" "?year" "?month"
+                 "?basisofrecord" "?countryisointerpreted" "?locality" "?county"
+                 "?continentorocean" "?stateprovince" "?coordinateprecision"
+                 "?geospatialissue" "?lastindexed"])
 
 (defn makeline
   "Returns a string line by joining a sequence of values on tab."
@@ -49,31 +44,6 @@
   "Returns vector of line values by splitting on tab."
   [line]
   (vec (.split line "\t")))
-
-(defn id
-  "Return occid from supplied textline."
-  [line]
-  (nth (split-line line) OCCID))
-
-(defn loc
-  "Return 3-tuple [occid lat lon] from supplied textline."
-  [line]
-  (let [vals (split-line line)]
-    (map (partial nth vals) [LATI LONI])))
-
-(defn tax
-  "Return 7-tuple [kingdom phylum class order family genus scientificname] from
-  supplied textline."
-  [line]
-  (let [vals (split-line line)]
-    (map (partial nth vals) [KINGDOM PHYLUM CLASS ORDER FAMILY GENUS SNAME])))
-
-(defn locname
-  "Return 4-tuple [occid lat lon name] from supplied textline."
-  [line]
-  (let [[lat lon] (loc line)
-        [k p c o f g s] (tax line)]
-    [lat lon k p c o f g s]))
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
@@ -114,7 +84,7 @@
         (src ?line)
         (gen-uuid :> ?uuid)
         (clojure.string/replace ?line "\\N" "" :> ?clean-line)
-        (split-line ?clean-line :>> occ-fields)
+        (split-line ?clean-line :>> gbif-fields)
         (valid-latlon? ?latitudeinterpreted ?longitudeinterpreted)
         (valid-name? ?scientificname))))
 
@@ -128,7 +98,7 @@
                     (loc-source ?loc-uuid ?latitudeinterpreted ?longitudeinterpreted)
                     (occ-source :>> mol-fields)
                     (:distinct true))]
-    (<- (vec (cons "?taxloc-uuid" mol-fields))
+    (<- occ-fields
         (uniques ?tax-uuid ?loc-uuid ?occurrenceid ?scientificname ?kingdom
                  ?phylum ?class ?orderrank ?family ?genus ?latitudeinterpreted
                  ?longitudeinterpreted)
