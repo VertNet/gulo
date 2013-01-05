@@ -9,3 +9,4 @@ creds.json
 s3.json
 target/
 cartodb.json
+credentials.json

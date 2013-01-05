@@ -1,0 +1,3 @@
+242135541	164	432	Bacteria	Acidobacteria	Acidobacteria	\N	\N	\N	Acidobacteria	Bacteria	Acidobacteria	Acidobacteria	\N	\N	\N	Acidobacteria	\N	2007-06-19	2007	6	0	\N	US	\N	\N	\N	\N	41.576233	41.576233	-70.6336	-70.6336	\N	0	2012-07-05 00:19:38
+244661001	164	335	Bacteria	Acidobacteria	Acidobacteria	\N	\N	\N	Acidobacteria	Bacteria	Acidobacteria	\N	\N	\N	\N	\N	\N	2008-05-14	2008	5	0	\N	NL	\N	\N	\N	\N	53.49027	53.49027	6.144433	6.144433	\N	0	2012-07-05 00:22:36
+100000000	164	335	Bacteria	Acidobacteria	Acidobacteria	\N	\N	\N	Acidobacteria	Bacteria	Acidobacteria	Acidobacteria	\N	\N	\N	Acidobacteria	\N	2008-10-12	2008	10	0	\N	NL	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	2012-07-05 00:22:36
