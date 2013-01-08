@@ -23,77 +23,38 @@ pail/edge/ResourceOrganizationEdge/
 pail/prop/ResourceProperty/.../
 pail/prop/DatasetProperty/.../
 pail/prop/OrganizationProperty/.../
-pail/prop/RecordProperty/{Taxon | Location | ...}
-
-Algorithm:
-
-sync resource/dataset/organization properties
-- for each url in resource table, 
-"
-
-  ;; (defn sync-metadata [url])
-  (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"
-        {:keys [resource dataset organization]} (url->resource url)
-        resource-data (t/resource-data resource)
-        resource-q (<- [?d]
-                       (resource-data ?d))
-        dataset-data (t/dataset-data dataset)
-        dataset-q (<- [?d]
-                      (dataset-data ?d))
-        organization-data (t/organization-data organization)
-        organization-q (<- [?d]
-                           (organization-data ?d))]
-    (def dd dataset-data)
-    (p/to-pail "/tmp/pail" resource-q)
-    (p/to-pail "/tmp/pail" dataset-q)
-    (p/to-pail "/tmp/pail" organization-q))
-
+pail/prop/RecordProperty/{Taxon | Location | ...}"
   
-  
-  ;; TODO
+  ;; WIP
   (defn sync
     []
     (for [url (resource-urls)]
-      (let [{:keys [resource dataset organization]} (url->resource url)]
+      (let [{:keys [resource dataset organization]} (url->metadata url)]
         (if (not= (:pubDate resource) (get-pub-date url))
           (sync-metadata resource dataset organization)
           (sync-data resource)
           (update-resource-table-pubdate resource)))))
 
+  ;; NEXT STEPS:
+  ;; 1. Modify pail.clj to vertically partition RecordProperty
+  ;; 2. Change detection algo for Records
   
-  
-  (defn resource-data
-    "Return sequece of Data Thirft objects each representing a ResourceProperty."
-    [resource])
-
-  (defn dataset-data
-    "Return sequece of Data Thirft objects each representing a DatasetProperty."
-    [dataset])
-
-  (defn organization-data
-    "Return sequece of Data Thirft objects each representing a OrganizationProperty."
-    [organization])
-  
-
-  ;; NEXT STEP: Modify pail.clj to vertically partition according to
-  ;; pail layout above.
-  
-  ;; TODO
-  (defn sync-metadata
-    [resource dataset organization]
-    (let [r-data (t/resource-data resource)
-          ;;dp (t/dataset-properties (t/DatasetID) dataset)          
-          ;;op (t/organization-properties (t/OrganizationID) organization)
-          ;;pedigree (t/Pedigree-)
-          ]
-      (for [data [r-data]]
-        (for [x data]
-          (to-pail "/tmp/staging/pail" x)))))
-  
-
   )
+  
 
-
+(defn sync-metadata
+  "TODO: Delete pail first?"
+  [resource dataset organization]
+  (let [resource-data (t/resource-data resource)
+        resource-q (<- [?d] (resource-data ?d))
+        dataset-data (t/dataset-data dataset)
+        dataset-q (<- [?d] (dataset-data ?d))
+        organization-data (t/organization-data organization)
+        organization-q (<- [?d] (organization-data ?d))]
+    (p/to-pail "/tmp/pail" resource-q)
+    (p/to-pail "/tmp/pail" dataset-q)
+    (p/to-pail "/tmp/pail" organization-q)))
+  
 (defn get-pub-date
     [url]
     (let [sql (format "SELECT pubdate FROM resource WHERE url = '%s'" url)]
@@ -191,9 +152,9 @@ sync resource/dataset/organization properties
         dataset (eml->dataset-property-value-map eml)]
     dataset))
 
-(defn url->resource
-  "Return map with :dataset => DatasetPropertyValue map and :resource =>
-   ResourcePropertyValue map from supplied IPT resource URL."
+(defn url->metadata
+  "Return map of :resource, :dataset, and :organization properties for supplied
+  resource URL."
   [url]
   (let [title (second (s/split url #"="))
         rss-url (s/replace url "resource" "rss")
@@ -215,7 +176,7 @@ sync resource/dataset/organization properties
    supplied sequence of IPT resource URLs of the form:
    http://{host}/ipt/resource.do?r={resource_name}"
   [& {:keys [urls] :or {urls (resource-urls)}}]
-  (map #(url->resource %) urls))
+  (map #(url->metadata %) urls))
 
 (comment
   (let [f (get-feed "http://ipt.vertnet.org:8080/ipt/rss.do")
