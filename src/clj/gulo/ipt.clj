@@ -31,7 +31,7 @@ sync resource/dataset/organization properties
 - for each url in resource table, 
 "
 
-  ;; 
+  ;; (defn sync-metadata [url])
   (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"
         {:keys [resource dataset organization]} (url->resource url)
         resource-data (t/resource-data resource)
@@ -39,10 +39,14 @@ sync resource/dataset/organization properties
                        (resource-data ?d))
         dataset-data (t/dataset-data dataset)
         dataset-q (<- [?d]
-                      (dataset-data ?d))]
+                      (dataset-data ?d))
+        organization-data (t/organization-data organization)
+        organization-q (<- [?d]
+                           (organization-data ?d))]
     (def dd dataset-data)
     (p/to-pail "/tmp/pail" resource-q)
-    (p/to-pail "/tmp/pail" dataset-q))
+    (p/to-pail "/tmp/pail" dataset-q)
+    (p/to-pail "/tmp/pail" organization-q))
 
   
   
@@ -153,9 +157,9 @@ sync resource/dataset/organization properties
   [feed]
   (let [f (fn [key] (feed-vals feed :channel :item key))
         keys [:title :link :description :author :ipt:eml :dc:publisher
-              :dc:creator :ipt:dwca :pubDate] ;; TODO add :giud
+              :dc:creator :ipt:dwca :pubDate :guid] ;; TODO add :giud
         props [:title :url :description :author :emlUrl :publisher
-               :creator :dwcaUrl :pubDate] ;; TODO add :guid
+               :creator :dwcaUrl :pubDate :guid] ;; TODO add :guid
         vals (map #(f %) keys)
         partitions (apply hash-map (interleave props vals))]
     (beast-mode partitions)))
@@ -198,6 +202,7 @@ sync resource/dataset/organization properties
         x (def resources resources)
         resource (first (filter #(= url (:url %)) resources))
         dataset (url->dataset url)
+        x (def dataset dataset)
         guid (:guid resource)        
         organization (if guid
                        (do

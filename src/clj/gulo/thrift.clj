@@ -5,7 +5,7 @@
   (:import [gulo.schema
             Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
             DatasetRecordEdge Event GeologicalContext Identification Location
-            MeasurementOrFact Occurrence OragnizationPropertyValue
+            MeasurementOrFact Occurrence OrganizationPropertyValue
             OrganizationDatasetEdge OrganizationID OrganizationProperty Pedigree
             RecordID RecordLevel RecordProperty RecordPropertyValue RecordSource
             ResourceID ResourceDatasetEdge ResourceOrganizationEdge
@@ -141,6 +141,13 @@
 (defmethod create-resource-id String
   [x]
   (ResourceID/uuid x))
+
+;; Multimethods for creating OrganizationID based on class:
+(defmulti create-organization-id class)
+
+(defmethod create-organization-id String
+  [x]
+  (OrganizationID/uuid x))
 
 (defn RecordSource-  
   [source-id dataset-uuid]
@@ -279,6 +286,25 @@
 
 
 
+(defn- organization-property-values
+  [organization]
+  (for [[k v] organization :when (not= v nil)]
+    (create-union OrganizationPropertyValue (name k) v)))
+
+(defn- organization-properties
+  [id organization]
+  (map #(OrganizationProperty. id %) (organization-property-values organization)))
+
+(defn organization-data
+  "Return generator of Data Thrift objects containing OrganizationProperty values."
+  [organization]
+  (let [id (create-organization-id (:key organization))
+        props (organization-properties id organization)
+        pedigree (Pedigree. (epoch))
+        units (map create-dataunit props)
+        data (map #(Data. pedigree %) units)]
+    (vec (map vector data))))
+
 (defn- dataset-property-values
   [dataset]
   (for [[k v] dataset :when (not= v nil)]
@@ -300,7 +326,7 @@
 
 (defn- resource-property-values
   [resource]  
-  (for [[k v] resource :when (not= v nil)]
+  (for [[k v] resource :when (and (not= v nil) (not= k :guid))]
     (create-union ResourcePropertyValue (name k) v)))
 
 (defn- resource-properties
@@ -310,7 +336,8 @@
 (defn resource-data
   "Return generator of Data Thrift objects containing ResourceProperty values."
   [resource]
-  (let [id (create-resource-id (:url resource))
+  {:pre  [(:guid resource)]}
+  (let [id (create-resource-id (:guid resource))
         props (resource-properties id resource)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)

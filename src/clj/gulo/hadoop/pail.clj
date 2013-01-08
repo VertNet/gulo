@@ -43,6 +43,10 @@
   [x]
   ["prop" "DatasetProperty"])
 
+(defmethod property-target OrganizationProperty
+  [x]
+  ["prop" "OrganizationProperty"])
+
 (defn split-getTarget
   [this ^Data d]
   "museum-of-vertebrate-zoology/nmmnh-mammal-uuid"
