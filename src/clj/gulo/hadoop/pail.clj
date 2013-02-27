@@ -7,8 +7,8 @@
            [gulo.schema
             Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
             DatasetRecordEdge Event GeologicalContext Identification Location
-            MeasurementOrFact Occurrence OragnizationPropertyValue
-            OrganizationDatasetEdge OrganizationID OrganizationProperty Pedigree
+            MeasurementOrFact Occurrence OrganizationPropertyValue
+            OrganizationID OrganizationProperty Pedigree
             RecordID RecordLevel RecordProperty RecordPropertyValue RecordSource
             ResourceID ResourceDatasetEdge ResourceOrganizationEdge
             ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]

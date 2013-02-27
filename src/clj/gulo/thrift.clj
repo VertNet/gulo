@@ -6,9 +6,9 @@
             Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
             DatasetRecordEdge Event GeologicalContext Identification Location
             MeasurementOrFact Occurrence OrganizationPropertyValue
-            OrganizationDatasetEdge OrganizationID OrganizationProperty Pedigree
-            RecordID RecordLevel RecordProperty RecordPropertyValue RecordSource
-            ResourceID ResourceDatasetEdge ResourceOrganizationEdge
+            OrganizationID OrganizationProperty Pedigree RecordID RecordLevel
+            RecordProperty RecordPropertyValue RecordSource ResourceID
+            ResourceDatasetEdge ResourceOrganizationEdge
             ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]
            [org.apache.thrift TBase TUnion]
            [clojure.lang Reflector]))
