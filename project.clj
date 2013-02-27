@@ -24,7 +24,7 @@
                  [org.pingles/cascading.protobuf "0.0.1"]
                  [dwca-reader-clj "0.7.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
-                 ;;[cartodb-clj "1.5.2"]
+                 [cartodb-clj "1.5.2"]
                  [org.clojure/data.csv "0.1.2"]
                  [clj-http "0.4.3"]
                  [net.lingala.zip4j/zip4j "1.3.1"]
