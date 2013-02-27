@@ -186,5 +186,3 @@ pail/prop/RecordProperty/{Taxon | Location | ...}"
 (comment
   (let [partitions {:title ["a" "b" "c"] :links [1 2 3] :names [:aaron :noa :tina]}]
     (beast-mode partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
-
-get
