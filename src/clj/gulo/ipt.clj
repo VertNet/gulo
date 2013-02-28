@@ -159,12 +159,20 @@
    :additionalInfo (.getAdditionalInfo eml)})
 
 (def zip (partial map vector))
-
 (defn beast-mode
   [m]
   (let [[ks v-colls] (apply zip m)]
     (for [vs (apply zip v-colls)]
          (zipmap ks vs))))
+
+;; beast-mode example:
+(comment 
+  (let [partitions {:title ["a" "b" "c"] :link [1 2 3]
+                    :name [:aaron :noah :tina]}]
+    (beast-mode partitions)))
+;; => ({:name :aaron, :link 1, :title "a"}
+;;     {:name :noah, :link 2, :title "b"}
+;;     {:name :tina, :link 3, :title "c"})
 
 (defn url->feedmap
   "Return map representation of RSS feed from supplied URL."
@@ -260,9 +268,9 @@
     rootpail/prop/RecordProperty/{Taxon | Location | ...}"
   
   ;; Harvest logic:
-  (defn sync
+  (defn harvest
     []
-    (for [url (resource-urls)]
+    (for [url (urls resource-table)]
       (let [{:keys [resource dataset organization]} (url->metadata url)]
         (if (not= (:pubDate resource) (pubdate resource-table url))
           (sink-metadata resource dataset organization)
@@ -270,16 +278,8 @@
           (update-pubdate resource-table url (:pubDate resource))))))
 
   ;; NEXT STEPS:
-  ;; 1. Modify pail.clj to vertically partition RecordProperty
-  ;; 2. Change detection algo for Records
-  
-  )
-
-(comment
-  (let [f (url->feedmap "http://ipt.vertnet.org:8080/ipt/rss.do")
-        titles (feed-vals f :channel :item :title)]
-    (prn titles)))
-
-(comment
-  (let [partitions {:title ["a" "b" "c"] :links [1 2 3] :names [:aaron :noa :tina]}]
-    (beast-mode partitions))) ;; => ({:title "a", :links 1} {:title "b", :links 2}
+  ;;
+  ;;  (1) Modify pail.clj to vertically partition RecordProperty
+  ;;  (2) Encode records into graph schema
+  ;;  (3) Sink record graph schema to pail.
+)
