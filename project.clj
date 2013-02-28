@@ -11,7 +11,7 @@
   :jvm-opts ["-XX:MaxPermSize=256M"
              "-XX:+UseConcMarkSweepGC"
              "-Xms1024M" "-Xmx1048M" "-server"]
-  :profiles {:dev {:dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
+  :profiles {:dev {:dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev" :exclusions [org.slf4j/slf4j-log4j12]]
                                   [eightysteele/midje-cascalog "0.5.0"]]
                    :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
              :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
@@ -20,7 +20,7 @@
                  [backtype/dfs-datastores "1.2.0"]
                  [cascalog-more-taps "0.3.1-SNAPSHOT"]
                  [backtype/dfs-datastores-cascading "1.3.0"]                 
-                 [cascading/cascading-hadoop "2.2.0-wip-19" :exclusions [org.slf4j/slf4j-log4j12]]
+                 [cascading/cascading-hadoop "2.2.0-wip-19"]
                  [org.pingles/cascading.protobuf "0.0.1"]
                  [dwca-reader-clj "0.7.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
