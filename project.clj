@@ -36,4 +36,4 @@
                  [org.apache.thrift/libthrift "0.8.0"
                   :exclusions [org.slf4j/slf4j-api]]]
   :min-lein-version "2.0.0"
-  :aot [vn.schema gulo.hadoop.pail])
+  :aot [vn.schema gulo.hadoop.pail org.json])

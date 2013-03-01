@@ -81,7 +81,8 @@
             [clojure.zip :as zip]
             [clojure.contrib.zip-filter.xml :as z])
   (:import [java.io File ByteArrayInputStream]
-             [org.gbif.metadata.eml EmlFactory]))
+           [org.gbif.metadata.eml EmlFactory]
+           [org.json XML]))
 
 (defn sink-metadata
   "Sinks metadata for supplied resource, dataset, and organization to a Pail.
@@ -138,7 +139,7 @@
   (cartodb/query "SELECT * FROM resource" "vertnet" :api-version "v1"))
 
 ;; The resource table.
-(def resource-table (ResourceTable. (resource-table-json)))
+(def resource-table (ResourceTable. (resource-table-response)))
 
 (defn url->eml
   "Return org.gbif.metadata.eml.Eml object from supplied EML URL."
@@ -157,6 +158,12 @@
    :pubDate (.toString (.getPubDate eml))
    :contact (.getEmail (.getContact eml))
    :additionalInfo (.getAdditionalInfo eml)})
+
+(defn xml->map
+  "Return map representation of supplied XML string."
+  [xml]
+  (let [json-obj (XML/toJSONObject xml)]
+    (read-json (.toString json-obj))))
 
 (def zip (partial map vector))
 (defn beast-mode
@@ -254,7 +261,7 @@
   "Return sequence of resource maps {:resource :dataset :organization} from
    supplied sequence of IPT resource URLs of the form:
    http://{host}/ipt/resource.do?r={resource_name}"
-  [& {:keys [urls] :or {urls (resource-urls)}}]
+  [& {:keys [urls] :or {urls (urls resource-table)}}]
   (map #(url->metadata %) urls))
 
 (comment
