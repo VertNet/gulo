@@ -73,6 +73,7 @@
          :only (html-resource, select, attr-values)]
         [clojure.data.json :only (read-json)]
         [cartodb.core :as cartodb]
+        [cartodb.utils :as cartodb-utils]
         [gulo.thrift :as t]
         [gulo.hadoop.pail :as p])
   (:require [clojure.string :as s]
@@ -183,7 +184,7 @@
 
 (defn url->feedmap
   "Return map representation of RSS feed from supplied URL."
-  [url]  
+  [url]
   (let [xml (slurp (io/reader url))
         stream (ByteArrayInputStream. (.getBytes (.trim xml)))
         map (xml/parse stream)
@@ -261,8 +262,46 @@
   "Return sequence of resource maps {:resource :dataset :organization} from
    supplied sequence of IPT resource URLs of the form:
    http://{host}/ipt/resource.do?r={resource_name}"
-  [& {:keys [urls] :or {urls (urls resource-table)}}]
+  [& {:keys [urls] :or {urls (take-last 45 (urls resource-table))}}]
   (map #(url->metadata %) urls))
+
+(defn insert-ipt-resources
+  "Creates statement to insert vector of IPT resource maps to supplied
+   table."
+  [table resource-vec]
+  (apply (partial cartodb-utils/maps->insert-sql table) resource-vec))
+
+(defn new-query
+  "Ex.:
+     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp LEFT OUTER JOIN
+     ipt_resources USING (guid) WHERE ipt_resources.guid is null"
+  [table tmp]
+  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" tmp tmp table table))
+
+(defn updated-query
+  "Ex.:
+     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp, ipt_resources
+     WHERE ipt_resources_tmp.guid = ipt_resources.guid
+     AND ipt_resources_tmp.pubdate <> ipt_resources.pubdate"
+  [table tmp]
+  (format "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate" tmp tmp table tmp table tmp table))
+
+(defn deleted-query
+  "Ex.:
+     SELECT * FROM ipt_resources LEFT OUTER JOIN ipt_resources_tmp
+     USING (guid) WHERE ipt_resources_tmp.guid is null"
+  [table tmp]
+  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" table table tmp tmp))
+
+(defn execute-ipt-query
+  [q api-key]
+  (:rows (cartodb/query q "vertnet" :api-key api-key)))
+
+(defn get-deltas
+  [table table-tmp api-key]
+  {:new (execute-ipt-query (new-query table table-tmp) api-key)
+   :updated (execute-ipt-query (updated-query table table-tmp) api-key)
+   :deleted (execute-ipt-query (deleted-query table table-tmp) api-key)})
 
 (comment
   "Pail layout:
