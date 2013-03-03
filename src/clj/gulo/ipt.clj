@@ -85,6 +85,15 @@
            [org.gbif.metadata.eml EmlFactory]
            [org.json XML]))
 
+;; Slurps resources/creds.json for CartoDB creds:
+(def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
+
+;; CartoDB API Key:
+(def api-key (:api_key cartodb-creds))
+
+;; RSS feed URL for the VertNet IPT instance:
+(def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
+
 (defn sink-metadata
   "Sinks metadata for supplied resource, dataset, and organization to a Pail.
 
@@ -113,7 +122,10 @@
   "Protocol for working with a CartoDB response with all resource table rows."
   (urls [this] "Return sequence of resource URLs.")
   (pubdate [this url] "Return pubdate for supplied resource URL.")
-  (update-pubdate [this url pubdate] "Update resource_pubdate."))
+  (update-pubdate [this url pubdate] "Update resource_pubdate.")
+  (sync-new [this table tmp] "Return new resources since last sync.")
+  (sync-updated [this table tmp] "Return updated resources since last sync.")
+  (sync-deleted [this table tmp] "Return deleted resources since last sync"))
 
 (defrecord ResourceTable   
   [results] ;; CartoDB result JSON for 'SELECT * FROM resource'
@@ -132,7 +144,22 @@
        (format "UPDATE resource SET resource_pubdate = '%s' WHERE url = '%s'"
                (:resource_pubdate resource)
                url)
-       "vertnet"))))
+       "vertnet")))
+  (sync-new
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" 
+          sql (format template tmp tmp table table)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key))))
+  (sync-updated
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate"
+          sql (format template tmp tmp table tmp table tmp table)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key))))
+  (sync-deleted
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null"
+          sql (format template table table tmp tmp)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key)))))
 
 (defn resource-table-response
   "Return CartoDB response JSON for all resource table records."
@@ -165,6 +192,12 @@
   [xml]
   (let [json-obj (XML/toJSONObject xml)]
     (read-json (.toString json-obj))))
+
+(defn vertnet-ipt-resources
+  "Return vector of IPT resource maps taken from RSS feed."
+  []
+  (let [map (xml->map (slurp (io/input-stream vertnet-ipt-rss)))]
+    (:item (:channel (:rss map)))))
 
 (def zip (partial map vector))
 (defn beast-mode
@@ -271,37 +304,11 @@
   [table resource-vec]
   (apply (partial cartodb-utils/maps->insert-sql table) resource-vec))
 
-(defn new-query
-  "Ex.:
-     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp LEFT OUTER JOIN
-     ipt_resources USING (guid) WHERE ipt_resources.guid is null"
-  [table tmp]
-  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" tmp tmp table table))
-
-(defn updated-query
-  "Ex.:
-     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp, ipt_resources
-     WHERE ipt_resources_tmp.guid = ipt_resources.guid
-     AND ipt_resources_tmp.pubdate <> ipt_resources.pubdate"
-  [table tmp]
-  (format "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate" tmp tmp table tmp table tmp table))
-
-(defn deleted-query
-  "Ex.:
-     SELECT * FROM ipt_resources LEFT OUTER JOIN ipt_resources_tmp
-     USING (guid) WHERE ipt_resources_tmp.guid is null"
-  [table tmp]
-  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" table table tmp tmp))
-
-(defn execute-ipt-query
-  [q api-key]
-  (:rows (cartodb/query q "vertnet" :api-key api-key)))
-
 (defn get-deltas
-  [table table-tmp api-key]
-  {:new (execute-ipt-query (new-query table table-tmp) api-key)
-   :updated (execute-ipt-query (updated-query table table-tmp) api-key)
-   :deleted (execute-ipt-query (deleted-query table table-tmp) api-key)})
+  [table table-tmp]
+  {:new (sync-new resource-table table table-tmp)
+   :updated (sync-updated resource-table table table-tmp)
+   :deleted (sync-deleted resource-table table table-tmp)})
 
 (comment
   "Pail layout:
