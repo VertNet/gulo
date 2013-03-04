@@ -215,12 +215,6 @@
 ;;     {:name :noah, :link 2, :title "b"}
 ;;     {:name :tina, :link 3, :title "c"})
 
-(defn kws-match
-  "Checks whether the fields in provided maps all have the same keywords."
-  [& maps]
-  (every? #(= (set (reduce concat (map keys maps))) %)
-          (map (comp set keys) maps)))
-
 (defn fix-keys
   "Return supplied resource map with fixed keys lower cased.
 
