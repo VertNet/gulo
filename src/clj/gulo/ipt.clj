@@ -164,7 +164,7 @@
 (defn resource-table-response
   "Return CartoDB response JSON for all resource table records."
   []
-  (cartodb/query "SELECT * FROM resource" "vertnet" :api-version "v1"))
+  (cartodb/query "SELECT * FROM resource" "vertnet" :api-version "v1" :api-key api-key))
 
 ;; The resource table.
 (def resource-table (ResourceTable. (resource-table-response)))
@@ -214,6 +214,33 @@
 ;; => ({:name :aaron, :link 1, :title "a"}
 ;;     {:name :noah, :link 2, :title "b"}
 ;;     {:name :tina, :link 3, :title "c"})
+
+(defn kws-match
+  "Checks whether the fields in provided maps all have the same keywords."
+  [& maps]
+  (every? #(= (set (reduce concat (map keys maps))) %)
+          (map (comp set keys) maps)))
+
+(defn fix-keys
+  "Return supplied resource map with fixed keys lower cased.
+
+  The resource map is created from an RSS feed. The following keys:
+
+    :dc:publisher :ipt:dwca :dc:creator :ipt:eml
+
+  Are changed to:
+
+    :publisher :dwca :creator :eml
+
+  Sometimes a :guid isn't in the RSS feed, so we add that key when needed.
+  "
+  [resource]
+  (let [[ks vs] (apply zip resource)
+        fixed-ks (map #(keyword (s/lower-case (last (s/split (name %) #":")))) ks)
+        r (zipmap fixed-ks vs)]
+    (if (contains? r :guid)
+      (assoc r :guid (:content (:guid r)))
+      (assoc r :guid ""))))
 
 (defn url->feedmap
   "Return map representation of RSS feed from supplied URL."
@@ -297,6 +324,13 @@
    http://{host}/ipt/resource.do?r={resource_name}"
   [& {:keys [urls] :or {urls (take-last 45 (urls resource-table))}}]
   (map #(url->metadata %) urls))
+
+(defn insert-resources
+  "Harvest resources from RSS and insert into CartoDB."
+  []
+  (let [resources (map fix-keys (vertnet-ipt-resources))
+        sql (apply (partial cartodb-utils/maps->insert-sql "resources") resources)]
+    (cartodb/query sql "vertnet" :api-key api-key)))
 
 (defn insert-ipt-resources
   "Creates statement to insert vector of IPT resource maps to supplied
