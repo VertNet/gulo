@@ -75,7 +75,8 @@
         [cartodb.core :as cartodb]
         [cartodb.utils :as cartodb-utils]
         [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p])
+        [gulo.hadoop.pail :as p]
+        [dwca.core :as dwca])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -117,6 +118,12 @@
     (p/to-pail pail resource-q)
     (p/to-pail pail dataset-q)
     (p/to-pail pail organization-q)))
+
+(defn sink-data
+  [resource]
+  (let [dwca-url (:dwca resource)])
+
+  )
 
 (defprotocol IResourceTable
   "Protocol for working with a CartoDB response with all resource table rows."
@@ -230,11 +237,13 @@
   "
   [resource]
   (let [[ks vs] (apply zip resource)
+        vs (map #(s/replace % "'" "\"") vs)
+        vs (map #(if (or (nil? %) (s/blank? %)) "'NONE'" %) vs)
         fixed-ks (map #(keyword (s/lower-case (last (s/split (name %) #":")))) ks)
         r (zipmap fixed-ks vs)]
     (if (contains? r :guid)
       (assoc r :guid (:content (:guid r)))
-      (assoc r :guid ""))))
+      (assoc r :guid "NONE"))))
 
 (defn url->feedmap
   "Return map representation of RSS feed from supplied URL."
@@ -267,21 +276,58 @@
   [url]
   (html/html-resource (java.net.URL. url)))
 
+(defn resource->organization
+  "Return resource with :orgname :orgurl :orgcontact if org exists."
+  [resource]
+  (let [guid (:guid resource)
+        url (str "http://gbrds.gbif.org/browse/agent?uuid=" guid)
+        uuid (url->org-uuid url)
+        org (uuid->organization uuid)]
+    (if org
+      (let [resource (assoc resource :orgname (:name org))
+            resource (assoc resource :orgurl (:homepageURL org))
+            resource (assoc resource :orgcontact (:primaryContactEmail org))]
+        resource)
+      resource)))
+
+(defn resource->sql
+  "Return SQL insert statement for supplied resource map from IPT RSS feed."
+  [table resource]
+  (let [guid (if (contains? resource :guid) (:content (:guid resource)) "NONE")
+        resource (assoc resource :guid guid)
+        resource (resource->organization resource)
+        x (pprint resource)
+        [k v] (apply zip resource)
+        k (map #(s/lower-case (last (s/split (name %) #":"))) k)
+        v (map #(format "'%s'" (s/replace % "'" "\"")) v)
+        sql "INSERT INTO %s (%s) VALUES (%s);"
+        cols (reduce #(str %1 "," %2) k)
+        vals (reduce #(str %1 "," %2) v)]
+    (format sql table cols vals)))
+
 (defn url->org-uuid
   "Return organization UUID scraped from GBIF registry page at supplied URL:
    http://gbrds.gbif.org/browse/agent?uuid={resource-uuid}"
   [url]
-  (let [nodes (html/select (fetch-url url) [:div.listItem :a])
-        urls (map #(html/attr-values % :href) nodes)
-        path (first (first urls))
-        uuid (second (s/split path #"="))]
-    uuid))
+  (try
+    (let [nodes (html/select (fetch-url url) [:div.listItem :a])
+          urls (map #(html/attr-values % :href) nodes)
+          path (first (first urls))
+          uuid (second (s/split path #"="))]
+      uuid)
+    (catch Exception e
+      (prn "Whoops can't get UUID for" url)
+      nil)))
 
 (defn uuid->organization
   "Return organization map for supplied organization uuid."
   [uuid]
-  (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
-    (read-json (slurp (io/input-stream url)))))
+  (try
+    (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
+      (read-json (slurp (io/input-stream url))))
+    (catch Exception e
+      (prn "Whoops no org" url)
+      nil)))
 
 (defn url->dataset
   "Return DatasetPropertyValue map from supplied IPT resource URL."
@@ -322,8 +368,8 @@
 (defn insert-resources
   "Harvest resources from RSS and insert into CartoDB."
   []
-  (let [resources (map fix-keys (vertnet-ipt-resources))
-        sql (apply (partial cartodb-utils/maps->insert-sql "resources") resources)]
+  (let [resources (vertnet-ipt-resources)
+        sql (reduce #(str %1 "" %2) (map (partial resource->sql "resources") resources))]
     (cartodb/query sql "vertnet" :api-key api-key)))
 
 (defn insert-ipt-resources
