@@ -374,9 +374,10 @@
 
 (defn record-data
   "Return generator of Data Thrift objects containing RecordProperty values."
-  [record]
-  {:pre  [(:guid record)]}
-  (let [id (create-resource-id (:guid resource))
+  [dataset-guid record]
+  {:pre  [(:id record)
+          dataset-guid]}
+  (let [id (create-rec-id (RecordSource. (:id record) dataset-guid))
         props (record-properties id record)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)

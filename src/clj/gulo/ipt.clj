@@ -120,10 +120,14 @@
     (p/to-pail pail organization-q)))
 
 (defn sink-data
-  [resource]
-  (let [dwca-url (:dwca resource)])
-
-  )
+  [pail resource]
+  (let [dataset-guid (:guid resource)
+        dwca-url (:dwca resource)
+        dwc-records (dwca/open dwca-url)
+        records (map fields dwc-records)
+        record-data (map (partial t/record-data dataset-guid) records)]
+    (for [d record-data]
+      (p/to-pail pail (<- [?d] (d ?d))))))
 
 (defprotocol IResourceTable
   "Protocol for working with a CartoDB response with all resource table rows."

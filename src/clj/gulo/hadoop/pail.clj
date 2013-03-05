@@ -47,6 +47,14 @@
   [x]
   ["prop" "OrganizationProperty"])
 
+(defmethod property-target RecordProperty
+  [x]
+  (let [prop-value (.getValue x)
+        value (-> prop-value .getFieldValue)
+        name (last (clojure.string/split (str (class value)) #"\."))]
+    (prn "NAME---------------------------------------" name)
+    ["prop" "RecordProperty" name]))
+
 (defn split-getTarget
   [this ^Data d]
   "museum-of-vertebrate-zoology/nmmnh-mammal-uuid"
