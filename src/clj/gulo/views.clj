@@ -42,6 +42,14 @@
   [obj]
   (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getScientificName))
 
+(defn get-collection-code
+  [obj]
+  (->> obj .dataUnit .getRecordProperty .getValue .getRecordLevel .getCollectionCode))
+
+(defn get-clazz
+  [obj]
+  (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getClazz))
+
 (defn get-unique-sci-names
   "Unpack RecordPropertyValue Data objects and return unique
   scientific names."  [src]
@@ -76,6 +84,22 @@
       (get-organization-id ?obj :> ?id)
       (:distinct true)))
 
+(defn get-uniques-by-coll-code
+  [src]
+  (<- [?coll-code ?id]
+      (src _ ?obj)
+      (get-collection-code ?obj :> ?coll-code)
+      (get-source-id ?obj :> ?id)
+      (:distinct true)))
+
+(defn get-uniques-occ-class
+  [src]
+  (<- [?id ?clazz]
+      (src _ ?obj)
+      (get-clazz ?obj :> ?clazz)
+      (get-source-id ?obj :> ?id)
+      (:distinct true)))
+
 (defn total-occ-by-country-query
   "Count unique occurrence records by country."
   [src]
@@ -107,6 +131,20 @@
         (uniques ?scientific-name)
         (c/count ?count))))
 
+(defn total-by-collection-query
+  [src]
+  (let [uniques (get-uniques-by-coll-code src)]
+    (<- [?coll-code ?count]
+        (uniques ?coll-code ?id)
+        (c/count ?count))))
+
+(defn total-by-class-query
+  [src]
+  (let [uniques (get-uniques-occ-class src)]
+    (<- [?class ?count]
+        (uniques ?id ?class)
+        (c/count ?count))))
+
 (comment
   ;; records by country
   (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-country stats-paths))]
@@ -123,4 +161,11 @@
   ;; total taxa
   (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-taxa stats-paths))]
     (??- (taxa-count-query tap)))
-  )
+
+  ;; records by collection
+  (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-collection stats-paths))]
+    (??- (total-by-collection-query tap)))
+
+  ;; records by class
+  (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-class stats-paths))]
+    (??- (total-by-class-query tap))))
