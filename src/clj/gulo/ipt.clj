@@ -120,6 +120,7 @@
     (p/to-pail pail organization-q)))
 
 (defn sink-data
+  "Sink all resource records to supplied pail."
   [pail resource]
   (let [dataset-guid (:guid resource)
         dwca-url (:dwca resource)
@@ -184,11 +185,6 @@
 ;; The resource table.
 (def resource-table (ResourceTable. (resource-table-response)))
 
-(defn url->eml
-  "Return org.gbif.metadata.eml.Eml object from supplied EML URL."
-  [url]
-  (EmlFactory/build (io/input-stream url)))
-
 (defn eml->dataset
   "Return DatasetPropertyValue map from supplied org.gbif.metadata.eml.Eml obj."
   [eml]  
@@ -200,7 +196,8 @@
                             (for [x (.getAssociatedParties eml)] (.getEmail x)))
    :pubDate (.toString (.getPubDate eml))
    :contact (.getEmail (.getContact eml))
-   :additionalInfo (.getAdditionalInfo eml)})
+   :additionalInfo (.getAdditionalInfo eml)
+   :guid (.getGuid eml)})
 
 (defn xml->map
   "Return map representation of supplied XML string."
@@ -208,10 +205,10 @@
   (let [json-obj (XML/toJSONObject xml)]
     (read-json (.toString json-obj))))
 
-(defn vertnet-ipt-resources
-  "Return vector of IPT resource maps taken from RSS feed."
-  []
-  (let [map (xml->map (slurp (io/input-stream vertnet-ipt-rss)))]
+(defn ipt-resources
+  "Return vector of resource maps from supplied IPT RSS url."
+  [url]
+  (let [map (xml->map (slurp (io/input-stream url)))]
     (:item (:channel (:rss map)))))
 
 (def zip (partial map vector))
@@ -221,8 +218,7 @@
     (for [vs (apply zip v-colls)]
          (zipmap ks vs))))
 
-;; beast-mode example:
-(comment 
+(comment ;; beast-mode example
   (let [partitions {:title ["a" "b" "c"] :link [1 2 3]
                     :name [:aaron :noah :tina]}]
     (beast-mode partitions)))
@@ -230,61 +226,12 @@
 ;;     {:name :noah, :link 2, :title "b"}
 ;;     {:name :tina, :link 3, :title "c"})
 
-(defn fix-keys
-  "Return supplied resource map with fixed keys lower cased.
-
-  The resource map is created from an RSS feed. The following keys:
-
-    :dc:publisher :ipt:dwca :dc:creator :ipt:eml
-
-  Are changed to:
-
-    :publisher :dwca :creator :eml
-
-  Sometimes a :guid isn't in the RSS feed, so we add that key when needed.
-  "
-  [resource]
-  (let [[ks vs] (apply zip resource)
-        vs (map #(s/replace % "'" "\"") vs)
-        vs (map #(if (or (nil? %) (s/blank? %)) "'NONE'" %) vs)
-        fixed-ks (map #(keyword (s/lower-case (last (s/split (name %) #":")))) ks)
-        r (zipmap fixed-ks vs)]
-    (if (contains? r :guid)
-      (assoc r :guid (:content (:guid r)))
-      (assoc r :guid "NONE"))))
-
-(defn url->feedmap
-  "Return map representation of RSS feed from supplied URL."
-  [url]
-  (let [xml (slurp (io/reader url))
-        stream (ByteArrayInputStream. (.getBytes (.trim xml)))
-        map (xml/parse stream)
-        feed (zip/xml-zip map)]
-    feed))
-
-(defn feed-vals
-  "Return feed values for tags from supplied feedmap."
-  [feedmap & tags]
-  (apply z/xml-> feedmap (conj (vec tags) z/text)))
-
-(defn feedmap->resources
-  "Return sequence of ResourcePropertyValue maps from supplied feed."
-  [feedmap]
-  (let [f (fn [key] (feed-vals feedmap :channel :item key))
-        keys [:title :link :description :author :ipt:eml :dc:publisher
-              :dc:creator :ipt:dwca :pubDate :guid] ;; TODO add :giud
-        props [:title :url :description :author :emlUrl :publisher
-               :creator :dwcaUrl :pubDate :guid] ;; TODO add :guid
-        vals (map #(f %) keys)
-        partitions (apply hash-map (interleave props vals))]
-    (beast-mode partitions)))
-
 (defn fetch-url
   "Return HTML from supplied URL."
   [url]
   (html/html-resource (java.net.URL. url)))
 
-(defn url->org-uuid
+(defn get-org-uuid
   "Return organization UUID scraped from GBIF registry page at supplied URL:
    http://gbrds.gbif.org/browse/agent?uuid={resource-uuid}"
   [url]
@@ -295,7 +242,7 @@
           uuid (second (s/split path #"="))]
       uuid)
     (catch Exception e
-      (prn "Whoops can't get UUID for" url)
+      (prn "Whoops can't get UUID for: " url)
       nil)))
 
 (defn uuid->organization
@@ -305,103 +252,14 @@
     (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
       (read-json (slurp (io/input-stream url))))
     (catch Exception e
-      (prn "Whoops no org" uuid)
+      (prn "Whoops no org for UUID: " uuid)
       nil)))
-
-(defn url->dataset
-  "Return DatasetPropertyValue map from supplied IPT resource URL."
-  [url]
-  (let [title (second (s/split url #"="))
-        eml-url (s/replace url "resource" "eml")
-        eml (url->eml eml-url)
-        dataset (eml->dataset eml)]
-    dataset))
-
-(defn url->metadata
-  "Return map of :resource, :dataset, and :organization maps.
-
-  Args:
-    url: The resource URL.
-  "
-  [url]
-  (let [title (second (s/split url #"="))
-        rss-url (s/replace url "resource" "rss")
-        feedmap (url->feedmap rss-url)
-        resources (feedmap->resources feedmap)
-        resource (first (filter #(= url (:url %)) resources))
-        dataset (url->dataset url)
-        guid (:guid resource)        
-        organization (if guid
-                       (do
-                         (let [gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)]
-                           (uuid->organization (url->org-uuid gbif-url)))))]
-    {:resource resource :dataset dataset :organization organization}))
-
-(defn resource->metadata
-  [resource] ;; resource map from cartodb
-  (let [url (:link resource)
-        dataset (url->dataset url)
-        guid (:guid resource)        
-        organization (if guid
-                       (do
-                         (let [gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)]
-                           (uuid->organization (url->org-uuid gbif-url)))))]
-    {:resource resource :dataset dataset :organization organization}))
-
-(defn get-resources
-  "Return sequence of resource maps {:resource :dataset :organization} from
-   supplied sequence of IPT resource URLs of the form:
-   http://{host}/ipt/resource.do?r={resource_name}"
-  [& {:keys [urls] :or {resource-urls (take-last 45 (urls resource-table))}}]
-  (map #(url->metadata %) urls))
-
-
-(defn insert-ipt-resources
-  "Creates statement to insert vector of IPT resource maps to supplied
-   table."
-  [table resource-vec]
-  (apply (partial cartodb-utils/maps->insert-sql table) resource-vec))
 
 (defn get-deltas
   [table table-tmp]
   {:new (sync-new resource-table table table-tmp)
    :updated (sync-updated resource-table table table-tmp)
    :deleted (sync-deleted resource-table table table-tmp)})
-
-(defn resource->organization
-  "Return resource with :orgname :orgurl :orgcontact if org exists."
-  [resource]
-  (let [guid (:guid resource)
-        url (str "http://gbrds.gbif.org/browse/agent?uuid=" guid)
-        uuid (url->org-uuid url)
-        org (uuid->organization uuid)]
-    (if org
-      (let [resource (assoc resource :orgname (:name org))
-            resource (assoc resource :orgurl (:homepageURL org))
-            resource (assoc resource :orgcontact (:primaryContactEmail org))]
-        resource)
-      resource)))
-
-(defn resource->sql
-  "Return SQL insert statement for supplied resource map from IPT RSS feed."
-  [table resource]
-  (let [guid (if (contains? resource :guid) (:content (:guid resource)) "NONE")
-        resource (assoc resource :guid guid)
-        resource (resource->organization resource)
-        [k v] (apply zip resource)
-        k (map #(s/lower-case (last (s/split (name %) #":"))) k)
-        v (map #(format "'%s'" (s/replace % "'" "\"")) v)
-        sql "INSERT INTO %s (%s) VALUES (%s);"
-        cols (reduce #(str %1 "," %2) k)
-        vals (reduce #(str %1 "," %2) v)]
-    (format sql table cols vals)))
-
-(defn insert-resources
-  "Harvest resources from RSS and insert into CartoDB."
-  []
-  (let [resources (vertnet-ipt-resources)
-        sql (reduce #(str %1 "" %2) (map (partial resource->sql "resources") resources))]
-    (cartodb/query sql "vertnet" :api-key api-key)))
 
 (defn harvest
   [bootstrap]
@@ -418,41 +276,57 @@
             (sink-data resource) ;; TODO
             (update-pubdate resource-table url (:pubDate resource))))))))
 
-(defn test-data
-  []
-  (let [resource-url "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_mammals"
-        sql (format "SELECT author,link,eml,dwca,orgcontact,orgname,orgurl,guid,description,pubdate,publisher,name FROM resources WHERE link = '%s'" resource-url)
-        resource (first (:rows (cartodb/query sql "vertnet" :api-key api-key)))
-        {:keys [resource dataset organization]} (resource->metadata resource)]
-    (sink-metadata "/tmp/vn" resource dataset organization)
-    (sink-data "/tmp/vn" resource)))
+(defprotocol IResource
+  "Protocol for a resource."
+  (get-props [this] "Get resource properties as a map.")
+  (get-dataset [this] "Get resource dataset properties as a map.")
+  (get-organization [this] "Get resource organization properties as a map.")
+  (get-recs [this] "Get sequence of resource record properties as maps.")
+  (get-insert-sql [this] "Get insert SQL to load resource to CartoDB."))
 
-(comment
-  "Pail layout:
-    rootpail/edge/ResourceDatasetEdge/
-    rootpail/edge/DatasetRecordEdge/
-    rootpail/edge/ResourceOrganizationEdge/
-    rootpail/prop/ResourceProperty/.../
-    rootpail/prop/DatasetProperty/.../
-    rootpail/prop/OrganizationProperty/.../
-    rootpail/prop/RecordProperty/{Taxon | Location | ...}"
-  
-  ;; Harvest logic:
-  (defn harvest
-    [bootstrap]
-    (for [url (urls resource-table)]
-      (let [{:keys [resource dataset organization]} (url->metadata url)]
-        (if bootstrap
-          (do
-            (sink-metadata resource dataset organization)
-            (sink-data resource) ;; TODO
-            (update-pubdate resource-table url (:pubDate resource)))
-          (if (not= (:pubDate resource) (pubdate resource-table url))
-            (sink-metadata "/tmp/vn" resource dataset organization)
-            (sink-data resource) ;; TODO
-            (update-pubdate resource-table url (:pubDate resource)))))))
-  
-  ;; NEXT STEPS:
-  ;;
-  ;; Sink edges hhh
-)
+(defrecord Resource
+  [url]
+  IResource
+  (get-props
+    [this]
+    (let [rss-url (s/replace url "resource" "rss")
+          resources (ipt-resources rss-url)
+          resource (first (filter #(= url (:link %)) resources))
+          [keys vals] (apply zip resource)
+          keys (map #(keyword (s/lower-case (last (s/split (name %) #":")))) keys)
+          resource (dissoc resource :guid)
+          resource (zipmap keys vals)]
+      resource))
+  (get-dataset
+    [this]
+    (let [eml-url (s/replace url "resource" "eml")
+          eml (EmlFactory/build (io/input-stream eml-url))
+          dataset (eml->dataset eml)]
+      dataset))
+  (get-organization
+    [this]
+    (let [dataset-guid (:guid (get-dataset this))
+            dataset-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s"
+                                dataset-guid)
+            uuid (get-org-uuid dataset-url)
+            organization (uuid->organization uuid)]
+        organization))
+  (get-recs
+    [this]
+    (let [dwca-url (s/replace url "resource" "archive")
+          dwc-records (dwca/open dwca-url)
+          records (map fields dwc-records)]
+      records))
+  (get-insert-sql
+    [this]
+    (let [resource (get-props this)
+          dataset (get-dataset this)
+          resource (assoc resource :datasetguid (:guid dataset))
+          [k v] (apply zip resource)
+          k (map #(s/lower-case (last (s/split (name %) #":"))) k)
+          v (map #(format "'%s'" (s/replace % "'" "''")) v)
+          query "INSERT INTO resource (%s) VALUES (%s);"
+          cols (reduce #(str %1 "," %2) k)
+          vals (reduce #(str %1 "," %2) v)
+          sql (format query cols vals)]
+      sql)))
