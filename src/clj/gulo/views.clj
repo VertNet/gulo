@@ -13,10 +13,9 @@
    :records-by-collection ["prop" "RecordProperty" "RecordLevel"]
    :records-by-class ["prop" "RecordProperty" "Taxon"]
 
-
 ;;   :downloaded-last-30-days ["prop"]
 ;;   :datasets-last-30-days ["prop"]
-   :total-taxa ["prop" "RecordProperty" "Occurrence"]})
+   :total-taxa ["prop" "RecordProperty" "Taxon"]})
 
 (defn get-n-sample-records
   "Grab n records from the sample pail."
@@ -39,30 +38,50 @@
   [obj]
   (->> obj .dataUnit .getRecordProperty .getValue .getLocation .getCountry))
 
+(defn get-scientific-name
+  [obj]
+  (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getScientificName))
+
+(defn get-unique-sci-names
+  "Unpack RecordPropertyValue Data objects and return unique
+  scientific names."  [src]
+  (<- [?scientific-name]
+      (src _ ?obj)
+      (get-scientific-name ?obj :> ?scientific-name)
+      (:distinct true)))
+
 (defn get-unique-occurrences
-  "Based on Data object RecordProperty's UUID, return unique Data objects."
-  [src]
-  (<- [?obj]
+  "Unpack RecordProperty Data objects and return unique
+  occurrence ids."  [src]
+  (<- [?id]
       (src _ ?obj)
       (get-source-id ?obj :> ?id)
-      (:distinct)))
+      (:distinct true)))
+
+(defn get-unique-occ-by-country
+  "Unpack RecordProperty Data objects and return
+   unique [?id ?country] tuples."
+  [src]
+  (<- [?id ?country]
+      (src _ ?obj)
+      (get-source-id ?obj :> ?id)
+      (get-country ?obj :> ?country)
+      (:distinct true)))
 
 (defn get-unique-publishers
-  "Based on Data object OrganizationProperty's UUID, return unique
-   Data objects."
+  "Unpack OrganizationProperty Data object and return unique UUIDs."
   [src]
   (<- [?id]
       (src _ ?obj)
       (get-organization-id ?obj :> ?id)
-      (:distinct)))
+      (:distinct true)))
 
-(defn total-by-country-query
-  "Count unique records by country."
+(defn total-occ-by-country-query
+  "Count unique occurrence records by country."
   [src]
-  (let [uniques (get-unique-occurrences src)]
+  (let [uniques (get-unique-occ-by-country src)]
     (<- [?country ?count]
-        (uniques ?obj)
-        (get-country ?obj :> ?country)
+        (uniques ?id ?country)
         (c/count ?count))))
 
 (defn total-occurrences-query
@@ -70,7 +89,7 @@
   [src]
   (let [uniques (get-unique-occurrences src)]
     (<- [?count]
-        (uniques ?obj)
+        (uniques ?id)
         (c/count ?count))))
 
 (defn total-publishers-query
@@ -78,19 +97,30 @@
   [src]
   (let [uniques (get-unique-publishers src)]
     (<- [?count]
-        (uniques ?obj)
+        (uniques ?id)
+        (c/count ?count))))
+
+(defn taxa-count-query
+  [src]
+  (let [uniques (get-unique-sci-names src)]
+    (<- [?count]
+        (uniques ?scientific-name)
         (c/count ?count))))
 
 (comment
-  ;; totals by country
+  ;; records by country
   (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-country stats-paths))]
-    (??- (total-by-country-query tap)))
+    (??- (total-occ-by-country-query tap)))
 
-  ;; total records
+  ;; count records
   (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-records stats-paths))]
     (??- (total-occurrences-query tap)))
 
   ;; total publishers
   (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-publishers stats-paths))]
-    (??- (totals-publishers-query tap)))
+    (??- (total-publishers-query tap)))
+
+  ;; total taxa
+  (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-taxa stats-paths))]
+    (??- (taxa-count-query tap)))
   )
