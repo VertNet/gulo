@@ -75,7 +75,8 @@
         [cartodb.core :as cartodb]
         [cartodb.utils :as cartodb-utils]
         [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p])
+        [gulo.hadoop.pail :as p]
+        [dwca.core :as dwca])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -84,6 +85,15 @@
   (:import [java.io File ByteArrayInputStream]
            [org.gbif.metadata.eml EmlFactory]
            [org.json XML]))
+
+;; Slurps resources/creds.json for CartoDB creds:
+(def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
+
+;; CartoDB API Key:
+(def api-key (:api_key cartodb-creds))
+
+;; RSS feed URL for the VertNet IPT instance:
+(def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
 (defn sink-metadata
   "Sinks metadata for supplied resource, dataset, and organization to a Pail.
@@ -109,18 +119,35 @@
     (p/to-pail pail dataset-q)
     (p/to-pail pail organization-q)))
 
+(defn sink-data
+  [pail resource]
+  (let [dataset-guid (:guid resource)
+        dwca-url (:dwca resource)
+        dwc-records (dwca/open dwca-url)
+        records (map fields dwc-records)
+        record-data (map (partial t/record-data dataset-guid) records)]
+    (for [d record-data]
+      (p/to-pail pail (<- [?d] (d ?d))))))
+
 (defprotocol IResourceTable
   "Protocol for working with a CartoDB response with all resource table rows."
-  (urls [this] "Return sequence of resource URLs.")
+  (dwca-urls [this] "Return sequence of archive URLs.")
+  (resource-urls [this] "Return sequence of resource URLs")
   (pubdate [this url] "Return pubdate for supplied resource URL.")
-  (update-pubdate [this url pubdate] "Update resource_pubdate."))
+  (update-pubdate [this url pubdate] "Update resource_pubdate.")
+  (sync-new [this table tmp] "Return new resources since last sync.")
+  (sync-updated [this table tmp] "Return updated resources since last sync.")
+  (sync-deleted [this table tmp] "Return deleted resources since last sync"))
 
 (defrecord ResourceTable   
   [results] ;; CartoDB result JSON for 'SELECT * FROM resource'
   IResourceTable
-  (urls
+  (dwca-urls
     [_]
-    (map :url (:rows results)))
+    (map :dwca (:rows results)))
+  (resource-urls
+    [_]
+    (map :link (:rows results)))  
   (pubdate
     [_ url]
     (when-let [resource (first (filter #(= (:url %) url) (:rows results)))]
@@ -132,12 +159,27 @@
        (format "UPDATE resource SET resource_pubdate = '%s' WHERE url = '%s'"
                (:resource_pubdate resource)
                url)
-       "vertnet"))))
+       "vertnet")))
+  (sync-new
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" 
+          sql (format template tmp tmp table table)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key))))
+  (sync-updated
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate"
+          sql (format template tmp tmp table tmp table tmp table)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key))))
+  (sync-deleted
+    [_ table tmp]
+    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null"
+          sql (format template table table tmp tmp)]
+      (:rows (cartodb/query sql "vertnet" :api-key api-key)))))
 
 (defn resource-table-response
   "Return CartoDB response JSON for all resource table records."
   []
-  (cartodb/query "SELECT * FROM resource" "vertnet" :api-version "v1"))
+  (cartodb/query "SELECT * FROM resources" "vertnet" :api-version "v1" :api-key api-key))
 
 ;; The resource table.
 (def resource-table (ResourceTable. (resource-table-response)))
@@ -166,6 +208,12 @@
   (let [json-obj (XML/toJSONObject xml)]
     (read-json (.toString json-obj))))
 
+(defn vertnet-ipt-resources
+  "Return vector of IPT resource maps taken from RSS feed."
+  []
+  (let [map (xml->map (slurp (io/input-stream vertnet-ipt-rss)))]
+    (:item (:channel (:rss map)))))
+
 (def zip (partial map vector))
 (defn beast-mode
   [m]
@@ -181,6 +229,29 @@
 ;; => ({:name :aaron, :link 1, :title "a"}
 ;;     {:name :noah, :link 2, :title "b"}
 ;;     {:name :tina, :link 3, :title "c"})
+
+(defn fix-keys
+  "Return supplied resource map with fixed keys lower cased.
+
+  The resource map is created from an RSS feed. The following keys:
+
+    :dc:publisher :ipt:dwca :dc:creator :ipt:eml
+
+  Are changed to:
+
+    :publisher :dwca :creator :eml
+
+  Sometimes a :guid isn't in the RSS feed, so we add that key when needed.
+  "
+  [resource]
+  (let [[ks vs] (apply zip resource)
+        vs (map #(s/replace % "'" "\"") vs)
+        vs (map #(if (or (nil? %) (s/blank? %)) "'NONE'" %) vs)
+        fixed-ks (map #(keyword (s/lower-case (last (s/split (name %) #":")))) ks)
+        r (zipmap fixed-ks vs)]
+    (if (contains? r :guid)
+      (assoc r :guid (:content (:guid r)))
+      (assoc r :guid "NONE"))))
 
 (defn url->feedmap
   "Return map representation of RSS feed from supplied URL."
@@ -217,17 +288,25 @@
   "Return organization UUID scraped from GBIF registry page at supplied URL:
    http://gbrds.gbif.org/browse/agent?uuid={resource-uuid}"
   [url]
-  (let [nodes (html/select (fetch-url url) [:div.listItem :a])
-        urls (map #(html/attr-values % :href) nodes)
-        path (first (first urls))
-        uuid (second (s/split path #"="))]
-    uuid))
+  (try
+    (let [nodes (html/select (fetch-url url) [:div.listItem :a])
+          urls (map #(html/attr-values % :href) nodes)
+          path (first (first urls))
+          uuid (second (s/split path #"="))]
+      uuid)
+    (catch Exception e
+      (prn "Whoops can't get UUID for" url)
+      nil)))
 
 (defn uuid->organization
   "Return organization map for supplied organization uuid."
   [uuid]
-  (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
-    (read-json (slurp (io/input-stream url)))))
+  (try
+    (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
+      (read-json (slurp (io/input-stream url))))
+    (catch Exception e
+      (prn "Whoops no org" uuid)
+      nil)))
 
 (defn url->dataset
   "Return DatasetPropertyValue map from supplied IPT resource URL."
@@ -258,12 +337,24 @@
                            (uuid->organization (url->org-uuid gbif-url)))))]
     {:resource resource :dataset dataset :organization organization}))
 
+(defn resource->metadata
+  [resource] ;; resource map from cartodb
+  (let [url (:link resource)
+        dataset (url->dataset url)
+        guid (:guid resource)        
+        organization (if guid
+                       (do
+                         (let [gbif-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s" guid)]
+                           (uuid->organization (url->org-uuid gbif-url)))))]
+    {:resource resource :dataset dataset :organization organization}))
+
 (defn get-resources
   "Return sequence of resource maps {:resource :dataset :organization} from
    supplied sequence of IPT resource URLs of the form:
    http://{host}/ipt/resource.do?r={resource_name}"
-  [& {:keys [urls] :or {urls (take-last 45 (urls resource-table))}}]
+  [& {:keys [urls] :or {resource-urls (take-last 45 (urls resource-table))}}]
   (map #(url->metadata %) urls))
+
 
 (defn insert-ipt-resources
   "Creates statement to insert vector of IPT resource maps to supplied
@@ -271,37 +362,70 @@
   [table resource-vec]
   (apply (partial cartodb-utils/maps->insert-sql table) resource-vec))
 
-(defn new-query
-  "Ex.:
-     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp LEFT OUTER JOIN
-     ipt_resources USING (guid) WHERE ipt_resources.guid is null"
-  [table tmp]
-  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" tmp tmp table table))
-
-(defn updated-query
-  "Ex.:
-     SELECT ipt_resources_tmp.* FROM ipt_resources_tmp, ipt_resources
-     WHERE ipt_resources_tmp.guid = ipt_resources.guid
-     AND ipt_resources_tmp.pubdate <> ipt_resources.pubdate"
-  [table tmp]
-  (format "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate" tmp tmp table tmp table tmp table))
-
-(defn deleted-query
-  "Ex.:
-     SELECT * FROM ipt_resources LEFT OUTER JOIN ipt_resources_tmp
-     USING (guid) WHERE ipt_resources_tmp.guid is null"
-  [table tmp]
-  (format "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" table table tmp tmp))
-
-(defn execute-ipt-query
-  [q api-key]
-  (:rows (cartodb/query q "vertnet" :api-key api-key)))
-
 (defn get-deltas
-  [table table-tmp api-key]
-  {:new (execute-ipt-query (new-query table table-tmp) api-key)
-   :updated (execute-ipt-query (updated-query table table-tmp) api-key)
-   :deleted (execute-ipt-query (deleted-query table table-tmp) api-key)})
+  [table table-tmp]
+  {:new (sync-new resource-table table table-tmp)
+   :updated (sync-updated resource-table table table-tmp)
+   :deleted (sync-deleted resource-table table table-tmp)})
+
+(defn resource->organization
+  "Return resource with :orgname :orgurl :orgcontact if org exists."
+  [resource]
+  (let [guid (:guid resource)
+        url (str "http://gbrds.gbif.org/browse/agent?uuid=" guid)
+        uuid (url->org-uuid url)
+        org (uuid->organization uuid)]
+    (if org
+      (let [resource (assoc resource :orgname (:name org))
+            resource (assoc resource :orgurl (:homepageURL org))
+            resource (assoc resource :orgcontact (:primaryContactEmail org))]
+        resource)
+      resource)))
+
+(defn resource->sql
+  "Return SQL insert statement for supplied resource map from IPT RSS feed."
+  [table resource]
+  (let [guid (if (contains? resource :guid) (:content (:guid resource)) "NONE")
+        resource (assoc resource :guid guid)
+        resource (resource->organization resource)
+        [k v] (apply zip resource)
+        k (map #(s/lower-case (last (s/split (name %) #":"))) k)
+        v (map #(format "'%s'" (s/replace % "'" "\"")) v)
+        sql "INSERT INTO %s (%s) VALUES (%s);"
+        cols (reduce #(str %1 "," %2) k)
+        vals (reduce #(str %1 "," %2) v)]
+    (format sql table cols vals)))
+
+(defn insert-resources
+  "Harvest resources from RSS and insert into CartoDB."
+  []
+  (let [resources (vertnet-ipt-resources)
+        sql (reduce #(str %1 "" %2) (map (partial resource->sql "resources") resources))]
+    (cartodb/query sql "vertnet" :api-key api-key)))
+
+(defn harvest
+  [bootstrap]
+  (for [url (resource-urls resource-table)]
+    (let [{:keys [resource dataset organization]} (url->metadata url)]
+      (if bootstrap
+        (do
+          (sink-metadata resource dataset organization)
+          (sink-data resource) ;; TODO
+          (update-pubdate resource-table url (:pubDate resource)))
+        (if (not= (:pubDate resource) (pubdate resource-table url))
+          (do
+            (sink-metadata resource dataset organization)
+            (sink-data resource) ;; TODO
+            (update-pubdate resource-table url (:pubDate resource))))))))
+
+(defn test-data
+  []
+  (let [resource-url "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_mammals"
+        sql (format "SELECT author,link,eml,dwca,orgcontact,orgname,orgurl,guid,description,pubdate,publisher,name FROM resources WHERE link = '%s'" resource-url)
+        resource (first (:rows (cartodb/query sql "vertnet" :api-key api-key)))
+        {:keys [resource dataset organization]} (resource->metadata resource)]
+    (sink-metadata "/tmp/vn" resource dataset organization)
+    (sink-data "/tmp/vn" resource)))
 
 (comment
   "Pail layout:
@@ -315,17 +439,20 @@
   
   ;; Harvest logic:
   (defn harvest
-    []
+    [bootstrap]
     (for [url (urls resource-table)]
       (let [{:keys [resource dataset organization]} (url->metadata url)]
-        (if (not= (:pubDate resource) (pubdate resource-table url))
-          (sink-metadata resource dataset organization)
-          (sync-data resource) ;; TODO
-          (update-pubdate resource-table url (:pubDate resource))))))
-
+        (if bootstrap
+          (do
+            (sink-metadata resource dataset organization)
+            (sink-data resource) ;; TODO
+            (update-pubdate resource-table url (:pubDate resource)))
+          (if (not= (:pubDate resource) (pubdate resource-table url))
+            (sink-metadata "/tmp/vn" resource dataset organization)
+            (sink-data resource) ;; TODO
+            (update-pubdate resource-table url (:pubDate resource)))))))
+  
   ;; NEXT STEPS:
   ;;
-  ;;  (1) Modify pail.clj to vertically partition RecordProperty
-  ;;  (2) Encode records into graph schema
-  ;;  (3) Sink record graph schema to pail.
+  ;; Sink edges hhh
 )

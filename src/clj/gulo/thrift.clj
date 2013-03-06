@@ -372,6 +372,18 @@
    map of Darwin Core record fields."
   (map #(RecordProperty- id %) (record-property-values fields)))
 
+(defn record-data
+  "Return generator of Data Thrift objects containing RecordProperty values."
+  [dataset-guid record]
+  {:pre  [(:id record)
+          dataset-guid]}
+  (let [id (create-rec-id (RecordSource. (:id record) dataset-guid))
+        props (record-properties id record)
+        pedigree (Pedigree. (epoch))
+        units (map create-dataunit props)
+        data (map #(Data. pedigree %) units)]
+    (vec (map vector data))))
+
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
