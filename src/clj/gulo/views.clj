@@ -1,8 +1,7 @@
 (ns gulo.views
   (:use [cascalog.api]
         [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p]
-        [dwca.core :as dwca])
+        [gulo.hadoop.pail :as p])
   (:require [cascalog.ops :as c])
   (:import [backtype.hadoop.pail Pail]))
 
@@ -16,12 +15,6 @@
 ;;   :downloaded-last-30-days ["prop"]
 ;;   :datasets-last-30-days ["prop"]
    :total-taxa ["prop" "RecordProperty" "Taxon"]})
-
-(defn get-n-sample-records
-  "Grab n records from the sample pail."
-  [n & [p]]
-  (let [path (str "/tmp/vn/" p)]
-    (take n (Pail. path))))
 
 (defn get-source-id
   "Unpack Data thrift object and return RecordProperty's UUID."
@@ -39,15 +32,18 @@
   (->> obj .dataUnit .getRecordProperty .getValue .getLocation .getCountry))
 
 (defn get-scientific-name
-  [obj]
+  "Unpack Data thrift object and return RecordProperty's scientific
+  name."  [obj]
   (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getScientificName))
 
 (defn get-collection-code
-  [obj]
+  "Unpack Data thrift object and return RecordProperty's collection
+  code."  [obj]
   (->> obj .dataUnit .getRecordProperty .getValue .getRecordLevel .getCollectionCode))
 
-(defn get-clazz
-  [obj]
+(defn get-class
+  "Unpack Data thrift object and return RecordProperty's taxonomic
+  class."  [obj]
   (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getClazz))
 
 (defn get-unique-sci-names
@@ -85,7 +81,8 @@
       (:distinct true)))
 
 (defn get-uniques-by-coll-code
-  [src]
+  "Unpack RecordProperty Data object and return unique collection-code
+  and id tuples."  [src]
   (<- [?coll-code ?id]
       (src _ ?obj)
       (get-collection-code ?obj :> ?coll-code)
@@ -93,10 +90,11 @@
       (:distinct true)))
 
 (defn get-uniques-occ-class
-  [src]
-  (<- [?id ?clazz]
+  "Unpack ReordProperty Data object and return unique id and class
+  tuples."  [src]
+  (<- [?id ?class]
       (src _ ?obj)
-      (get-clazz ?obj :> ?clazz)
+      (get-class ?obj :> ?class)
       (get-source-id ?obj :> ?id)
       (:distinct true)))
 
@@ -125,6 +123,7 @@
         (c/count ?count))))
 
 (defn taxa-count-query
+  "Count taxa."
   [src]
   (let [uniques (get-unique-sci-names src)]
     (<- [?count]
@@ -132,6 +131,7 @@
         (c/count ?count))))
 
 (defn total-by-collection-query
+  "Count unique records by collection."
   [src]
   (let [uniques (get-uniques-by-coll-code src)]
     (<- [?coll-code ?count]
@@ -139,33 +139,9 @@
         (c/count ?count))))
 
 (defn total-by-class-query
+  "Count unique records by class."
   [src]
   (let [uniques (get-uniques-occ-class src)]
     (<- [?class ?count]
         (uniques ?id ?class)
         (c/count ?count))))
-
-(comment
-  ;; records by country
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-country stats-paths))]
-    (??- (total-occ-by-country-query tap)))
-
-  ;; count records
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-records stats-paths))]
-    (??- (total-occurrences-query tap)))
-
-  ;; total publishers
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-publishers stats-paths))]
-    (??- (total-publishers-query tap)))
-
-  ;; total taxa
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:total-taxa stats-paths))]
-    (??- (taxa-count-query tap)))
-
-  ;; records by collection
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-collection stats-paths))]
-    (??- (total-by-collection-query tap)))
-
-  ;; records by class
-  (let [tap (p/split-chunk-tap "/tmp/vn/" (:records-by-class stats-paths))]
-    (??- (total-by-class-query tap))))
