@@ -31,8 +31,8 @@
   (let [tap (p/split-chunk-tap pail-path (k stats-paths))]
     (fun tap)))
 
-;; TODO: ensure sink-test-records runs before tests
-(sink-test-records PAIL-PATH TEST-RECORDS)
+(def test-data
+  (sink-test-records PAIL-PATH TEST-RECORDS))
 
 (future-fact "Checks unpack-RecordProperty")
 (future-fact "Checks get-RecordProperty-id")
