@@ -37,8 +37,10 @@
   (->> obj unpack-OrganizationProperty .getId .getUuid))
 
 (defn get-org-id
+  "Unpack Data thrift object and return OrganizationProperty's organization id."
   [obj]
   (get-OrganizationProperty-id get-org-id))
+
 (defn get-country
   "Unpack Data thrift object and return RecordProperty's country."
   [obj]
@@ -46,22 +48,26 @@
 
 (defn get-scientific-name
   "Unpack Data thrift object and return RecordProperty's scientific
-  name."  [obj]
+  name."
+  [obj]
   (.getScientificName (unpack-RecordProperty obj)))
 
 (defn get-collection-code
   "Unpack Data thrift object and return RecordProperty's collection
-  code."  [obj]
+  code."
+  [obj]
   (.getCollectionCode (unpack-RecordProperty obj)))
 
 (defn get-class
   "Unpack Data thrift object and return RecordProperty's taxonomic
-  class."  [obj]
+  class."
+  [obj]
   (.getClazz (unpack-RecordProperty obj)))
 
 (defn get-unique-sci-names
   "Unpack RecordPropertyValue Data objects and return unique
-  scientific names."  [src]
+  scientific names."
+  [src]
   (<- [?scientific-name]
       (src _ ?obj)
       (get-scientific-name ?obj :> ?scientific-name)
@@ -69,7 +75,8 @@
 
 (defn get-unique-occurrences
   "Unpack RecordProperty Data objects and return unique
-  occurrence ids."  [src]
+  occurrence ids."
+  [src]
   (<- [?id]
       (src _ ?obj)
       (get-RecordProperty-id ?obj :> ?id)
@@ -95,7 +102,8 @@
 
 (defn get-unique-by-coll-code
   "Unpack RecordProperty Data object and return unique collection-code
-  and id tuples."  [src]
+  and id tuples."
+  [src]
   (<- [?coll-code ?id]
       (src _ ?obj)
       (get-collection-code ?obj :> ?coll-code)
@@ -104,7 +112,8 @@
 
 (defn get-unique-by-occ-class
   "Unpack ReordProperty Data object and return unique id and class
-  tuples."  [src]
+  tuples."
+  [src]
   (<- [?id ?class]
       (src _ ?obj)
       (get-class ?obj :> ?class)
