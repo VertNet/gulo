@@ -7,44 +7,57 @@
 
 (def stats-paths
   {:total-records ["prop" "RecordProperty" "Occurrence"]
-   :total-publishers ["prop" "OrganizationProperty"]
    :records-by-country ["prop" "RecordProperty" "Location"]
    :records-by-collection ["prop" "RecordProperty" "RecordLevel"]
    :records-by-class ["prop" "RecordProperty" "Taxon"]
+   :total-taxa ["prop" "RecordProperty" "Taxon"]
+   :total-publishers ["prop" "OrganizationProperty"]
+   ;;   :downloaded-last-30-days ["prop"]
+   ;;   :datasets-last-30-days ["prop"]
+   })
 
-;;   :downloaded-last-30-days ["prop"]
-;;   :datasets-last-30-days ["prop"]
-   :total-taxa ["prop" "RecordProperty" "Taxon"]})
-
-(defn get-source-id
-  "Unpack Data thrift object and return RecordProperty's UUID."
+(defn unpack-RecordProperty
+  "Unpack RecordProperty Data object as far as RecordPropertyValue struct."
   [obj]
-  (->> obj .dataUnit .getRecordProperty .getId .getRecordSource .getSourceID))
+  (->> obj .dataUnit .getFieldValue .getValue .getFieldValue))
 
-(defn get-organization-id
-  "Unpack Data thrift object and return OrganizationProperty's UUID."
+(defn get-RecordProperty-id
+  "Unpack RecordProperty Data object and return the SourceID."
   [obj]
-  (->> obj .dataUnit .getOrganizationProperty .getId .getUuid))
+  (->> obj .dataUnit .getFieldValue .getId .getFieldValue .getSourceID))
 
+(defn unpack-OrganizationProperty
+  "Unpack OrganizationProperty Data object as far as OrganizationPropertyValue."
+  [obj]
+  (->> obj .dataUnit .getFieldValue))
+
+(defn get-OrganizationProperty-id
+  "Unpack OrganizationProperty Data object and return OrganizationProperty's UUID."
+  [obj]
+  (->> obj unpack-OrganizationProperty .getId .getUuid))
+
+(defn get-org-id
+  [obj]
+  (get-OrganizationProperty-id get-org-id))
 (defn get-country
   "Unpack Data thrift object and return RecordProperty's country."
   [obj]
-  (->> obj .dataUnit .getRecordProperty .getValue .getLocation .getCountry))
+  (.getCountry (unpack-RecordProperty obj)))
 
 (defn get-scientific-name
   "Unpack Data thrift object and return RecordProperty's scientific
   name."  [obj]
-  (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getScientificName))
+  (.getScientificName (unpack-RecordProperty obj)))
 
 (defn get-collection-code
   "Unpack Data thrift object and return RecordProperty's collection
   code."  [obj]
-  (->> obj .dataUnit .getRecordProperty .getValue .getRecordLevel .getCollectionCode))
+  (.getCollectionCode (unpack-RecordProperty obj)))
 
 (defn get-class
   "Unpack Data thrift object and return RecordProperty's taxonomic
   class."  [obj]
-  (->> obj .dataUnit .getRecordProperty .getValue .getTaxon .getClazz))
+  (.getClazz (unpack-RecordProperty obj)))
 
 (defn get-unique-sci-names
   "Unpack RecordPropertyValue Data objects and return unique
@@ -59,7 +72,7 @@
   occurrence ids."  [src]
   (<- [?id]
       (src _ ?obj)
-      (get-source-id ?obj :> ?id)
+      (get-RecordProperty-id ?obj :> ?id)
       (:distinct true)))
 
 (defn get-unique-occ-by-country
@@ -68,7 +81,7 @@
   [src]
   (<- [?id ?country]
       (src _ ?obj)
-      (get-source-id ?obj :> ?id)
+      (get-RecordProperty-id ?obj :> ?id)
       (get-country ?obj :> ?country)
       (:distinct true)))
 
@@ -77,25 +90,25 @@
   [src]
   (<- [?id]
       (src _ ?obj)
-      (get-organization-id ?obj :> ?id)
+      (get-org-id ?obj :> ?id)
       (:distinct true)))
 
-(defn get-uniques-by-coll-code
+(defn get-unique-by-coll-code
   "Unpack RecordProperty Data object and return unique collection-code
   and id tuples."  [src]
   (<- [?coll-code ?id]
       (src _ ?obj)
       (get-collection-code ?obj :> ?coll-code)
-      (get-source-id ?obj :> ?id)
+      (get-RecordProperty-id ?obj :> ?id)
       (:distinct true)))
 
-(defn get-uniques-occ-class
+(defn get-unique-by-occ-class
   "Unpack ReordProperty Data object and return unique id and class
   tuples."  [src]
   (<- [?id ?class]
       (src _ ?obj)
       (get-class ?obj :> ?class)
-      (get-source-id ?obj :> ?id)
+      (get-RecordProperty-id ?obj :> ?id)
       (:distinct true)))
 
 (defn total-occ-by-country-query
@@ -133,7 +146,7 @@
 (defn total-by-collection-query
   "Count unique records by collection."
   [src]
-  (let [uniques (get-uniques-by-coll-code src)]
+  (let [uniques (get-unique-by-coll-code src)]
     (<- [?coll-code ?count]
         (uniques ?coll-code ?id)
         (c/count ?count))))
@@ -141,7 +154,7 @@
 (defn total-by-class-query
   "Count unique records by class."
   [src]
-  (let [uniques (get-uniques-occ-class src)]
+  (let [uniques (get-unique-by-occ-class src)]
     (<- [?class ?count]
         (uniques ?id ?class)
         (c/count ?count))))
