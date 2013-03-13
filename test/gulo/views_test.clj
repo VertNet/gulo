@@ -19,7 +19,7 @@
            [clojure.lang Reflector]))
 
 (def PAIL-PATH
-  (let [desired-pail-name "vn-test-tmp"
+  (let [desired-pail-name "vn-test"
         fn-check "test" ;; file exists in resources directory
         fn-check-path (.getPath (io/resource fn-check)) ;; get full path
         resources-path (apply str (drop-last (count fn-check) fn-check-path))]
