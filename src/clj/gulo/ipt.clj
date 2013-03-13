@@ -163,24 +163,25 @@
        "vertnet")))
   (sync-new
     [_ table tmp]
-    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null" 
+    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (datasetguid) WHERE %s.datasetguid is null" 
           sql (format template tmp tmp table table)]
       (:rows (cartodb/query sql "vertnet" :api-key api-key))))
   (sync-updated
     [_ table tmp]
-    (let [template "SELECT %s.* FROM %s, %s WHERE %s.guid = %s.guid AND %s.pubdate <> %s.pubdate"
+    (let [template "SELECT %s.* FROM %s, %s WHERE %s.datasetguid = %s.datasetguid AND %s.pubdate <> %s.pubdate"
           sql (format template tmp tmp table tmp table tmp table)]
       (:rows (cartodb/query sql "vertnet" :api-key api-key))))
   (sync-deleted
     [_ table tmp]
-    (let [template "SELECT %s.* FROM %s LEFT OUTER JOIN %s USING (guid) WHERE %s.guid is null"
-          sql (format template table table tmp tmp)]
-      (:rows (cartodb/query sql "vertnet" :api-key api-key)))))
+    (let [template "SELECT * FROM %s LEFT OUTER JOIN %s USING (datasetguid) WHERE %s.datasetguid is null"
+          sql (format template table tmp tmp)
+          rows (:rows (cartodb/query sql "vertnet" :api-key api-key))]
+      (filter #(not= nil (:cartodb_id %)) rows))))
 
 (defn resource-table-response
   "Return CartoDB response JSON for all resource table records."
   []
-  (cartodb/query "SELECT * FROM resources" "vertnet" :api-version "v1" :api-key api-key))
+  (cartodb/query "SELECT * FROM resource" "vertnet" :api-version "v1" :api-key api-key))
 
 ;; The resource table.
 (def resource-table (ResourceTable. (resource-table-response)))
@@ -255,12 +256,6 @@
       (prn "Whoops no org for UUID: " uuid)
       nil)))
 
-(defn get-deltas
-  [table table-tmp]
-  {:new (sync-new resource-table table table-tmp)
-   :updated (sync-updated resource-table table table-tmp)
-   :deleted (sync-deleted resource-table table table-tmp)})
-
 ;; (defn harvest
 ;;   [bootstrap]
 ;;   (for [url (resource-urls resource-table)]
@@ -282,7 +277,8 @@
   (get-dataset [this] "Get resource dataset properties as a map.")
   (get-organization [this] "Get resource organization properties as a map.")
   (get-recs [this] "Get sequence of resource record properties as maps.")
-  (get-insert-sql [this] "Get insert SQL to load resource to CartoDB."))
+  (get-insert-sql [this table] "Get insert SQL to load resource to CartoDB.")
+  (cdb-insert [this table] "Insert resource to supplied table on CartoDB"))
 
 (defrecord Resource
   [url]
@@ -318,18 +314,61 @@
           records (map fields dwc-records)]
       records))
   (get-insert-sql
-    [this]
+    [this table]
     (let [resource (get-props this)
           dataset (get-dataset this)
           resource (assoc resource :datasetguid (:guid dataset))
           [k v] (apply zip resource)
           k (map #(s/lower-case (last (s/split (name %) #":"))) k)
           v (map #(format "'%s'" (s/replace % "'" "''")) v)
-          query "INSERT INTO resource (%s) VALUES (%s);"
+          query "INSERT INTO %s (%s) VALUES (%s);"
           cols (reduce #(str %1 "," %2) k)
           vals (reduce #(str %1 "," %2) v)
-          sql (format query cols vals)]
-      sql)))
+          sql (format query table cols vals)]
+      sql))
+  (cdb-insert
+    [this table]
+    (let [sql (get-insert-sql this table)]
+      (cartodb/query sql "vertnet" :api-key api-key))))
+
+(defn copy-resource-table
+  "Copy records from vn_resources to resource_tmp table."
+  []
+  (let [sql "insert into resource_tmp (link, ipt) (select distinct(link), ipt from vn_resources where ipt = true)"]
+    (cartodb/query sql "vertnet" :api-key api-key)))
+
+(defn sync-resources
+  "Return new, updated, deleted resource urls."
+  [& {:keys [bootstrap] :or {bootstrap false}}]
+  (cartodb/query "delete from resource_tmp" "vertnet" :api-key api-key)
+  (if-not bootstrap
+    (copy-resource-table)) ;; copy rows from vn_resources to resource_tmp.
+  (let [resource-urls (resource-urls resource-table)
+        ;resources (map #(Resource. %) resource-urls)
+        ;insert-results (doall (map #(cdb-insert % "resource_tmp") resources))
+        new (map #(:link %) (sync-new resource-table "resource" "resource_tmp"))
+        updated (map #(:link %) (sync-updated resource-table "resource" "resource_tmp"))
+        deleted (map #(:link %) (sync-deleted resource-table "resource" "resource_tmp"))]
+    (do
+      (map #(harvest-new % "/tmp/vn") new))))
+
+(defn harvest-new
+  "Harvest new records from supplied vector of resource urls and insert into
+  resource table."
+  [url path]
+  (let [r (Resource. url)
+        resource (get-props r)
+        dataset (get-dataset r)
+        organization (get-organization r)]
+    (do
+      (sink-metadata path resource dataset organization)
+      (sink-data path resource)
+      (cdb-insert r "resource"))))
+
+(defn harvest-updated
+  "Harvest updated records from supplied vector of resource urls and update
+  resource table."
+  [urls])
 
 ;; TODO
 ;; get new/updated/deleted resources from CartoDB:
