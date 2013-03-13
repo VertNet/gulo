@@ -52,7 +52,6 @@
   (let [prop-value (.getValue x)
         value (-> prop-value .getFieldValue)
         name (last (clojure.string/split (str (class value)) #"\."))]
-    (prn "NAME---------------------------------------" name)
     ["prop" "RecordProperty" name]))
 
 (defn split-getTarget

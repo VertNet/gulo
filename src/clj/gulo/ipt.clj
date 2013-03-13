@@ -261,20 +261,20 @@
    :updated (sync-updated resource-table table table-tmp)
    :deleted (sync-deleted resource-table table table-tmp)})
 
-(defn harvest
-  [bootstrap]
-  (for [url (resource-urls resource-table)]
-    (let [{:keys [resource dataset organization]} (url->metadata url)]
-      (if bootstrap
-        (do
-          (sink-metadata resource dataset organization)
-          (sink-data resource) ;; TODO
-          (update-pubdate resource-table url (:pubDate resource)))
-        (if (not= (:pubDate resource) (pubdate resource-table url))
-          (do
-            (sink-metadata resource dataset organization)
-            (sink-data resource) ;; TODO
-            (update-pubdate resource-table url (:pubDate resource))))))))
+;; (defn harvest
+;;   [bootstrap]
+;;   (for [url (resource-urls resource-table)]
+;;     (let [{:keys [resource dataset organization]} (url->metadata url)]
+;;       (if bootstrap
+;;         (do
+;;           (sink-metadata resource dataset organization)
+;;           (sink-data resource) ;; TODO
+;;           (update-pubdate resource-table url (:pubDate resource)))
+;;         (if (not= (:pubDate resource) (pubdate resource-table url))
+;;           (do
+;;             (sink-metadata resource dataset organization)
+;;             (sink-data resource) ;; TODO
+;;             (update-pubdate resource-table url (:pubDate resource))))))))
 
 (defprotocol IResource
   "Protocol for a resource."
@@ -292,9 +292,9 @@
     (let [rss-url (s/replace url "resource" "rss")
           resources (ipt-resources rss-url)
           resource (first (filter #(= url (:link %)) resources))
+          resource (dissoc resource :guid)
           [keys vals] (apply zip resource)
           keys (map #(keyword (s/lower-case (last (s/split (name %) #":")))) keys)
-          resource (dissoc resource :guid)
           resource (zipmap keys vals)]
       resource))
   (get-dataset
@@ -330,3 +330,9 @@
           vals (reduce #(str %1 "," %2) v)
           sql (format query cols vals)]
       sql)))
+
+;; TODO
+;; get new/updated/deleted resources from CartoDB:
+;; sink new/updated
+;; sink edges!
+;; figure out when to consolidate pail
