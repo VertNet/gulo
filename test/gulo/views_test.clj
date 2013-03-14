@@ -31,8 +31,8 @@
    {:id "yourid" :scientificname "Mustache Mustachus" :country "Mustandia" :collectioncode "VIZZ" :clazz "Mustachia"}])
 
 (def TEST-ORGS
-  [{:key "myguid" :name "Museum of Vertebrate Zoology"}
-   {:key "myguid" :name "American Museum of Natural History"}])
+  [{:key "MVZguid" :name "Museum of Vertebrate Zoology"}
+   {:key "AMNHguid" :name "American Museum of Natural History"}])
 
 (defn sink-test-records [pail-path record-data org-data]
   (let [record-guid "myguid"
@@ -85,6 +85,15 @@
  "RecordLevel"
  "Taxon")
 
+(fact "Checks unpack-OrganizationProperty"
+  (let [rec (get-test-record ["prop" "OrganizationProperty"])]
+    (type (unpack-OrganizationProperty rec)) => gulo.schema.OrganizationProperty))
+
+(fact "Checks get-OrganizationProperty-id"
+  (let [rec (get-test-record ["prop" "OrganizationProperty"])]
+    (or (= "MVZguid" (get-OrganizationProperty-id rec))
+        (= "AMNHguid" (get-OrganizationProperty-id rec)))) => true)
+
 (fact "Checks get-country"
   (let [rec (get-test-record ["prop" "RecordProperty" "Location"])]
     (or (= "United States" (get-country rec))
@@ -121,6 +130,10 @@
   (let [rec (get-test-record ["prop" "RecordProperty" "Event"])]
     (get-class rec)) => (throws java.lang.IllegalArgumentException))
 
+(fact "Checks get-org-id"
+  (let [rec (get-test-record ["prop" "OrganizationProperty"])]
+    (get-org-id rec)) => "AMNHguid")
+
 (fact "Checks get-unique-sci-names"
   (let [src (p/split-chunk-tap PAIL-PATH ["prop" "RecordProperty" "Taxon"])]
     (get-unique-sci-names src))
@@ -145,10 +158,9 @@
     (get-unique-by-occ-class src))
     => (produces [["myid" "Mammalia"] ["yourid" "Mustachia"]]))
 
-(future-fact "Checks unpack-OrganizationProperty")
-(future-fact "Checks get-OrganizationProperty-id")
-(future-fact "Checks get-org-id")
-(future-fact "Checks get-unique-publishers")
+(fact "Checks get-unique-publishers"
+  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "OrganizationProperty"])]
+    (get-unique-publishers src)) => (produces [["AMNHguid"] ["MVZguid"]]))
 
 (fact "Checks total-occ-by-country-query."
   (query-runner total-occ-by-country-query :records-by-country PAIL-PATH)
@@ -158,9 +170,10 @@
   (query-runner total-occurrences-query :total-records PAIL-PATH)
   => (produces [[2]]))
 
-(future-fact
- "Checks total-pubishers-query (requires creating organization dataset)"
- (query-runner total-publishers-query :total-publishers PAIL-PATH))
+(fact
+ "Checks total-pubishers-query"
+ (query-runner total-publishers-query :total-publishers PAIL-PATH)
+ => (produces [[2]]))
 
 (fact "Checks taxa-count-query."
   (query-runner taxa-count-query :total-taxa PAIL-PATH)
