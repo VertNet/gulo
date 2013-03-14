@@ -39,7 +39,7 @@
 (defn get-org-id
   "Unpack Data thrift object and return OrganizationProperty's organization id."
   [obj]
-  (get-OrganizationProperty-id get-org-id))
+  (get-OrganizationProperty-id obj))
 
 (defn get-country
   "Unpack Data thrift object and return RecordProperty's country."
