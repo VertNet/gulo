@@ -13,6 +13,7 @@
             ResourceID ResourceDatasetEdge ResourceOrganizationEdge
             ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]
            [backtype.cascading.tap PailTap PailTap$PailTapOptions]
+           [backtype.hadoop.pail Pail]
            [gulo.tap ThriftPailStructure]))
 
 (gen-class :name gulo.hadoop.pail.DataPailStructure
@@ -62,7 +63,11 @@
     target))
 
 (defn split-isValidTarget [this dirs]
-  (boolean (#{2 3} (count dirs))))
+  (let [dirs-set (set dirs)]
+    (boolean
+     (if (contains? dirs-set "RecordProperty")
+       (#{3 4} (count dirs-set))
+       (#{2 3} (count dirs-set))))))
 
 (defn pail-structure []
   (gulo.hadoop.pail.SplitDataPailStructure.))
