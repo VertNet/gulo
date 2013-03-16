@@ -345,11 +345,11 @@ struct ResourceProperty {
 }
 
 /**
- * The DatasetID node uniquely identifies a Dataset. The UUID is the same as the
+ * The DatasetID node uniquely identifies a Dataset. The GUID is the same as the
  * Resource UUID.
  */
 union DatasetID {
-  1: string uuid;
+  1: string guid;
 }
 
 /**
