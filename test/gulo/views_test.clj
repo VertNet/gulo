@@ -186,6 +186,3 @@
 (fact "Checks total-by-class-query."
   (query-runner total-by-class-query :records-by-class PAIL-PATH)
   => (produces [["Mammalia" 1] ["Mustachia" 1]]))
-
-;; TODO: ensure delete-directory runs after tests
-;; (delete-directory PAIL-PATH)
