@@ -109,26 +109,33 @@
                    :primaryContactPhone :homepageURL :descriptionLanguage
                    :description :nodeKey :nodeContactEmail :primaryContactEmail}"
   [pail resource dataset organization]
-  (let [resource-data (t/resource-data resource)
+  (let [resource-data (t/resource-data resource) ;; ResourceProperty
+        resource-id "" ;; TODO
         resource-q (<- [?d] (resource-data ?d))
-        dataset-data (t/dataset-data dataset)
+        dataset-data (t/dataset-data dataset) ;; DatasetProperty
+        dataset-id "" ;; TODO
         dataset-q (<- [?d] (dataset-data ?d))
-        organization-data (t/organization-data organization)
+        organization-data (t/organization-data organization) ;; OrganizationProperty
+        organiation-id "" ;; TODO
         organization-q (<- [?d] (organization-data ?d))]
     (p/to-pail pail resource-q)
     (p/to-pail pail dataset-q)
-    (p/to-pail pail organization-q)))
+    (p/to-pail pail organization-q)
+    dataset-id))
 
 (defn sink-data
   "Sink all resource records to supplied pail."
-  [pail resource]
+  [pail resource dataset-id]
   (let [dataset-guid (:guid resource)
         dwca-url (:dwca resource)
         dwc-records (dwca/open dwca-url)
         records (map fields dwc-records)
         record-data (map (partial t/record-data dataset-guid) records)]
-    (for [d record-data]
-      (p/to-pail pail (<- [?d] (d ?d))))))
+    (doall
+     (for [d record-data]
+       (do
+         ;; TODO: create and sink RecordDatasetEdge
+         (p/to-pail pail (<- [?d] (d ?d))))))))
 
 (defprotocol IResourceTable
   "Protocol for working with a CartoDB response with all resource table rows."
@@ -288,7 +295,9 @@
     (let [rss-url (s/replace url "resource" "rss")
           resources (ipt-resources rss-url)
           resource (first (filter #(= url (:link %)) resources))
+          guid (:content (:guid resource))
           resource (dissoc resource :guid)
+          resource (assoc resource :guid guid)
           [keys vals] (apply zip resource)
           keys (map #(keyword (s/lower-case (last (s/split (name %) #":")))) keys)
           resource (zipmap keys vals)]
@@ -318,6 +327,7 @@
     (let [resource (get-props this)
           dataset (get-dataset this)
           resource (assoc resource :datasetguid (:guid dataset))
+          resource (dissoc resource :guid)
           [k v] (apply zip resource)
           k (map #(s/lower-case (last (s/split (name %) #":"))) k)
           v (map #(format "'%s'" (s/replace % "'" "''")) v)
@@ -331,47 +341,61 @@
     (let [sql (get-insert-sql this table)]
       (cartodb/query sql "vertnet" :api-key api-key))))
 
-(defn copy-resource-table
-  "Copy records from vn_resources to resource_tmp table."
-  []
-  (let [sql "insert into resource_tmp (link, ipt) (select distinct(link), ipt from vn_resources where ipt = true)"]
-    (cartodb/query sql "vertnet" :api-key api-key)))
-
-(defn sync-resources
-  "Return new, updated, deleted resource urls."
-  [& {:keys [bootstrap] :or {bootstrap false}}]
-  (cartodb/query "delete from resource_tmp" "vertnet" :api-key api-key)
-  (if-not bootstrap
-    (copy-resource-table)) ;; copy rows from vn_resources to resource_tmp.
-  (let [resource-urls (resource-urls resource-table)
-        ;resources (map #(Resource. %) resource-urls)
-        ;insert-results (doall (map #(cdb-insert % "resource_tmp") resources))
-        new (map #(:link %) (sync-new resource-table "resource" "resource_tmp"))
-        updated (map #(:link %) (sync-updated resource-table "resource" "resource_tmp"))
-        deleted (map #(:link %) (sync-deleted resource-table "resource" "resource_tmp"))]
-    (do
-      (map #(harvest-new % "/tmp/vn") new))))
-
-(defn harvest-new
+(defn harvest
   "Harvest new records from supplied vector of resource urls and insert into
   resource table."
   [url path]
   (let [r (Resource. url)
         resource (get-props r)
         dataset (get-dataset r)
-        organization (get-organization r)]
+        organization (get-organization r)
+        dataset-id (sink-metadata path resource dataset organization)]
     (do
-      (sink-metadata path resource dataset organization)
-      (sink-data path resource)
+      (sink-data path resource dataset-id)
       (cdb-insert r "resource"))))
+
+(defn harvest-all
+  []
+  (let [sql "select link from vn_resources where ipt=true"
+        urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
+    (prn urls)
+    (doall
+     (map #(harvest % "/tmp/vn") urls))))
+
+(defn copy-resource-table
+  "Copy records from vn_resources to resource_tmp table."
+  []
+  (let [sql "insert into resource_tmp (link, ipt) (select distinct(link), ipt from vn_resources where ipt = true)"]
+    (cartodb/query sql "vertnet" :api-key api-key)))
+
+
 
 (defn harvest-updated
   "Harvest updated records from supplied vector of resource urls and update
   resource table."
   [urls])
 
+;; (defn sync-resources
+;;   "Return new, updated, deleted resource urls."
+;;   [& {:keys [bootstrap] :or {bootstrap false}}]
+;;   (cartodb/query "delete from resource_tmp" "vertnet" :api-key api-key)
+;;   (if-not bootstrap
+;;     (copy-resource-table)) ;; copy rows from vn_resources to resource_tmp.
+;;   (let [resource-urls (resource-urls resource-table)
+;;         ;resources (map #(Resource. %) resource-urls)
+;;         ;insert-results (doall (map #(cdb-insert % "resource_tmp") resources))
+;;         new (map #(:link %) (sync-new resource-table "resource" "resource_tmp"))
+;;         updated (map #(:link %) (sync-updated resource-table "resource" "resource_tmp"))
+;;         deleted (map #(:link %) (sync-deleted resource-table "resource" "resource_tmp"))]
+;;     (doall
+;;       (map #(harvest-new % "/tmp/vn") new))))
+
+
 ;; TODO
+;; sink edges
+;;
 ;; get new/updated/deleted resources from CartoDB:
 ;; sink new/updated
 ;; sink edges!
 ;; figure out when to consolidate pail
+;;

@@ -129,7 +129,7 @@
 
 (defmethod create-dataset-id String
   [x]
-  (DatasetID/uuid x))
+  (DatasetID/guid x))
 
 (defmethod create-rec-id RecordSource
   [x]
@@ -317,7 +317,8 @@
 (defn dataset-data
   "Return generator of Data Thrift objects containing DatasetProperty values."
   [dataset]
-  (let [id (create-dataset-id (:title dataset))
+  (let [id (create-dataset-id (:guid dataset))
+        dataset (dissoc dataset :guid)
         props (dataset-properties id dataset)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)
@@ -387,13 +388,6 @@
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; API
-
 
 
 (comment
