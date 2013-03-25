@@ -26,6 +26,16 @@
   [obj]
   (->> obj .dataUnit .getFieldValue .getId .getFieldValue .getSourceID))
 
+(defn get-ResourceProperty-id
+  "Unapck ResourceProperty Data object and return ResourceID."
+  [obj]
+  (->> obj .dataUnit .getFieldValue .getId .getFieldValue))
+
+(defn get-DatasetProperty-id
+  "Unapck DatasetProperty Data object and return DatasetID."
+  [obj]
+  (->> obj .dataUnit .getFieldValue .getId .getFieldValue))
+
 (defn unpack-OrganizationProperty
   "Unpack OrganizationProperty Data object as far as OrganizationPropertyValue."
   [obj]

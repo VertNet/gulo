@@ -76,7 +76,8 @@
         [cartodb.utils :as cartodb-utils]
         [gulo.thrift :as t]
         [gulo.hadoop.pail :as p]
-        [dwca.core :as dwca])
+        [dwca.core :as dwca]
+        [gulo.views :as views])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.xml :as xml]
@@ -84,7 +85,8 @@
             [clojure.contrib.zip-filter.xml :as z])
   (:import [java.io File ByteArrayInputStream]
            [org.gbif.metadata.eml EmlFactory]
-           [org.json XML]))
+           [org.json XML]
+           [gulo.schema DatasetRecordEdge ResourceDatasetEdge ResourceOrganizationEdge]))
 
 ;; Slurps resources/creds.json for CartoDB creds:
 (def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
@@ -100,28 +102,40 @@
 
   Args:
     pail: String path to root pail directory.
-    resource: {:creator :author :emlUrl :guid :title :url :pubDate :publisher
+    resource: {:creator :author :eml :guid :title :orgurl :pubDate :publisher
                :description :dwcaUrl}                            
     dataset: {:title :creator :metadataProvider :language :associatedParty
-              :pubDate :contact :additionalInfo}
+              :pubDate :contact :additionalInfo :guid}
     organization: {:primaryContactType :nodeName :primaryContactDescription :key
                    :name :primaryContactAddress :primaryContactName :nameLanguage
                    :primaryContactPhone :homepageURL :descriptionLanguage
                    :description :nodeKey :nodeContactEmail :primaryContactEmail}"
   [pail resource dataset organization]
-  (let [resource-data (t/resource-data resource) ;; ResourceProperty
-        resource-id "" ;; TODO
-        resource-q (<- [?d] (resource-data ?d))
-        dataset-data (t/dataset-data dataset) ;; DatasetProperty
-        dataset-id "" ;; TODO
-        dataset-q (<- [?d] (dataset-data ?d))
-        organization-data (t/organization-data organization) ;; OrganizationProperty
-        organiation-id "" ;; TODO
-        organization-q (<- [?d] (organization-data ?d))]
-    (p/to-pail pail resource-q)
-    (p/to-pail pail dataset-q)
-    (p/to-pail pail organization-q)
+  (let [resource-data (t/resource-data resource)
+        resource-id (views/get-ResourceProperty-id (ffirst resource-data))
+        dataset-data (t/dataset-data dataset)
+        dataset-id (views/get-DatasetProperty-id (ffirst dataset-data))
+        organization-data (t/organization-data organization)
+        organization-id (views/get-OrganizationProperty-id organization-data)
+        resource-dataset-edge (ResourceDatasetEdge.
+                               (t/create-resource-id resource-id)
+                               (t/create-dataset-id dataset-id))
+        resource-organization-edge (ResourceOrganizationEdge.
+                                    (t/create-resource-id resource-id)
+                                    (t/create-organization-id organization-id))]
+    (p/to-pail pail resource-data)
+    (p/to-pail pail dataset-data)
+    (p/to-pail pail organization-data)
+    (p/to-pail pail [[resource-dataset-edge]])
+    (p/to-pail pail [[resource-organization-edge]])
     dataset-id))
+
+(defn mk-DatasetRecordEdge
+  [d dataset-id]
+  (->> (views/get-RecordProperty-id d)
+       (t/create-rec-id)
+       (DatasetRecordEdge. (t/create-dataset-id dataset-id))
+       (t/edge-data)))
 
 (defn sink-data
   "Sink all resource records to supplied pail."
@@ -133,8 +147,8 @@
         record-data (map (partial t/record-data dataset-guid) records)]
     (doall
      (for [d record-data]
-       (do
-         ;; TODO: create and sink RecordDatasetEdge
+       (do 
+         (p/to-pail pail [[(mk-DatasetRecordEdge d dataset-id)]])
          (p/to-pail pail (<- [?d] (d ?d))))))))
 
 (defprotocol IResourceTable

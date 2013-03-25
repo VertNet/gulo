@@ -385,6 +385,12 @@
         data (map #(Data. pedigree %) units)]
     (vec (map vector data))))
 
+(defn edge-data
+  [edge]
+  (let [data-unit (create-dataunit edge)
+        pedigree (Pedigree. (epoch))]
+    (Data. pedigree data-unit)))
+
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
