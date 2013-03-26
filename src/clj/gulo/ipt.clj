@@ -219,13 +219,11 @@
   "Return organization UUID scraped from GBIF registry page at supplied URL:
    http://gbrds.gbif.org/browse/agent?uuid={resource-uuid}"
   [url]
-  (prn "URL IS " url)
   (try
     (let [nodes (html/select (fetch-url url) [:div.listItem :a])
           urls (map #(html/attr-values % :href) nodes)
           path (first (first urls))
           uuid (second (s/split path #"="))]
-      (prn (format "path:%s uuid:%s urls:%s" path uuid urls))
       uuid)
     (catch Exception e
       (prn "Whoops can't get UUID for: " url)
@@ -274,7 +272,6 @@
       dataset))
   (get-organization
     [this]
-    (prn "DATASET " (get-dataset this))
     (let [dataset-guid (:guid (get-dataset this))
             dataset-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s"
                                 dataset-guid)
@@ -317,7 +314,6 @@
           dataset (get-dataset r)
           organization (get-organization r)
           dataset-id (sink-metadata path resource dataset organization)]
-      (prn organization)
       (sink-data path resource dataset-id))
     (catch Exception e
       (prn (format "Unable to harvest resource %s - %s" url e))
