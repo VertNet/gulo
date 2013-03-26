@@ -294,12 +294,15 @@
   "Harvest new records from supplied vector of resource urls and insert into
   resource table."
   [url path]
-  (let [r (Resource. url)
-        resource (get-props r)
-        dataset (get-dataset r)
-        organization (get-organization r)
-        dataset-id (sink-metadata path resource dataset organization)]
-    (sink-data path resource dataset-id)))
+  (try
+    (let [r (Resource. url)
+          resource (get-props r)
+          dataset (get-dataset r)
+          organization (get-organization r)
+          dataset-id (sink-metadata path resource dataset organization)]
+      (sink-data path resource dataset-id))
+    (catch Exception e
+      (prn (format "Unable to harvest resource %s - %s" url e)))))
 
 (defn harvest-all
   "Harvest all resource in vn-resources table."
