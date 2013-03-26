@@ -336,6 +336,7 @@
   [resource]
   {:pre  [(:guid resource)]}
   (let [id (create-resource-id (:url resource))
+        resource (dissoc resource :url)
         props (resource-properties id resource)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)
