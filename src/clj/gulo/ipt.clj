@@ -153,8 +153,7 @@
     (doall
      (for [d record-data]
        (do
-         (->> (views/get-RecordProperty-id d)
-              #(p/to-pail pail [[(mk-DatasetRecordEdge-Data % dataset-id)]]))
+         (p/to-pail pail [[(mk-DatasetRecordEdge-Data (views/get-RecordProperty-id (ffirst d)) dataset-id)]])
          (p/to-pail pail (<- [?d] (d ?d))))))))
 
 (defprotocol IResourceTable
