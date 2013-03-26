@@ -142,6 +142,10 @@
     (p/to-pail pail [[(mk-ResourceOrganizationEdge-Data organization-id resource-id)]])
     dataset-id))
 
+(defn make-edge
+  [d dataset-id]
+  (mk-DatasetRecordEdge-Data (views/get-RecordProperty-id (ffirst d)) dataset-id))
+
 (defn sink-data
   "Sink all resource records to supplied pail."
   [pail resource dataset-id]
@@ -149,12 +153,21 @@
         dwca-url (:dwca resource)
         dwc-records (dwca/open dwca-url)
         records (map fields dwc-records)
-        record-data (map (partial t/record-data dataset-guid) records)]
-    (doall
-     (for [d record-data]
-       (do
-         (p/to-pail pail [[(mk-DatasetRecordEdge-Data (views/get-RecordProperty-id (ffirst d)) dataset-id)]])
-         (p/to-pail pail (<- [?d] (d ?d))))))))
+        record-data (map (partial t/record-data dataset-guid) records)
+        edges (map #(make-edge % dataset-id) record-data)
+        src (map vector (flatten record-data))
+        src (concat src edges)] 
+
+    ;; [[[data] [data]] [[data] [data]]] 
+    (do
+      (p/to-pail pail (<- [?d] (src ?d))))))
+;; [data] [data]]
+;; [data data data] (map vector 
+    ;; (doall
+    ;;  (for [d record-data]
+    ;;    (do
+    ;;      (p/to-pail pail [[(make-edge d dataset-id)]]) ;; d = [[data] [data]]
+    ;;      (p/to-pail pail (<- [?d] (d ?d))))))))
 
 (defn eml->dataset
   "Return DatasetPropertyValue map from supplied org.gbif.metadata.eml.Eml obj."
