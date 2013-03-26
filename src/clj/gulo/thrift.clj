@@ -335,7 +335,7 @@
   "Return generator of Data Thrift objects containing ResourceProperty values."
   [resource]
   {:pre  [(:guid resource)]}
-  (let [id (create-resource-id (:guid resource))
+  (let [id (create-resource-id (:url resource))
         props (resource-properties id resource)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)

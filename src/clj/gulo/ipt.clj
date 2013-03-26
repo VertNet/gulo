@@ -318,6 +318,7 @@
           guid (:content (:guid resource))
           resource (dissoc resource :guid)
           resource (assoc resource :guid guid)
+          resource (assoc resource :url url)
           [keys vals] (apply zip resource)
           keys (map #(keyword (s/lower-case (last (s/split (name %) #":")))) keys)
           resource (zipmap keys vals)]
@@ -387,8 +388,6 @@
   []
   (let [sql "insert into resource_tmp (link, ipt) (select distinct(link), ipt from vn_resources where ipt = true)"]
     (cartodb/query sql "vertnet" :api-key api-key)))
-
-
 
 (defn harvest-updated
   "Harvest updated records from supplied vector of resource urls and update
