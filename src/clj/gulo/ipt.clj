@@ -312,9 +312,10 @@
     (let [r (Resource. url)
           resource (get-props r)
           dataset (get-dataset r)
-          organization (get-organization r)
-          dataset-id (sink-metadata path resource dataset organization)]
-      (sink-data path resource dataset-id))
+          organization (get-organization r)]
+      (if (nil? (:guid resource))
+        (prn (format "Invalid resource (no guid)"))
+        (sink-data path resource (sink-metadata path resource dataset organization))))
     (catch Exception e
       (prn (format "Unable to harvest resource %s - %s" url e))
       nil)))
