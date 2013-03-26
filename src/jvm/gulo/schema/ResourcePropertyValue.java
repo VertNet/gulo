@@ -42,7 +42,7 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
   private static final org.apache.thrift.protocol.TField PUBLISHER_FIELD_DESC = new org.apache.thrift.protocol.TField("publisher", org.apache.thrift.protocol.TType.STRING, (short)6);
   private static final org.apache.thrift.protocol.TField CREATOR_FIELD_DESC = new org.apache.thrift.protocol.TField("creator", org.apache.thrift.protocol.TType.STRING, (short)7);
   private static final org.apache.thrift.protocol.TField DWCA_FIELD_DESC = new org.apache.thrift.protocol.TField("dwca", org.apache.thrift.protocol.TType.STRING, (short)8);
-  private static final org.apache.thrift.protocol.TField PUB_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("pubDate", org.apache.thrift.protocol.TType.STRING, (short)9);
+  private static final org.apache.thrift.protocol.TField PUBDATE_FIELD_DESC = new org.apache.thrift.protocol.TField("pubdate", org.apache.thrift.protocol.TType.STRING, (short)9);
   private static final org.apache.thrift.protocol.TField ORGURL_FIELD_DESC = new org.apache.thrift.protocol.TField("orgurl", org.apache.thrift.protocol.TType.STRING, (short)10);
   private static final org.apache.thrift.protocol.TField ORGCONTACT_FIELD_DESC = new org.apache.thrift.protocol.TField("orgcontact", org.apache.thrift.protocol.TType.STRING, (short)11);
   private static final org.apache.thrift.protocol.TField ORGNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("orgname", org.apache.thrift.protocol.TType.STRING, (short)12);
@@ -57,7 +57,7 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     PUBLISHER((short)6, "publisher"),
     CREATOR((short)7, "creator"),
     DWCA((short)8, "dwca"),
-    PUB_DATE((short)9, "pubDate"),
+    PUBDATE((short)9, "pubdate"),
     ORGURL((short)10, "orgurl"),
     ORGCONTACT((short)11, "orgcontact"),
     ORGNAME((short)12, "orgname");
@@ -91,8 +91,8 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           return CREATOR;
         case 8: // DWCA
           return DWCA;
-        case 9: // PUB_DATE
-          return PUB_DATE;
+        case 9: // PUBDATE
+          return PUBDATE;
         case 10: // ORGURL
           return ORGURL;
         case 11: // ORGCONTACT
@@ -157,7 +157,7 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.DWCA, new org.apache.thrift.meta_data.FieldMetaData("dwca", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PUB_DATE, new org.apache.thrift.meta_data.FieldMetaData("pubDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.PUBDATE, new org.apache.thrift.meta_data.FieldMetaData("pubdate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.ORGURL, new org.apache.thrift.meta_data.FieldMetaData("orgurl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
@@ -232,9 +232,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     return x;
   }
 
-  public static ResourcePropertyValue pubDate(String value) {
+  public static ResourcePropertyValue pubdate(String value) {
     ResourcePropertyValue x = new ResourcePropertyValue();
-    x.setPubDate(value);
+    x.setPubdate(value);
     return x;
   }
 
@@ -300,11 +300,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'dwca', but got " + value.getClass().getSimpleName());
-      case PUB_DATE:
+      case PUBDATE:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'pubDate', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'pubdate', but got " + value.getClass().getSimpleName());
       case ORGURL:
         if (value instanceof String) {
           break;
@@ -402,11 +402,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case PUB_DATE:
-          if (field.type == PUB_DATE_FIELD_DESC.type) {
-            String pubDate;
-            pubDate = iprot.readString();
-            return pubDate;
+        case PUBDATE:
+          if (field.type == PUBDATE_FIELD_DESC.type) {
+            String pubdate;
+            pubdate = iprot.readString();
+            return pubdate;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -481,9 +481,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String dwca = (String)value_;
         oprot.writeString(dwca);
         return;
-      case PUB_DATE:
-        String pubDate = (String)value_;
-        oprot.writeString(pubDate);
+      case PUBDATE:
+        String pubdate = (String)value_;
+        oprot.writeString(pubdate);
         return;
       case ORGURL:
         String orgurl = (String)value_;
@@ -539,10 +539,10 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           String dwca;
           dwca = iprot.readString();
           return dwca;
-        case PUB_DATE:
-          String pubDate;
-          pubDate = iprot.readString();
-          return pubDate;
+        case PUBDATE:
+          String pubdate;
+          pubdate = iprot.readString();
+          return pubdate;
         case ORGURL:
           String orgurl;
           orgurl = iprot.readString();
@@ -598,9 +598,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String dwca = (String)value_;
         oprot.writeString(dwca);
         return;
-      case PUB_DATE:
-        String pubDate = (String)value_;
-        oprot.writeString(pubDate);
+      case PUBDATE:
+        String pubdate = (String)value_;
+        oprot.writeString(pubdate);
         return;
       case ORGURL:
         String orgurl = (String)value_;
@@ -638,8 +638,8 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         return CREATOR_FIELD_DESC;
       case DWCA:
         return DWCA_FIELD_DESC;
-      case PUB_DATE:
-        return PUB_DATE_FIELD_DESC;
+      case PUBDATE:
+        return PUBDATE_FIELD_DESC;
       case ORGURL:
         return ORGURL_FIELD_DESC;
       case ORGCONTACT:
@@ -778,17 +778,17 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     value_ = value;
   }
 
-  public String getPubDate() {
-    if (getSetField() == _Fields.PUB_DATE) {
+  public String getPubdate() {
+    if (getSetField() == _Fields.PUBDATE) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'pubDate' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'pubdate' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setPubDate(String value) {
+  public void setPubdate(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.PUB_DATE;
+    setField_ = _Fields.PUBDATE;
     value_ = value;
   }
 
@@ -874,8 +874,8 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
   }
 
 
-  public boolean isSetPubDate() {
-    return setField_ == _Fields.PUB_DATE;
+  public boolean isSetPubdate() {
+    return setField_ == _Fields.PUBDATE;
   }
 
 

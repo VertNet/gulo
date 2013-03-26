@@ -283,9 +283,6 @@
   (let [type RecordPropertyValue]
     (partial create-union type)))
 
-
-
-
 (defn- organization-property-values
   [organization]
   (for [[k v] organization :when (not= v nil)]

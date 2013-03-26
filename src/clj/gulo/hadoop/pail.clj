@@ -49,15 +49,15 @@
 
 (defmethod property-target ResourceDatasetEdge
   [x]
-  ["prop" "ResourceDatasetEdge"])
+  ["edge" "ResourceDatasetEdge"])
 
 (defmethod property-target DatasetRecordEdge
   [x]
-  ["prop" "DatasetRecordEdge"])
+  ["edge" "DatasetRecordEdge"])
 
 (defmethod property-target ResourceOrganizationEdge
   [x]
-  ["prop" "ResourceOrganizationEdge"])
+  ["edge" "ResourceOrganizationEdge"])
 
 (defmethod property-target RecordProperty
   [x]
