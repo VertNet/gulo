@@ -307,6 +307,7 @@
   "Harvest new records from supplied vector of resource urls and insert into
   resource table."
   [url path]
+  (prn (format "Harvesting: %s" url))
   (try
     (let [r (Resource. url)
           resource (get-props r)
@@ -315,7 +316,8 @@
           dataset-id (sink-metadata path resource dataset organization)]
       (sink-data path resource dataset-id))
     (catch Exception e
-      (prn (format "Unable to harvest resource %s - %s" url e)))))
+      (prn (format "Unable to harvest resource %s - %s" url e))
+      nil)))
 
 (defn harvest-all
   "Harvest all resource in vn-resources table."
@@ -323,4 +325,5 @@
   (let [sql "select link from vn_resources where ipt=true"
         urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
     (doall
+     (prn (format "Harvesting %s resources" (count urls)))
      (map #(harvest % path) urls))))
