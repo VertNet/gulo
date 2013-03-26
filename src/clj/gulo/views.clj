@@ -19,27 +19,27 @@
 (defn unpack-RecordProperty
   "Unpack RecordProperty Data object as far as RecordPropertyValue struct."
   [obj]
-  (->> obj .dataUnit .getFieldValue .getValue .getFieldValue))
+  (->> obj .getDataUnit .getFieldValue .getValue .getFieldValue))
 
 (defn get-RecordProperty-id
   "Unpack RecordProperty Data object and return the SourceID."
   [obj]
-  (->> obj .dataUnit .getFieldValue .getId .getFieldValue .getSourceID))
+  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue .getSourceID))
 
 (defn get-ResourceProperty-id
   "Unapck ResourceProperty Data object and return ResourceID."
   [obj]
-  (->> obj .dataUnit .getFieldValue .getId .getFieldValue))
+  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue))
 
 (defn get-DatasetProperty-id
   "Unapck DatasetProperty Data object and return DatasetID."
   [obj]
-  (->> obj .dataUnit .getFieldValue .getId .getFieldValue))
+  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue))
 
 (defn unpack-OrganizationProperty
   "Unpack OrganizationProperty Data object as far as OrganizationPropertyValue."
   [obj]
-  (->> obj .dataUnit .getFieldValue))
+  (->> obj .getDataUnit .getFieldValue))
 
 (defn get-OrganizationProperty-id
   "Unpack OrganizationProperty Data object and return OrganizationProperty's UUID."

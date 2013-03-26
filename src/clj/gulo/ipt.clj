@@ -97,13 +97,31 @@
 ;; RSS feed URL for the VertNet IPT instance:
 (def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
+(defn mk-ResourceDatasetEdge-Data
+  [resource-id dataset-id]
+  (-> (t/create-resource-id resource-id)
+      (ResourceDatasetEdge. (t/create-dataset-id dataset-id))
+      (t/edge-data)))
+
+(defn mk-DatasetRecordEdge-Data
+  [dataset-id record-id]
+  (-> (t/create-dataset-id dataset-id)
+      (DatasetRecordEdge. (t/create-rec-id record-id))
+      (t/edge-data)))
+
+(defn mk-ResourceOrganizationEdge-Data
+  [organization-id resource-id]
+  (->> (t/create-organization-id organization-id)
+       (ResourceOrganizationEdge. (t/create-resource-id resource-id))
+       (t/edge-data)))
+
 (defn sink-metadata
   "Sinks metadata for supplied resource, dataset, and organization to a Pail.
 
   Args:
     pail: String path to root pail directory.
     resource: {:creator :author :eml :guid :title :orgurl :pubDate :publisher
-               :description :dwcaUrl}                            
+               :description :dwca}
     dataset: {:title :creator :metadataProvider :language :associatedParty
               :pubDate :contact :additionalInfo :guid}
     organization: {:primaryContactType :nodeName :primaryContactDescription :key
@@ -116,26 +134,13 @@
         dataset-data (t/dataset-data dataset)
         dataset-id (views/get-DatasetProperty-id (ffirst dataset-data))
         organization-data (t/organization-data organization)
-        organization-id (views/get-OrganizationProperty-id organization-data)
-        resource-dataset-edge (ResourceDatasetEdge.
-                               (t/create-resource-id resource-id)
-                               (t/create-dataset-id dataset-id))
-        resource-organization-edge (ResourceOrganizationEdge.
-                                    (t/create-resource-id resource-id)
-                                    (t/create-organization-id organization-id))]
+        organization-id (views/get-OrganizationProperty-id (ffirst organization-data))]
     (p/to-pail pail resource-data)
     (p/to-pail pail dataset-data)
     (p/to-pail pail organization-data)
-    (p/to-pail pail [[resource-dataset-edge]])
-    (p/to-pail pail [[resource-organization-edge]])
+    (p/to-pail pail [[(mk-ResourceDatasetEdge-Data resource-id dataset-id)]])
+    (p/to-pail pail [[(mk-ResourceOrganizationEdge-Data organization-id resource-id)]])
     dataset-id))
-
-(defn mk-DatasetRecordEdge
-  [d dataset-id]
-  (->> (views/get-RecordProperty-id d)
-       (t/create-rec-id)
-       (DatasetRecordEdge. (t/create-dataset-id dataset-id))
-       (t/edge-data)))
 
 (defn sink-data
   "Sink all resource records to supplied pail."
@@ -147,8 +152,9 @@
         record-data (map (partial t/record-data dataset-guid) records)]
     (doall
      (for [d record-data]
-       (do 
-         (p/to-pail pail [[(mk-DatasetRecordEdge d dataset-id)]])
+       (do
+         (->> (views/get-RecordProperty-id d)
+              #(p/to-pail pail [[(mk-DatasetRecordEdge-Data % dataset-id)]]))
          (p/to-pail pail (<- [?d] (d ?d))))))))
 
 (defprotocol IResourceTable
