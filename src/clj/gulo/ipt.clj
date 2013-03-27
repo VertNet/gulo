@@ -94,6 +94,14 @@
 ;; CartoDB API Key:
 (def api-key (:api_key cartodb-creds))
 
+(defn s3-pail-path
+  [s3path]
+  (let [s3creds (read-json (slurp (io/resource "aws.json")))
+        key (:access-key s3creds)
+        secret (:secret-key s3creds)
+        sink (format "s3n://%s:%s@%s" key secret s3path)]
+    sink))
+
 ;; RSS feed URL for the VertNet IPT instance:
 (def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
