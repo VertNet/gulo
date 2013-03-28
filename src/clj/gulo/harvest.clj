@@ -14,8 +14,14 @@
            [com.google.common.io Files]
            [com.google.common.base Charsets]))
 
+;; Slurps resources/creds.json for CartoDB creds:
+(def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
+
+;; CartoDB API Key:
+(def api-key (:api_key cartodb-creds))
+
 ;; Slurps resources/s3.json for Amazon S3: {"access-key" "secret-key"}
-(def s3-creds (read-json (slurp (io/resource "s3.json"))))
+(def s3-creds (read-json (slurp (io/resource "aws.json"))))
 
 (defn publishers
   "Return vector of maps containing :dwca_url, :inst_code, and :inst_name keys
@@ -23,6 +29,10 @@
   []
   (let [sql "SELECT archive_name, dwca_url, inst_code, inst_name FROM publishers"]
     (:rows (cartodb/query sql "vertnet" :api-version "v1"))))
+
+(defn- prepend-resource-name
+  [vals name]
+  (cons name vals))
 
 (defn- prepend-uuid
   "Prepend UUID to sequence of vals."
@@ -69,23 +79,49 @@
   [path names]
   (map #(file->s3 (str path % ".csv") (str "guloharvest/publishers/" %)) names))
 
-
 (defn archive->csv
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
-  [path publisher]
+  [path url]
   (try
-    (let [{:keys [dwca_url inst_code inst_name]} publisher
-          name (:archive_name publisher)
-          path (str path "/" name ".csv")
-          records (dwca/open dwca_url)
+    (let [resource-name (second (s/split url #"="))
+          path (format "%s/%s.csv" path resource-name)
+          archive-url (s/replace url "resource" "archive")
+          records (dwca/open archive-url)
           vals (map field-vals records)
-          vals (map prepend-uuid vals)
-          vals (map #(append-vals % inst_name inst_code) vals)
+          vals (map #(prepend-resource-name % resource-name) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
-      (with-open [f out]
-        (csv/write-csv f vals :separator \tab :quote \"))
+      (do
+        (with-open [f out]
+          (csv/write-csv f vals :separator \tab :quote \"))
+        (file->s3 path (format "vertnet/data/staging/%s" resource-name)))
       (prn "Done harvesting" name))
-    (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
+    (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
+
+(defn harvest-all
+  "Harvest all resource in vn-resources table."
+  [& {:keys [path] :or {path "/tmp/vn"}}]
+  (let [sql "select link from vn_resources where ipt=true"
+        urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
+    (doall
+     (prn (format "Harvesting %s resources" (count urls)))
+     (map #(archive->csv path %) urls))))
+
+;; (defn archive->csv
+;;   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
+;;   [path publisher]
+;;   (try
+;;     (let [{:keys [dwca_url inst_code inst_name]} publisher
+;;           name (:archive_name publisher)
+;;           path (str path "/" name ".csv")
+;;           records (dwca/open dwca_url)
+;;           vals (map field-vals records)
+;;           vals (map prepend-uuid vals)
+;;           vals (map #(append-vals % inst_name inst_code) vals)
+;;           out (io/writer (io/file path) :encoding "UTF-8")]
+;;       (with-open [f out]
+;;         (csv/write-csv f vals :separator \tab :quote \"))
+;;       (prn "Done harvesting" name))
+;;     (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
 
 (defn harvest
   "Harvest supplied map of publishers in parallel to CSV files at path."
