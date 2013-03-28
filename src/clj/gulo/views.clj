@@ -3,7 +3,15 @@
         [gulo.thrift :as t]
         [gulo.hadoop.pail :as p])
   (:require [cascalog.ops :as c])
-  (:import [backtype.hadoop.pail Pail]))
+  (:import [backtype.hadoop.pail Pail])
+  (:import [gulo.schema
+            Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
+            DatasetRecordEdge Event GeologicalContext Identification Location
+            MeasurementOrFact Occurrence OrganizationPropertyValue
+            OrganizationID OrganizationProperty Pedigree RecordID RecordLevel
+            RecordProperty RecordPropertyValue RecordSource ResourceID
+            ResourceDatasetEdge ResourceOrganizationEdge
+            ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]))
 
 (def stats-paths
   {:total-records ["prop" "RecordProperty" "Occurrence"]
@@ -15,11 +23,6 @@
    ;;   :downloaded-last-30-days ["prop"]
    ;;   :datasets-last-30-days ["prop"]
    })
-
-(defn unpack-RecordProperty
-  "Unpack RecordProperty Data object as far as RecordPropertyValue struct."
-  [obj]
-  (->> obj .getDataUnit .getFieldValue .getValue .getFieldValue))
 
 (defn get-RecordProperty-id
   "Unpack RecordProperty Data object and return the SourceID."
@@ -54,25 +57,25 @@
 (defn get-country
   "Unpack Data thrift object and return RecordProperty's country."
   [obj]
-  (.getCountry (unpack-RecordProperty obj)))
+  (.getCountry (t/unpack-RecordProperty obj)))
 
 (defn get-scientific-name
   "Unpack Data thrift object and return RecordProperty's scientific
   name."
   [obj]
-  (.getScientificName (unpack-RecordProperty obj)))
+  (.getScientificName (t/unpack-RecordProperty obj)))
 
 (defn get-collection-code
   "Unpack Data thrift object and return RecordProperty's collection
   code."
   [obj]
-  (.getCollectionCode (unpack-RecordProperty obj)))
+  (.getCollectionCode (t/unpack-RecordProperty obj)))
 
 (defn get-class
   "Unpack Data thrift object and return RecordProperty's taxonomic
   class."
   [obj]
-  (.getClazz (unpack-RecordProperty obj)))
+  (.getClazz (t/unpack-RecordProperty obj)))
 
 (defn get-unique-sci-names
   "Unpack RecordPropertyValue Data objects and return unique
@@ -177,3 +180,57 @@
     (<- [?class ?count]
         (uniques ?id ?class)
         (c/count ?count))))
+
+(defn get-most-recent-fields
+  "Return the unpacked fields from the most recent RecordProperty object."
+  [tuples]
+  (let [max-time (apply max (map first tuples))
+        f #(= max-time (first %))
+        newest (last (first (filter f tuples)))
+        rec-prop-val (t/unpack-RecordProperty newest)]
+    [(t/unpack* rec-prop-val)]))
+
+(defbufferop wrap-get-most-recent-fields
+  "Wrapper for `get-most-recent fields`"
+  [tuples]
+  (get-most-recent-fields tuples))
+
+(defn keep-most-recent
+  "Query unpacks Data objects, determines which object of each
+   RecordProperty class is most recent, and returns that object's
+   RecordProperty fields."
+  [src]
+  (<- [?id ?class-str ?fields]
+      (src _ ?data)
+      (t/unpack ?data :> ?pedigree _)
+      (get-RecordProperty-id ?data :> ?id)
+      (t/unpack ?pedigree :> ?time)
+      (wrap-get-most-recent-fields ?time ?data :> ?fields)
+      (unpack-RecordProperty ?data :> ?prop)
+      (class ?prop :> ?class)
+      (str ?class :> ?class-str)))
+
+(defn concat-fields
+  "Flattens multiple tuples into a single vector. Intended for use with
+   tuples coming in from a `defbufferop`.
+
+   Usage:
+     (concat-fields [[1 2 3] [4 5 6]])
+     ;=> [[[1 2 3 4 5 6]]]"
+  [tuples]
+  [[(vec (flatten tuples))]])
+
+(defbufferop wrap-concat-fields
+  "Wraps `concat-fields`."
+  [tuples]
+  (concat-fields tuples))
+
+(defn concat-fields-query
+  "Concatenate fields from various RecordProperty Data objects for each
+   record (based on record id)."
+  [pail-path dirs]
+  (let [src (p/split-chunk-tap pail-path dirs)
+        newest-src (keep-most-recent src)]
+    (<- [?id ?all-fields]
+        (newest-src ?id ?class ?fields)
+        (wrap-concat-fields ?fields :> ?all-fields))))
