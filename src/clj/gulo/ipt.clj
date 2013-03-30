@@ -235,7 +235,7 @@
           uuid (second (s/split path #"="))]
       uuid)
     (catch Exception e
-      (prn "Whoops can't get UUID for: " url)
+      (prn "Unable to get organization UUID for: " url)
       nil)))
 
 (defn uuid->organization
@@ -245,7 +245,7 @@
     (let [url (format "http://gbrds.gbif.org/registry/organisation/%s.json" uuid)]
       (read-json (slurp (io/input-stream url))))
     (catch Exception e
-      (prn "Whoops no org for UUID: " uuid)
+      (prn (format "Unable to get organization from UUID: %s" uuid))
       nil)))
 
 (defprotocol IResource
@@ -281,7 +281,8 @@
       dataset))
   (get-organization
     [this]
-    (let [dataset-guid (:guid (get-dataset this))
+    (let [dataset (get-dataset this)
+          dataset-guid (:guid dataset)
             dataset-url (format "http://gbrds.gbif.org/browse/agent?uuid=%s"
                                 dataset-guid)
             uuid (get-org-uuid dataset-url)
@@ -325,9 +326,8 @@
           props (map #(% resource) [:pubdate :link :eml :dwca :guid :title])
           props (concat props (map #(% organization) [:key :name :homepageURL]))
           props (vec (flatten props))]
-      (prn props)
-      (if (nil? (:guid resource))
-        (prn (format "Invalid resource (no guid)"))
+      (if (or (nil? (:guid resource)) (nil? organization))
+        (prn (format "Invalid resource (no GUID)."))
         (harvest/archive->csv path url props)
         ;(sink-data path resource (sink-metadata path resource dataset
         ;organization))

@@ -85,6 +85,7 @@
 (defn archive->csv
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
   [path url props]
+  (prn (format "Downloading: %s" url))
   (try
     (let [resource-name (second (s/split url #"="))
           path (format "%s/%s.csv" path resource-name)
@@ -94,10 +95,12 @@
           vals (map #(prepend-props % props) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
       (do
+        (prn (format "Writing to %s" path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
+        (prn (format "Uploading %s to S3..." path resource-name))
         (file->s3 path (format "vertnet/data/staging/%s" resource-name)))
-      (prn "Done harvesting" name))
+      (prn "Done harvesting" resource-name))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
 (defn harvest-all
