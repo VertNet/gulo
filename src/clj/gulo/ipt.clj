@@ -180,17 +180,19 @@
 
 (defn eml->dataset
   "Return DatasetPropertyValue map from supplied org.gbif.metadata.eml.Eml obj."
-  [eml]  
-  {:title (.getTitle eml)
-   :creator (.getCreatorEmail eml)
-   :metadataProvider (.getEmail (.getMetadataProvider eml))
-   :language (.getLanguage eml)
-   :associatedParty (reduce #(str %1 "," %2)
-                            (for [x (.getAssociatedParties eml)] (.getEmail x)))
-   :pubDate (.toString (.getPubDate eml))
-   :contact (.getEmail (.getContact eml))
-   :additionalInfo (.getAdditionalInfo eml)
-   :guid (.getGuid eml)})
+  [eml]
+  (let [parties (.getAssociatedParties eml)
+        parties-emails (for [x parties :when x] (.getEmail x))
+        ap (if (empty? parties-emails) "" (reduce #(str %1 "," %2) parties-emails))]
+    {:title (.getTitle eml)
+     :creator (.getCreatorEmail eml)
+     :metadataProvider (.getEmail (.getMetadataProvider eml))
+     :language (.getLanguage eml)
+     :associatedParty ap
+     :pubDate (.toString (.getPubDate eml))
+     :contact (.getEmail (.getContact eml))
+     :additionalInfo (.getAdditionalInfo eml)
+     :guid (.getGuid eml)}))
 
 (defn xml->map
   "Return map representation of supplied XML string."
