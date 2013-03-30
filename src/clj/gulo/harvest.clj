@@ -8,7 +8,8 @@
         [clojure.data.csv :as csv]
         [clojure.java.io :as io])
   (:require [clojure.string :as s]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [clojure.zip :as zip])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [com.google.common.io Files]
@@ -23,6 +24,8 @@
 ;; Slurps resources/s3.json for Amazon S3: {"access-key" "secret-key"}
 (def s3-creds (read-json (slurp (io/resource "aws.json"))))
 
+(def zip (partial map vector))
+
 (defn publishers
   "Return vector of maps containing :dwca_url, :inst_code, and :inst_name keys
   for each publisher in the publishers CartoDB table."
@@ -30,9 +33,9 @@
   (let [sql "SELECT archive_name, dwca_url, inst_code, inst_name FROM publishers"]
     (:rows (cartodb/query sql "vertnet" :api-version "v1"))))
 
-(defn- prepend-resource-name
-  [vals name]
-  (cons name vals))
+(defn- prepend-props
+  [vals props]
+  (concat props vals))
 
 (defn- prepend-uuid
   "Prepend UUID to sequence of vals."
@@ -81,14 +84,14 @@
 
 (defn archive->csv
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
-  [path url]
+  [path url props]
   (try
     (let [resource-name (second (s/split url #"="))
           path (format "%s/%s.csv" path resource-name)
           archive-url (s/replace url "resource" "archive")
           records (dwca/open archive-url)
           vals (map field-vals records)
-          vals (map #(prepend-resource-name % resource-name) vals)
+          vals (map #(prepend-props % props) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
       (do
         (with-open [f out]

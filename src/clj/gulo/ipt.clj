@@ -76,6 +76,7 @@
         [cartodb.utils :as cartodb-utils]
         [gulo.thrift :as t]
         [gulo.hadoop.pail :as p]
+        [gulo.harvest :as harvest :only (archive->csv)]
         [dwca.core :as dwca]
         [gulo.views :as views])
   (:require [clojure.string :as s]
@@ -320,13 +321,22 @@
     (let [r (Resource. url)
           resource (get-props r)
           dataset (get-dataset r)
-          organization (get-organization r)]
+          organization (get-organization r)
+          props (map #(% resource) [:pubdate :link :eml :dwca :guid :title])
+          props (concat props (map #(% organization) [:key :name :homepageURL]))
+          props (vec (flatten props))]
+      (prn props)
       (if (nil? (:guid resource))
         (prn (format "Invalid resource (no guid)"))
-        (sink-data path resource (sink-metadata path resource dataset organization))))
+        (harvest/archive->csv path url props)
+        ;(sink-data path resource (sink-metadata path resource dataset
+        ;organization))
+        ))
     (catch Exception e
       (prn (format "Unable to harvest resource %s - %s" url e))
       nil)))
+
+;; r.pubdate, r.link. r.eml, r.dwca, r.guid, r.title, o.key, o.name, o.homepageURL
 
 (defn harvest-all
   "Harvest all resource in vn-resources table."
