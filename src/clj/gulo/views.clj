@@ -1,7 +1,8 @@
 (ns gulo.views
   (:use [cascalog.api]
         [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p])
+        [gulo.hadoop.pail :as p]
+        [gulo.util :as u])
   (:require [cascalog.ops :as c])
   (:import [backtype.hadoop.pail Pail]))
 
@@ -104,10 +105,9 @@
   "Unpack RecordProperty Data object and return unique collection-code
   and id tuples."
   [src]
-  (<- [?coll-code ?id]
-      (src _ ?obj)
-      (get-collection-code ?obj :> ?coll-code)
-      (get-RecordProperty-id ?obj :> ?id)
+  (<- [?collectioncode ?id]
+      (src ?line)
+      (u/splitline ?line :>> u/harvest-fields)
       (:distinct true)))
 
 (defn get-unique-by-occ-class
