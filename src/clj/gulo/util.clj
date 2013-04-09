@@ -95,7 +95,7 @@
    "?namepublishedinid" "?taxonomicstatus" "?nomenclaturalstatus" "?nameaccordingto"
    "?nameaccordingtoid" "?parentnameusageid" "?parentnameusage" "?originalnameusageid"
    "?originalnameusage" "?acceptednameusageid" "?acceptednameusage" "?taxonremarks"
-   "?dynamicproperties" "?namepublishedinyear"])
+   "?dynamicproperties" "?namepublishedinyear" "?dummy"])
 
 ;; Ordered vector of occ table column names for use in wide Cascalog sources:
 (def rec-fields ["?occ-id" "?id" "?associatedmedia" "?associatedoccurrences"
