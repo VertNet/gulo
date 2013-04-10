@@ -84,7 +84,7 @@
 
 (defn archive->csv
   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
-  [path url props]
+  [path url props & {:keys [s3] :or {s3 false}}]
   (prn (format "Downloading: %s" url))
   (try
     (let [resource-name (second (s/split url #"="))
@@ -93,13 +93,16 @@
           records (dwca/open archive-url)
           vals (map field-vals records)
           vals (map #(prepend-props % props) vals)
+          vals (map #(concat % [";"]) vals)
           out (io/writer (io/file path) :encoding "UTF-8")]
       (do
         (prn (format "Writing to %s" path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
-        (prn (format "Uploading %s to S3..." path resource-name))
-        (file->s3 path (format "vertnet/data/staging/%s" resource-name))
+        (if s3
+          (do
+            (prn (format "Uploading %s to S3..." path resource-name))
+            (file->s3 path (format "vertnet/data/staging/%s" resource-name))))
         (prn "Done harvesting" resource-name)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
@@ -111,23 +114,6 @@
     (doall
      (prn (format "Harvesting %s resources" (count urls)))
      (map #(archive->csv path %) urls))))
-
-;; (defn archive->csv
-;;   "Convert publisher Darwin Core Archive to tab delineated file at supplied path."
-;;   [path publisher]
-;;   (try
-;;     (let [{:keys [dwca_url inst_code inst_name]} publisher
-;;           name (:archive_name publisher)
-;;           path (str path "/" name ".csv")
-;;           records (dwca/open dwca_url)
-;;           vals (map field-vals records)
-;;           vals (map prepend-uuid vals)
-;;           vals (map #(append-vals % inst_name inst_code) vals)
-;;           out (io/writer (io/file path) :encoding "UTF-8")]
-;;       (with-open [f out]
-;;         (csv/write-csv f vals :separator \tab :quote \"))
-;;       (prn "Done harvesting" name))
-;;     (catch Exception e (prn "Error harvesting" publisher (.getMessage e)))))
 
 (defn harvest
   "Harvest supplied map of publishers in parallel to CSV files at path."
