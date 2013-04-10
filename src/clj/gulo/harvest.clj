@@ -102,7 +102,7 @@
         (if s3
           (do
             (prn (format "Uploading %s to S3..." path resource-name))
-            (file->s3 path (format "vertnet/data/staging/%s" resource-name))))
+            (file->s3 path (format "vnproject/data/staging/%s" resource-name))))
         (prn "Done harvesting" resource-name)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
