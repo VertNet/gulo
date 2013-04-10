@@ -1,3 +1,0 @@
-hi
-hey
-PATH=/home/eightysteele/.rvm/gems/ruby-1.8.7-p371/bin:/home/eightysteele/.rvm/gems/ruby-1.8.7-p371@global/bin:/home/eightysteele/.rvm/rubies/ruby-1.8.7-p371/bin:/home/eightysteele/.rvm/bin:/home/eightysteele/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/eightysteele/bin:/home/eightysteele/bin/elastic-mapreduce:/home/eightysteele/bin/SublimeText2:/home/eightysteele/bin/mongodb:/home/eightysteele/bin/google_appengine:/home/eightysteele/bin/gsutil:~/bin
