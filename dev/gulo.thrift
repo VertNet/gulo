@@ -322,14 +322,17 @@ union ResourceID {
  */
 union ResourcePropertyValue {
   1: string title;
-  2: string url;
+  2: string link;
   3: string description;
   4: string author;
-  5: string emlUrl;
+  5: string eml;
   6: string publisher;
   7: string creator;
-  8: string dwcaUrl;
-  9: string pubDate;
+  8: string dwca;
+  9: string pubdate;
+  10: string orgurl;
+  11: string orgcontact;
+  12: string orgname;
 }
 
 /**
@@ -342,11 +345,11 @@ struct ResourceProperty {
 }
 
 /**
- * The DatasetID node uniquely identifies a Dataset. The UUID is the same as the
+ * The DatasetID node uniquely identifies a Dataset. The GUID is the same as the
  * Resource UUID.
  */
 union DatasetID {
-  1: string uuid;
+  1: string guid;
 }
 
 /**

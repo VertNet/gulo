@@ -35,26 +35,32 @@ import org.slf4j.LoggerFactory;
 public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourcePropertyValue, ResourcePropertyValue._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ResourcePropertyValue");
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField URL_FIELD_DESC = new org.apache.thrift.protocol.TField("url", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField LINK_FIELD_DESC = new org.apache.thrift.protocol.TField("link", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField AUTHOR_FIELD_DESC = new org.apache.thrift.protocol.TField("author", org.apache.thrift.protocol.TType.STRING, (short)4);
-  private static final org.apache.thrift.protocol.TField EML_URL_FIELD_DESC = new org.apache.thrift.protocol.TField("emlUrl", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField EML_FIELD_DESC = new org.apache.thrift.protocol.TField("eml", org.apache.thrift.protocol.TType.STRING, (short)5);
   private static final org.apache.thrift.protocol.TField PUBLISHER_FIELD_DESC = new org.apache.thrift.protocol.TField("publisher", org.apache.thrift.protocol.TType.STRING, (short)6);
   private static final org.apache.thrift.protocol.TField CREATOR_FIELD_DESC = new org.apache.thrift.protocol.TField("creator", org.apache.thrift.protocol.TType.STRING, (short)7);
-  private static final org.apache.thrift.protocol.TField DWCA_URL_FIELD_DESC = new org.apache.thrift.protocol.TField("dwcaUrl", org.apache.thrift.protocol.TType.STRING, (short)8);
-  private static final org.apache.thrift.protocol.TField PUB_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("pubDate", org.apache.thrift.protocol.TType.STRING, (short)9);
+  private static final org.apache.thrift.protocol.TField DWCA_FIELD_DESC = new org.apache.thrift.protocol.TField("dwca", org.apache.thrift.protocol.TType.STRING, (short)8);
+  private static final org.apache.thrift.protocol.TField PUBDATE_FIELD_DESC = new org.apache.thrift.protocol.TField("pubdate", org.apache.thrift.protocol.TType.STRING, (short)9);
+  private static final org.apache.thrift.protocol.TField ORGURL_FIELD_DESC = new org.apache.thrift.protocol.TField("orgurl", org.apache.thrift.protocol.TType.STRING, (short)10);
+  private static final org.apache.thrift.protocol.TField ORGCONTACT_FIELD_DESC = new org.apache.thrift.protocol.TField("orgcontact", org.apache.thrift.protocol.TType.STRING, (short)11);
+  private static final org.apache.thrift.protocol.TField ORGNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("orgname", org.apache.thrift.protocol.TType.STRING, (short)12);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TITLE((short)1, "title"),
-    URL((short)2, "url"),
+    LINK((short)2, "link"),
     DESCRIPTION((short)3, "description"),
     AUTHOR((short)4, "author"),
-    EML_URL((short)5, "emlUrl"),
+    EML((short)5, "eml"),
     PUBLISHER((short)6, "publisher"),
     CREATOR((short)7, "creator"),
-    DWCA_URL((short)8, "dwcaUrl"),
-    PUB_DATE((short)9, "pubDate");
+    DWCA((short)8, "dwca"),
+    PUBDATE((short)9, "pubdate"),
+    ORGURL((short)10, "orgurl"),
+    ORGCONTACT((short)11, "orgcontact"),
+    ORGNAME((short)12, "orgname");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -71,22 +77,28 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
       switch(fieldId) {
         case 1: // TITLE
           return TITLE;
-        case 2: // URL
-          return URL;
+        case 2: // LINK
+          return LINK;
         case 3: // DESCRIPTION
           return DESCRIPTION;
         case 4: // AUTHOR
           return AUTHOR;
-        case 5: // EML_URL
-          return EML_URL;
+        case 5: // EML
+          return EML;
         case 6: // PUBLISHER
           return PUBLISHER;
         case 7: // CREATOR
           return CREATOR;
-        case 8: // DWCA_URL
-          return DWCA_URL;
-        case 9: // PUB_DATE
-          return PUB_DATE;
+        case 8: // DWCA
+          return DWCA;
+        case 9: // PUBDATE
+          return PUBDATE;
+        case 10: // ORGURL
+          return ORGURL;
+        case 11: // ORGCONTACT
+          return ORGCONTACT;
+        case 12: // ORGNAME
+          return ORGNAME;
         default:
           return null;
       }
@@ -131,21 +143,27 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.URL, new org.apache.thrift.meta_data.FieldMetaData("url", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.LINK, new org.apache.thrift.meta_data.FieldMetaData("link", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.AUTHOR, new org.apache.thrift.meta_data.FieldMetaData("author", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.EML_URL, new org.apache.thrift.meta_data.FieldMetaData("emlUrl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.EML, new org.apache.thrift.meta_data.FieldMetaData("eml", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.PUBLISHER, new org.apache.thrift.meta_data.FieldMetaData("publisher", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.CREATOR, new org.apache.thrift.meta_data.FieldMetaData("creator", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DWCA_URL, new org.apache.thrift.meta_data.FieldMetaData("dwcaUrl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.DWCA, new org.apache.thrift.meta_data.FieldMetaData("dwca", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PUB_DATE, new org.apache.thrift.meta_data.FieldMetaData("pubDate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.PUBDATE, new org.apache.thrift.meta_data.FieldMetaData("pubdate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ORGURL, new org.apache.thrift.meta_data.FieldMetaData("orgurl", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ORGCONTACT, new org.apache.thrift.meta_data.FieldMetaData("orgcontact", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ORGNAME, new org.apache.thrift.meta_data.FieldMetaData("orgname", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResourcePropertyValue.class, metaDataMap);
@@ -172,9 +190,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     return x;
   }
 
-  public static ResourcePropertyValue url(String value) {
+  public static ResourcePropertyValue link(String value) {
     ResourcePropertyValue x = new ResourcePropertyValue();
-    x.setUrl(value);
+    x.setLink(value);
     return x;
   }
 
@@ -190,9 +208,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     return x;
   }
 
-  public static ResourcePropertyValue emlUrl(String value) {
+  public static ResourcePropertyValue eml(String value) {
     ResourcePropertyValue x = new ResourcePropertyValue();
-    x.setEmlUrl(value);
+    x.setEml(value);
     return x;
   }
 
@@ -208,15 +226,33 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     return x;
   }
 
-  public static ResourcePropertyValue dwcaUrl(String value) {
+  public static ResourcePropertyValue dwca(String value) {
     ResourcePropertyValue x = new ResourcePropertyValue();
-    x.setDwcaUrl(value);
+    x.setDwca(value);
     return x;
   }
 
-  public static ResourcePropertyValue pubDate(String value) {
+  public static ResourcePropertyValue pubdate(String value) {
     ResourcePropertyValue x = new ResourcePropertyValue();
-    x.setPubDate(value);
+    x.setPubdate(value);
+    return x;
+  }
+
+  public static ResourcePropertyValue orgurl(String value) {
+    ResourcePropertyValue x = new ResourcePropertyValue();
+    x.setOrgurl(value);
+    return x;
+  }
+
+  public static ResourcePropertyValue orgcontact(String value) {
+    ResourcePropertyValue x = new ResourcePropertyValue();
+    x.setOrgcontact(value);
+    return x;
+  }
+
+  public static ResourcePropertyValue orgname(String value) {
+    ResourcePropertyValue x = new ResourcePropertyValue();
+    x.setOrgname(value);
     return x;
   }
 
@@ -229,11 +265,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'title', but got " + value.getClass().getSimpleName());
-      case URL:
+      case LINK:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'url', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'link', but got " + value.getClass().getSimpleName());
       case DESCRIPTION:
         if (value instanceof String) {
           break;
@@ -244,11 +280,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'author', but got " + value.getClass().getSimpleName());
-      case EML_URL:
+      case EML:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'emlUrl', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'eml', but got " + value.getClass().getSimpleName());
       case PUBLISHER:
         if (value instanceof String) {
           break;
@@ -259,16 +295,31 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           break;
         }
         throw new ClassCastException("Was expecting value of type String for field 'creator', but got " + value.getClass().getSimpleName());
-      case DWCA_URL:
+      case DWCA:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'dwcaUrl', but got " + value.getClass().getSimpleName());
-      case PUB_DATE:
+        throw new ClassCastException("Was expecting value of type String for field 'dwca', but got " + value.getClass().getSimpleName());
+      case PUBDATE:
         if (value instanceof String) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type String for field 'pubDate', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type String for field 'pubdate', but got " + value.getClass().getSimpleName());
+      case ORGURL:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'orgurl', but got " + value.getClass().getSimpleName());
+      case ORGCONTACT:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'orgcontact', but got " + value.getClass().getSimpleName());
+      case ORGNAME:
+        if (value instanceof String) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type String for field 'orgname', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -288,11 +339,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case URL:
-          if (field.type == URL_FIELD_DESC.type) {
-            String url;
-            url = iprot.readString();
-            return url;
+        case LINK:
+          if (field.type == LINK_FIELD_DESC.type) {
+            String link;
+            link = iprot.readString();
+            return link;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -315,11 +366,11 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case EML_URL:
-          if (field.type == EML_URL_FIELD_DESC.type) {
-            String emlUrl;
-            emlUrl = iprot.readString();
-            return emlUrl;
+        case EML:
+          if (field.type == EML_FIELD_DESC.type) {
+            String eml;
+            eml = iprot.readString();
+            return eml;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -342,20 +393,47 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case DWCA_URL:
-          if (field.type == DWCA_URL_FIELD_DESC.type) {
-            String dwcaUrl;
-            dwcaUrl = iprot.readString();
-            return dwcaUrl;
+        case DWCA:
+          if (field.type == DWCA_FIELD_DESC.type) {
+            String dwca;
+            dwca = iprot.readString();
+            return dwca;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case PUB_DATE:
-          if (field.type == PUB_DATE_FIELD_DESC.type) {
-            String pubDate;
-            pubDate = iprot.readString();
-            return pubDate;
+        case PUBDATE:
+          if (field.type == PUBDATE_FIELD_DESC.type) {
+            String pubdate;
+            pubdate = iprot.readString();
+            return pubdate;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ORGURL:
+          if (field.type == ORGURL_FIELD_DESC.type) {
+            String orgurl;
+            orgurl = iprot.readString();
+            return orgurl;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ORGCONTACT:
+          if (field.type == ORGCONTACT_FIELD_DESC.type) {
+            String orgcontact;
+            orgcontact = iprot.readString();
+            return orgcontact;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case ORGNAME:
+          if (field.type == ORGNAME_FIELD_DESC.type) {
+            String orgname;
+            orgname = iprot.readString();
+            return orgname;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -375,9 +453,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String title = (String)value_;
         oprot.writeString(title);
         return;
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
+      case LINK:
+        String link = (String)value_;
+        oprot.writeString(link);
         return;
       case DESCRIPTION:
         String description = (String)value_;
@@ -387,9 +465,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String author = (String)value_;
         oprot.writeString(author);
         return;
-      case EML_URL:
-        String emlUrl = (String)value_;
-        oprot.writeString(emlUrl);
+      case EML:
+        String eml = (String)value_;
+        oprot.writeString(eml);
         return;
       case PUBLISHER:
         String publisher = (String)value_;
@@ -399,13 +477,25 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String creator = (String)value_;
         oprot.writeString(creator);
         return;
-      case DWCA_URL:
-        String dwcaUrl = (String)value_;
-        oprot.writeString(dwcaUrl);
+      case DWCA:
+        String dwca = (String)value_;
+        oprot.writeString(dwca);
         return;
-      case PUB_DATE:
-        String pubDate = (String)value_;
-        oprot.writeString(pubDate);
+      case PUBDATE:
+        String pubdate = (String)value_;
+        oprot.writeString(pubdate);
+        return;
+      case ORGURL:
+        String orgurl = (String)value_;
+        oprot.writeString(orgurl);
+        return;
+      case ORGCONTACT:
+        String orgcontact = (String)value_;
+        oprot.writeString(orgcontact);
+        return;
+      case ORGNAME:
+        String orgname = (String)value_;
+        oprot.writeString(orgname);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -421,10 +511,10 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           String title;
           title = iprot.readString();
           return title;
-        case URL:
-          String url;
-          url = iprot.readString();
-          return url;
+        case LINK:
+          String link;
+          link = iprot.readString();
+          return link;
         case DESCRIPTION:
           String description;
           description = iprot.readString();
@@ -433,10 +523,10 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           String author;
           author = iprot.readString();
           return author;
-        case EML_URL:
-          String emlUrl;
-          emlUrl = iprot.readString();
-          return emlUrl;
+        case EML:
+          String eml;
+          eml = iprot.readString();
+          return eml;
         case PUBLISHER:
           String publisher;
           publisher = iprot.readString();
@@ -445,14 +535,26 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
           String creator;
           creator = iprot.readString();
           return creator;
-        case DWCA_URL:
-          String dwcaUrl;
-          dwcaUrl = iprot.readString();
-          return dwcaUrl;
-        case PUB_DATE:
-          String pubDate;
-          pubDate = iprot.readString();
-          return pubDate;
+        case DWCA:
+          String dwca;
+          dwca = iprot.readString();
+          return dwca;
+        case PUBDATE:
+          String pubdate;
+          pubdate = iprot.readString();
+          return pubdate;
+        case ORGURL:
+          String orgurl;
+          orgurl = iprot.readString();
+          return orgurl;
+        case ORGCONTACT:
+          String orgcontact;
+          orgcontact = iprot.readString();
+          return orgcontact;
+        case ORGNAME:
+          String orgname;
+          orgname = iprot.readString();
+          return orgname;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -468,9 +570,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String title = (String)value_;
         oprot.writeString(title);
         return;
-      case URL:
-        String url = (String)value_;
-        oprot.writeString(url);
+      case LINK:
+        String link = (String)value_;
+        oprot.writeString(link);
         return;
       case DESCRIPTION:
         String description = (String)value_;
@@ -480,9 +582,9 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String author = (String)value_;
         oprot.writeString(author);
         return;
-      case EML_URL:
-        String emlUrl = (String)value_;
-        oprot.writeString(emlUrl);
+      case EML:
+        String eml = (String)value_;
+        oprot.writeString(eml);
         return;
       case PUBLISHER:
         String publisher = (String)value_;
@@ -492,13 +594,25 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
         String creator = (String)value_;
         oprot.writeString(creator);
         return;
-      case DWCA_URL:
-        String dwcaUrl = (String)value_;
-        oprot.writeString(dwcaUrl);
+      case DWCA:
+        String dwca = (String)value_;
+        oprot.writeString(dwca);
         return;
-      case PUB_DATE:
-        String pubDate = (String)value_;
-        oprot.writeString(pubDate);
+      case PUBDATE:
+        String pubdate = (String)value_;
+        oprot.writeString(pubdate);
+        return;
+      case ORGURL:
+        String orgurl = (String)value_;
+        oprot.writeString(orgurl);
+        return;
+      case ORGCONTACT:
+        String orgcontact = (String)value_;
+        oprot.writeString(orgcontact);
+        return;
+      case ORGNAME:
+        String orgname = (String)value_;
+        oprot.writeString(orgname);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -510,22 +624,28 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     switch (setField) {
       case TITLE:
         return TITLE_FIELD_DESC;
-      case URL:
-        return URL_FIELD_DESC;
+      case LINK:
+        return LINK_FIELD_DESC;
       case DESCRIPTION:
         return DESCRIPTION_FIELD_DESC;
       case AUTHOR:
         return AUTHOR_FIELD_DESC;
-      case EML_URL:
-        return EML_URL_FIELD_DESC;
+      case EML:
+        return EML_FIELD_DESC;
       case PUBLISHER:
         return PUBLISHER_FIELD_DESC;
       case CREATOR:
         return CREATOR_FIELD_DESC;
-      case DWCA_URL:
-        return DWCA_URL_FIELD_DESC;
-      case PUB_DATE:
-        return PUB_DATE_FIELD_DESC;
+      case DWCA:
+        return DWCA_FIELD_DESC;
+      case PUBDATE:
+        return PUBDATE_FIELD_DESC;
+      case ORGURL:
+        return ORGURL_FIELD_DESC;
+      case ORGCONTACT:
+        return ORGCONTACT_FIELD_DESC;
+      case ORGNAME:
+        return ORGNAME_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -560,17 +680,17 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     value_ = value;
   }
 
-  public String getUrl() {
-    if (getSetField() == _Fields.URL) {
+  public String getLink() {
+    if (getSetField() == _Fields.LINK) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'url' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'link' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setUrl(String value) {
+  public void setLink(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.URL;
+    setField_ = _Fields.LINK;
     value_ = value;
   }
 
@@ -602,17 +722,17 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     value_ = value;
   }
 
-  public String getEmlUrl() {
-    if (getSetField() == _Fields.EML_URL) {
+  public String getEml() {
+    if (getSetField() == _Fields.EML) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'emlUrl' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'eml' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setEmlUrl(String value) {
+  public void setEml(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.EML_URL;
+    setField_ = _Fields.EML;
     value_ = value;
   }
 
@@ -644,31 +764,73 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
     value_ = value;
   }
 
-  public String getDwcaUrl() {
-    if (getSetField() == _Fields.DWCA_URL) {
+  public String getDwca() {
+    if (getSetField() == _Fields.DWCA) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'dwcaUrl' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'dwca' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setDwcaUrl(String value) {
+  public void setDwca(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.DWCA_URL;
+    setField_ = _Fields.DWCA;
     value_ = value;
   }
 
-  public String getPubDate() {
-    if (getSetField() == _Fields.PUB_DATE) {
+  public String getPubdate() {
+    if (getSetField() == _Fields.PUBDATE) {
       return (String)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'pubDate' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'pubdate' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setPubDate(String value) {
+  public void setPubdate(String value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.PUB_DATE;
+    setField_ = _Fields.PUBDATE;
+    value_ = value;
+  }
+
+  public String getOrgurl() {
+    if (getSetField() == _Fields.ORGURL) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'orgurl' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOrgurl(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ORGURL;
+    value_ = value;
+  }
+
+  public String getOrgcontact() {
+    if (getSetField() == _Fields.ORGCONTACT) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'orgcontact' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOrgcontact(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ORGCONTACT;
+    value_ = value;
+  }
+
+  public String getOrgname() {
+    if (getSetField() == _Fields.ORGNAME) {
+      return (String)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'orgname' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOrgname(String value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.ORGNAME;
     value_ = value;
   }
 
@@ -677,8 +839,8 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
   }
 
 
-  public boolean isSetUrl() {
-    return setField_ == _Fields.URL;
+  public boolean isSetLink() {
+    return setField_ == _Fields.LINK;
   }
 
 
@@ -692,8 +854,8 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
   }
 
 
-  public boolean isSetEmlUrl() {
-    return setField_ == _Fields.EML_URL;
+  public boolean isSetEml() {
+    return setField_ == _Fields.EML;
   }
 
 
@@ -707,13 +869,28 @@ public class ResourcePropertyValue extends org.apache.thrift.TUnion<ResourceProp
   }
 
 
-  public boolean isSetDwcaUrl() {
-    return setField_ == _Fields.DWCA_URL;
+  public boolean isSetDwca() {
+    return setField_ == _Fields.DWCA;
   }
 
 
-  public boolean isSetPubDate() {
-    return setField_ == _Fields.PUB_DATE;
+  public boolean isSetPubdate() {
+    return setField_ == _Fields.PUBDATE;
+  }
+
+
+  public boolean isSetOrgurl() {
+    return setField_ == _Fields.ORGURL;
+  }
+
+
+  public boolean isSetOrgcontact() {
+    return setField_ == _Fields.ORGCONTACT;
+  }
+
+
+  public boolean isSetOrgname() {
+    return setField_ == _Fields.ORGNAME;
   }
 
 
