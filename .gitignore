@@ -1,3 +1,4 @@
+vertnet.pem
 pom.xml
 *jar
 /lib/
@@ -7,6 +8,7 @@ pom.xml
 rm-dwca-reader-clj-jars.sh
 creds.json
 s3.json
+aws.json
 target/
 #*.*
 *.*~

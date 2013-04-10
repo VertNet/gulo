@@ -47,6 +47,18 @@
   [x]
   ["prop" "OrganizationProperty"])
 
+(defmethod property-target ResourceDatasetEdge
+  [x]
+  ["edge" "ResourceDatasetEdge"])
+
+(defmethod property-target DatasetRecordEdge
+  [x]
+  ["edge" "DatasetRecordEdge"])
+
+(defmethod property-target ResourceOrganizationEdge
+  [x]
+  ["edge" "ResourceOrganizationEdge"])
+
 (defmethod property-target RecordProperty
   [x]
   (let [prop-value (.getValue x)

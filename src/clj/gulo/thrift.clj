@@ -283,9 +283,6 @@
   (let [type RecordPropertyValue]
     (partial create-union type)))
 
-
-
-
 (defn- organization-property-values
   [organization]
   (for [[k v] organization :when (not= v nil)]
@@ -338,7 +335,8 @@
   "Return generator of Data Thrift objects containing ResourceProperty values."
   [resource]
   {:pre  [(:guid resource)]}
-  (let [id (create-resource-id (:guid resource))
+  (let [id (create-resource-id (:url resource))
+        resource (dissoc resource :url)
         props (resource-properties id resource)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)
@@ -385,6 +383,12 @@
         data (map #(Data. pedigree %) units)]
     (vec (map vector data))))
 
+(defn edge-data
+  [edge]
+  (let [data-unit (create-dataunit edge)
+        pedigree (Pedigree. (epoch))]
+    (Data. pedigree data-unit)))
+
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
@@ -394,3 +398,81 @@
   (def path (.getPath (io/resource "archive-occ")))
   (def recs (dwca/get-records path))
   (def rec (first recs)))
+
+(defn unpack-RecordProperty
+  "Unpack RecordProperty Data object as far as RecordPropertyValue struct."
+  [obj]
+  (->> obj .getDataUnit .getFieldValue .getValue .getFieldValue))
+
+(defprotocol IUnpackable
+  (unpack [x]))
+
+(extend-protocol IUnpackable
+  Data
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Data/metaDataMap)))))
+
+  Pedigree
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Pedigree/metaDataMap)))))
+
+  RecordProperty
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (RecordProperty/metaDataMap)))))
+
+  DatasetProperty
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (DatasetProperty/metaDataMap)))))
+
+  OrganizationProperty
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (OrganizationProperty/metaDataMap)))))
+
+  DatasetRecordEdge
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (DatasetRecordEdge/metaDataMap)))))
+
+  ResourceDatasetEdge
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (ResourceDatasetEdge/metaDataMap)))))
+
+  ResourceOrganizationEdge
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (ResourceOrganizationEdge/metaDataMap)))))
+
+  DataUnit
+  (unpack [x] (.getFieldValue x))
+
+  RecordPropertyValue
+  (unpack [x] (.getFieldValue x))
+  
+  RecordID
+  (unpack [x] (.getFieldValue x))
+
+  RecordSource
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (RecordSource/metaDataMap)))))
+
+  Event
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Event/metaDataMap)))))
+
+  GeologicalContext
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (GeologicalContext/metaDataMap)))))
+  
+  Identification
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Identification/metaDataMap)))))
+  
+  Location
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Location/metaDataMap)))))
+  
+  MeasurementOrFact
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (MeasurementOrFact/metaDataMap)))))
+  
+  Occurrence
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Occurrence/metaDataMap)))))
+  
+  RecordLevel
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (RecordLevel/metaDataMap)))))
+  
+  ResourceRelationship
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (ResourceRelationship/metaDataMap)))))
+  
+  Taxon
+  (unpack [x] (vec (map #(.getFieldValue x %) (keys (Taxon/metaDataMap))))))
+
+(defn unpack*
+  "Unpack a Thrift object and return it wrapped in a vector. Common use case is
+  calling this within a Cascalog query."
+  [x]
+  (vector (unpack x)))

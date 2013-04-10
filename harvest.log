@@ -1,0 +1,1042 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nREPL server started on port 56282
+REPL-y 0.1.10
+Clojure 1.4.0
+    Exit: Control+D or (exit) or (quit)
+Commands: (user/help)
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+          (user/sourcery function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+Examples from clojuredocs.org: [clojuredocs or cdoc]
+          (user/clojuredocs name-here)
+          (user/clojuredocs "ns-here" "name-here")
+user=> (use 'gulo.ipt)
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+nil
+user=> (in-ns 'gulo.ipt)
+#<Namespace gulo.ipt>
+gulo.ipt=> (harvest-all)
+"Harvesting 28 resources"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=tcwc_verts"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://ipt.vertnet.org:8080/ipt/resource.do?id=tcwc_verts"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=ubc_bbm_ctc_birds"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=ubc_bbm_ctc_birds"
+"Writing to /tmp/vn/ubc_bbm_ctc_birds.csv"
+"Uploading /tmp/vn/ubc_bbm_ctc_birds.csv to S3..."
+13/03/30 21:07:36 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:07:37 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+13/03/30 21:07:37 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:07:37 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:07:38 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:07:40 INFO mapred.TaskRunner: Task:attempt_local_0001_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:07:40 INFO mapred.LocalJobRunner:
+13/03/30 21:07:40 INFO mapred.TaskRunner: Task attempt_local_0001_m_000000_0 is allowed to commit now
+13/03/30 21:07:42 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0001_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/ubc_bbm_ctc_birds
+13/03/30 21:07:42 INFO mapred.LocalJobRunner: file:/tmp/vn/ubc_bbm_ctc_birds.csv:0+19080814
+13/03/30 21:07:42 INFO mapred.TaskRunner: Task 'attempt_local_0001_m_000000_0' done.
+"Done harvesting" "ubc_bbm_ctc_birds"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=crcm_verts"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://ipt.vertnet.org:8080/ipt/resource.do?id=crcm_verts"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=dmnh_birds"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://vertnet.nhm.ku.edu:8080/ipt/resource.do?id=dmnh_birds"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=kstc_plants"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=kstc_plants"
+"Writing to /tmp/vn/kstc_plants.csv"
+"Uploading /tmp/vn/kstc_plants.csv to S3..."
+13/03/30 21:08:06 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:06 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:08:06 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:06 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:08 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:08:10 INFO mapred.TaskRunner: Task:attempt_local_0002_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:08:11 INFO mapred.LocalJobRunner:
+13/03/30 21:08:11 INFO mapred.TaskRunner: Task attempt_local_0002_m_000000_0 is allowed to commit now
+13/03/30 21:08:12 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0002_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/kstc_plants
+13/03/30 21:08:12 INFO mapred.LocalJobRunner: file:/tmp/vn/kstc_plants.csv:0+12932799
+13/03/30 21:08:12 INFO mapred.TaskRunner: Task 'attempt_local_0002_m_000000_0' done.
+"Done harvesting" "kstc_plants"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=hendersonnotebooks1-3"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://ipt.vertnet.org:8080/ipt/resource.do?id=hendersonnotebooks1-3"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_birds"
+"Unable to harvest resource http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_birds - clojure.lang.ArityException: Wrong number of args (0) passed to: ipt$eml--GT-dataset$fn"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_eggs_nests"
+"Unable to harvest resource http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_eggs_nests - clojure.lang.ArityException: Wrong number of args (0) passed to: ipt$eml--GT-dataset
+$fn"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_mammals"
+"Unable to harvest resource http://ipt.vertnet.org:8080/ipt/resource.do?r=hsu_wildlife_mammals - clojure.lang.ArityException: Wrong number of args (0) passed to: ipt$eml--GT-dataset$fn
+"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=isu_birds"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://vertnet.nhm.ku.edu:8080/ipt/resource.do?id=isu_birds"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=isu_mammals"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=isu_mammals"
+"Writing to /tmp/vn/isu_mammals.csv"
+"Uploading /tmp/vn/isu_mammals.csv to S3..."
+13/03/30 21:08:18 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:18 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:08:18 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:18 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:08:18 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:08:19 INFO mapred.TaskRunner: Task:attempt_local_0003_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:08:19 INFO mapred.LocalJobRunner:
+13/03/30 21:08:19 INFO mapred.TaskRunner: Task attempt_local_0003_m_000000_0 is allowed to commit now
+13/03/30 21:08:19 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0003_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/isu_mammals
+13/03/30 21:08:19 INFO mapred.LocalJobRunner: file:/tmp/vn/isu_mammals.csv:0+917611
+13/03/30 21:08:19 INFO mapred.TaskRunner: Task 'attempt_local_0003_m_000000_0' done.
+"Done harvesting" "isu_mammals"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=mpm_herps"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=mpm_herps"
+"Writing to /tmp/vn/mpm_herps.csv"
+"Uploading /tmp/vn/mpm_herps.csv to S3..."
+13/03/30 21:09:10 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:10 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:09:10 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:10 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:10 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:09:15 INFO mapred.TaskRunner: Task:attempt_local_0004_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:09:15 INFO mapred.LocalJobRunner:
+13/03/30 21:09:15 INFO mapred.TaskRunner: Task attempt_local_0004_m_000000_0 is allowed to commit now
+13/03/30 21:09:16 INFO mapred.LocalJobRunner: file:/tmp/vn/mpm_herps.csv:0+25544132
+13/03/30 21:09:17 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0004_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/mpm_herps
+13/03/30 21:09:17 INFO mapred.LocalJobRunner: file:/tmp/vn/mpm_herps.csv:0+25544132
+13/03/30 21:09:17 INFO mapred.TaskRunner: Task 'attempt_local_0004_m_000000_0' done.
+"Done harvesting" "mpm_herps"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=nmmnh_mammals"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://vertnet.nhm.ku.edu:8080/ipt/resource.do?id=nmmnh_mammals"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=nysm_mammals"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=nysm_mammals"
+"Writing to /tmp/vn/nysm_mammals.csv"
+"Uploading /tmp/vn/nysm_mammals.csv to S3..."
+13/03/30 21:09:40 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:40 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:09:40 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:40 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:41 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:09:47 INFO mapred.LocalJobRunner: file:/tmp/vn/nysm_mammals.csv:0+13844822
+13/03/30 21:09:48 INFO mapred.TaskRunner: Task:attempt_local_0005_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:09:48 INFO mapred.LocalJobRunner: file:/tmp/vn/nysm_mammals.csv:0+13844822
+13/03/30 21:09:48 INFO mapred.TaskRunner: Task attempt_local_0005_m_000000_0 is allowed to commit now
+13/03/30 21:09:51 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0005_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/nysm_mammals
+13/03/30 21:09:51 INFO mapred.LocalJobRunner: file:/tmp/vn/nysm_mammals.csv:0+13844822
+13/03/30 21:09:51 INFO mapred.TaskRunner: Task 'attempt_local_0005_m_000000_0' done.
+"Done harvesting" "nysm_mammals"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=sbmnh_verts"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://ipt.vertnet.org:8080/ipt/resource.do?id=sbmnh_verts"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=smns_herps"
+"Unable to get organization UUID for: " "http://gbrds.gbif.org/browse/agent?uuid=http://vertnet.nhm.ku.edu:8080/ipt/resource.do?id=smns_herps"
+"Unable to get organization from UUID: null"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_mammals"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_mammals"
+"Writing to /tmp/vn/ttrs_mammals.csv"
+"Uploading /tmp/vn/ttrs_mammals.csv to S3..."
+13/03/30 21:09:56 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:56 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:09:56 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:56 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:09:56 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:09:57 INFO mapred.TaskRunner: Task:attempt_local_0006_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:09:57 INFO mapred.LocalJobRunner:
+13/03/30 21:09:57 INFO mapred.TaskRunner: Task attempt_local_0006_m_000000_0 is allowed to commit now
+13/03/30 21:09:58 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0006_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/ttrs_mammals
+13/03/30 21:09:58 INFO mapred.LocalJobRunner: file:/tmp/vn/ttrs_mammals.csv:0+861058
+13/03/30 21:09:58 INFO mapred.TaskRunner: Task 'attempt_local_0006_m_000000_0' done.
+"Done harvesting" "ttrs_mammals"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds"
+"Writing to /tmp/vn/ttrs_birds.csv"
+"Uploading /tmp/vn/ttrs_birds.csv to S3..."
+13/03/30 21:10:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:04 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:10:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:05 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:10:05 INFO mapred.TaskRunner: Task:attempt_local_0007_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:10:05 INFO mapred.LocalJobRunner:
+13/03/30 21:10:05 INFO mapred.TaskRunner: Task attempt_local_0007_m_000000_0 is allowed to commit now
+13/03/30 21:10:07 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0007_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/ttrs_birds
+13/03/30 21:10:07 INFO mapred.LocalJobRunner: file:/tmp/vn/ttrs_birds.csv:0+3171734
+13/03/30 21:10:07 INFO mapred.TaskRunner: Task 'attempt_local_0007_m_000000_0' done.
+"Done harvesting" "ttrs_birds"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=uafmc_fish"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=uafmc_fish"
+"Writing to /tmp/vn/uafmc_fish.csv"
+"Uploading /tmp/vn/uafmc_fish.csv to S3..."
+13/03/30 21:10:15 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:15 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:10:15 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:15 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:10:16 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:10:17 INFO mapred.TaskRunner: Task:attempt_local_0008_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:10:17 INFO mapred.LocalJobRunner:
+13/03/30 21:10:17 INFO mapred.TaskRunner: Task attempt_local_0008_m_000000_0 is allowed to commit now
+13/03/30 21:10:18 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0008_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uafmc_fish
+13/03/30 21:10:18 INFO mapred.LocalJobRunner: file:/tmp/vn/uafmc_fish.csv:0+4759301
+13/03/30 21:10:18 INFO mapred.TaskRunner: Task 'attempt_local_0008_m_000000_0' done.
+"Done harvesting" "uafmc_fish"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=uam_ento"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=uam_ento"
+"Writing to /tmp/vn/uam_ento.csv"
+"Uploading /tmp/vn/uam_ento.csv to S3..."
+13/03/30 21:15:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:15:04 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:15:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:15:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:15:05 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:10 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:15:10 INFO mapred.LocalJobRunner:
+13/03/30 21:15:10 INFO mapred.TaskRunner: Task attempt_local_0009_m_000000_0 is allowed to commit now
+13/03/30 21:15:11 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:0+33554432
+13/03/30 21:15:12 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:12 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:0+33554432
+13/03/30 21:15:12 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000000_0' done.
+13/03/30 21:15:12 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:18 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:33554432+33554432
+13/03/30 21:15:21 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:15:21 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:33554432+33554432
+13/03/30 21:15:21 INFO mapred.TaskRunner: Task attempt_local_0009_m_000001_0 is allowed to commit now
+13/03/30 21:15:23 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:23 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:33554432+33554432
+13/03/30 21:15:23 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000001_0' done.
+13/03/30 21:15:23 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:28 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000002_0 is done. And is in the process of commiting
+13/03/30 21:15:28 INFO mapred.LocalJobRunner:
+13/03/30 21:15:28 INFO mapred.TaskRunner: Task attempt_local_0009_m_000002_0 is allowed to commit now
+13/03/30 21:15:29 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:67108864+33554432
+13/03/30 21:15:30 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000002_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:30 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:67108864+33554432
+13/03/30 21:15:30 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000002_0' done.
+13/03/30 21:15:30 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:34 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000003_0 is done. And is in the process of commiting
+13/03/30 21:15:35 INFO mapred.LocalJobRunner:
+13/03/30 21:15:35 INFO mapred.TaskRunner: Task attempt_local_0009_m_000003_0 is allowed to commit now
+13/03/30 21:15:36 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:100663296+33554432
+13/03/30 21:15:37 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000003_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:37 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:100663296+33554432
+13/03/30 21:15:37 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000003_0' done.
+13/03/30 21:15:37 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:41 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000004_0 is done. And is in the process of commiting
+13/03/30 21:15:41 INFO mapred.LocalJobRunner:
+13/03/30 21:15:41 INFO mapred.TaskRunner: Task attempt_local_0009_m_000004_0 is allowed to commit now
+13/03/30 21:15:43 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:134217728+33554432
+13/03/30 21:15:43 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000004_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:43 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:134217728+33554432
+13/03/30 21:15:43 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000004_0' done.
+13/03/30 21:15:43 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:15:46 INFO mapred.TaskRunner: Task:attempt_local_0009_m_000005_0 is done. And is in the process of commiting
+13/03/30 21:15:46 INFO mapred.LocalJobRunner:
+13/03/30 21:15:46 INFO mapred.TaskRunner: Task attempt_local_0009_m_000005_0 is allowed to commit now
+13/03/30 21:15:48 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0009_m_000005_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uam_ento
+13/03/30 21:15:48 INFO mapred.LocalJobRunner: file:/tmp/vn/uam_ento.csv:167772160+20326407
+13/03/30 21:15:48 INFO mapred.TaskRunner: Task 'attempt_local_0009_m_000005_0' done.
+"Done harvesting" "uam_ento"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=uamobs_ento"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=uamobs_ento"
+"Writing to /tmp/vn/uamobs_ento.csv"
+"Uploading /tmp/vn/uamobs_ento.csv to S3..."
+13/03/30 21:16:42 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:16:42 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:16:42 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:16:42 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:16:42 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:16:46 INFO mapred.TaskRunner: Task:attempt_local_0010_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:16:46 INFO mapred.LocalJobRunner:
+13/03/30 21:16:46 INFO mapred.TaskRunner: Task attempt_local_0010_m_000000_0 is allowed to commit now
+13/03/30 21:16:48 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0010_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uamobs_ento
+13/03/30 21:16:48 INFO mapred.LocalJobRunner: file:/tmp/vn/uamobs_ento.csv:0+33554432
+13/03/30 21:16:48 INFO mapred.TaskRunner: Task 'attempt_local_0010_m_000000_0' done.
+13/03/30 21:16:48 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:16:49 INFO mapred.TaskRunner: Task:attempt_local_0010_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:16:49 INFO mapred.LocalJobRunner:
+13/03/30 21:16:49 INFO mapred.TaskRunner: Task attempt_local_0010_m_000001_0 is allowed to commit now
+13/03/30 21:16:50 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0010_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uamobs_ento
+13/03/30 21:16:50 INFO mapred.LocalJobRunner: file:/tmp/vn/uamobs_ento.csv:33554432+7979286
+13/03/30 21:16:50 INFO mapred.TaskRunner: Task 'attempt_local_0010_m_000001_0' done.
+"Done harvesting" "uamobs_ento"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=ummz_birds"
+"Unable to get organization from UUID: a957a663-2f17-415f-b1c8-5cf6398df8ed"
+"Invalid resource (no GUID)."
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=umzc_vertebrates"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=umzc_vertebrates"
+"Writing to /tmp/vn/umzc_vertebrates.csv"
+"Uploading /tmp/vn/umzc_vertebrates.csv to S3..."
+13/03/30 21:18:39 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:18:39 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:18:39 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:18:39 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:18:39 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:18:45 INFO mapred.TaskRunner: Task:attempt_local_0011_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:18:45 INFO mapred.LocalJobRunner:
+13/03/30 21:18:45 INFO mapred.TaskRunner: Task attempt_local_0011_m_000000_0 is allowed to commit now
+13/03/30 21:18:45 INFO mapred.LocalJobRunner: file:/tmp/vn/umzc_vertebrates.csv:0+33554432
+13/03/30 21:18:48 INFO mapred.LocalJobRunner: file:/tmp/vn/umzc_vertebrates.csv:0+33554432
+13/03/30 21:18:49 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0011_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/umzc_vertebrates
+13/03/30 21:18:49 INFO mapred.LocalJobRunner: file:/tmp/vn/umzc_vertebrates.csv:0+33554432
+13/03/30 21:18:49 INFO mapred.TaskRunner: Task 'attempt_local_0011_m_000000_0' done.
+13/03/30 21:18:49 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:18:52 INFO mapred.TaskRunner: Task:attempt_local_0011_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:18:52 INFO mapred.LocalJobRunner:
+13/03/30 21:18:52 INFO mapred.TaskRunner: Task attempt_local_0011_m_000001_0 is allowed to commit now
+13/03/30 21:18:55 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0011_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/umzc_vertebrates
+13/03/30 21:18:55 INFO mapred.LocalJobRunner: file:/tmp/vn/umzc_vertebrates.csv:33554432+26999672
+13/03/30 21:18:55 INFO mapred.TaskRunner: Task 'attempt_local_0011_m_000001_0' done.
+"Done harvesting" "umzc_vertebrates"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=unr_herps"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=unr_herps"
+"Writing to /tmp/vn/unr_herps.csv"
+"Uploading /tmp/vn/unr_herps.csv to S3..."
+13/03/30 21:19:03 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:19:04 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:19:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:19:04 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:19:04 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:19:05 INFO mapred.TaskRunner: Task:attempt_local_0012_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:19:05 INFO mapred.LocalJobRunner:
+13/03/30 21:19:05 INFO mapred.TaskRunner: Task attempt_local_0012_m_000000_0 is allowed to commit now
+13/03/30 21:19:08 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0012_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/unr_herps
+13/03/30 21:19:08 INFO mapred.LocalJobRunner: file:/tmp/vn/unr_herps.csv:0+4958608
+13/03/30 21:19:08 INFO mapred.TaskRunner: Task 'attempt_local_0012_m_000000_0' done.
+"Done harvesting" "unr_herps"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=uta_herps"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=uta_herps"
+"Writing to /tmp/vn/uta_herps.csv"
+"Uploading /tmp/vn/uta_herps.csv to S3..."
+13/03/30 21:20:33 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:20:33 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:20:34 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:20:34 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:20:34 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:20:38 INFO mapred.TaskRunner: Task:attempt_local_0013_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:20:38 INFO mapred.LocalJobRunner:
+13/03/30 21:20:38 INFO mapred.TaskRunner: Task attempt_local_0013_m_000000_0 is allowed to commit now
+13/03/30 21:20:40 INFO mapred.LocalJobRunner: file:/tmp/vn/uta_herps.csv:0+33554432
+13/03/30 21:20:41 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0013_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uta_herps
+13/03/30 21:20:41 INFO mapred.LocalJobRunner: file:/tmp/vn/uta_herps.csv:0+33554432
+13/03/30 21:20:41 INFO mapred.TaskRunner: Task 'attempt_local_0013_m_000000_0' done.
+13/03/30 21:20:41 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:20:45 INFO mapred.TaskRunner: Task:attempt_local_0013_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:20:45 INFO mapred.LocalJobRunner:
+13/03/30 21:20:45 INFO mapred.TaskRunner: Task attempt_local_0013_m_000001_0 is allowed to commit now
+13/03/30 21:20:47 INFO mapred.LocalJobRunner: file:/tmp/vn/uta_herps.csv:33554432+33220564
+13/03/30 21:20:48 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0013_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/uta_herps
+13/03/30 21:20:48 INFO mapred.LocalJobRunner: file:/tmp/vn/uta_herps.csv:33554432+33220564
+13/03/30 21:20:48 INFO mapred.TaskRunner: Task 'attempt_local_0013_m_000001_0' done.
+"Done harvesting" "uta_herps"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=utep_verts"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=utep_verts"
+"Writing to /tmp/vn/utep_verts.csv"
+"Uploading /tmp/vn/utep_verts.csv to S3..."
+13/03/30 21:23:10 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:23:11 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:23:11 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:23:11 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:23:12 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:23:18 INFO mapred.LocalJobRunner: file:/tmp/vn/utep_verts.csv:0+33554432
+13/03/30 21:23:19 INFO mapred.TaskRunner: Task:attempt_local_0014_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:23:19 INFO mapred.LocalJobRunner: file:/tmp/vn/utep_verts.csv:0+33554432
+13/03/30 21:23:19 INFO mapred.TaskRunner: Task attempt_local_0014_m_000000_0 is allowed to commit now
+13/03/30 21:23:24 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0014_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/utep_verts
+13/03/30 21:23:24 INFO mapred.LocalJobRunner: file:/tmp/vn/utep_verts.csv:0+33554432
+13/03/30 21:23:24 INFO mapred.TaskRunner: Task 'attempt_local_0014_m_000000_0' done.
+13/03/30 21:23:24 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:23:28 INFO mapred.TaskRunner: Task:attempt_local_0014_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:23:28 INFO mapred.LocalJobRunner:
+13/03/30 21:23:28 INFO mapred.TaskRunner: Task attempt_local_0014_m_000001_0 is allowed to commit now
+13/03/30 21:23:30 INFO mapred.LocalJobRunner: file:/tmp/vn/utep_verts.csv:33554432+24876829
+13/03/30 21:23:30 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0014_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/utep_verts
+13/03/30 21:23:30 INFO mapred.LocalJobRunner: file:/tmp/vn/utep_verts.csv:33554432+24876829
+13/03/30 21:23:30 INFO mapred.TaskRunner: Task 'attempt_local_0014_m_000001_0' done.
+"Done harvesting" "utep_verts"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=wfvz_birds"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=wfvz_birds"
+"Writing to /tmp/vn/wfvz_birds.csv"
+"Uploading /tmp/vn/wfvz_birds.csv to S3..."
+13/03/30 21:32:01 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:32:01 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:32:01 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:32:01 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:32:01 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:06 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:32:06 INFO mapred.LocalJobRunner:
+13/03/30 21:32:06 INFO mapred.TaskRunner: Task attempt_local_0015_m_000000_0 is allowed to commit now
+13/03/30 21:32:07 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:0+33554432
+13/03/30 21:32:08 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:08 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:0+33554432
+13/03/30 21:32:08 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000000_0' done.
+13/03/30 21:32:08 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:13 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:32:13 INFO mapred.LocalJobRunner:
+13/03/30 21:32:13 INFO mapred.TaskRunner: Task attempt_local_0015_m_000001_0 is allowed to commit now
+13/03/30 21:32:14 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:33554432+33554432
+13/03/30 21:32:14 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:14 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:33554432+33554432
+13/03/30 21:32:14 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000001_0' done.
+13/03/30 21:32:14 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:19 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000002_0 is done. And is in the process of commiting
+13/03/30 21:32:19 INFO mapred.LocalJobRunner:
+13/03/30 21:32:19 INFO mapred.TaskRunner: Task attempt_local_0015_m_000002_0 is allowed to commit now
+13/03/30 21:32:20 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:67108864+33554432
+13/03/30 21:32:21 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000002_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:21 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:67108864+33554432
+13/03/30 21:32:21 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000002_0' done.
+13/03/30 21:32:21 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:26 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000003_0 is done. And is in the process of commiting
+13/03/30 21:32:26 INFO mapred.LocalJobRunner:
+13/03/30 21:32:26 INFO mapred.TaskRunner: Task attempt_local_0015_m_000003_0 is allowed to commit now
+13/03/30 21:32:27 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000003_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:27 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:100663296+33554432
+13/03/30 21:32:27 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000003_0' done.
+13/03/30 21:32:27 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:32 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000004_0 is done. And is in the process of commiting
+13/03/30 21:32:32 INFO mapred.LocalJobRunner:
+13/03/30 21:32:32 INFO mapred.TaskRunner: Task attempt_local_0015_m_000004_0 is allowed to commit now
+13/03/30 21:32:33 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:134217728+33554432
+13/03/30 21:32:34 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000004_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:34 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:134217728+33554432
+13/03/30 21:32:34 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000004_0' done.
+13/03/30 21:32:34 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:32:40 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:167772160+36840625
+13/03/30 21:32:41 INFO mapred.TaskRunner: Task:attempt_local_0015_m_000005_0 is done. And is in the process of commiting
+13/03/30 21:32:41 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:167772160+36840625
+13/03/30 21:32:41 INFO mapred.TaskRunner: Task attempt_local_0015_m_000005_0 is allowed to commit now
+13/03/30 21:32:43 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0015_m_000005_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/wfvz_birds
+13/03/30 21:32:43 INFO mapred.LocalJobRunner: file:/tmp/vn/wfvz_birds.csv:167772160+36840625
+13/03/30 21:32:43 INFO mapred.TaskRunner: Task 'attempt_local_0015_m_000005_0' done.
+"Done harvesting" "wfvz_birds"
+"Harvesting: http://ipt.vertnet.org:8080/ipt/resource.do?r=lacm_verts"
+"Downloading: http://ipt.vertnet.org:8080/ipt/resource.do?r=lacm_verts"
+"Writing to /tmp/vn/lacm_verts.csv"
+"Uploading /tmp/vn/lacm_verts.csv to S3..."
+13/03/30 21:56:02 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:56:03 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+13/03/30 21:56:03 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:56:03 INFO mapred.FileInputFormat: Total input paths to process : 1
+13/03/30 21:56:03 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:08 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000000_0 is done. And is in the process of commiting
+13/03/30 21:56:08 INFO mapred.LocalJobRunner:
+13/03/30 21:56:08 INFO mapred.TaskRunner: Task attempt_local_0016_m_000000_0 is allowed to commit now
+13/03/30 21:56:09 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:0+33554432
+13/03/30 21:56:12 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:0+33554432
+13/03/30 21:56:14 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000000_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:14 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:0+33554432
+13/03/30 21:56:14 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000000_0' done.
+13/03/30 21:56:14 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:19 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000001_0 is done. And is in the process of commiting
+13/03/30 21:56:19 INFO mapred.LocalJobRunner:
+13/03/30 21:56:19 INFO mapred.TaskRunner: Task attempt_local_0016_m_000001_0 is allowed to commit now
+13/03/30 21:56:20 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:33554432+33554432
+13/03/30 21:56:23 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000001_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:23 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:33554432+33554432
+13/03/30 21:56:23 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000001_0' done.
+13/03/30 21:56:23 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:29 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:67108864+33554432
+13/03/30 21:56:30 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000002_0 is done. And is in the process of commiting
+13/03/30 21:56:30 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:67108864+33554432
+13/03/30 21:56:30 INFO mapred.TaskRunner: Task attempt_local_0016_m_000002_0 is allowed to commit now
+13/03/30 21:56:33 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000002_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:33 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:67108864+33554432
+13/03/30 21:56:33 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000002_0' done.
+13/03/30 21:56:33 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:38 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000003_0 is done. And is in the process of commiting
+13/03/30 21:56:38 INFO mapred.LocalJobRunner:
+13/03/30 21:56:38 INFO mapred.TaskRunner: Task attempt_local_0016_m_000003_0 is allowed to commit now
+13/03/30 21:56:39 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:100663296+33554432
+13/03/30 21:56:42 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000003_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:42 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:100663296+33554432
+13/03/30 21:56:42 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000003_0' done.
+13/03/30 21:56:42 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:48 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000004_0 is done. And is in the process of commiting
+13/03/30 21:56:48 INFO mapred.LocalJobRunner:
+13/03/30 21:56:48 INFO mapred.TaskRunner: Task attempt_local_0016_m_000004_0 is allowed to commit now
+13/03/30 21:56:48 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:134217728+33554432
+13/03/30 21:56:50 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000004_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:50 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:134217728+33554432
+13/03/30 21:56:50 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000004_0' done.
+13/03/30 21:56:50 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:56:55 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000005_0 is done. And is in the process of commiting
+13/03/30 21:56:55 INFO mapred.LocalJobRunner:
+13/03/30 21:56:55 INFO mapred.TaskRunner: Task attempt_local_0016_m_000005_0 is allowed to commit now
+13/03/30 21:56:56 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:167772160+33554432
+13/03/30 21:56:57 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000005_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:56:57 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:167772160+33554432
+13/03/30 21:56:57 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000005_0' done.
+13/03/30 21:56:57 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:03 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000006_0 is done. And is in the process of commiting
+13/03/30 21:57:03 INFO mapred.LocalJobRunner:
+13/03/30 21:57:03 INFO mapred.TaskRunner: Task attempt_local_0016_m_000006_0 is allowed to commit now
+13/03/30 21:57:03 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:201326592+33554432
+13/03/30 21:57:06 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:201326592+33554432
+13/03/30 21:57:06 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000006_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:06 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:201326592+33554432
+13/03/30 21:57:06 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000006_0' done.
+13/03/30 21:57:06 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:11 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000007_0 is done. And is in the process of commiting
+13/03/30 21:57:11 INFO mapred.LocalJobRunner:
+13/03/30 21:57:11 INFO mapred.TaskRunner: Task attempt_local_0016_m_000007_0 is allowed to commit now
+13/03/30 21:57:12 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:234881024+33554432
+13/03/30 21:57:15 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000007_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:15 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:234881024+33554432
+13/03/30 21:57:15 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000007_0' done.
+13/03/30 21:57:15 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:21 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000008_0 is done. And is in the process of commiting
+13/03/30 21:57:21 INFO mapred.LocalJobRunner:
+13/03/30 21:57:21 INFO mapred.TaskRunner: Task attempt_local_0016_m_000008_0 is allowed to commit now
+13/03/30 21:57:21 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:268435456+33554432
+13/03/30 21:57:23 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000008_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:23 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:268435456+33554432
+13/03/30 21:57:23 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000008_0' done.
+13/03/30 21:57:23 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:28 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000009_0 is done. And is in the process of commiting
+13/03/30 21:57:28 INFO mapred.LocalJobRunner:
+13/03/30 21:57:28 INFO mapred.TaskRunner: Task attempt_local_0016_m_000009_0 is allowed to commit now
+13/03/30 21:57:29 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:301989888+33554432
+13/03/30 21:57:30 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000009_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:30 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:301989888+33554432
+13/03/30 21:57:30 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000009_0' done.
+13/03/30 21:57:30 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:36 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:335544320+33554432
+13/03/30 21:57:38 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000010_0 is done. And is in the process of commiting
+13/03/30 21:57:38 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:335544320+33554432
+13/03/30 21:57:38 INFO mapred.TaskRunner: Task attempt_local_0016_m_000010_0 is allowed to commit now
+13/03/30 21:57:40 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000010_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:40 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:335544320+33554432
+13/03/30 21:57:40 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000010_0' done.
+13/03/30 21:57:40 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:46 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000011_0 is done. And is in the process of commiting
+13/03/30 21:57:46 INFO mapred.LocalJobRunner:
+13/03/30 21:57:46 INFO mapred.TaskRunner: Task attempt_local_0016_m_000011_0 is allowed to commit now
+13/03/30 21:57:46 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:369098752+33554432
+13/03/30 21:57:48 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000011_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:48 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:369098752+33554432
+13/03/30 21:57:48 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000011_0' done.
+13/03/30 21:57:48 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:57:54 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:402653184+33554432
+13/03/30 21:57:54 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000012_0 is done. And is in the process of commiting
+13/03/30 21:57:55 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:402653184+33554432
+13/03/30 21:57:55 INFO mapred.TaskRunner: Task attempt_local_0016_m_000012_0 is allowed to commit now
+13/03/30 21:57:56 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000012_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:57:56 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:402653184+33554432
+13/03/30 21:57:56 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000012_0' done.
+13/03/30 21:57:56 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:58:02 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000013_0 is done. And is in the process of commiting
+13/03/30 21:58:02 INFO mapred.LocalJobRunner:
+13/03/30 21:58:02 INFO mapred.TaskRunner: Task attempt_local_0016_m_000013_0 is allowed to commit now
+13/03/30 21:58:02 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:436207616+33554432
+13/03/30 21:58:04 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000013_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:58:04 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:436207616+33554432
+13/03/30 21:58:04 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000013_0' done.
+13/03/30 21:58:04 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:58:10 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000014_0 is done. And is in the process of commiting
+13/03/30 21:58:10 INFO mapred.LocalJobRunner:
+13/03/30 21:58:10 INFO mapred.TaskRunner: Task attempt_local_0016_m_000014_0 is allowed to commit now
+13/03/30 21:58:10 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:469762048+33554432
+13/03/30 21:58:12 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000014_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:58:12 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:469762048+33554432
+13/03/30 21:58:12 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000014_0' done.
+13/03/30 21:58:12 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:58:17 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000015_0 is done. And is in the process of commiting
+13/03/30 21:58:17 INFO mapred.LocalJobRunner:
+13/03/30 21:58:17 INFO mapred.TaskRunner: Task attempt_local_0016_m_000015_0 is allowed to commit now
+13/03/30 21:58:18 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:503316480+33554432
+13/03/30 21:58:20 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000015_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:58:20 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:503316480+33554432
+13/03/30 21:58:20 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000015_0' done.
+13/03/30 21:58:20 INFO mapred.MapTask: numReduceTasks: 0
+13/03/30 21:58:22 INFO mapred.TaskRunner: Task:attempt_local_0016_m_000016_0 is done. And is in the process of commiting
+13/03/30 21:58:22 INFO mapred.LocalJobRunner:
+13/03/30 21:58:22 INFO mapred.TaskRunner: Task attempt_local_0016_m_000016_0 is allowed to commit now
+13/03/30 21:58:24 INFO mapred.FileOutputCommitter: Saved output of task 'attempt_local_0016_m_000016_0' to s3n://AKIAJKJ4ILNQX2BMAK5A:VKiwx6OaSFOORRuTUWDGxCvnu9PGbMonmN83l5X8@vertnet/d
+ata/staging/lacm_verts
+13/03/30 21:58:24 INFO mapred.LocalJobRunner: file:/tmp/vn/lacm_verts.csv:536870912+14407796
+13/03/30 21:58:24 INFO mapred.TaskRunner: Task 'attempt_local_0016_m_000016_0' done.
+"Done harvesting" "lacm_verts"
+NullPointerException   clojure.lang.Numbers.ops (Numbers.java:942)
+
+gulo.ipt=>
+
+gulo.ipt=>
+
+gulo.ipt=> (use 'gulo.harvest)
