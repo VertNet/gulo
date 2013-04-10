@@ -106,78 +106,6 @@
 ;; RSS feed URL for the VertNet IPT instance:
 (def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
-(defn mk-ResourceDatasetEdge-Data
-  [resource-id dataset-id]
-  (-> (t/create-resource-id resource-id)
-      (ResourceDatasetEdge. (t/create-dataset-id dataset-id))
-      (t/edge-data)))
-
-(defn mk-DatasetRecordEdge-Data
-  [dataset-id record-id]
-  (-> (t/create-dataset-id dataset-id)
-      (DatasetRecordEdge. (t/create-rec-id record-id))
-      (t/edge-data)))
-
-(defn mk-ResourceOrganizationEdge-Data
-  [organization-id resource-id]
-  (->> (t/create-organization-id organization-id)
-       (ResourceOrganizationEdge. (t/create-resource-id resource-id))
-       (t/edge-data)))
-
-(defn sink-metadata
-  "Sinks metadata for supplied resource, dataset, and organization to a Pail.
-
-  Args:
-    pail: String path to root pail directory.
-    resource: {:creator :author :eml :guid :title :orgurl :pubDate :publisher
-               :description :dwca}
-    dataset: {:title :creator :metadataProvider :language :associatedParty
-              :pubDate :contact :additionalInfo :guid}
-    organization: {:primaryContactType :nodeName :primaryContactDescription :key
-                   :name :primaryContactAddress :primaryContactName :nameLanguage
-                   :primaryContactPhone :homepageURL :descriptionLanguage
-                   :description :nodeKey :nodeContactEmail :primaryContactEmail}"
-  [pail resource dataset organization]
-  (let [resource-data (t/resource-data resource)
-        resource-id (views/get-ResourceProperty-id (ffirst resource-data))
-        dataset-data (t/dataset-data dataset)
-        dataset-id (views/get-DatasetProperty-id (ffirst dataset-data))
-        organization-data (t/organization-data organization)
-        organization-id (views/get-OrganizationProperty-id (ffirst organization-data))]
-    (p/to-pail pail resource-data)
-    (p/to-pail pail dataset-data)
-    (p/to-pail pail organization-data)
-    (p/to-pail pail [[(mk-ResourceDatasetEdge-Data resource-id dataset-id)]])
-    (p/to-pail pail [[(mk-ResourceOrganizationEdge-Data organization-id resource-id)]])
-    dataset-id))
-
-(defn make-edge
-  [d dataset-id]
-  (mk-DatasetRecordEdge-Data (views/get-RecordProperty-id (ffirst d)) dataset-id))
-
-(defn sink-data
-  "Sink all resource records to supplied pail."
-  [pail resource dataset-id]
-  (let [dataset-guid (:guid resource)
-        dwca-url (:dwca resource)
-        dwc-records (dwca/open dwca-url)
-        records (map fields dwc-records)
-        record-data (map (partial t/record-data dataset-guid) records)
-        edges (map #(make-edge % dataset-id) record-data)
-        src (map vector (flatten record-data))
-        src (concat src edges)] 
-
-    ;; [[[data] [data]] [[data] [data]]] 
-    (do
-      (p/to-pail pail (<- [?d] (src ?d))))))
-;; [data] [data]]
-;; [data data data] (map vector 
-    ;; (doall
-    ;;  (for [d record-data]
-    ;;    (do
-    ;;      (p/to-pail pail [[(make-edge d dataset-id)]]) ;; d = [[data] [data]]
-    ;;      (p/to-pail pail (<- [?d] (d ?d))))))))
-
 (defn eml->dataset
   "Return DatasetPropertyValue map from supplied org.gbif.metadata.eml.Eml obj."
   [eml]
@@ -203,6 +131,7 @@
 (defn ipt-resources
   "Return vector of resource maps from supplied IPT RSS url."
   [url]
+  (prn (format "RSS URL: %s" url))
   (let [map (xml->map (slurp (io/input-stream url)))]
     (:item (:channel (:rss map)))))
 
@@ -264,6 +193,7 @@
   IResource
   (get-props
     [this]
+    (prn url)
     (let [rss-url (s/replace url "resource" "rss")
           resources (ipt-resources rss-url)
           resource (first (filter #(= url (:link %)) resources))
@@ -318,7 +248,7 @@
 (defn harvest
   "Harvest new records from supplied vector of resource urls and insert into
   resource table."
-  [url path]
+  [url path & {:keys [s3] :or {s3 false}}]
   (prn (format "Harvesting: %s" url))
   (try
     (let [r (Resource. url)
@@ -330,12 +260,13 @@
           props (vec (flatten props))]
       (if (or (nil? (:guid resource)) (nil? organization))
         (prn (format "Invalid resource (no GUID)."))
-        (harvest/archive->csv path url props)
+        (harvest/archive->csv path url props :s3 s3)
         ;(sink-data path resource (sink-metadata path resource dataset
         ;organization))
         ))
     (catch Exception e
       (prn (format "Unable to harvest resource %s - %s" url e))
+      (throw e)
       nil)))
 
 ;; r.pubdate, r.link. r.eml, r.dwca, r.guid, r.title, o.key, o.name, o.homepageURL
