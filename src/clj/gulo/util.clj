@@ -45,6 +45,58 @@
               (>= lon lon-min)))
        (catch Exception e false))))
 
+;; Ordered vector of harvesting output column names for use in wide Cascalog sources:
+(def harvest-fields
+  ["?pubdate" "?link" "?eml" "?dwca" "?guid" "?title" "?key" "?name" "?homepageURL"
+   "?id" "?associatedmedia" "?associatedoccurrences" "?associatedreferences"
+   "?associatedsequences" "?associatedtaxa" "?basisofrecord" "?bed" "?behavior"
+   "?catalognumber" "?collectioncode" "?collectionid" "?continent"
+   "?coordinateprecision" "?coordinateuncertaintyinmeters" "?country" "?countrycode"
+   "?county" "?datageneralizations" "?dateidentified" "?day" "?decimallatitude"
+   "?decimallongitude" "?disposition" "?earliestageorloweststage"
+   "?earliesteonorlowesteonothem" "?earliestepochorlowestseries"
+   "?earliesteraorlowesterathem" "?earliestperiodorlowestsystem" "?enddayofyear"
+   "?establishmentmeans" "?eventattributes" "?eventdate" "?eventid" "?eventremarks"
+   "?eventtime" "?fieldnotes" "?fieldnumber" "?footprintspatialfit" "?footprintwkt"
+   "?formation" "?geodeticdatum" "?geologicalcontextid" "?georeferenceprotocol"
+   "?georeferenceremarks" "?georeferencesources" "?georeferenceverificationstatus"
+   "?georeferencedby" "?group" "?habitat" "?highergeography" "?highergeographyid"
+   "?highestbiostratigraphiczone" "?identificationattributes" "?identificationid"
+   "?identificationqualifier" "?identificationreferences" "?identificationremarks"
+   "?identifiedby" "?individualcount" "?individualid" "?informationwithheld"
+   "?institutioncode" "?island" "?islandgroup" "?latestageorhigheststage"
+   "?latesteonorhighesteonothem" "?latestepochorhighestseries"
+   "?latesteraorhighesterathem" "?latestperiodorhighestsystem" "?lifestage"
+   "?lithostratigraphicterms" "?locality" "?locationattributes" "?locationid"
+   "?locationremarks" "?lowestbiostratigraphiczone" "?maximumdepthinmeters"
+   "?maximumdistanceabovesurfaceinmeters" "?maximumelevationinmeters"
+   "?measurementaccuracy" "?measurementdeterminedby" "?measurementdetermineddate"
+   "?measurementid" "?measurementmethod" "?measurementremarks" "?measurementtype"
+   "?measurementunit" "?measurementvalue" "?member" "?minimumdepthinmeters"
+   "?minimumdistanceabovesurfaceinmeters" "?minimumelevationinmeters" "?month"
+   "?occurrenceattributes" "?occurrencedetails" "?occurrenceid" "?occurrenceremarks"
+   "?othercatalognumbers" "?pointradiusspatialfit" "?preparations"
+   "?previousidentifications" "?recordnumber" "?recordedby" "?relatedresourceid"
+   "?relationshipaccordingto" "?relationshipestablisheddate" "?relationshipofresource"
+   "?relationshipremarks" "?reproductivecondition" "?resourceid"
+   "?resourcerelationshipid" "?samplingprotocol" "?sex" "?startdayofyear"
+   "?stateprovince" "?taxonattributes" "?typestatus" "?verbatimcoordinatesystem"
+   "?verbatimcoordinates" "?verbatimdepth" "?verbatimelevation" "?verbatimeventdate"
+   "?verbatimlatitude" "?verbatimlocality" "?verbatimlongitude" "?waterbody" "?year"
+   "?footprintsrs" "?georeferenceddate" "?identificationverificationstatus"
+   "?institutionid" "?locationaccordingto" "?municipality" "?occurrencestatus"
+   "?ownerinstitutioncode" "?samplingeffort" "?verbatimsrs" "?locationaccordingto7"
+   "?taxonid" "?taxonconceptid" "?datasetid" "?datasetname" "?source" "?modified"
+   "?accessrights" "?rights" "?rightsholder" "?language" "?higherclassification"
+   "?kingdom" "?phylum" "?classs" "?order" "?family" "?genus" "?subgenus"
+   "?specificepithet" "?infraspecificepithet" "?scientificname" "?scientificnameid"
+   "?vernacularname" "?taxonrank" "?verbatimtaxonrank" "?infraspecificmarker"
+   "?scientificnameauthorship" "?nomenclaturalcode" "?namepublishedin"
+   "?namepublishedinid" "?taxonomicstatus" "?nomenclaturalstatus" "?nameaccordingto"
+   "?nameaccordingtoid" "?parentnameusageid" "?parentnameusage" "?originalnameusageid"
+   "?originalnameusage" "?acceptednameusageid" "?acceptednameusage" "?taxonremarks"
+   "?dynamicproperties" "?namepublishedinyear" "?dummy"])
+
 ;; Ordered vector of occ table column names for use in wide Cascalog sources:
 (def rec-fields ["?occ-id" "?id" "?associatedmedia" "?associatedoccurrences"
                 "?associatedreferences" "?associatedsequences" "?associatedtaxa"
@@ -164,3 +216,22 @@
    "originalnameusageid" "originalnameusage" "acceptednameusageid"
    "acceptednameusage" "taxonremarks" "dynamicproperties" "namepublishedinyear"
    "iname" "icode"])
+
+(defn positions
+  "Returns a lazy sequence containing the positions at which pred
+   is true for items in coll."
+  [pred coll]
+  (for [[idx elt] (map-indexed vector coll) :when (pred elt)] idx))
+
+(defn mk-field-map
+  [field-vec field-str]
+  (zipmap (positions (partial = field-str) field-vec) [field-str]))
+
+(defn fields->pos-map
+  [field-vec & fields]
+  (apply merge (for [f fields] (zipmap (positions (partial = f) field-vec) [f]))))
+
+(defn splitline
+  "Returns vector of line values by splitting on tab."
+  [line]
+  (vec (.split line "\t")))

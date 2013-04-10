@@ -13,7 +13,7 @@
             ResourceID ResourceDatasetEdge ResourceOrganizationEdge
             ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]
            [backtype.cascading.tap PailTap PailTap$PailTapOptions]
-           [backtype.hadoop.pail PailStructure Pail]
+           [backtype.hadoop.pail Pail]
            [gulo.tap ThriftPailStructure]))
 
 (gen-class :name gulo.hadoop.pail.DataPailStructure
