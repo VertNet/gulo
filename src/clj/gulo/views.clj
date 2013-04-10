@@ -1,236 +1,70 @@
 (ns gulo.views
   (:use [cascalog.api]
-        [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p])
-  (:require [cascalog.ops :as c])
-  (:import [backtype.hadoop.pail Pail])
-  (:import [gulo.schema
-            Data DataUnit DatasetID DatasetProperty DatasetPropertyValue
-            DatasetRecordEdge Event GeologicalContext Identification Location
-            MeasurementOrFact Occurrence OrganizationPropertyValue
-            OrganizationID OrganizationProperty Pedigree RecordID RecordLevel
-            RecordProperty RecordPropertyValue RecordSource ResourceID
-            ResourceDatasetEdge ResourceOrganizationEdge
-            ResourcePropertyValue ResourceProperty ResourceRelationship Taxon]))
+        [gulo.util :as u])
+  (:require [cascalog.ops :as c]))
 
-(def stats-paths
-  {:total-records ["prop" "RecordProperty" "Occurrence"]
-   :records-by-country ["prop" "RecordProperty" "Location"]
-   :records-by-collection ["prop" "RecordProperty" "RecordLevel"]
-   :records-by-class ["prop" "RecordProperty" "Taxon"]
-   :total-taxa ["prop" "RecordProperty" "Taxon"]
-   :total-publishers ["prop" "OrganizationProperty"]
-   ;;   :downloaded-last-30-days ["prop"]
-   ;;   :datasets-last-30-days ["prop"]
-   })
+(defn uniques-query
+  "Given a source of harvested textlines and a vector of fields to extract,
+   return supplied fields for unique records.
 
-(defn get-RecordProperty-id
-  "Unpack RecordProperty Data object and return the SourceID."
-  [obj]
-  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue .getSourceID))
+   Usage:
+     (let [src (hfs-textline \"resources/test-stats/\")]
+       (??- (uniques-query src [\"?collectioncode\" \"?catalognumber\"])))
+     ;=> (([\"Mammals\" \"1\"] [\"Mammals\" \"2\"]))
 
-(defn get-ResourceProperty-id
-  "Unapck ResourceProperty Data object and return ResourceID."
-  [obj]
-  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue))
-
-(defn get-DatasetProperty-id
-  "Unapck DatasetProperty Data object and return DatasetID."
-  [obj]
-  (->> obj .getDataUnit .getFieldValue .getId .getFieldValue))
-
-(defn unpack-OrganizationProperty
-  "Unpack OrganizationProperty Data object as far as OrganizationPropertyValue."
-  [obj]
-  (->> obj .getDataUnit .getFieldValue))
-
-(defn get-OrganizationProperty-id
-  "Unpack OrganizationProperty Data object and return OrganizationProperty's UUID."
-  [obj]
-  (->> obj unpack-OrganizationProperty .getId .getUuid))
-
-(defn get-org-id
-  "Unpack Data thrift object and return OrganizationProperty's organization id."
-  [obj]
-  (get-OrganizationProperty-id get-org-id))
-
-(defn get-country
-  "Unpack Data thrift object and return RecordProperty's country."
-  [obj]
-  (.getCountry (t/unpack-RecordProperty obj)))
-
-(defn get-scientific-name
-  "Unpack Data thrift object and return RecordProperty's scientific
-  name."
-  [obj]
-  (.getScientificName (t/unpack-RecordProperty obj)))
-
-(defn get-collection-code
-  "Unpack Data thrift object and return RecordProperty's collection
-  code."
-  [obj]
-  (.getCollectionCode (t/unpack-RecordProperty obj)))
-
-(defn get-class
-  "Unpack Data thrift object and return RecordProperty's taxonomic
-  class."
-  [obj]
-  (.getClazz (t/unpack-RecordProperty obj)))
-
-(defn get-unique-sci-names
-  "Unpack RecordPropertyValue Data objects and return unique
-  scientific names."
-  [src]
-  (<- [?scientific-name]
-      (src _ ?obj)
-      (get-scientific-name ?obj :> ?scientific-name)
+     (let [src (hfs-textline \"resources/test-stats/\")]
+       (??- (uniques-query src [\"?collectioncode\"])))
+     ;=> (([\"Mammals\"]))"
+  [textline-src fields-vec]
+  (<- fields-vec
+      (textline-src ?line)
+      (u/splitline ?line :>> u/harvest-fields)
       (:distinct true)))
 
-(defn get-unique-occurrences
-  "Unpack RecordProperty Data objects and return unique
-  occurrence ids."
+(defn taxa-count
+  "Count unique taxa."
   [src]
-  (<- [?id]
-      (src _ ?obj)
-      (get-RecordProperty-id ?obj :> ?id)
-      (:distinct true)))
-
-(defn get-unique-occ-by-country
-  "Unpack RecordProperty Data objects and return
-   unique [?id ?country] tuples."
-  [src]
-  (<- [?id ?country]
-      (src _ ?obj)
-      (get-RecordProperty-id ?obj :> ?id)
-      (get-country ?obj :> ?country)
-      (:distinct true)))
-
-(defn get-unique-publishers
-  "Unpack OrganizationProperty Data object and return unique UUIDs."
-  [src]
-  (<- [?id]
-      (src _ ?obj)
-      (get-org-id ?obj :> ?id)
-      (:distinct true)))
-
-(defn get-unique-by-coll-code
-  "Unpack RecordProperty Data object and return unique collection-code
-  and id tuples."
-  [src]
-  (<- [?coll-code ?id]
-      (src _ ?obj)
-      (get-collection-code ?obj :> ?coll-code)
-      (get-RecordProperty-id ?obj :> ?id)
-      (:distinct true)))
-
-(defn get-unique-by-occ-class
-  "Unpack ReordProperty Data object and return unique id and class
-  tuples."
-  [src]
-  (<- [?id ?class]
-      (src _ ?obj)
-      (get-class ?obj :> ?class)
-      (get-RecordProperty-id ?obj :> ?id)
-      (:distinct true)))
-
-(defn total-occ-by-country-query
-  "Count unique occurrence records by country."
-  [src]
-  (let [uniques (get-unique-occ-by-country src)]
-    (<- [?country ?count]
-        (uniques ?id ?country)
-        (c/count ?count))))
-
-(defn total-occurrences-query
-  "Count total unique occurrences."
-  [src]
-  (let [uniques (get-unique-occurrences src)]
-    (<- [?count]
-        (uniques ?id)
-        (c/count ?count))))
-
-(defn total-publishers-query
-  "Count total publishers."
-  [src]
-  (let [uniques (get-unique-publishers src)]
-    (<- [?count]
-        (uniques ?id)
-        (c/count ?count))))
-
-(defn taxa-count-query
-  "Count taxa."
-  [src]
-  (let [uniques (get-unique-sci-names src)]
+  (let [uniques (uniques-query src ["?scientific-name"])]
     (<- [?count]
         (uniques ?scientific-name)
         (c/count ?count))))
 
-(defn total-by-collection-query
+(defn publisher-count
+  "Count unique publishers."
+  [src]
+  (let [uniques (uniques-query src ["?dwca"])] ;; correct publisher id?
+    (<- [?count]
+        (uniques ?dwca)
+        (c/count ?count))))
+
+(defn total-recs
+  "Count unique occurrences."
+  [src]
+  (let [uniques (uniques-query src ["?occurrenceid"])] ;; correct id?
+    (<- [?count]
+        (uniques ?occurrenceid)
+        (c/count ?count))))
+
+(defn total-recs-by-country
+  "Count unique occurrence records by country."
+  [src]
+  (let [uniques (uniques-query src ["?country" "?occurrenceid"])] ;; correct id?
+    (<- [?country ?count]
+        (uniques _ ?country)
+        (c/count ?count))))
+
+(defn total-recs-by-collection
   "Count unique records by collection."
   [src]
-  (let [uniques (get-unique-by-coll-code src)]
-    (<- [?coll-code ?count]
-        (uniques ?coll-code ?id)
+  (let [uniques (uniques-query src ["?collectioncode" "?occurrenceid"])]
+    (<- [?collectioncode ?count]
+        (uniques ?collectioncode _)
         (c/count ?count))))
 
-(defn total-by-class-query
+(defn total-recs-by-class
   "Count unique records by class."
   [src]
-  (let [uniques (get-unique-by-occ-class src)]
-    (<- [?class ?count]
-        (uniques ?id ?class)
+  (let [uniques (uniques-query src ["?classs" "?occurrenceid"])]
+    (<- [?classs ?count]
+        (uniques ?id ?classs)
         (c/count ?count))))
-
-(defn get-most-recent-fields
-  "Return the unpacked fields from the most recent RecordProperty object."
-  [tuples]
-  (let [max-time (apply max (map first tuples))
-        f #(= max-time (first %))
-        newest (last (first (filter f tuples)))
-        rec-prop-val (t/unpack-RecordProperty newest)]
-    [(t/unpack* rec-prop-val)]))
-
-(defbufferop wrap-get-most-recent-fields
-  "Wrapper for `get-most-recent fields`"
-  [tuples]
-  (get-most-recent-fields tuples))
-
-(defn keep-most-recent
-  "Query unpacks Data objects, determines which object of each
-   RecordProperty class is most recent, and returns that object's
-   RecordProperty fields."
-  [src]
-  (<- [?id ?class-str ?fields]
-      (src _ ?data)
-      (t/unpack ?data :> ?pedigree _)
-      (get-RecordProperty-id ?data :> ?id)
-      (t/unpack ?pedigree :> ?time)
-      (wrap-get-most-recent-fields ?time ?data :> ?fields)
-      (unpack-RecordProperty ?data :> ?prop)
-      (class ?prop :> ?class)
-      (str ?class :> ?class-str)))
-
-(defn concat-fields
-  "Flattens multiple tuples into a single vector. Intended for use with
-   tuples coming in from a `defbufferop`.
-
-   Usage:
-     (concat-fields [[1 2 3] [4 5 6]])
-     ;=> [[[1 2 3 4 5 6]]]"
-  [tuples]
-  [[(vec (flatten tuples))]])
-
-(defbufferop wrap-concat-fields
-  "Wraps `concat-fields`."
-  [tuples]
-  (concat-fields tuples))
-
-(defn concat-fields-query
-  "Concatenate fields from various RecordProperty Data objects for each
-   record (based on record id)."
-  [pail-path dirs]
-  (let [src (p/split-chunk-tap pail-path dirs)
-        newest-src (keep-most-recent src)]
-    (<- [?id ?all-fields]
-        (newest-src ?id ?class ?fields)
-        (wrap-concat-fields ?fields :> ?all-fields))))
