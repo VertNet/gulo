@@ -54,3 +54,6 @@
   (let [table "ipt_resources_tmp"]
     (insert-ipt-resources table [sample-resource])) =>
     "INSERT INTO ipt_resources_tmp (creator, author, emlUrl, guid, title, url, pubDate, publisher, description, dwcaUrl) VALUES ('The Creator<creator@vertnet.org>', 'author@vernet.org', 'http://ipt.vertnet.org:8080/ipt/eml.do?r=tester', 'b6015b60-6f96-43a9-88e5-2f41854e8f07', 'Test Title', 'http://ipt.vertnet.org:8080/ipt/resource.do?r=tester', 'Thu, 02 Aug 2012 12:28:24 -0500', 'Publisher<publisher@vernet.org>', 'Description goes here <a href=\"http://ipt.vertnet.org:8080/ipt/logo.do?r=tester\">Resource Logo</a> <a href=\"http://ipt.vertnet.org:8080/ipt/eml.do?r=tester\">EML</a>', 'http://ipt.vertnet.org:8080/ipt/archive.do?r=tester')")
+
+(future-fact
+ "Check behavior when the two tables contain exactly the same thing.")

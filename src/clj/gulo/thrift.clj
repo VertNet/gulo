@@ -129,7 +129,7 @@
 
 (defmethod create-dataset-id String
   [x]
-  (DatasetID/uuid x))
+  (DatasetID/guid x))
 
 (defmethod create-rec-id RecordSource
   [x]
@@ -317,7 +317,8 @@
 (defn dataset-data
   "Return generator of Data Thrift objects containing DatasetProperty values."
   [dataset]
-  (let [id (create-dataset-id (:title dataset))
+  (let [id (create-dataset-id (:guid dataset))
+        dataset (dissoc dataset :guid)
         props (dataset-properties id dataset)
         pedigree (Pedigree. (epoch))
         units (map create-dataunit props)
@@ -372,16 +373,21 @@
    map of Darwin Core record fields."
   (map #(RecordProperty- id %) (record-property-values fields)))
 
+(defn record-data
+  "Return generator of Data Thrift objects containing RecordProperty values."
+  [dataset-guid record]
+  {:pre  [(:id record)
+          dataset-guid]}
+  (let [id (create-rec-id (RecordSource. (:id record) dataset-guid))
+        props (record-properties id record)
+        pedigree (Pedigree. (epoch))
+        units (map create-dataunit props)
+        data (map #(Data. pedigree %) units)]
+    (vec (map vector data))))
+
 (defn Pedigree-
   []
   (Pedigree. (epoch)))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; API
-
 
 
 (comment
