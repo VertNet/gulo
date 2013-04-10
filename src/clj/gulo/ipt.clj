@@ -278,4 +278,4 @@
         urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
     (doall
      (prn (format "Harvesting %s resources" (count urls)))
-     (map #(harvest % path) urls))))
+     (map #(harvest % path :s3 true) urls))))
