@@ -177,7 +177,7 @@
       (read-json (slurp (io/input-stream url))))
     (catch Exception e
       (prn (format "Unable to get organization from UUID: %s" uuid))
-      nil)))
+      {})))
 
 (defprotocol IResource
   "Protocol for a resource."
@@ -259,17 +259,12 @@
           props (concat props (map #(% organization) [:key :name :homepageURL]))
           props (vec (flatten props))]
       (if (or (nil? (:guid resource)) (nil? organization))
-        (prn (format "Invalid resource (no GUID)."))
-        (harvest/archive->csv path url props :s3 s3)
-        ;(sink-data path resource (sink-metadata path resource dataset
-        ;organization))
-        ))
+        (prn (format "Warning: No GUID for resource.")))
+      (harvest/archive->csv path url props :s3 s3))
     (catch Exception e
       (prn (format "Unable to harvest resource %s - %s" url e))
       (throw e)
       nil)))
-
-;; r.pubdate, r.link. r.eml, r.dwca, r.guid, r.title, o.key, o.name, o.homepageURL
 
 (defn harvest-all
   "Harvest all resource in vn-resources table."
