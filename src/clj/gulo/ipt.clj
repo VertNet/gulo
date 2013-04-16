@@ -77,7 +77,7 @@
         [gulo.thrift :as t]
         [gulo.hadoop.pail :as p]
         [gulo.harvest :as harvest :only (archive->csv)]
-        [dwca.core :as dwca]
+        [dwca.core :as dwca :only (open fields)]
         [gulo.views :as views])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -131,7 +131,6 @@
 (defn ipt-resources
   "Return vector of resource maps from supplied IPT RSS url."
   [url]
-  (prn (format "RSS URL: %s" url))
   (let [map (xml->map (slurp (io/input-stream url)))]
     (:item (:channel (:rss map)))))
 
@@ -184,7 +183,7 @@
   (get-props [this] "Get resource properties as a map.")
   (get-dataset [this] "Get resource dataset properties as a map.")
   (get-organization [this] "Get resource organization properties as a map.")
-  (get-recs [this] "Get sequence of resource record properties as maps.")
+  (get-recs [this path] "Get sequence of resource record properties as maps.")
   (get-insert-sql [this table] "Get insert SQL to load resource to CartoDB.")
   (cdb-insert [this table] "Insert resource to supplied table on CartoDB"))
 
@@ -221,9 +220,9 @@
             organization (uuid->organization uuid)]
         organization))
   (get-recs
-    [this]
+    [this path]
     (let [dwca-url (s/replace url "resource" "archive")
-          dwc-records (dwca/open dwca-url)
+          dwc-records (dwca/open dwca-url :path path)
           records (map fields dwc-records)]
       records))
   (get-insert-sql

@@ -1,6 +1,6 @@
 (ns gulo.util
   "This namespace contains utility functions."
-  (:use [dwca.core :as dwca])
+  (:use [dwca.core :as dwca :only (index-of field-vals)])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
 (defn gen-uuid

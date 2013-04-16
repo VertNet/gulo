@@ -3,7 +3,7 @@
   (:use [gulo.util :as util :only (gen-uuid, name-valid? latlon-valid?)]
         [clojure.data.json :only (read-json)]
         [cascalog.api]
-        [dwca.core :as dwca]
+        [dwca.core :as dwca :only (open field-vals)]
         [cartodb.core :as cartodb]
         [clojure.data.csv :as csv]
         [clojure.java.io :as io])
@@ -88,22 +88,24 @@
   (prn (format "Downloading: %s" url))
   (try
     (let [resource-name (second (s/split url #"="))
-          path (format "%s/%s.csv" path resource-name)
+          uuid (util/gen-uuid)
+          csv-path (format "%s/%s-%s.csv" path resource-name uuid)
           archive-url (s/replace url "resource" "archive")
-          records (dwca/open archive-url)
+          records (dwca/open archive-url :path path)
           vals (map field-vals records)
           vals (map #(prepend-props % props) vals)
           vals (map #(concat % [";"]) vals)
-          out (io/writer (io/file path) :encoding "UTF-8")]
+          out (io/writer (io/file csv-path) :encoding "UTF-8")]
       (do
-        (prn (format "Writing to %s" path))
+        (prn (format "Writing to %s" csv-path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
         (if s3
           (do
             (prn (format "Uploading %s to S3..." path resource-name))
-            (file->s3 path (format "vnproject/data/staging/%s" resource-name))))
-        (prn "Done harvesting" resource-name)))
+            (file->s3 csv-path (format "vnproject/data/staging/%s-%s" resource-name uuid))))
+        (prn "Done harvesting" resource-name)
+        (io/delete-file csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
 (defn harvest-all
