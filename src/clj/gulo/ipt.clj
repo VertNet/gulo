@@ -267,8 +267,8 @@
 
 (defn harvest-all
   "Harvest all resource in vn-resources table."
-  [& {:keys [path] :or {path "/tmp/vn"}}]
-  (let [sql "select link from vn_resources where ipt=true"
+  [& {:keys [path s3] :or {path "/tmp/vn" s3 true}}]
+  (let [sql "select link from vn_resources where ipt=true order by cartodb_id"
         urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
     (doall
      (prn (format "Harvesting %s resources" (count urls)))
