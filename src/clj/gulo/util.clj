@@ -1,7 +1,9 @@
 (ns gulo.util
   "This namespace contains utility functions."
   (:use [dwca.core :as dwca])
-  (:import [org.gbif.dwc.record DarwinCoreRecord]))
+  (:import [org.gbif.dwc.record DarwinCoreRecord])
+  (:require [clj-time.core :as time]
+            [clj-time.format :as f]))
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
@@ -235,3 +237,21 @@
   "Returns vector of line values by splitting on tab."
   [line]
   (vec (.split line "\t")))
+
+(defn todays-date
+  "Returns current date as \"YYYY-MM-dd\".
+
+   Usage:
+     (todays-date)
+     ;=> \"2013-04-16\""
+  []
+  (f/unparse (f/formatters :year-month-day) (time/now)))
+
+(defn mk-stats-out-path
+  "Build output path, using a base path, query name, and the current date.
+
+   Usage:
+     (mk-stats-out-path \"/tmp/stats\" \"taxon\")
+     ;=> \"/tmp/stats/2013-04-17/taxon\""
+  [base-path date-str query-name]
+  (format "%s/%s/%s" base-path date-str query-name))

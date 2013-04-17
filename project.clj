@@ -32,6 +32,7 @@
                  ;;[clj-aws-s3 "0.3.2"]
                  [org.gbif/gbif-metadata-profile "1.1-SNAPSHOT"]
                  [enlive "1.0.1"]
-                 [org.apache.thrift/libthrift "0.8.0"]]
+                 [org.apache.thrift/libthrift "0.8.0"]
+                 [clj-time "0.3.4"]]
   :min-lein-version "2.0.0"
   :aot [vn.schema gulo.hadoop.pail org.json])
