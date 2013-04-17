@@ -47,27 +47,6 @@
   [vals name code]
   (conj (vec vals) name code)) ;; vec forces conj to append to tail.
 
-(defn- clean-val
-  "Clean val by removing tabs and line breaks and replacing double quotes with
-   single quotes."
-  [^String val]
-  (if val
-    (-> val
-        (s/replace "\t" " ")
-        (s/replace "\n" " ")
-        (s/replace "\r" " ")
-        (s/replace "\"" "`"))
-    val))
-
-(defn- clean
-  "Clean a sequence of vals."
-  [vals]
-  (map clean-val vals))
-
-(defn- valid-rec?
-  [rec]
-  (and (name-valid? rec) (latlon-valid? rec)))
-
 (defn file->s3
   "Upload files at supplied path to S3 path."
   [path s3path]
@@ -107,18 +86,3 @@
         (prn "Done harvesting" resource-name)
         (io/delete-file csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
-
-(defn harvest-all
-  "Harvest all resource in vn-resources table."
-  [& {:keys [path] :or {path "/tmp/vn"}}]
-  (let [sql "select link from vn_resources where ipt=true"
-        urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
-    (doall
-     (prn (format "Harvesting %s resources" (count urls)))
-     (map #(archive->csv path %) urls))))
-
-(defn harvest
-  "Harvest supplied map of publishers in parallel to CSV files at path."
-  [publishers path]
-  (doall
-   (map #(future (archive->csv path %)) publishers)))

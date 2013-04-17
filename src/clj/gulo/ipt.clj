@@ -13,45 +13,12 @@
   For convienience, we store resource URLs that we want to harvest in
   CartoDB:
 
-    https://vertnet.cartodb.com/tables/resource
-
-  The resource table has the resource_pubdate for when the resource
-  was last published, the dataset_pubdate for when the dataset was
-  last updated, and the link to the resource.
+    https://vertnet.cartodb.com/tables/publishers
 
   When we harvest resources, we extract the dataset and metadata from
   their archive, lookup the resource organization if possible, and
   encode everything (records, resource, dataset, organization) into a
-  graph-based schema using Thrift. The schema definition is in
-  dev/gulo.thrift. The basic nodes in our schema are Organization,
-  Resource, Dataset, and Record:
- 
-    +----------+    +----------+    +----------+    +--------------+
-    |          |    |          |    |          |    |              |
-    | Record   +--->+ Dataset  +--->+ Resource +--->+ Organization |
-    |          |    |          |    |          |    |              |
-    +----------+    +----------+    +----------+    +--------------+
- 
-  We then store the graph in S3 using Pails so that we can easily
-  process them into views using MapReduce on Hadoop via Cascading and
-  Cascalog. The resulting views are ultimately uploaded to Google App
-  Engine and CartoDB for serving core VertNet APIs and UIs.
-
-  The harvesting workflow looks like this:
-
-    (1) Grab resources from our CartoDB resource table
-
-    (2) For each resource, compare resource_pubdate with the RSS feed pubdate
-
-    (3) If resource_pubdate equals RSS pubdate, skip resource
-
-    (4) If resource_pubdate older than RSS feed pubdate, then:
-        - Download resource RSS
-        - If RSS contains GUID, download resource organiation metadata
-        - Download and extract dataset and metadata from resource archive
-        - Encode resource, dataset, organization, records into graph
-        - upload graph to S3
-        - Update resource_pubdate in CartoDB resource table
+  simple CSV textline that gets uploaded to S3.
   
   For reference:
 
@@ -59,13 +26,7 @@
     Darwin Core Archive: http://goo.gl/ee3KC
     EML: http://goo.gl/Z27H5
     IPT: http://goo.gl/GtJMF
-    Thrift: http://goo.gl/S5xmY
     S3: http://goo.gl/ailE
-    Pails: http://goo.gl/MjVkn
-    Hadoop: http://goo.gl/tnkf
-    MapReduce: http://goo.gl/Dmj3
-    Cascading: http://goo.gl/9PaFv
-    Cascalog: http://goo.gl/SRmDh
   "
   (:use [clojure.java.io :as io]
         [cascalog.api]
