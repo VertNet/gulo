@@ -44,7 +44,7 @@
   "Run a specific statistic query."
   [query in-path base-path query-name]
   (let [final-path (util/mk-stats-out-path base-path (util/todays-date) query-name)]
-    (?- (hfs-seqfile final-path) (query (hfs-seqfile in-path)))))
+    (?- (hfs-textline final-path) (query (hfs-textline in-path)))))
 
 (defmain RunStats
   "Run all statistics queries."
