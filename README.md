@@ -7,7 +7,17 @@ Gulo is the genus for wolverine, the biggest land-dwelling species of weasel on 
 Gulo is also a VertNet project designed for harvesting Darwin Core Archives, shredding them into small pieces, and loading them into [CartoDB](http://cartodb.com). It's written in the [Clojure](http://clojure.org) programming language and rides on [Cascading](http://www.cascading.org) and [Cascalog](https://github.com/nathanmarz/cascalog) for processing "Big Data" on top of [Hadoop](http://hadoop.apache.org) using [MapReduce](http://research.google.com/archive/mapreduce.html).
 
 # Developing
+## AWS credentials
 
+Running Gulo queries with Elastic MapReduce requires adding the following to the file `resources/credentials.json`:
+
+```json
+{
+   "access-id": "your_aws_access_id",
+   "private-key":"your_aws_private_key",
+   "key-pair-file":"~/.ssh/vertnet.pem"
+}
+```
 ## CartoDB OAuth credentials
 
 Gulo depends on an authenticated connection to CartoDB. This requires adding the following file in `resources/creds.json`:
