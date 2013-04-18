@@ -67,6 +67,43 @@
 ;; RSS feed URL for the VertNet IPT instance:
 (def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
+(defn resource-row
+  "Return map of resource table columns from supplied IPT resource URL."
+  [url icode ipt]
+  (let [eml-url (s/replace url "resource" "eml")
+        eml (EmlFactory/build (io/input-stream eml-url))
+        row {:title (.getTitle eml)
+             :icode icode
+             :ipt ipt
+             :url url
+             :eml eml-url
+             :dwca (s/replace url "resource" "archive")
+             :pubdate (.toString (.getPubDate eml))
+             :orgname (.getOrganisation (.getContact eml))
+             :description (.getAbstract eml)
+             :rights (.getIntellectualRights eml)
+             :contact (.getCreatorName eml)
+             :email (.getCreatorEmail eml)}]
+    row))
+
+(defn resource-rows
+  "Return vector of resource-rows from resource_staging table on CartoDB."
+  []
+  (let [sql "SELECT url, icode, ipt FROM resource_staging WHERE ipt=true ORDER BY cartodb_id"
+        rows (:rows (cartodb/query sql "vertnet" :api-key api-key))
+        resource-rows (map #(resource-row (:url %) (:icode %) (:ipt %)) rows)]
+    resource-rows))
+
+(defn insert-resource-rows
+  [rows]
+  (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
+  (for [row rows]
+    (let [sql (cartodb-utils/maps->insert-sql "resource" row)]
+      (try
+        (cartodb/query sql "vertnet" :api-key api-key)
+        (catch Exception e
+          (prn (format "FAIL: %s" sql)))))))
+
 (defn eml->dataset
   "Return DatasetPropertyValue map from supplied org.gbif.metadata.eml.Eml obj."
   [eml]
@@ -75,13 +112,16 @@
         ap (if (empty? parties-emails) "" (reduce #(str %1 "," %2) parties-emails))]
     {:title (.getTitle eml)
      :creator (.getCreatorEmail eml)
+     :creator-name (.getCreatorName eml)
      :metadataProvider (.getEmail (.getMetadataProvider eml))
      :language (.getLanguage eml)
      :associatedParty ap
      :pubDate (.toString (.getPubDate eml))
      :contact (.getEmail (.getContact eml))
      :additionalInfo (.getAdditionalInfo eml)
-     :guid (.getGuid eml)}))
+     :guid (.getGuid eml)
+     :abstract (.getAbstract eml)
+     :rights (.getIntellectualRights eml)}))
 
 (defn xml->map
   "Return map representation of supplied XML string."
@@ -234,3 +274,5 @@
     (doall
      (prn (format "Harvesting %s resources" (count urls)))
      (map #(harvest % path :s3 true) urls))))
+
+
