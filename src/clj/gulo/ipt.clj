@@ -67,11 +67,32 @@
 ;; RSS feed URL for the VertNet IPT instance:
 (def vertnet-ipt-rss "http://ipt.vertnet.org:8080/ipt/rss.do")
 
+(defn fetch-url
+  "Return HTML from supplied URL."
+  [url]
+  (html/html-resource (java.net.URL. url)))
+
+(defn get-size-count
+  "Return map with :size in MB and record :count for supplied resource URL."
+  [url]
+  (try
+    (let [html (fetch-url url)
+          node (nth (html/select html [:div.details :td]) 2)
+          token (second (:content node))
+          tokens (s/split token #" ")
+          size (s/replace (s/replace (second tokens) "(" "") "," "")
+          count (s/replace (nth tokens 3) "," "")]
+      {:size size :count count})
+    (catch Exception e
+      (prn (format "Unable to scrape size/count for %s" url))
+      {})))
+
 (defn resource-row
   "Return map of resource table columns from supplied IPT resource URL."
   [url icode ipt]
   (let [eml-url (s/replace url "resource" "eml")
         eml (EmlFactory/build (io/input-stream eml-url))
+        stats (get-size-count url)
         row {:title (.getTitle eml)
              :icode icode
              :ipt ipt
@@ -83,7 +104,9 @@
              :description (.getAbstract eml)
              :rights (.getIntellectualRights eml)
              :contact (.getCreatorName eml)
-             :email (.getCreatorEmail eml)}]
+             :email (.getCreatorEmail eml)
+             :count (:count stats)
+             :size (:size stats)}]
     row))
 
 (defn resource-rows
@@ -150,10 +173,6 @@
 ;;     {:name :noah, :link 2, :title "b"}
 ;;     {:name :tina, :link 3, :title "c"})
 
-(defn fetch-url
-  "Return HTML from supplied URL."
-  [url]
-  (html/html-resource (java.net.URL. url)))
 
 (defn get-org-uuid
   "Return organization UUID scraped from GBIF registry page at supplied URL:
@@ -245,6 +264,20 @@
     (let [sql (get-insert-sql this table)]
       (cartodb/query sql "vertnet" :api-key api-key))))
 
+(defn harvest-resource
+  [resource path & {:keys [s3] :or {s3 false}}]
+  (try
+    (let [url (:url resource)
+          props (map #(% resource) [:pubdate :url :eml :dwca :title :icode
+                                    :description :contact :orgname :email
+                                    :rights :icode :count])
+          props (vec (flatten props))]
+      (harvest/archive->csv path url props :s3 s3))
+    (catch Exception e
+      (prn (format "ERROR: Resource %s (%s)" (:url resource) (.getMessage e)))
+      (throw e)
+      nil)))
+
 (defn harvest
   "Harvest new records from supplied vector of resource urls and insert into
   resource table."
@@ -266,13 +299,21 @@
       (throw e)
       nil)))
 
+(defn get-resources
+  "Sync VertNet resources on CartoDB and return all rows."
+  [& {:keys [limit] :or {limit nil}}]
+  (let [sql "SELECT * FROM resource WHERE ipt=true ORDER BY cartodb_id"
+        sql (if (nil? limit) sql (format "%s LIMIT %s" sql limit))
+        resources (:rows (cartodb/query sql "vertnet" :api-key api-key))]
+    resources))
+
 (defn harvest-all
   "Harvest all resource in vn-resources table."
   [& {:keys [path s3] :or {path "/tmp/vn" s3 true}}]
-  (let [sql "select link from vn_resources where ipt=true order by cartodb_id"
-        urls (map :link (:rows (cartodb/query sql "vertnet" :api-key api-key)))]
+  (let [sql "SELECT * FROM resource WHERE ipt=true ORDER BY cartodb_id"
+        resources (:rows (cartodb/query sql "vertnet" :api-key api-key))]
     (doall
-     (prn (format "Harvesting %s resources" (count urls)))
-     (map #(harvest % path :s3 true) urls))))
+     (prn (format "Harvesting %s resources" (count resources)))
+     (map #(harvest % path :s3 true) resources))))
 
 
