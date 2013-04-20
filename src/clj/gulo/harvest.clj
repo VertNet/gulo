@@ -170,8 +170,9 @@
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
   (let [rows (resource-staging-rows)]
-    (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
-    (map sync-resource rows)))
+    (doall
+     (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
+     (map sync-resource rows))))
 
 (defn get-resources
   "Return vector of resource table row maps from CartoDB."
