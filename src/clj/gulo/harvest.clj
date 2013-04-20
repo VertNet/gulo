@@ -72,8 +72,8 @@
 
 (defn resource->s3
   "Upload Darwn Core records from supplied IPT resource URL to S3."
-  [path url props & {:keys [s3] :or {s3 false}}]
-  (prn (format "Downloading: %s" url))
+  [path url props s3-path]
+  (prn (format "Downloading: %s records from %s" (nth props 12) url))
   (try
     (let [resource-name (second (s/split url #"="))
           uuid (util/gen-uuid)
@@ -88,10 +88,10 @@
         (prn (format "Writing to %s" csv-path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
-        (if s3
+        (if s3-path
           (do
-            (prn (format "Uploading %s to S3..." path resource-name))
-            (file->s3 csv-path (format "vnproject/data/staging/%s-%s" resource-name uuid))))
+            (prn (format "Uploading %s to S3: %s" resource-name s3-path))
+            (file->s3 csv-path (format "%s/%s-%s" s3-path resource-name uuid))))
         (prn "Done harvesting" resource-name)
         (io/delete-file csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
@@ -160,18 +160,19 @@
 (defn sync-resource
   "Sync resource map to CartoDB."
   [resource]
-  (let [sql (cartodb-utils/maps->insert-sql "resource" resource)]
-    (try
-      (cartodb/query sql "vertnet" :api-key api-key)
-      (catch Exception e
-        (prn (format "SYNC FAIL: %s" sql))))))
+  (try
+    (prn (format "Syncing: %s" (:url resource)))
+    (let [sql (cartodb-utils/maps->insert-sql "resource" resource)]      
+      (cartodb/query sql "vertnet" :api-key api-key))
+    (catch Exception e
+      (prn (format "SYNC FAIL: %s (%s)" (:url resource) (.getMessage e))))))
 
 (defn sync-resource-table
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
   (let [rows (resource-staging-rows)]
+    (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
     (doall
-     (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
      (map sync-resource rows))))
 
 (defn get-resources
