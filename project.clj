@@ -22,6 +22,7 @@
                  [backtype/dfs-datastores-cascading "1.3.0"]                 
                  [cascading/cascading-hadoop "2.2.0-wip-19" :exclusions [org.slf4j/slf4j-log4j12]]
                  [org.pingles/cascading.protobuf "0.0.1"]
+                 [org.clojure/clojure-contrib "1.2.0"]
                  [dwca-reader-clj "0.8.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
                  [cartodb-clj "1.5.5"]

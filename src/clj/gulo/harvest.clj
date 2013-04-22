@@ -33,12 +33,12 @@
         [cartodb.core :as cartodb]
         [cartodb.utils :as cartodb-utils]
         [clojure.data.csv :as csv]
-        [clojure.java.io :as io]
-         [net.cgrand.enlive-html :as html
+        [net.cgrand.enlive-html :as html
          :only (html-resource, select, attr-values)])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
-            [clojure.zip :as zip])
+            [clojure.zip :as zip]
+            [clojure.contrib.io :as cio :only (delete-file-recursively)])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [org.gbif.metadata.eml EmlFactory]))
@@ -93,7 +93,8 @@
             (prn (format "Uploading %s to S3: %s" resource-name s3-path))
             (file->s3 csv-path (format "%s/%s-%s" s3-path resource-name uuid))))
         (prn "Done harvesting" resource-name)
-        (io/delete-file csv-path)))
+        (cio/delete-file-recursively "/tmp/vn/")
+        (io/make-parents "/tmp/vn/boom")))
     (catch Exception e (prn "Error harvesting" url (.getMessage e)))))
 
 (defn s3-pail-path
