@@ -20,7 +20,7 @@ Running Gulo queries with Elastic MapReduce requires adding the following to the
 }
 ```
 
-This needs to be stored in `resources/s3.json`:
+Working with the `gulo.cdb` namespace requires this to be stored in `resources/aws.json`:
 
 ```json
 {
