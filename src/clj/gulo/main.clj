@@ -2,8 +2,8 @@
   "This namespace provides entry points for harvesting, shredding, and preparing
   data from Darwin Core Archives into CartoDB."
   (:use [cascalog.api]
-        [cascalog.more-taps :as taps :only (hfs-delimited)]        
-        [gulo.core]
+        [cascalog.more-taps :as taps :only (hfs-delimited)]
+        [gulo core views]
         [gulo.cdb :only (prepare-tables, wire-tables)]
         [gulo.harvest]
         [gulo.util :as util]
@@ -40,3 +40,21 @@
   []
   (wire-tables))
 
+(defn run-stat-query
+  "Run a specific statistic query."
+  [query in-path base-path query-name]
+  (let [final-path (util/mk-stats-out-path base-path (util/todays-date) query-name)]
+    (?- (hfs-textline final-path) (query (hfs-textline in-path)))))
+
+(defmain RunStats
+  "Run all statistics queries."
+  [in-path out-dir]
+  (let [today (todays-date)
+        queries-names [[taxa-count "taxa-count"]
+                      [publisher-count "publisher-count"]
+                      [total-recs "total-recs"]
+                      [total-recs-by-country "total-recs-by-country"]
+                      [total-recs-by-collection "total-recs-by-collection"]
+                      [total-recs-by-class "total-recs-by-class"]]]
+    (for [[q q-name] queries-names]
+      (run-stat-query q in-path out-dir q-name))))
