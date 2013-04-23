@@ -1,68 +1,42 @@
 (ns gulo.views-test
   (:use gulo.views :reload)
   (:use [cascalog.api]
-        [gulo.thrift :as t]
-        [gulo.hadoop.pail :as p]
         [midje sweet cascalog])
   (:require [cascalog.ops :as c]
             [clojure.java.io :as io]))
 
 (def src (hfs-textline (.getPath (io/resource "test-stats"))))
 
-(defn query-runner
-  [fun k pail-path]
-  (let [tap (p/split-chunk-tap pail-path (k stats-paths))]
-    (fun tap)))
+(fact "Check `uniques-query` with one field."
+  (uniques-query src ["?scientificname"])
+  => (produces-some [["Aplodontia rufa"] ["Blarina brevicauda"] ["Canis latrans"]
+                     ["Castor canadensis"] ["Citellus tridecemlineatus"]
+                     ["Clethrionomys gapperi"] ["Cryptotis parva"]
+                     ["Dasypterus floridanus"] ["Dasypus novemcinctus"]
+                     ["Didelphis marsupialis"]]))
 
-(fact "Checks get-unique-sci-names"
-  (let []
-    (get-unique-sci-names src))
-  => (produces [["Mustache Mustachus"] ["Puma Concolor"]]))
+(fact "Check `uniques-query` with multiple fields."
+  (uniques-query src ["?scientificname" "?year"])
+  => (produces-some [["Aplodontia rufa" "1974"] ["Blarina brevicauda" "1966"]
+                     ["Blarina brevicauda" "1967"] ["Blarina brevicauda" "1968"]
+                     ["Blarina brevicauda" "1971"] ["Blarina brevicauda" "1973"]
+                     ["Blarina brevicauda" "1976"] ["Blarina brevicauda" "1977"]
+                     ["Blarina brevicauda" "1978"] ["Canis latrans" "1987"]]))
 
-(fact "Checks get-unique-occurrences"
-  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "RecordProperty" "Occurrence"])]
-    (get-unique-occurrences src)) => (produces [["myid"] ["yourid"]]))
+(fact "Check `taxa-count`."
+  (taxa-count src) => (produces [[63]]))
 
-(fact "Checks get-unique-occ-by-country"
-  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "RecordProperty" "Location"])]
-    (get-unique-occ-by-country src))
-  => (produces [["yourid" "Mustandia"] ["myid" "United States"]]))
+(fact "Check `publisher-count`."
+  (publisher-count src) => (produces [[1]]))
 
-(fact "Checks get-unique-by-coll-code"
-  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "RecordProperty" "RecordLevel"])]
-    (get-unique-by-coll-code src))
-  => (produces [["MVZ" "myid"] ["VIZZ" "yourid"]]))
+(fact "Check `total-recs`."
+  (total-recs src) => (produces [[968]]))
 
-(fact "Checks get-unique-by-occ-class"
-  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "RecordProperty" "Taxon"])]
-    (get-unique-by-occ-class src))
-    => (produces [["myid" "Mammalia"] ["yourid" "Mustachia"]]))
+(fact "Check `total-recs-by-country`."
+  (total-recs-by-country src) => (produces [["United States" 968]]))
 
-(fact "Checks get-unique-publishers"
-  (let [src (p/split-chunk-tap PAIL-PATH ["prop" "OrganizationProperty"])]
-    (get-unique-publishers src)) => (produces [["AMNHguid"] ["MVZguid"]]))
+(fact "Check `total-recs-by-collection`."
+  (total-recs-by-collection src) => (produces [["Mammals" 968]]))
 
-(fact "Checks total-occ-by-country-query."
-  (query-runner total-occ-by-country-query :records-by-country PAIL-PATH)
-  => (produces [["Mustandia" 1] ["United States" 1]]))
-
-(fact "Checks total-occurrences-query."
-  (query-runner total-occurrences-query :total-records PAIL-PATH)
-  => (produces [[2]]))
-
-(fact
- "Checks total-pubishers-query"
- (query-runner total-publishers-query :total-publishers PAIL-PATH)
- => (produces [[2]]))
-
-(fact "Checks taxa-count-query."
-  (query-runner taxa-count-query :total-taxa PAIL-PATH)
-  => (produces [[2]]))
-
-(fact "Checks total-by-collection-query."
-  (query-runner total-by-collection-query :records-by-collection PAIL-PATH)
-  => (produces [["MVZ" 1] ["VIZZ" 1]]))
-
-(fact "Checks total-by-class-query."
-  (query-runner total-by-class-query :records-by-class PAIL-PATH)
-  => (produces [["Mammalia" 1] ["Mustachia" 1]]))
+(fact "Check `total-recs-by-class`."
+  (total-recs-by-class src) => (produces [["Mammalia" 968]]))

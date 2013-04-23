@@ -24,15 +24,15 @@
 (defn taxa-count
   "Count unique taxa."
   [src]
-  (let [uniques (uniques-query src ["?scientific-name"])]
+  (let [uniques (uniques-query src ["?scientificname"])]
     (<- [?count]
-        (uniques ?scientific-name)
+        (uniques ?scientificname)
         (c/count ?count))))
 
 (defn publisher-count
   "Count unique publishers."
   [src]
-  (let [uniques (uniques-query src ["?dwca"])] ;; correct publisher id?
+  (let [uniques (uniques-query src ["?name"])] ;; correct publisher id?
     (<- [?count]
         (uniques ?dwca)
         (c/count ?count))))
@@ -40,7 +40,7 @@
 (defn total-recs
   "Count unique occurrences."
   [src]
-  (let [uniques (uniques-query src ["?occurrenceid"])] ;; correct id?
+  (let [uniques (uniques-query src ["?id"])] ;; correct id?
     (<- [?count]
         (uniques ?occurrenceid)
         (c/count ?count))))
@@ -48,15 +48,15 @@
 (defn total-recs-by-country
   "Count unique occurrence records by country."
   [src]
-  (let [uniques (uniques-query src ["?country" "?occurrenceid"])] ;; correct id?
+  (let [uniques (uniques-query src ["?country" "?id"])] ;; correct id?
     (<- [?country ?count]
-        (uniques _ ?country)
+        (uniques ?country _)
         (c/count ?count))))
 
 (defn total-recs-by-collection
   "Count unique records by collection."
   [src]
-  (let [uniques (uniques-query src ["?collectioncode" "?occurrenceid"])]
+  (let [uniques (uniques-query src ["?collectioncode" "?id"])]
     (<- [?collectioncode ?count]
         (uniques ?collectioncode _)
         (c/count ?count))))
@@ -64,7 +64,7 @@
 (defn total-recs-by-class
   "Count unique records by class."
   [src]
-  (let [uniques (uniques-query src ["?classs" "?occurrenceid"])]
+  (let [uniques (uniques-query src ["?classs" "?id"])]
     (<- [?classs ?count]
-        (uniques ?id ?classs)
+        (uniques ?classs _)
         (c/count ?count))))
