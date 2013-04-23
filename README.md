@@ -9,7 +9,7 @@ Gulo is also a VertNet project designed for harvesting Darwin Core Archives, shr
 # Developing
 ## AWS credentials
 
-Running Gulo queries with Elastic MapReduce requires adding the following to the file `resources/credentials.json`:
+Running Gulo queries with Elastic MapReduce requires adding the following to the file `credentials.json` in the project root:
 
 ```json
 {
@@ -19,6 +19,16 @@ Running Gulo queries with Elastic MapReduce requires adding the following to the
    "key-pair":"vertnet"
 }
 ```
+
+This needs to be stored in `resources/s3.json`:
+
+```json
+{
+    "access-key": "your_aws_access_id",
+    "secret-key": "your_aws_private_key"
+}
+```
+
 ## CartoDB OAuth credentials
 
 Gulo depends on an authenticated connection to CartoDB. This requires adding the following file in `resources/creds.json`:
