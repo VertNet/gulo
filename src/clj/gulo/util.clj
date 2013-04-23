@@ -50,7 +50,7 @@
 ;; Ordered vector of harvesting output column names for use in wide Cascalog sources:
 (def harvest-fields
   ["?pubdate" "?url" "?eml" "?dwca" "?title" "?icode" "?description" "?contact"
-   "?orgname" "?email" "?rights" "?icode" "?count"
+   "?orgname" "?email" "?rights-extra" "?icode-extra" "?count"
    "?id" "?associatedmedia" "?associatedoccurrences" "?associatedreferences"
    "?associatedsequences" "?associatedtaxa" "?basisofrecord" "?bed" "?behavior"
    "?catalognumber" "?collectioncode" "?collectionid" "?continent"
