@@ -33,3 +33,9 @@
  "91" "0" false
  "-181" "0" false
  "181" "0" false)
+
+(fact "Check `todays-date`."
+  (type (todays-date)) => java.lang.String)
+
+(fact "Check `mk-stats-out-path`."
+  (mk-stats-out-path "/tmp/stats" "2013-04-16" "taxon") => "/tmp/stats/2013-04-16/taxon")
