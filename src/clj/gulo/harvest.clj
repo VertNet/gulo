@@ -26,8 +26,7 @@
     EML: http://goo.gl/Z27H5
     IPT: http://goo.gl/GtJMF
     S3: http://goo.gl/ailE"
-  (:use [gulo.util :as util :only (gen-uuid)]
-        [clojure.data.json :only (read-json)]
+  (:use [clojure.data.json :only (read-json)]
         [cascalog.api]
         [dwca.core :as dwca :only (open field-vals fields)]
         [cartodb.core :as cartodb]
@@ -38,6 +37,7 @@
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.zip :as zip]
+            [gulo.util :as util :only (gen-uuid)]
             [clojure.contrib.io :as cio :only (delete-file-recursively)])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
