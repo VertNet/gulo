@@ -15,7 +15,8 @@ Running Gulo queries with Elastic MapReduce requires adding the following to the
 {
    "access-id": "your_aws_access_id",
    "private-key":"your_aws_private_key",
-   "key-pair-file":"~/.ssh/vertnet.pem"
+   "key-pair-file":"~/.ssh/vertnet.pem",
+   "key-pair":"vertnet"
 }
 ```
 ## CartoDB OAuth credentials
