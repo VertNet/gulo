@@ -1,9 +1,20 @@
 (ns gulo.util
   "This namespace contains utility functions."
-  (:use [dwca.core :as dwca :only (index-of field-vals)])
+  (:use [dwca.core :as dwca :only (index-of field-vals)]
+        [clojure.data.json :only (read-json)])
   (:import [org.gbif.dwc.record DarwinCoreRecord])
   (:require [clj-time.core :as time]
-            [clj-time.format :as f]))
+            [clj-time.format :as f]
+            [clojure.java.io :as io]))
+
+;; Slurps resources/creds.json for CartoDB OAuth: {"key" "secret" "user" "password"}
+(def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
+
+;; CartoDB API key:
+(def api-key (:api_key cartodb-creds))
+
+;; Slurps resources/aws.json for Amazon S3: {"access-key" "secret-key"}
+(def aws-creds (read-json (slurp (io/resource "aws.json"))))
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
