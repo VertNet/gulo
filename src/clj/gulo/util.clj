@@ -3,7 +3,8 @@
   (:use [dwca.core :as dwca :only (index-of field-vals)])
   (:import [org.gbif.dwc.record DarwinCoreRecord])
   (:require [clj-time.core :as time]
-            [clj-time.format :as f]))
+            [clj-time.format :as f]
+            [clojure.string :as s]))
 
 (defn gen-uuid
   "Return a randomly generated UUID string."
@@ -47,58 +48,76 @@
               (>= lon lon-min)))
        (catch Exception e false))))
 
+(def resource-fields
+  "Ordered vector of fields used in resource map."
+  [:pubdate :url :eml :dwca :title :icode :description :contact :orgname :email
+   :emlrights :count])
+
+(defn kw->field-str
+  "Convert a field name keyword or string to a Cascalog-style field string.
+
+   Usage:
+     (field->field-str :pubdate)
+     ;=> \"?pubdate\"
+
+     (field->field-str \"pubdate\")
+     ;=> \"?pubdate\""
+  [kw]
+  (str "?" (name kw)))
+
 ;; Ordered vector of harvesting output column names for use in wide Cascalog sources:
 (def harvest-fields
-  ["?pubdate" "?url" "?eml" "?dwca" "?title" "?icode" "?description" "?contact"
-   "?orgname" "?email" "?rights-extra" "?icode-extra" "?count"
-   "?id" "?associatedmedia" "?associatedoccurrences" "?associatedreferences"
-   "?associatedsequences" "?associatedtaxa" "?basisofrecord" "?bed" "?behavior"
-   "?catalognumber" "?collectioncode" "?collectionid" "?continent"
-   "?coordinateprecision" "?coordinateuncertaintyinmeters" "?country" "?countrycode"
-   "?county" "?datageneralizations" "?dateidentified" "?day" "?decimallatitude"
-   "?decimallongitude" "?disposition" "?earliestageorloweststage"
-   "?earliesteonorlowesteonothem" "?earliestepochorlowestseries"
-   "?earliesteraorlowesterathem" "?earliestperiodorlowestsystem" "?enddayofyear"
-   "?establishmentmeans" "?eventattributes" "?eventdate" "?eventid" "?eventremarks"
-   "?eventtime" "?fieldnotes" "?fieldnumber" "?footprintspatialfit" "?footprintwkt"
-   "?formation" "?geodeticdatum" "?geologicalcontextid" "?georeferenceprotocol"
-   "?georeferenceremarks" "?georeferencesources" "?georeferenceverificationstatus"
-   "?georeferencedby" "?group" "?habitat" "?highergeography" "?highergeographyid"
-   "?highestbiostratigraphiczone" "?identificationattributes" "?identificationid"
-   "?identificationqualifier" "?identificationreferences" "?identificationremarks"
-   "?identifiedby" "?individualcount" "?individualid" "?informationwithheld"
-   "?institutioncode" "?island" "?islandgroup" "?latestageorhigheststage"
-   "?latesteonorhighesteonothem" "?latestepochorhighestseries"
-   "?latesteraorhighesterathem" "?latestperiodorhighestsystem" "?lifestage"
-   "?lithostratigraphicterms" "?locality" "?locationattributes" "?locationid"
-   "?locationremarks" "?lowestbiostratigraphiczone" "?maximumdepthinmeters"
-   "?maximumdistanceabovesurfaceinmeters" "?maximumelevationinmeters"
-   "?measurementaccuracy" "?measurementdeterminedby" "?measurementdetermineddate"
-   "?measurementid" "?measurementmethod" "?measurementremarks" "?measurementtype"
-   "?measurementunit" "?measurementvalue" "?member" "?minimumdepthinmeters"
-   "?minimumdistanceabovesurfaceinmeters" "?minimumelevationinmeters" "?month"
-   "?occurrenceattributes" "?occurrencedetails" "?occurrenceid" "?occurrenceremarks"
-   "?othercatalognumbers" "?pointradiusspatialfit" "?preparations"
-   "?previousidentifications" "?recordnumber" "?recordedby" "?relatedresourceid"
-   "?relationshipaccordingto" "?relationshipestablisheddate" "?relationshipofresource"
-   "?relationshipremarks" "?reproductivecondition" "?resourceid"
-   "?resourcerelationshipid" "?samplingprotocol" "?sex" "?startdayofyear"
-   "?stateprovince" "?taxonattributes" "?typestatus" "?verbatimcoordinatesystem"
-   "?verbatimcoordinates" "?verbatimdepth" "?verbatimelevation" "?verbatimeventdate"
-   "?verbatimlatitude" "?verbatimlocality" "?verbatimlongitude" "?waterbody" "?year"
-   "?footprintsrs" "?georeferenceddate" "?identificationverificationstatus"
-   "?institutionid" "?locationaccordingto" "?municipality" "?occurrencestatus"
-   "?ownerinstitutioncode" "?samplingeffort" "?verbatimsrs" "?locationaccordingto7"
-   "?taxonid" "?taxonconceptid" "?datasetid" "?datasetname" "?source" "?modified"
-   "?accessrights" "?rights" "?rightsholder" "?language" "?higherclassification"
-   "?kingdom" "?phylum" "?classs" "?order" "?family" "?genus" "?subgenus"
-   "?specificepithet" "?infraspecificepithet" "?scientificname" "?scientificnameid"
-   "?vernacularname" "?taxonrank" "?verbatimtaxonrank" "?infraspecificmarker"
-   "?scientificnameauthorship" "?nomenclaturalcode" "?namepublishedin"
-   "?namepublishedinid" "?taxonomicstatus" "?nomenclaturalstatus" "?nameaccordingto"
-   "?nameaccordingtoid" "?parentnameusageid" "?parentnameusage" "?originalnameusageid"
-   "?originalnameusage" "?acceptednameusageid" "?acceptednameusage" "?taxonremarks"
-   "?dynamicproperties" "?namepublishedinyear" "?dummy"])
+  (into (vec (map kw->field-str resource-fields))
+        ["?id" "?associatedmedia" "?associatedoccurrences" "?associatedreferences"
+         "?associatedsequences" "?associatedtaxa" "?basisofrecord" "?bed" "?behavior"
+         "?catalognumber" "?collectioncode" "?collectionid" "?continent"
+         "?coordinateprecision" "?coordinateuncertaintyinmeters" "?country" "?countrycode"
+         "?county" "?datageneralizations" "?dateidentified" "?day" "?decimallatitude"
+         "?decimallongitude" "?disposition" "?earliestageorloweststage"
+         "?earliesteonorlowesteonothem" "?earliestepochorlowestseries"
+         "?earliesteraorlowesterathem" "?earliestperiodorlowestsystem" "?enddayofyear"
+         "?establishmentmeans" "?eventattributes" "?eventdate" "?eventid" "?eventremarks"
+         "?eventtime" "?fieldnotes" "?fieldnumber" "?footprintspatialfit" "?footprintwkt"
+         "?formation" "?geodeticdatum" "?geologicalcontextid" "?georeferenceprotocol"
+         "?georeferenceremarks" "?georeferencesources" "?georeferenceverificationstatus"
+         "?georeferencedby" "?group" "?habitat" "?highergeography" "?highergeographyid"
+         "?highestbiostratigraphiczone" "?identificationattributes" "?identificationid"
+         "?identificationqualifier" "?identificationreferences" "?identificationremarks"
+         "?identifiedby" "?individualcount" "?individualid" "?informationwithheld"
+         "?institutioncode" "?island" "?islandgroup" "?latestageorhigheststage"
+         "?latesteonorhighesteonothem" "?latestepochorhighestseries"
+         "?latesteraorhighesterathem" "?latestperiodorhighestsystem" "?lifestage"
+         "?lithostratigraphicterms" "?locality" "?locationattributes" "?locationid"
+         "?locationremarks" "?lowestbiostratigraphiczone" "?maximumdepthinmeters"
+         "?maximumdistanceabovesurfaceinmeters" "?maximumelevationinmeters"
+         "?measurementaccuracy" "?measurementdeterminedby" "?measurementdetermineddate"
+         "?measurementid" "?measurementmethod" "?measurementremarks" "?measurementtype"
+         "?measurementunit" "?measurementvalue" "?member" "?minimumdepthinmeters"
+         "?minimumdistanceabovesurfaceinmeters" "?minimumelevationinmeters" "?month"
+         "?occurrenceattributes" "?occurrencedetails" "?occurrenceid" "?occurrenceremarks"
+         "?othercatalognumbers" "?pointradiusspatialfit" "?preparations"
+         "?previousidentifications" "?recordnumber" "?recordedby" "?relatedresourceid"
+         "?relationshipaccordingto" "?relationshipestablisheddate"
+         "?relationshipofresource" "?relationshipremarks" "?reproductivecondition"
+         "?resourceid" "?resourcerelationshipid" "?samplingprotocol" "?sex"
+         "?startdayofyear" "?stateprovince" "?taxonattributes" "?typestatus"
+         "?verbatimcoordinatesystem" "?verbatimcoordinates" "?verbatimdepth"
+         "?verbatimelevation" "?verbatimeventdate" "?verbatimlatitude"
+         "?verbatimlocality" "?verbatimlongitude" "?waterbody" "?year" "?footprintsrs"
+         "?georeferenceddate" "?identificationverificationstatus" "?institutionid"
+         "?locationaccordingto" "?municipality" "?occurrencestatus"
+         "?ownerinstitutioncode" "?samplingeffort" "?verbatimsrs" "?locationaccordingto7"
+         "?taxonid" "?taxonconceptid" "?datasetid" "?datasetname" "?source" "?modified"
+         "?accessrights" "?rights" "?rightsholder" "?language" "?higherclassification"
+         "?kingdom" "?phylum" "?classs" "?order" "?family" "?genus" "?subgenus"
+         "?specificepithet" "?infraspecificepithet" "?scientificname" "?scientificnameid"
+         "?vernacularname" "?taxonrank" "?verbatimtaxonrank" "?infraspecificmarker"
+         "?scientificnameauthorship" "?nomenclaturalcode" "?namepublishedin"
+         "?namepublishedinid" "?taxonomicstatus" "?nomenclaturalstatus" "?nameaccordingto"
+         "?nameaccordingtoid" "?parentnameusageid" "?parentnameusage"
+         "?originalnameusageid" "?originalnameusage" "?acceptednameusageid"
+         "?acceptednameusage" "?taxonremarks" "?dynamicproperties" "?namepublishedinyear"
+         "?dummy"]))
 
 ;; Ordered vector of occ table column names for use in wide Cascalog sources:
 (def rec-fields ["?occ-id" "?id" "?associatedmedia" "?associatedoccurrences"
@@ -256,3 +275,9 @@
      ;=> \"/tmp/stats/2013-04-17/taxon\""
   [base-path date-str query-name]
   (format "%s/%s/%s" base-path date-str query-name))
+
+(defn remove-line-breaks
+  [s]
+  (-> s
+      (s/replace "\n" " ")
+      (s/replace "\r" " ")))
