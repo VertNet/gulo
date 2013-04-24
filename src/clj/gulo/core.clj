@@ -1,9 +1,9 @@
 (ns gulo.core
   "Cascalog queries for transforming CSV Darwin Core data into CartoDB tables."
-  (:use [gulo.util :as util :only (latlon-valid? gen-uuid)]
-        [cascalog.api]
+  (:use [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
+  (:require [gulo.util :as util :only (latlon-valid? gen-uuid)])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
 ;; Position of values in a split texline.
