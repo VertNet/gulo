@@ -173,14 +173,17 @@
         resources (:rows (cartodb/query sql "vertnet" :api-key util/api-key))]
     resources))
 
+(defn get-resource-props
+  "Extract and clean up props in resource map."
+  [resource-map]
+  (let [props (map #(% resource-map) util/resource-fields)]
+    (map remove-line-breaks (flatten props))))
+
 (defn harvest-resource
   [resource local-path s3-path]
   (try
     (let [url (:url resource)
-          props (map #(% resource) [:pubdate :url :eml :dwca :title :icode
-                                    :description :contact :orgname :email
-                                    :rights :icode :count])
-          props (vec (flatten props))]
+          props (get-resource-props resource)]
       (resource->s3 local-path url props s3-path))
     (catch Exception e
       (prn (format "ERROR: Resource %s (%s)" (:url resource) (.getMessage e)))
