@@ -26,9 +26,7 @@
     EML: http://goo.gl/Z27H5
     IPT: http://goo.gl/GtJMF
     S3: http://goo.gl/ailE"
-  (:use [gulo.util :as util :only (gen-uuid)]
-        [clojure.data.json :only (read-json)]
-        [cascalog.api]
+  (:use [cascalog.api]
         [dwca.core :as dwca :only (open field-vals fields)]
         [cartodb.core :as cartodb]
         [cartodb.utils :as cartodb-utils]
@@ -38,19 +36,11 @@
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.zip :as zip]
+            [gulo.util :as util :only (gen-uuid aws-creds api-key)]
             [clojure.contrib.io :as cio :only (delete-file-recursively)])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [org.gbif.metadata.eml EmlFactory]))
-
-;; Credentials for CartoDB:
-(def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
-
-;; CartoDB API key:
-(def api-key (:api_key cartodb-creds))
-
-;; Credentials for AWS:
-(def aws-creds (read-json (slurp (io/resource "aws.json"))))
 
 (defn prepend-props
   [vals props]
@@ -64,8 +54,8 @@
 (defn file->s3
   "Upload file at supplied path to S3 path."
   [path s3path]
-  (let [key (:access-key aws-creds)
-        secret (:secret-key aws-creds)
+  (let [key (:access-key util/aws-creds)
+        secret (:secret-key util/aws-creds)
         sink (str "s3n://" key  ":" secret "@" s3path)]
     (?- (hfs-textline sink :sinkmode :replace)
         (hfs-textline path))))
@@ -100,9 +90,8 @@
 (defn s3-pail-path
   "Return authenticated S3 path."
   [s3path]
-  (let [s3creds (read-json (slurp (io/resource "aws.json")))
-        key (:access-key s3creds)
-        secret (:secret-key s3creds)
+  (let [key (:access-key util/aws-creds)
+        secret (:secret-key util/aws-creds)
         sink (format "s3n://%s:%s@%s" key secret s3path)]
     sink))
 
@@ -154,7 +143,7 @@
   "Return vector of resource-rows from resource_staging table on CartoDB."
   []
   (let [sql "SELECT url, icode, ipt FROM resource_staging WHERE ipt=true ORDER BY cartodb_id"
-        rows (:rows (cartodb/query sql "vertnet" :api-key api-key))
+        rows (:rows (cartodb/query sql "vertnet" :api-key util/api-key))
         resource-rows (map #(resource-row (:url %) (:icode %) (:ipt %)) rows)]
     resource-rows))
 
@@ -164,7 +153,7 @@
   (try
     (prn (format "Syncing: %s" (:url resource)))
     (let [sql (cartodb-utils/maps->insert-sql "resource" resource)]      
-      (cartodb/query sql "vertnet" :api-key api-key))
+      (cartodb/query sql "vertnet" :api-key util/api-key))
     (catch Exception e
       (prn (format "SYNC FAIL: %s (%s)" (:url resource) (.getMessage e))))))
 
@@ -172,7 +161,7 @@
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
   (let [rows (resource-staging-rows)]
-    (cartodb/query "DELETE FROM resource" "vertnet" :api-key api-key)
+    (cartodb/query "DELETE FROM resource" "vertnet" :api-key util/api-key)
     (doall
      (map sync-resource rows))))
 
@@ -181,7 +170,7 @@
   [& {:keys [limit] :or {limit nil}}]
   (let [sql "SELECT * FROM resource WHERE ipt=true ORDER BY cartodb_id"
         sql (if (nil? limit) sql (format "%s LIMIT %s" sql limit))
-        resources (:rows (cartodb/query sql "vertnet" :api-key api-key))]
+        resources (:rows (cartodb/query sql "vertnet" :api-key util/api-key))]
     resources))
 
 (defn get-resource-props

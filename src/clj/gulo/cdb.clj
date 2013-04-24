@@ -1,7 +1,6 @@
 (ns gulo.cdb
   "This namespace contains CartoDB functions for setting up database tables."
   (:use [gulo.util]
-        [clojure.data.json :only (read-json)]
         [clojure.string :only (join)]
         [cascalog.api]
         [clojure.contrib.shell-out :only (sh)])
@@ -21,35 +20,29 @@
   [& strs]
   (apply str (interpose " " strs)))
 
-;; Slurps resources/creds.json for OAuth: {"key" "secret" "user" "password"}
-(def creds (read-json (slurp (io/resource "creds.json"))))
-
-;; Slurps resources/s3.json for Amazon S3: {"access-key" "secret-key"}
-(def s3-creds (read-json (slurp (io/resource "s3.json"))))
-
 (defn- drop-column
   "Drop the supplied column from the supplied table or just return the SQL."
   [table column & {:keys [cascade execute account]
                    :or {cascade false execute true account nil}}]
-  (let [account (if (not account) (:user creds) account)
+  (let [account (if (not account) (:user cartodb-creds) account)
         sql (sql-builder "ALTER TABLE" table "DROP COLUMN" column)
         sql (if cascade (str sql " CASCADE;") (str sql ";"))]
-    (if execute (cartodb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
 
 (defn- drop-table
   "Drop the supplied table or just return the SQL."
   [table & {:keys [execute account]
                    :or {execute true account nil}}]
   (let [tables (if (coll? table) (join "," table) table)
-        account (if (not account) (:user creds) account)
+        account (if (not account) (:user cartodb-creds) account)
         sql (sql-builder "DROP TABLE IF EXISTS" tables ";")]
-    (if execute (cartodb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
 
 (defn- create-index
   "Create index on table column or just return the SQL."
   [table column index & {:keys [unique execute account lower]
                          :or {unique false execute true account nil lower false}}]
-  (let [account (if (not account) (:user creds) account)
+  (let [account (if (not account) (:user cartodb-creds) account)
         sql (sql-builder "CREATE"
                          (if unique "UNIQUE" "")
                          "INDEX" index
@@ -57,7 +50,7 @@
                          "("
                          (if lower (str "lower(" column ")") column)
                          ");")]
-    (if execute (cartodb/query sql account :oauth creds) sql)))
+    (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
 
 (defn- create-occ-table
   "Create occ table."
@@ -66,8 +59,8 @@
         sql (str sql "cartodb_id SERIAL,")
         sql (str sql (join "," (map #(str % " text") occ-columns)))
         sql (str sql ");")
-        account (:user creds)]
-    (if execute (cartodb/query sql account :oauth creds) sql)))
+        account (:user cartodb-creds)]
+    (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
 
 (defn- wire-occ-table
   [& {:keys [delete drop-geom] :or {delete false drop-geom false}}]
@@ -108,8 +101,8 @@
   "Download part files from S3 for supplied table and merge into single file."
   [table & {:keys [local] :or {local "/mnt/hgfs/Data/vertnet/gulo/hfs/"}}]
   (let [sink (str local table)
-        key (:access-key s3-creds)
-        secret (:secret-key s3-creds)
+        key (:access-key aws-creds)
+        secret (:secret-key aws-creds)
         source (str "s3n://" key  ":" secret "@gulohfs/" table)
         temp-file (?- (hfs-textline sink :sinkmode :replace)
                       (hfs-textline source))]
