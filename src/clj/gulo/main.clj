@@ -3,11 +3,12 @@
   data from Darwin Core Archives into CartoDB."
   (:use [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
-        [gulo core views]
+        [gulo.core]
+        [gulo.views]
+        [gulo.harvest :only (harvest-all)]
         [gulo.cdb :only (prepare-tables, wire-tables)]
-        [gulo.harvest]
-        [gulo.util :as util]
-        [clojure.java.io :as io]))
+        [clojure.java.io :as io])
+  (:require [gulo.util :as util :only (mk-stats-out-path todays-date)]))
 
 (defn Harvest
   "Harvest supplied publishers to a CSV file at supplied path. Publishers is a
@@ -15,7 +16,7 @@
   [publishers path]  
   (let [csv-file (str path "/" "dwc.csv")]
     (io/delete-file csv-file true)
-    (harvest publishers csv-file)))
+    (harvest-all publishers csv-file)))
 
 (defmain Shred
   "Shred a CSV file containing Darwin Core records into the VertNet schema."
@@ -49,7 +50,7 @@
 (defmain RunStats
   "Run all statistics queries."
   [in-path out-dir]
-  (let [today (todays-date)
+  (let [today (util/todays-date)
         queries-names [[taxa-count "taxa-count"]
                       [publisher-count "publisher-count"]
                       [total-recs "total-recs"]
