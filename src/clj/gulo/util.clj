@@ -5,8 +5,9 @@
   (:import [org.gbif.dwc.record DarwinCoreRecord])
   (:require [clj-time.core :as time]
             [clj-time.format :as f]
-            [clojure.string :as s]))
+            [clojure.string :as s]
             [clojure.java.io :as io]))
+
 
 ;; Slurps resources/creds.json for CartoDB OAuth: {"key" "secret" "user" "password"}
 (def cartodb-creds (read-json (slurp (io/resource "creds.json"))))
