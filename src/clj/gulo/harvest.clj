@@ -63,7 +63,7 @@
 (defn resource->s3
   "Upload Darwn Core records from supplied IPT resource URL to S3."
   [path url props s3-path]
-  (prn (format "Downloading: %s records from %s" (nth props 12) url))
+  (prn (format "Downloading: %s records from %s" (nth props 11) url))
   (try
     (let [resource-name (second (s/split url #"="))
           uuid (util/gen-uuid)

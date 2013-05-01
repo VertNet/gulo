@@ -290,6 +290,8 @@
 
 (defn remove-line-breaks
   [s]
-  (-> s
-      (s/replace "\n" " ")
-      (s/replace "\r" " ")))
+  (if (nil? s)
+    ""
+    (-> s
+        (s/replace "\n" " ")
+        (s/replace "\r" " "))))
