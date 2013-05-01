@@ -32,7 +32,7 @@
 (defn publisher-count
   "Count unique publishers."
   [src]
-  (let [uniques (uniques-query src ["?name"])] ;; correct publisher id?
+  (let [uniques (uniques-query src ["?orgname"])] ;; correct publisher id?
     (<- [?count]
         (uniques ?dwca)
         (c/count ?count))))
