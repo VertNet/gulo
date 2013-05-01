@@ -177,7 +177,7 @@
   "Extract and clean up props in resource map."
   [resource-map]
   (let [props (map #(% resource-map) util/resource-fields)]
-    (map remove-line-breaks (flatten props))))
+    (map util/remove-line-breaks (flatten props))))
 
 (defn harvest-resource
   [resource local-path s3-path]
