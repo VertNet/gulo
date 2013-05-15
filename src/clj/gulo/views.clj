@@ -1,6 +1,7 @@
 (ns gulo.views
   (:use [cascalog.api]
-        [gulo.util :as u])
+        [gulo.util :as u]
+        [teratorn.common])
   (:require [cascalog.ops :as c]
             [teratorn.vertnet :as v]))
 
@@ -19,7 +20,7 @@
   [textline-src fields-vec]
   (<- fields-vec
       (textline-src ?line)
-      (u/splitline ?line :>> v/harvest-fields)
+      (split-line ?line :>> v/harvest-fields)
       (:distinct true)))
 
 (defn taxa-count
