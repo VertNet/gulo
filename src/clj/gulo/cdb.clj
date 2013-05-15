@@ -6,7 +6,8 @@
         [clojure.contrib.shell-out :only (sh)])
   (:require [clojure.java.io :as io]
             [cartodb.core :as cartodb]
-            [aws.sdk.s3 :as s3])
+            [aws.sdk.s3 :as s3]
+            [teratorn.vertnet :as v])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]
@@ -57,7 +58,7 @@
   [& {:keys [execute] :or {execute true}}]
   (let [sql "CREATE TABLE IF NOT EXISTS occ ("
         sql (str sql "cartodb_id SERIAL,")
-        sql (str sql (join "," (map #(str % " text") occ-columns)))
+        sql (str sql (join "," (map #(str % " text") v/vertnet-columns)))
         sql (str sql ");")
         account (:user cartodb-creds)]
     (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
@@ -67,7 +68,7 @@
   (if drop-geom (drop-column "occ" "the_geom" :cascade true))
   (create-index "occ" "occ_id" "occ_occ_id_idx" :unique true)
   (create-index "occ" "tax_loc_id" "occ_tax_loc_id_idx")
-  (create-index "occ" "_classs" "occ_class_idx" :lower true)
+  (create-index "occ" "classs" "occ_class_idx" :lower true)
   (create-index "occ" "icode" "occ_icode_idx" :lower true))
 
 (defn- wire-tax-table
@@ -130,7 +131,7 @@
         tax-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/"
         loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/"
         tax-loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/taxloc/"]
-    (prepare-zip "occ" occ-columns occ-source sink)
+    (prepare-zip "occ" v/vertnet-columns occ-source sink)
     (prepare-zip "tax" ["tax_id" "name"] tax-source sink)
     (prepare-zip "loc" ["loc_id" "lat" "lon" "wkt_geom"] loc-source sink)
     (prepare-zip "taxloc" ["tax_loc_id" "tax_id" "loc_id"] tax-loc-source sink)))
