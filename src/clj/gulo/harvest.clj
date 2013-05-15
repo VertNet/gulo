@@ -32,11 +32,12 @@
         [cartodb.utils :as cartodb-utils]
         [clojure.data.csv :as csv]
         [net.cgrand.enlive-html :as html
-         :only (html-resource, select, attr-values)])
+         :only (html-resource, select, attr-values)]
+        [teratorn.common])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.zip :as zip]
-            [gulo.util :as util :only (gen-uuid aws-creds api-key splitline)]
+            [gulo.util :as util]
             [clojure.contrib.io :as cio :only (delete-file-recursively)]
             [teratorn.vertnet :as v])
   (:import [java.io File]
@@ -50,7 +51,7 @@
 (defn prepend-uuid
   "Prepend UUID to sequence of vals."
   [vals]
-  (cons (util/gen-uuid) vals))
+  (cons (gen-uuid) vals))
 
 (defn file->s3
   "Upload file at supplied path to S3 path."
@@ -61,19 +62,24 @@
     (?- (hfs-textline sink :sinkmode :replace)
         (hfs-textline path))))
 
+(defn prep-records
+  [records field-vals props]
+  (->> records
+       (map field-vals)
+       (map #(prepend-props % props))
+       (map #(concat % [";"]))))
+
 (defn resource->s3
   "Upload Darwn Core records from supplied IPT resource URL to S3."
   [path url props s3-path]
   (prn (format "Downloading: %s records from %s" (nth props 11) url))
   (try
-    (let [resource-name (second (s/split url #"="))
-          uuid (util/gen-uuid)
-          csv-path (format "%s/%s-%s.csv" path resource-name uuid)
-          archive-url (s/replace url "resource" "archive")
+    (let [resource-name (util/resource-url->name url)
+          uuid (gen-uuid)
+          csv-path (util/mk-s3-path path resource-name uuid)
+          archive-url (util/resource-url->archive-url url)
           records (dwca/open archive-url :path path)
-          vals (map field-vals records)
-          vals (map #(prepend-props % props) vals)
-          vals (map #(concat % [";"]) vals)
+          vals (prep-records records field-vals props)
           out (io/writer (io/file csv-path) :encoding "UTF-8")]
       (do
         (prn (format "Writing to %s" csv-path))
@@ -107,7 +113,7 @@
   (try
     (let [html (fetch-url url)
           tds (html/select html [:td])
-          dwca-url (s/replace url "resource" "archive")
+          dwca-url (util/resource-url->archive-url url)
           node (first
                 (filter
                  #(= (:href (:attrs (first (:content %)))) dwca-url)
@@ -123,7 +129,7 @@
 (defn resource-row
   "Return map of resource table columns from supplied IPT resource URL."
   [url icode ipt]
-  (let [eml-url (s/replace url "resource" "eml")
+  (let [eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))        
         row {:title (.getTitle eml)
              :icode icode
@@ -140,11 +146,16 @@
              :count (get-count url)}]
     row))
 
-(defn resource-staging-rows
-  "Return vector of resource-rows from resource_staging table on CartoDB."
+(defn query-resource-rows
   []
   (let [sql "SELECT url, icode, ipt FROM resource_staging WHERE ipt=true ORDER BY cartodb_id"
-        rows (:rows (cartodb/query sql "vertnet" :api-key util/api-key))
+        rows (:rows (cartodb/query sql "vertnet" :api-key util/api-key))]
+    rows))
+
+(defn resource-staging-rows
+  "Return vector of resource-rows from resource_staging table on CartoDB."
+  [& [rows]]
+  (let [rows (or rows (query-resource-rows))
         resource-rows (map #(resource-row (:url %) (:icode %) (:ipt %)) rows)]
     resource-rows))
 
@@ -178,7 +189,7 @@
   "Extract and clean up props in resource map."
   [resource-map]
   (let [props (map #(% resource-map) v/resource-fields)]
-    (map util/remove-line-breaks (flatten props))))
+    (map util/line-breaks->spaces (flatten props))))
 
 (defn harvest-resource
   [resource local-path s3-path]
