@@ -17,53 +17,6 @@
 ;; Slurps resources/aws.json for Amazon S3: {"access-key" "secret-key"}
 (def aws-creds (read-json (slurp (io/resource "aws.json"))))
 
-(defn gen-uuid
-  "Return a randomly generated UUID string."
-  [& x]
-  (str (java.util.UUID/randomUUID)))
-
-(defn wkt-point
-  "Return point encoded as WKT (well known text)."
-  [lat lng]
-  [(str "POINT(" lng " " lat ")")])
-
-;; Valid ranges for latitude and longitude.
-(def latlon-range {:lat-min -90 :lat-max 90 :lon-min -180 :lon-max 180})
-
-(defn read-latlon
-  "Converts lat and lon values from string to number."
-  [lat lon]
-  {:pre [(every? string? [lat lon])]}
-  (map read-string [lat lon]))
-
-(defn name-valid?
-  "Return true if name is valid, otherwise return false."
-  [rec]
-  (let [index (dwca/index-of rec :scientificname)
-        name (nth (field-vals rec) index)]
-    (and (not= name nil) (not= (.trim name) ""))))
-
-(defn latlon-valid?
-  "Return true if lat and lon are valid, otherwise return false."
-  ([^DarwinCoreRecord rec]
-     (let [lat (nth (field-vals rec) (dwca/index-of rec :decimallatitude))
-           lon (nth (field-vals rec) (dwca/index-of rec :decimallongitude))]
-       (apply latlon-valid? (map str [lat lon]))))
-  ([lat lon]
-     (try
-       (let [{:keys [lat-min lat-max lon-min lon-max]} latlon-range
-             [lat lon] (read-latlon lat lon)]
-         (and (<= lat lat-max)
-              (>= lat lat-min)
-              (<= lon lon-max)
-              (>= lon lon-min)))
-       (catch Exception e false))))
-
-(defn splitline
-  "Returns vector of line values by splitting on tab."
-  [line]
-  (vec (.split line "\t")))
-
 (defn todays-date
   "Returns current date as \"YYYY-MM-dd\".
 
@@ -82,10 +35,26 @@
   [base-path date-str query-name]
   (format "%s/%s/%s" base-path date-str query-name))
 
-(defn remove-line-breaks
+(defn line-breaks->spaces
   [s]
   (if (nil? s)
     ""
     (-> s
         (s/replace "\n" " ")
         (s/replace "\r" " "))))
+
+(defn resource-url->name
+  [url]
+  (second (s/split url #"=")))
+
+(defn mk-s3-path
+  [path resource-name uuid]
+  (format "%s/%s-%s.csv" path resource-name uuid))
+
+(defn resource-url->archive-url
+  [url]
+  (s/replace url "resource" "archive"))
+
+(defn resource-url->eml-url
+  [url]
+  (s/replace url "resource" "eml"))
