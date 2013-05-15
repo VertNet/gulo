@@ -1,7 +1,8 @@
 (ns gulo.views
   (:use [cascalog.api]
         [gulo.util :as u])
-  (:require [cascalog.ops :as c]))
+  (:require [cascalog.ops :as c]
+            [teratorn.vertnet :as v]))
 
 (defn uniques-query
   "Given a source of harvested textlines and a vector of fields to extract,
@@ -18,7 +19,7 @@
   [textline-src fields-vec]
   (<- fields-vec
       (textline-src ?line)
-      (u/splitline ?line :>> u/harvest-fields)
+      (u/splitline ?line :>> v/harvest-fields)
       (:distinct true)))
 
 (defn taxa-count

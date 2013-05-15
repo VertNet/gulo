@@ -39,7 +39,3 @@
 
 (fact "Check `mk-stats-out-path`."
   (mk-stats-out-path "/tmp/stats" "2013-04-16" "taxon") => "/tmp/stats/2013-04-16/taxon")
-
-(fact "Check `kw->field-str`."
-  (kw->field-str :pubdate) => "?pubdate"
-  (kw->field-str "pubdate") => "?pubdate")

@@ -37,7 +37,8 @@
             [clojure.java.io :as io]
             [clojure.zip :as zip]
             [gulo.util :as util :only (gen-uuid aws-creds api-key splitline)]
-            [clojure.contrib.io :as cio :only (delete-file-recursively)])
+            [clojure.contrib.io :as cio :only (delete-file-recursively)]
+            [teratorn.vertnet :as v])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [org.gbif.metadata.eml EmlFactory]))
@@ -176,7 +177,7 @@
 (defn get-resource-props
   "Extract and clean up props in resource map."
   [resource-map]
-  (let [props (map #(% resource-map) util/resource-fields)]
+  (let [props (map #(% resource-map) v/resource-fields)]
     (map util/remove-line-breaks (flatten props))))
 
 (defn harvest-resource

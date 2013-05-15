@@ -3,7 +3,8 @@
   (:use [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
         [dwca.core :as dwca])
-  (:require [gulo.util :as util :only (latlon-valid? gen-uuid)])
+  (:require [gulo.util :as util :only (latlon-valid? gen-uuid)]
+            [teratorn.vertnet :as v])
   (:import [org.gbif.dwc.record DarwinCoreRecord]))
 
 ;; Position of values in a split texline.
@@ -46,7 +47,7 @@
 (defn occ-table
   "Build occ and tax_loc tables."
   [occ-path tax-path loc-path tax-loc-path occ-sink-path]
-  (let [fields util/rec-fields
+  (let [fields v/rec-fields
         result-vector (vec (cons "?tax-loc-id" fields))
         occ-tab (hfs-textline occ-path)
         occ-source (hfs-textline occ-path)
