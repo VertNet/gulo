@@ -140,7 +140,7 @@
              :pubdate (.toString (.getPubDate eml))
              :orgname (.getOrganisation (.getContact eml))
              :description (.getAbstract eml)
-             :emlrights (.getIntellectualRights eml)
+             :rights (.getIntellectualRights eml)
              :contact (.getCreatorName eml)
              :email (.getCreatorEmail eml)
              :count (get-count url)}]

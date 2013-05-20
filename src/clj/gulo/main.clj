@@ -3,7 +3,6 @@
   data from Darwin Core Archives into CartoDB."
   (:use [cascalog.api]
         [cascalog.more-taps :as taps :only (hfs-delimited)]
-        [gulo.core]
         [gulo.views]
         [gulo.harvest :only (harvest-all)]
         [gulo.cdb :only (prepare-tables, wire-tables)]
