@@ -17,19 +17,6 @@
     (io/delete-file csv-file true)
     (harvest-all publishers csv-file)))
 
-(defmain Shred
-  "Shred a CSV file containing Darwin Core records into the VertNet schema."
-  [harvest-path hfs-path tables-path]
-  (let [csv-file (str harvest-path "/dwc.csv")
-        hfs-tax (str hfs-path "/tax")
-        hfs-loc (str hfs-path "/loc")
-        hfs-tax-loc (str hfs-path "/taxloc")
-        hfs-occ (str hfs-path "/occ")]
-    (location-table (hfs-textline csv-file) hfs-loc)
-    (taxon-table (hfs-textline csv-file) hfs-tax)
-    (tax-loc-table csv-file hfs-tax hfs-loc hfs-tax-loc)
-    (occ-table csv-file hfs-tax hfs-loc hfs-tax-loc hfs-occ)))
-
 (defn PrepareTables
   "Prepare table files for upload to CartoDB."
   []
