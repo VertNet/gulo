@@ -74,7 +74,6 @@
   (try
     (let [resource-name (util/resource-url->name url)
           uuid (gen-uuid)
-          fname (format "%s-%s" resource-name uuid)
           local-csv-path (util/mk-local-path path resource-name uuid)
           s3-full-path (util/mk-full-s3-path bucket s3-base-path resource-name uuid)
           stub (last (.split s3-full-path "@"))

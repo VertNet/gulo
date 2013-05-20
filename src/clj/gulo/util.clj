@@ -62,7 +62,7 @@
 (defn mk-full-s3-path
   [bucket s3-path resource-name uuid & [creds-map]]
   (let [aws-creds (or creds-map aws-creds)
-        key (:access-key aws-creds)
+        key (:access-id aws-creds)
         secret (:secret-key aws-creds)
         path (mk-s3-path bucket s3-path resource-name uuid)]
     (format "s3n://%s:%s@%s" key secret path)))
