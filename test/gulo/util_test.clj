@@ -41,9 +41,9 @@
 
 (fact "Check `mk-s3-path`."
   (mk-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl")
-  => "vertnet/data/staging/ttrs_birds-asdfjkl.csv")
+  => "vertnet/data/staging/ttrs_birds-asdfjkl")
 
 (fact "Check `mk-full-s3-path`."
   (mk-full-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl"
-                   {:access-key "asdf" :secret-key "jkl"})
-  => "s3n://asdf:jkl@vertnet/data/staging/ttrs_birds-asdfjkl.csv")
+                   {:access-id "asdf" :secret-key "jkl"})
+  => "s3n://asdf:jkl@vertnet/data/staging/ttrs_birds-asdfjkl")
