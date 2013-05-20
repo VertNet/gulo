@@ -87,20 +87,12 @@
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
         (do
-          (prn (format "Uploading %s to S3: %s" stub))
+          (prn (format "Uploading %s to S3: %s" local-csv-path stub))
           (file->s3 local-csv-path s3-full-path))
         (prn "Done harvesting" resource-name)
         (cio/delete-file-recursively local-csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
-
-(defn s3-pail-path
-  "Return authenticated S3 path."
-  [s3path]
-  (let [key (:access-key util/aws-creds)
-        secret (:secret-key util/aws-creds)
-        sink (format "s3n://%s:%s@%s" key secret s3path)]
-    sink))
 
 (defn fetch-url
   "Return HTML from supplied URL."
