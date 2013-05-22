@@ -10,7 +10,7 @@
   :dev-resources-path "dev"
   :jvm-opts ["-XX:MaxPermSize=256M"
              "-XX:+UseConcMarkSweepGC"
-             "-Xms1024M" "-Xmx1048M" "-server"]
+             "-Xms1024M" "-Xmx14336M" "-server"]
   :profiles {:dev {:dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"
                                    :exclusions [org.slf4j/slf4j-log4j12]]
                                   [cascalog/midje-cascalog "1.10.1-SNAPSHOT"]]
