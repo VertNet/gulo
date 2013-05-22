@@ -64,6 +64,7 @@
   [records field-vals props]
   (->> records
        (map field-vals)
+       (map prepend-uuid)
        (map #(prepend-props % props))
        (map #(concat % [";"]))))
 
