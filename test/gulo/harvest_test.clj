@@ -65,5 +65,5 @@
                but are allowed occasionally and governed by formal
                agreements developed on an individual basis."}]]
     (set (keys (first (resource-staging-rows rows)))))
-  => (set [:pubdate :ipt :eml :count :dwca :title :icode :rights :url :orgname
+  => (set [:pubdate :ipt :eml :count :dwca :title :icode :emlrights :url :orgname
            :email :contact :description]))

@@ -35,5 +35,15 @@
    "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds")
   => "http://ipt.vertnet.org:8080/ipt/archive.do?r=ttrs_birds")
 
+(fact "Check mk-local-path"
+  (mk-local-path "/tmp/vn" "ttrs_birds" "asdfjkl")
+  => "/tmp/vn/ttrs_birds-asdfjkl.csv")
+
 (fact "Check `mk-s3-path`."
-  (mk-s3-path "vertnet" "ttrs_birds" "asdfjkl") => "vertnet/ttrs_birds-asdfjkl.csv")
+  (mk-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl")
+  => "vertnet/data/staging/ttrs_birds-asdfjkl")
+
+(fact "Check `mk-full-s3-path`."
+  (mk-full-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl"
+                   {:access-id "asdf" :secret-key "jkl"})
+  => "s3n://asdf:jkl@vertnet/data/staging/ttrs_birds-asdfjkl")
