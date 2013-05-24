@@ -24,7 +24,7 @@ Working with the `gulo.cdb` namespace requires this to be stored in `resources/a
 
 ```json
 {
-    "access-key": "your_aws_access_id",
+    "access-id": "your_aws_access_id",
     "secret-key": "your_aws_private_key"
 }
 ```
