@@ -1,4 +1,5 @@
 # configure EMR cluster for use with VertNet projects
+# put on S3 at s3://vnproject/bootstrap-actions/gulo/bootstrap.sh
 
 # install some helpful utilities
 sudo apt-get install -y  screen, s3cmd, zip, unzip
