@@ -9,34 +9,34 @@
 
 (fact "Check `uniques-query` with one field."
   (uniques-query src ["?scientificname"])
-  => (produces-some [["Aplodontia rufa"] ["Blarina brevicauda"] ["Canis latrans"]
-                     ["Castor canadensis"] ["Citellus tridecemlineatus"]
-                     ["Clethrionomys gapperi"] ["Cryptotis parva"]
-                     ["Dasypterus floridanus"] ["Dasypus novemcinctus"]
-                     ["Didelphis marsupialis"]]))
+  => (produces-some [["Accipiter cooperii"] ["Accipiter striatus"]
+                     ["Actitis macularius"] ["Aix sponsa"] ["Alectoris chukar"]
+                     ["Anas clypeata"] ["Anas crecca"] ["Anas discors"]
+                     ["Anas platyrhynchos"] ["Anas rubripes"]]))
 
 (fact "Check `uniques-query` with multiple fields."
   (uniques-query src ["?scientificname" "?year"])
-  => (produces-some [["Aplodontia rufa" "1974"] ["Blarina brevicauda" "1966"]
-                     ["Blarina brevicauda" "1967"] ["Blarina brevicauda" "1968"]
-                     ["Blarina brevicauda" "1971"] ["Blarina brevicauda" "1973"]
-                     ["Blarina brevicauda" "1976"] ["Blarina brevicauda" "1977"]
-                     ["Blarina brevicauda" "1978"] ["Canis latrans" "1987"]]))
+  => (produces-some [["Accipiter cooperii" "1931"] ["Accipiter cooperii" "1934"]
+                     ["Accipiter cooperii" "1939"] ["Accipiter striatus" "1930"]
+                     ["Accipiter striatus" "1932"] ["Accipiter striatus" "1933"]
+                     ["Accipiter striatus" "1939"] ["Accipiter striatus" "1940"]
+                     ["Accipiter striatus" "1953"] ["Accipiter striatus" "1959"]]))
 
 (fact "Check `taxa-count`."
-  (taxa-count src) => (produces [[63]]))
+  (taxa-count src) => (produces [[132]]))
 
 (fact "Check `publisher-count`."
   (publisher-count src) => (produces [[1]]))
 
 (fact "Check `total-recs`."
-  (total-recs src) => (produces [[968]]))
+  (total-recs src) => (produces [[500]]))
 
 (fact "Check `total-recs-by-country`."
-  (total-recs-by-country src) => (produces [["United States" 968]]))
+  (total-recs-by-country src) => (produces [["UNITED STATES" 499]
+                                            ["MEXICO" 1]]))
 
 (fact "Check `total-recs-by-collection`."
-  (total-recs-by-collection src) => (produces [["Mammals" 968]]))
+  (total-recs-by-collection src) => (produces [["Ornithology" 500]]))
 
 (fact "Check `total-recs-by-class`."
-  (total-recs-by-class src) => (produces [["Mammalia" 968]]))
+  (total-recs-by-class src) => (produces [["Aves" 500]]))
