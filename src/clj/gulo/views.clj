@@ -1,9 +1,8 @@
 (ns gulo.views
-  (:use [cascalog.api]
-        [gulo.util :as u]
-        [teratorn.common])
+  (:use [cascalog.api])
   (:require [cascalog.ops :as c]
-            [teratorn.vertnet :as v]))
+            [gulo.fields :as f]
+            [gulo.util :as util]))
 
 (defn uniques-query
   "Given a source of harvested textlines and a vector of fields to extract,
@@ -20,7 +19,7 @@
   [textline-src fields-vec]
   (<- fields-vec
       (textline-src ?line)
-      (split-line ?line :>> v/harvest-fields)
+      (util/split-line ?line :>> f/harvest-fields)
       (:distinct true)))
 
 (defn taxa-count
@@ -42,7 +41,7 @@
 (defn total-recs
   "Count unique occurrences."
   [src]
-  (let [uniques (uniques-query src ["?id"])] ;; correct id?
+  (let [uniques (uniques-query src ["?harvestid"])] ;; correct id?
     (<- [?count]
         (uniques ?occurrenceid)
         (c/count ?count))))
@@ -50,7 +49,7 @@
 (defn total-recs-by-country
   "Count unique occurrence records by country."
   [src]
-  (let [uniques (uniques-query src ["?country" "?id"])] ;; correct id?
+  (let [uniques (uniques-query src ["?country" "?harvestid"])] ;; correct id?
     (<- [?country ?count]
         (uniques ?country _)
         (c/count ?count))))
@@ -58,7 +57,7 @@
 (defn total-recs-by-collection
   "Count unique records by collection."
   [src]
-  (let [uniques (uniques-query src ["?collectioncode" "?id"])]
+  (let [uniques (uniques-query src ["?collectioncode" "?harvestid"])]
     (<- [?collectioncode ?count]
         (uniques ?collectioncode _)
         (c/count ?count))))
@@ -66,7 +65,7 @@
 (defn total-recs-by-class
   "Count unique records by class."
   [src]
-  (let [uniques (uniques-query src ["?classs" "?id"])]
+  (let [uniques (uniques-query src ["?classs" "?harvestid"])]
     (<- [?classs ?count]
         (uniques ?classs _)
         (c/count ?count))))

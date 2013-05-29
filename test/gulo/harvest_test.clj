@@ -3,7 +3,7 @@
   (:use gulo.harvest
         [midje sweet])
   (:require [gulo.util :as util]
-            [teratorn.vertnet :as v]))
+            [gulo.fields :as f]))
 
 (def uuid-pattern #"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
 (def uuid-pattern-str "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
@@ -17,8 +17,8 @@
     (.matches (re-matcher uuid-pattern (first vals))) => true))
 
 (fact "Test `get-resource-props`"
-  (let [val-vec (into ["a" "a\nb"] (repeat (count v/resource-fields) "a"))
-        resource-map (zipmap v/resource-fields val-vec)]
+  (let [val-vec (into ["a" "a\nb"] (repeat (count f/resource-fields) "a"))
+        resource-map (zipmap f/resource-fields val-vec)]
     (get-resource-props resource-map)) => ["a" "a b" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"])
 
 (fact "Test `get-count`."
