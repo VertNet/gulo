@@ -7,7 +7,7 @@
   (:require [clojure.java.io :as io]
             [cartodb.core :as cartodb]
             [aws.sdk.s3 :as s3]
-            [teratorn.vertnet :as v])
+            [gulo.fields :as f])
   (:import [com.google.common.io Files]
            [com.google.common.base Charsets]
            [java.io File FileInputStream FileWriter]
@@ -58,7 +58,7 @@
   [& {:keys [execute] :or {execute true}}]
   (let [sql "CREATE TABLE IF NOT EXISTS occ ("
         sql (str sql "cartodb_id SERIAL,")
-        sql (str sql (join "," (map #(str % " text") v/vertnet-columns)))
+        sql (str sql (join "," (map #(str % " text") f/vertnet-columns)))
         sql (str sql ");")
         account (:user cartodb-creds)]
     (if execute (cartodb/query sql account :oauth cartodb-creds) sql)))
@@ -131,7 +131,7 @@
         tax-source "/mnt/hgfs/Data/vertnet/gulo/hfs/tax/"
         loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/loc/"
         tax-loc-source "/mnt/hgfs/Data/vertnet/gulo/hfs/taxloc/"]
-    (prepare-zip "occ" v/vertnet-columns occ-source sink)
+    (prepare-zip "occ" f/vertnet-columns occ-source sink)
     (prepare-zip "tax" ["tax_id" "name"] tax-source sink)
     (prepare-zip "loc" ["loc_id" "lat" "lon" "wkt_geom"] loc-source sink)
     (prepare-zip "taxloc" ["tax_loc_id" "tax_id" "loc_id"] tax-loc-source sink)))
