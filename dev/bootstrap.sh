@@ -2,6 +2,7 @@
 # put on S3 at s3://vnproject/bootstrap-actions/gulo/bootstrap.sh
 
 # install some helpful utilities
+sudo apt-get update
 sudo apt-get install -y  screen, s3cmd, zip, unzip
 
 # Setup for git
@@ -22,12 +23,6 @@ echo "alias li='cd /home/hadoop/bin; wget https://raw.github.com/technomancy/lei
 # simple uberjarring
 echo "alias uj='lein do deps, compile :all, uberjar'" >> /home/hadoop/.bashrc
 
-git clone git://github.com/VertNet/gulo.git
-git clone git://github.com/MapofLife/teratorn.git
-git clone git://github.com/VertNet/webapp.git
-
-source ~/.bashrc
-
-sudo chown hadoop /mnt/
-mkdir /mnt/beast
-sudo chown hadoop:hadoop /mnt/beast
+# simple installs & configs
+echo "alias gulo='git clone git://github.com/VertNet/gulo.git'"
+echo "alias teratorn='git clone git://github.com/MapofLife/teratorn.git'"
