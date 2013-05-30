@@ -32,14 +32,13 @@
         [cartodb.utils :as cartodb-utils]
         [clojure.data.csv :as csv]
         [net.cgrand.enlive-html :as html
-         :only (html-resource, select, attr-values)]
-        [teratorn.common])
+         :only (html-resource, select, attr-values)])
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.zip :as zip]
-            [gulo.util :as util]
             [clojure.contrib.io :as cio :only (delete-file-recursively)]
-            [teratorn.vertnet :as v])
+            [gulo.fields :as f]
+            [gulo.util :as util])
   (:import [java.io File]
            [org.gbif.dwc.record DarwinCoreRecord]
            [org.gbif.metadata.eml EmlFactory]))
@@ -51,7 +50,7 @@
 (defn prepend-uuid
   "Prepend UUID to sequence of vals."
   [vals]
-  (cons (gen-uuid) vals))
+  (cons (util/gen-uuid) vals))
 
 (defn file->s3
   "Upload file at supplied path to S3 path."
@@ -74,7 +73,7 @@
   (prn (format "Downloading: %s records from %s" (nth props 11) url))
   (try
     (let [resource-name (util/resource-url->name url)
-          uuid (gen-uuid)
+          uuid (util/gen-uuid)
           local-csv-path (util/mk-local-path path resource-name uuid)
           s3-full-path (util/mk-full-s3-path bucket s3-base-path resource-name uuid)
           stub (last (.split s3-full-path "@"))
@@ -180,7 +179,7 @@
 (defn get-resource-props
   "Extract and clean up props in resource map."
   [resource-map]
-  (let [props (map #(% resource-map) v/resource-fields)]
+  (let [props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
 
 (defn harvest-resource

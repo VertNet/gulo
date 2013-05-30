@@ -38,10 +38,10 @@
   [in-path out-dir]
   (let [today (util/todays-date)
         queries-names [[taxa-count "taxa-count"]
-                      [publisher-count "publisher-count"]
-                      [total-recs "total-recs"]
-                      [total-recs-by-country "total-recs-by-country"]
-                      [total-recs-by-collection "total-recs-by-collection"]
-                      [total-recs-by-class "total-recs-by-class"]]]
+                       [publisher-count "publisher-count"]
+                       [total-recs "total-recs"]
+                       [total-recs-by-country "total-recs-by-country"]
+                       [total-recs-by-collection "total-recs-by-collection"]
+                       [total-recs-by-class "total-recs-by-class"]]]
     (for [[q q-name] queries-names]
       (run-stat-query q in-path out-dir q-name))))
