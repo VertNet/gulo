@@ -19,7 +19,7 @@
 (fact "Test `get-resource-props`"
   (let [val-vec (into ["a" "a\nb"] (repeat (count f/resource-fields) "a"))
         resource-map (zipmap f/resource-fields val-vec)]
-    (get-resource-props resource-map)) => ["a" "a b" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"])
+    (get-resource-props resource-map)) => ["a" "a b" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"])
 
 (fact "Test `get-count`."
   (get-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds")
@@ -27,13 +27,13 @@
 
 (fact "Test `resource-row`."
   (let [row-map (resource-row
-                 "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds"
-                 "TTRS" true)]
+                 "http://ipt.vertnet.org:8080/ipt/resource.do?r=ubc_bbm_ctc_herps"
+                 "UBCBBM" true)]
     (:ipt row-map) => true
-    (:icode row-map) => "TTRS"
-    (:count row-map) => "3945"
-    (:orgname row-map) => "Tall Timbers Research Station and Land Conservancy"
-    (:title row-map) => "TTRS Ornithology"))
+    (:icode row-map) => "UBCBBM"
+    (:count row-map) => "1863"
+    (:orgname row-map) => "University of British Columbia Beaty Biodiversity Museum"
+    (:citation row-map) => "Cowan Tetrapod Collection at the University of British Columbia Beaty Biodiversity Museum (UBCBBM)"))
 
 (fact "Test `query-resource-rows`."
   (let [rows (query-resource-rows)]
@@ -63,7 +63,8 @@
                work with specimens, and the general hours of operation
                are 8:30 AM-4:30 PM. Loans are generally discouraged
                but are allowed occasionally and governed by formal
-               agreements developed on an individual basis."}]]
+               agreements developed on an individual basis."
+               :citation nil}]]
     (set (keys (first (resource-staging-rows rows)))))
-  => (set [:pubdate :ipt :eml :count :dwca :title :icode :emlrights :url :orgname
+  => (set [:citation :pubdate :ipt :eml :count :dwca :title :icode :emlrights :url :orgname
            :email :contact :description]))
