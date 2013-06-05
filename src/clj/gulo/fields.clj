@@ -5,7 +5,7 @@
 (def resource-fields
   "Ordered vector of fields used in resource map."
   [:pubdate :url :eml :dwca :title :icode :description :contact :orgname :email
-   :emlrights :count])
+   :emlrights :count :citation])
 
 (def base-fields
   "Ordered vector of VertNet field names. Used as base for various

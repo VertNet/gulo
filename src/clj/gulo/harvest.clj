@@ -117,6 +117,11 @@
       (prn (format "Unable to scrape size/count for %s" url))
       -1)))
 
+(defn get-citation
+  [eml]
+  (let [citation (.getCitation eml)]
+    (if citation (.getCitation citation) nil)))
+
 (defn resource-row
   "Return map of resource table columns from supplied IPT resource URL."
   [url icode ipt]
@@ -134,7 +139,8 @@
              :emlrights (.getIntellectualRights eml)
              :contact (.getCreatorName eml)
              :email (.getCreatorEmail eml)
-             :count (get-count url)}]
+             :count (get-count url)
+             :citation (get-citation eml)}]
     row))
 
 (defn query-resource-rows
