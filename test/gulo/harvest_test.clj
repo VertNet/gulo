@@ -66,5 +66,5 @@
                agreements developed on an individual basis."
                :citation nil}]]
     (set (keys (first (resource-staging-rows rows)))))
-  => (set [:citation :pubdate :ipt :eml :count :dwca :title :icode :emlrights :url :orgname
-           :email :contact :description]))
+  => (set [:citation :pubdate :ipt :eml :count :dwca :title :icode :emlrights
+           :url :orgname :email :contact :description]))
