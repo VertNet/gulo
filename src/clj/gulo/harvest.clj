@@ -42,6 +42,9 @@
   (:import [java.io File]
            [org.gbif.metadata.eml EmlFactory]))
 
+(def STAGING-TABLE "resource_staging")
+(def HARVEST-TABLE "resource")
+
 (defn execute-sql
   ([sql]
      (execute-sql sql "vertnet"))
@@ -111,12 +114,12 @@
 
 (defn url->ipt
   [url]
-  (let [sql (format "SELECT ipt FROM resource_staging WHERE url='%s' LIMIT 1" url)]
+  (let [sql (format "SELECT ipt FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
     (:ipt (first (execute-sql sql)))))
 
 (defn url->icode
   [url]
-  (let [sql (format "SELECT icode FROM resource_staging WHERE url='%s' LIMIT 1" url)]
+  (let [sql (format "SELECT icode FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
     (:icode (first (execute-sql sql)))))
 
 (defn fetch-url
@@ -184,7 +187,7 @@
   (try
     (prn (format "Syncing: %s" url))
     (let [resource (mk-resource-map url)
-          sql (cartodb-utils/maps->insert-sql "resource" resource)]      
+          sql (cartodb-utils/maps->insert-sql HARVEST-TABLE resource)]      
       (execute-sql sql))
     (catch Exception e
       (prn (format "SYNC FAIL: %s (%s)" url (.getMessage e))))))
@@ -192,8 +195,8 @@
 (defn sync-resource-table
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
-  (let [urls (get-resource-urls "resource_staging")]
-    (cartodb/query "DELETE FROM resource" "vertnet" :api-key util/api-key)
+  (let [urls (get-resource-urls STAGING-TABLE)]
+    (cartodb/query (forma "DELETE FROM %s" HARVEST-TABLE) "vertnet" :api-key util/api-key)
     (doall
      (map sync-resource urls))))
 
@@ -211,7 +214,7 @@
   [local-path s3-bucket s3-path & {:keys [sync] :or {sync false}}]
   (if sync
     (sync-resource-table))
-  (let [resource-urls (get-resource-urls "resource")
+  (let [resource-urls (get-resource-urls HARVEST-TABLE)
         harvest-fn #(harvest-resource % local-path s3-bucket s3-path)]
     (prn (format "Harvesting %s resources to %s" (count resource-urls) s3-path))
     (doall
