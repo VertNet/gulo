@@ -8,7 +8,7 @@
 (def uuid-pattern #"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
 (def uuid-pattern-str "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
 
-(fact "Test prepend-uuid function."
+(fact "Test `prepend-uuid`."
   (let [vals ["gulo" "shreds"]
         vals (prepend-uuid vals)]
     (count vals) => 3
@@ -16,55 +16,48 @@
     (nth vals 2) => "shreds"
     (.matches (re-matcher uuid-pattern (first vals))) => true))
 
-(fact "Test `get-resource-props`"
-  (let [val-vec (into ["a" "a\nb"] (repeat (count f/resource-fields) "a"))
-        resource-map (zipmap f/resource-fields val-vec)]
-    (get-resource-props resource-map)) => ["a" "a b" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a" "a"])
+(future-fact "Test `file->s3`.")
+
+(future-fact "Test `prep-record`.")
+
+(fact "Test `get-resource-props` by getting count from result (element 11)."
+  (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg"]
+    (nth (get-resource-props url) 11)) => "14011")
+
+(future-fact "Test `resource->s3`.")
+
+(fact "Test `url->ipt`."
+  (url->ipt "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => true)
+
+(fact "Test `url->icode`."
+  (url->icode "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => "MLZ")
+
+(future-fact "Test `fetch-url`.")
 
 (fact "Test `get-count`."
   (get-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds")
   => "3945")
 
-(fact "Test `resource-row`."
-  (let [row-map (resource-row
-                 "http://ipt.vertnet.org:8080/ipt/resource.do?r=ubc_bbm_ctc_herps"
-                 "UBCBBM" true)]
+(future-fact "Test `get-citation`")
+
+(fact "Test `mk-resource-map`."
+  (let [row-map (mk-resource-map
+                 "http://ipt.vertnet.org:8080/ipt/resource.do?r=ubc_bbm_ctc_herps")]
     (:ipt row-map) => true
     (:icode row-map) => "UBCBBM"
     (:count row-map) => "1863"
     (:orgname row-map) => "University of British Columbia Beaty Biodiversity Museum"
     (:citation row-map) => "Cowan Tetrapod Collection at the University of British Columbia Beaty Biodiversity Museum (UBCBBM)"))
 
-(fact "Test `query-resource-rows`."
-  (let [rows (query-resource-rows)]
-    (set (keys (first rows)))) => (set [:url :icode :ipt]))
+(future-fact "Test `execute-sql`.")
 
-(fact "Test `resource-staging-rows` parsing. Use a predefined row to avoid extra
-       roundtrip to & dl from CartoDB. Actual content of row is tested in
-       test for `resource-row."
-  (let [rows [{:pubdate "Mon Apr 16 00:00:00 PDT 2012", :ipt true, :eml
-               "http://ipt.vertnet.org:8080/ipt/eml.do?r=ttrs_birds",
-               :count "3945",
-               :dwca "http://ipt.vertnet.org:8080/ipt/archive.do?r=ttrs_birds",
-               :title "TTRS Ornithology", :icode "TTRS",
-               :rights "Tall Timbers data is governed by the Creative
-               Commons Attribution 3.0 license
-               (http://creativecommons.org/licenses/by/3.0/legalcode). Any
-               use of data or images must be attributed to Tall
-               Timbers Research Station and Land Conservancy.",
-               :url "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds",
-               :orgname "Tall Timbers Research Station and Land Conservancy",
-               :email "jim@ttrs.org", :contact "Jim Cox",
-               :description "Scientists, natural history students,
-               artists, and others interested in the fauna and flora
-               of the southeast are encouraged to visit The Natural
-               History Museum and Scientific Collections at Tall
-               Timbers. Special arrangements must be made to view and
-               work with specimens, and the general hours of operation
-               are 8:30 AM-4:30 PM. Loans are generally discouraged
-               but are allowed occasionally and governed by formal
-               agreements developed on an individual basis."
-               :citation nil}]]
-    (set (keys (first (resource-staging-rows rows)))))
-  => (set [:citation :pubdate :ipt :eml :count :dwca :title :icode :emlrights
-           :url :orgname :email :contact :description]))
+(fact "Test `get-resource-staging-urls."
+  (count (get-resource-urls "resource_staging" :limit 3)) => 3
+  (count (get-resource-urls "resource" :limit 3)) => 3)
+
+(future-fact "Test `sync-resource`.")
+(future-fact "Test `sync-resource-table`.")
+
+(fact "Test that `harvest-resource` completes successfully."
+  (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "vnproject" "tmp")
+  1 => 1)

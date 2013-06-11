@@ -27,7 +27,6 @@
     IPT: http://goo.gl/GtJMF
     S3: http://goo.gl/ailE"
   (:use [cascalog.api]
-        [dwca.core :as dwca :only (open field-vals fields)]
         [cartodb.core :as cartodb]
         [cartodb.utils :as cartodb-utils]
         [clojure.data.csv :as csv]
@@ -38,10 +37,16 @@
             [clojure.zip :as zip]
             [clojure.contrib.io :as cio :only (delete-file-recursively)]
             [gulo.fields :as f]
-            [gulo.util :as util])
+            [gulo.util :as util]
+            [dwca.core :as dwca])
   (:import [java.io File]
-           [org.gbif.dwc.record DarwinCoreRecord]
            [org.gbif.metadata.eml EmlFactory]))
+
+(defn execute-sql
+  ([sql]
+     (execute-sql sql "vertnet"))
+  ([sql account]
+     (:rows (cartodb/query sql account :api-key util/api-key))))
 
 (defn prepend-props
   [vals props]
@@ -59,29 +64,40 @@
         sink (hfs-textline s3-path :sinkmode :replace)]
     (?- sink src)))
 
-(defn prep-records
-  [records field-vals props]
-  (->> records
-       (map field-vals)
-       (map prepend-uuid)
-       (map #(prepend-props % props))
-       (map #(concat % [";"]))))
+(defn prep-record
+  ""
+  [props record]
+  (-> record
+      dwca/field-vals
+      prepend-uuid
+      (prepend-props props)
+      (concat [";"])))
+
+(defn get-resource-props
+  "Extract and clean up props in resource map."
+  [resource-url]
+  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id" resource-url)
+        [resource-map] (execute-sql sql)
+        props (map #(% resource-map) f/resource-fields)]
+    (map util/line-breaks->spaces (flatten props))))
 
 (defn resource->s3
   "Upload Darwn Core records from supplied IPT resource URL to S3."
-  [path url props bucket s3-base-path]
-  (prn (format "Downloading: %s records from %s" (nth props 11) url))
+  [url path bucket s3-base-path]
+  (prn (format "Downloading records from %s" url))
   (try
-    (let [resource-name (util/resource-url->name url)
+    (let [props (get-resource-props url)
+          resource-name (util/resource-url->name url)
           uuid (util/gen-uuid)
           local-csv-path (util/mk-local-path path resource-name uuid)
           s3-full-path (util/mk-full-s3-path bucket s3-base-path resource-name uuid)
           stub (last (.split s3-full-path "@"))
           archive-url (util/resource-url->archive-url url)
           records (dwca/open archive-url :path path)
-          vals (prep-records records field-vals props)
+          vals (map (partial prep-record props) records)
           out (io/writer (io/file local-csv-path) :encoding "UTF-8")]
       (do
+        (prn (format "%s records found" (nth props 11)))
         (prn (format "Writing to %s" local-csv-path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
@@ -92,6 +108,16 @@
         (cio/delete-file-recursively local-csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
+
+(defn url->ipt
+  [url]
+  (let [sql (format "SELECT ipt FROM resource_staging WHERE url='%s' LIMIT 1" url)]
+    (:ipt (first (execute-sql sql)))))
+
+(defn url->icode
+  [url]
+  (let [sql (format "SELECT icode FROM resource_staging WHERE url='%s' LIMIT 1" url)]
+    (:icode (first (execute-sql sql)))))
 
 (defn fetch-url
   "Return HTML from supplied URL."
@@ -122,11 +148,13 @@
   (let [citation (.getCitation eml)]
     (if citation (.getCitation citation) nil)))
 
-(defn resource-row
+(defn mk-resource-map
   "Return map of resource table columns from supplied IPT resource URL."
-  [url icode ipt]
-  (let [eml-url (util/resource-url->eml-url url)
-        eml (EmlFactory/build (io/input-stream eml-url))        
+  [url]
+  (let [icode (url->icode url)
+        ipt (url->ipt url)
+        eml-url (util/resource-url->eml-url url)
+        eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
              :icode icode
              :ipt ipt
@@ -143,59 +171,38 @@
              :citation (get-citation eml)}]
     row))
 
-(defn query-resource-rows
-  []
-  (let [sql "SELECT url, icode, ipt FROM resource_staging WHERE ipt=true ORDER BY cartodb_id"
-        rows (:rows (cartodb/query sql "vertnet" :api-key util/api-key))]
-    rows))
-
-(defn resource-staging-rows
-  "Return vector of resource-rows from resource_staging table on CartoDB."
-  [& [rows]]
-  (let [rows (or rows (query-resource-rows))
-        resource-rows (map #(resource-row (:url %) (:icode %) (:ipt %)) rows)]
-    resource-rows))
+(defn get-resource-urls
+  "Return vector of resource table row maps from CartoDB."
+  [table & {:keys [limit] :or {limit nil}}]
+  (let [sql (format "SELECT url FROM %s WHERE ipt=true ORDER BY cartodb_id" table)
+        sql (if (nil? limit) sql (format "%s LIMIT %s" sql limit))]
+    (map :url (execute-sql sql))))
 
 (defn sync-resource
-  "Sync resource map to CartoDB."
-  [resource]
+  "Sync resource at url to CartoDB."
+  [url]
   (try
-    (prn (format "Syncing: %s" (:url resource)))
-    (let [sql (cartodb-utils/maps->insert-sql "resource" resource)]      
-      (cartodb/query sql "vertnet" :api-key util/api-key))
+    (prn (format "Syncing: %s" url))
+    (let [resource (mk-resource-map url)
+          sql (cartodb-utils/maps->insert-sql "resource" resource)]      
+      (execute-sql sql))
     (catch Exception e
-      (prn (format "SYNC FAIL: %s (%s)" (:url resource) (.getMessage e))))))
+      (prn (format "SYNC FAIL: %s (%s)" url (.getMessage e))))))
 
 (defn sync-resource-table
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
-  (let [rows (resource-staging-rows)]
+  (let [urls (get-resource-urls "resource_staging")]
     (cartodb/query "DELETE FROM resource" "vertnet" :api-key util/api-key)
     (doall
-     (map sync-resource rows))))
-
-(defn get-resources
-  "Return vector of resource table row maps from CartoDB."
-  [& {:keys [limit] :or {limit nil}}]
-  (let [sql "SELECT * FROM resource WHERE ipt=true ORDER BY cartodb_id"
-        sql (if (nil? limit) sql (format "%s LIMIT %s" sql limit))
-        resources (:rows (cartodb/query sql "vertnet" :api-key util/api-key))]
-    resources))
-
-(defn get-resource-props
-  "Extract and clean up props in resource map."
-  [resource-map]
-  (let [props (map #(% resource-map) f/resource-fields)]
-    (map util/line-breaks->spaces (flatten props))))
+     (map sync-resource urls))))
 
 (defn harvest-resource
-  [resource local-path bucket s3-path]
+  [resource-url local-path bucket s3-path]
   (try
-    (let [url (:url resource)
-          props (get-resource-props resource)]
-      (resource->s3 local-path url props bucket s3-path))
+    (resource->s3  resource-url local-path bucket s3-path)
     (catch Exception e
-      (prn (format "ERROR: Resource %s (%s)" (:url resource) (.getMessage e)))
+      (prn (format "ERROR: Resource %s (%s)" resource-url (.getMessage e)))
       (throw e)
       nil)))
 
@@ -204,11 +211,11 @@
   [local-path s3-bucket s3-path & {:keys [sync] :or {sync false}}]
   (if sync
     (sync-resource-table))
-  (let [resources (get-resources)
+  (let [resource-urls (get-resource-urls "resource")
         harvest-fn #(harvest-resource % local-path s3-bucket s3-path)]
-    (prn (format "Harvesting %s resources to %s" (count resources) s3-path))
+    (prn (format "Harvesting %s resources to %s" (count resource-urls) s3-path))
     (doall
-     (map harvest-fn resources))
+     (map harvest-fn resource-urls))
     (prn "Harvest complete.")))
 
 (def line "Wed Apr 18 00:00:00 UTC 2012	http://fmipt.fieldmuseum.org:8080/ipt/resource.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/eml.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/archive.do?r=fm_birds	Field Museum of Natural History (Zoology) Bird Collection	FMNH	The Division of Birds houses the third largest scientific bird collection in the United States. The main collection contains over 480,000 specimens, including 600 holotypes, 70,000 skeletons, and 7,000 fluid specimens. In addition, the division houses 21,000 egg sets and 200 nests. The scope of the collection is world-wide; all bird families but one are represented, as are 90% of the world's genera and species. Included among its many historically and scientifically valuable individual collections are the H. B. Conover Game Bird Collection, Good's and Van Someren's African collections, C. B. Cory's West Indian collection, the Bishop Collection of North American birds, a large portion of W. Koelz's material from India and the Middle East, and many separate collections from South America, Africa (Hoogstraal from Egypt) and the Philippines (Rabor).	Sharon Grant	Field Museum of Natural History	sgrant@fieldmuseum.org	\"Copyright © 2012 The Field Museum of Natural History
