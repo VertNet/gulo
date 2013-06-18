@@ -122,6 +122,14 @@
   (let [sql (format "SELECT icode FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
     (:icode (first (execute-sql sql)))))
 
+(defn url->networks
+  [url]
+  (let [sql (format "SELECT networks FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
+    (->> (execute-sql sql)
+         first
+         :networks
+         (clojure.string/join ","))))
+
 (defn fetch-url
   "Return HTML from supplied URL."
   [url]
@@ -156,6 +164,7 @@
   [url]
   (let [icode (url->icode url)
         ipt (url->ipt url)
+        networks (url->networks url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
@@ -171,7 +180,8 @@
              :contact (.getCreatorName eml)
              :email (.getCreatorEmail eml)
              :count (get-count url)
-             :citation (get-citation eml)}]
+             :citation (get-citation eml)
+             :networks networks}]
     row))
 
 (defn get-resource-urls
@@ -196,7 +206,7 @@
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
   (let [urls (get-resource-urls STAGING-TABLE)]
-    (cartodb/query (forma "DELETE FROM %s" HARVEST-TABLE) "vertnet" :api-key util/api-key)
+    (cartodb/query (format "DELETE FROM %s" HARVEST-TABLE) "vertnet" :api-key util/api-key)
     (doall
      (map sync-resource urls))))
 
