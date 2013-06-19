@@ -108,9 +108,4 @@ read GAE_PASSWORD
 echo "export GAE_PASSWORD=$GAE_PASSWORD" >> ~/.bashrc
 echo "Credentials are now set up."
 
-# uberjar gulo
-cd gulo
-uj
-cd
-
 echo "Instance configured - go have a beer to celebrate!"
