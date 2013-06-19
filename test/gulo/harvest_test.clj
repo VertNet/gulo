@@ -32,6 +32,9 @@
 (fact "Test `url->icode`."
   (url->icode "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => "MLZ")
 
+(fact "Test `url->networks`."
+  (url->networks "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg") => "ORNIS,MANIS")
+
 (future-fact "Test `fetch-url`.")
 
 (fact "Test `get-count`."
@@ -47,7 +50,8 @@
     (:icode row-map) => "UBCBBM"
     (:count row-map) => "1863"
     (:orgname row-map) => "University of British Columbia Beaty Biodiversity Museum"
-    (:citation row-map) => "Cowan Tetrapod Collection at the University of British Columbia Beaty Biodiversity Museum (UBCBBM)"))
+    (:citation row-map) => "Cowan Tetrapod Collection at the University of British Columbia Beaty Biodiversity Museum (UBCBBM)"
+    (:networks row-map) => ""))
 
 (future-fact "Test `execute-sql`.")
 
