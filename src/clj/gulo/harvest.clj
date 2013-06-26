@@ -75,7 +75,7 @@
         fields-tmp (drop-last (drop-last f/harvest-fields))]
     (<- f/harvest-fields
         (src :>> fields-nullable)
-        (util/replace-nils :<< fields-nullable :>> fields-tmp)
+        (util/nils->spaces :<< fields-nullable :>> fields-tmp)
         (util/get-season-str ?decimallatitude ?decimallongitude ?month :> ?season)
         (util/add-fields ";" :> ?dummy))))
 
@@ -109,7 +109,7 @@
           records (dwca/open archive-url :path path)
           vs (map (partial prep-record props) records)]
       (do
-        (prn (format "Uploading to S3: %s" s3-full-path))
+        (prn (format "Uploading to S3: %s" stub))
         (?- (hfs-textline s3-full-path :sinkmode :replace) 
             (clean-up-fields vs))
         (prn "Done harvesting" resource-name)))
