@@ -67,19 +67,32 @@
         sink (hfs-textline s3-path :sinkmode :replace)]
     (?- sink src)))
 
+(defn record->season
+  [rec]
+  (let [record-vals (dwca/field-vals rec)
+        lat-idx (dwca/index-of rec :decimallatitude)
+        lon-idx (dwca/index-of rec :decimallongitude)
+        month-idx (dwca/index-of rec :month)
+        lat (nth record-vals lat-idx)
+        lon (nth record-vals lon-idx)
+        month (nth record-vals month-idx)
+        [lat lon month] (map util/str->num-or-empty-str [lat lon month])]
+    (util/get-season-str lat lon month)))
+
 (defn prep-record
-  ""
+  "Prepend record property fields to fields from a Darwin Core Archive record."
   [props record]
-  (-> record
-      dwca/field-vals
-      prepend-uuid
-      (prepend-props props)
-      (concat [";"])))
+  (let [season (record->season record)]
+    (-> (dwca/field-vals record)
+        prepend-uuid
+        (prepend-props props)
+        (concat [season ";"]))))
 
 (defn get-resource-props
   "Extract and clean up props in resource map."
   [resource-url]
-  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id" resource-url)
+  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id"
+                    resource-url)
         [resource-map] (execute-sql sql)
         props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
