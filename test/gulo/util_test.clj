@@ -1,7 +1,8 @@
 (ns gulo.util-test
   "Unit test the gulo.util namespace."
   (:use gulo.util
-        [midje sweet])
+        cascalog.api
+        [midje cascalog sweet])
   (:require [clj-time.format :as f]))
 
 (fact "Check `todays-date`."
@@ -17,6 +18,12 @@
     (->> (first date-tuple)
         (read-string)
         (<= 2013)) => true))
+
+(fact "Check `add-fields`."
+  (let [src [[1 2]]]
+    (<- [?a ?b ?c]
+        (src ?a ?b)
+        (add-fields 3 :> ?c))) => (produces [[1 2 3]]))
 
 (fact "Check `mk-stats-out-path`"
   (mk-stats-out-path "/tmp/stats" "2013-01-01" "taxon")
@@ -37,7 +44,7 @@
 
 (fact "Check mk-local-path"
   (mk-local-path "/tmp/vn" "ttrs_birds" "asdfjkl")
-  => "/tmp/vn/ttrs_birds-asdfjkl.csv")
+  => "/tmp/vn/ttrs_birds-asdfjkl")
 
 (fact "Check `mk-s3-path`."
   (mk-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl")
@@ -130,8 +137,8 @@
 
 (fact
   "Test parse-hemisphere"
-  (parse-hemisphere "N") => {0 "winter" 1 "spring" 2 "summer" 3 "fall"}
-  (parse-hemisphere "S") => {0 "summer" 1 "fall" 2 "winter" 3 "spring"})
+  (parse-hemisphere "Northern") => {0 "winter" 1 "spring" 2 "summer" 3 "fall"}
+  (parse-hemisphere "Southern") => {0 "summer" 1 "fall" 2 "winter" 3 "spring"})
 
 (fact
   "Test get-season-idx"
@@ -143,13 +150,28 @@
 
 (fact
   "Test get-season"
-  (get-season 1 1) => "0"
-  (get-season -1 1) => "6"
-  (get-season 1 3) => "1"
-  (get-season -1 3) => "7"
-  (get-season 1 4) => "1"
-  (get-season -1 4) => "7"
-  (get-season 1 7) => "2"
-  (get-season -1 7) => "4"
-  (get-season 1 10) => "3"
-  (get-season -1 10) => "5")
+  (get-season-str 1 1 1) => "Northern winter"
+  (get-season-str -1 1 1) => "Southern summer"
+  (get-season-str 1 1 3) => "Northern spring"
+  (get-season-str -1 1 3) => "Southern fall"
+  (get-season-str 1 1 4) => "Northern spring"
+  (get-season-str -1 1 4) => "Southern fall"
+  (get-season-str 1 1 7) => "Northern summer"
+  (get-season-str -1 1 7) => "Southern winter"
+  (get-season-str 1 1 10) => "Northern fall"
+  (get-season-str -1 1 10) => "Southern spring")
+
+(fact "Test `field->nullable`."
+  (field->nullable "?yo") => "!yo")
+
+(fact "Test `nils->spaces`."
+  ;; regular
+  (nils->spaces [1 2 nil]) => [1 2 ""]
+
+  ;; works within Cascalog
+  (let [src [[1 2 nil]]
+        fields ["?a" "?b" "?c"]
+        fields-nullable (map field->nullable fields)]
+    (<- [?a ?b ?c]
+        (src :>> fields-nullable)
+        (nils->spaces :<< fields-nullable :>> fields)) => (produces [[1 2 ""]])))
