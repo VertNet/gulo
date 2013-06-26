@@ -34,7 +34,7 @@
                  [enlive "1.0.1"]
                  [org.apache.thrift/libthrift "0.8.0"]
                  [clj-time "0.3.4"]
-                 [clj-aws-s3 "0.3.2"]
+                 [clj-aws-s3 "0.3.6"]
                  [org.clojure/java.jdbc "0.3.0-alpha1"]]
   :min-lein-version "2.0.0"
   :aot [vn.schema gulo.hadoop.pail org.json])

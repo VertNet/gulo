@@ -68,10 +68,11 @@
     (?- sink src)))
 
 (defn record->season
-  [record-vals]
-  (let [[lat-idx] (util/positions (partial = "?decimallatitude") f/harvest-fields)
-        [lon-idx] (util/positions (partial = "?decimallongitude") f/harvest-fields)
-        [month-idx] (util/positions (partial = "?month") f/harvest-fields)
+  [rec]
+  (let [record-vals (dwca/field-vals rec)
+        lat-idx (dwca/index-of rec :decimallatitude)
+        lon-idx (dwca/index-of rec :decimallongitude)
+        month-idx (dwca/index-of rec :month)
         lat (nth record-vals lat-idx)
         lon (nth record-vals lon-idx)
         month (nth record-vals month-idx)]
@@ -80,9 +81,8 @@
 (defn prep-record
   "Prepend record property fields to fields from a Darwin Core Archive record."
   [props record]
-  (let [record-vals (dwca/field-vals record)
-        season (record->season record-vals)]
-    (-> record-vals
+  (let [season (record->season record)]
+    (-> (dwca/field-vals record)
         prepend-uuid
         (prepend-props props)
         (concat [season ";"]))))

@@ -3,7 +3,7 @@
 
 # install some helpful utilities
 sudo apt-get update
-sudo apt-get install -y  screen, s3cmd, zip, unzip
+sudo apt-get install -y  screen s3cmd zip unzip
 
 # Setup for git
 git config --global user.name "Whizbang Systems"
@@ -24,5 +24,7 @@ echo "alias li='cd /home/hadoop/bin; wget https://raw.github.com/technomancy/lei
 echo "alias uj='lein do deps, compile :all, uberjar'" >> /home/hadoop/.bashrc
 
 # simple installs & configs
-echo "alias gulo='git clone git://github.com/VertNet/gulo.git'"
-echo "alias teratorn='git clone git://github.com/MapofLife/teratorn.git'"
+echo "alias gulo='git clone git://github.com/VertNet/gulo.git'" >> /home/hadoop/.bashrc
+echo "alias teratorn='git clone git://github.com/MapofLife/teratorn.git'" >> /home/hadoop/.bashrc
+
+echo "alias dl='wget https://gist.github.com/robinkraft/5666682/download'" >> /home/hadoop/.bashrc
