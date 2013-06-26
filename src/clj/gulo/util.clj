@@ -326,3 +326,23 @@
    is true for items in coll."
   [pred coll]
   (for [[idx elt] (map-indexed vector coll) :when (pred elt)] idx))
+
+(defn str->num-or-empty-str
+  "Convert a string to a number with read-string and return it. If not a
+   number, return an empty string.
+
+   Try/catch form will catch exception from using read-string with
+   non-decimal degree or entirely wrong lats and lons (a la 5°52.5'N, 6d
+   10m s S, or 0/0/0 - all have been seen in the data).
+
+   Note that this will also handle major errors in the lat/lon fields
+   that may be due to mal-formed or non-standard input text lines that
+   would otherwise cause parsing errors."
+  [s]
+  (try
+    (let [parsed-str (read-string s)]
+      (cond
+       (number? parsed-str) parsed-str
+       (symbol? parsed-str) (str->num-or-empty-str (format "0%s" parsed-str))
+       :else ""))
+    (catch Exception e "")))

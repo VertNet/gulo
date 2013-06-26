@@ -178,3 +178,10 @@
 
 (fact "Test `positions`."
   (positions (partial > 1) [0 1 2 3 -1]) => [0 4])
+
+(facts
+  "Test `str->num-or-empty-str`."
+  (str->num-or-empty-str "1.2") => 1.2
+  (str->num-or-empty-str "\\N") => ""
+  (str->num-or-empty-str "5°52.5'N") => ""
+  (str->num-or-empty-str ".435") => 0.435)

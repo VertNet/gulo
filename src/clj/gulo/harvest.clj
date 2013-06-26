@@ -75,7 +75,8 @@
         month-idx (dwca/index-of rec :month)
         lat (nth record-vals lat-idx)
         lon (nth record-vals lon-idx)
-        month (nth record-vals month-idx)]
+        month (nth record-vals month-idx)
+        [lat lon month] (map util/str->num-or-empty-str [lat lon month])]
     (util/get-season-str lat lon month)))
 
 (defn prep-record
