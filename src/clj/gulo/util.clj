@@ -57,7 +57,7 @@
 
 (defn mk-local-path
   [path resource-name uuid]
-  (format "%s/%s-%s" path resource-name uuid))
+  (format "%s/%s-%s.csv" path resource-name uuid))
 
 (defn mk-s3-path
   [bucket s3-path resource-name uuid]
@@ -320,3 +320,9 @@
   (let [fields (flatten fields)
         replacer #(if (nil? %) "" %)]
     (map replacer fields)))
+
+(defn positions
+  "Returns a lazy sequence containing the positions at which pred
+   is true for items in coll."
+  [pred coll]
+  (for [[idx elt] (map-indexed vector coll) :when (pred elt)] idx))

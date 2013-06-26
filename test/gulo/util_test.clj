@@ -44,7 +44,7 @@
 
 (fact "Check mk-local-path"
   (mk-local-path "/tmp/vn" "ttrs_birds" "asdfjkl")
-  => "/tmp/vn/ttrs_birds-asdfjkl")
+  => "/tmp/vn/ttrs_birds-asdfjkl.csv")
 
 (fact "Check `mk-s3-path`."
   (mk-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl")
@@ -175,3 +175,6 @@
     (<- [?a ?b ?c]
         (src :>> fields-nullable)
         (nils->spaces :<< fields-nullable :>> fields)) => (produces [[1 2 ""]])))
+
+(fact "Test `positions`."
+  (positions (partial > 1) [0 1 2 3 -1]) => [0 4])

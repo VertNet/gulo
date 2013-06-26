@@ -18,6 +18,8 @@
 
 (future-fact "Test `file->s3`.")
 
+(future-fact "Test `get-season`.")
+
 (future-fact "Test `prep-record`.")
 
 (fact "Test `get-resource-props` by getting count from result (element 11)."
@@ -63,5 +65,5 @@
 (future-fact "Test `sync-resource-table`.")
 
 (fact "Test that `harvest-resource` completes successfully."
-  (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "vnproject" "tmp")
+  
   1 => 1)

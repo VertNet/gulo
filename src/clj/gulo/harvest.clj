@@ -67,30 +67,31 @@
         sink (hfs-textline s3-path :sinkmode :replace)]
     (?- sink src)))
 
-(defn clean-up-fields
-  "Takes raw data from a Darwin Core Archive along with additional record properties,
-   and does some cleanup work, including adding season and the dummy field \";\"."
-  [src]
-  (let [fields-nullable (drop-last (drop-last f/harvest-fields-nullable))
-        fields-tmp (drop-last (drop-last f/harvest-fields))]
-    (<- f/harvest-fields
-        (src :>> fields-nullable)
-        (util/nils->spaces :<< fields-nullable :>> fields-tmp)
-        (util/get-season-str ?decimallatitude ?decimallongitude ?month :> ?season)
-        (util/add-fields ";" :> ?dummy))))
+(defn record->season
+  [record-vals]
+  (let [[lat-idx] (util/positions (partial = "?decimallatitude") f/harvest-fields)
+        [lon-idx] (util/positions (partial = "?decimallongitude") f/harvest-fields)
+        [month-idx] (util/positions (partial = "?month") f/harvest-fields)
+        lat (nth record-vals lat-idx)
+        lon (nth record-vals lon-idx)
+        month (nth record-vals month-idx)]
+    (util/get-season-str lat lon month)))
 
 (defn prep-record
   "Prepend record property fields to fields from a Darwin Core Archive record."
   [props record]
-  (-> record
-      dwca/field-vals
-      prepend-uuid
-      (prepend-props props)))
+  (let [record-vals (dwca/field-vals record)
+        season (record->season record-vals)]
+    (-> record-vals
+        prepend-uuid
+        (prepend-props props)
+        (concat [season ";"]))))
 
 (defn get-resource-props
   "Extract and clean up props in resource map."
   [resource-url]
-  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id" resource-url)
+  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id"
+                    resource-url)
         [resource-map] (execute-sql sql)
         props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
@@ -103,16 +104,23 @@
     (let [props (get-resource-props url)
           resource-name (util/resource-url->name url)
           uuid (util/gen-uuid)
+          local-csv-path (util/mk-local-path path resource-name uuid)
           s3-full-path (util/mk-full-s3-path bucket s3-base-path resource-name uuid)
           stub (last (.split s3-full-path "@"))
           archive-url (util/resource-url->archive-url url)
           records (dwca/open archive-url :path path)
-          vs (map (partial prep-record props) records)]
+          vals (map (partial prep-record props) records)
+          out (io/writer (io/file local-csv-path) :encoding "UTF-8")]
       (do
-        (prn (format "Uploading to S3: %s" stub))
-        (?- (hfs-textline s3-full-path :sinkmode :replace) 
-            (clean-up-fields vs))
-        (prn "Done harvesting" resource-name)))
+        (prn (format "%s records found" (nth props 11)))
+        (prn (format "Writing to %s" local-csv-path))
+        (with-open [f out]
+          (csv/write-csv f vals :separator \tab :quote \"))
+        (do
+          (prn (format "Uploading %s to S3: %s" local-csv-path stub))
+          (file->s3 local-csv-path s3-full-path))
+        (prn "Done harvesting" resource-name)
+        (cio/delete-file-recursively local-csv-path)))
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
 
