@@ -29,6 +29,11 @@
   []
   (f/unparse (f/formatters :year-month-day) (time/now)))
 
+(defn add-fields
+  "Adds an arbitrary number of fields to tuples in a cascalog query."
+  [& fields]
+  (vec fields))
+
 (defn mk-stats-out-path
   "Build output path, using a base path, query name, and the current date.
 
@@ -219,21 +224,21 @@
 
 (def season-map
   "Encodes seasons as indices: 0-3 for northern hemisphere, 4-7 for the south"
-  {"N winter" 0
-   "N spring" 1
-   "N summer" 2
-   "N fall" 3
-   "S winter" 4
-   "S spring" 5
-   "S summer" 6
-   "S fall" 7})
+  {"Northern winter" 0
+   "Northern spring" 1
+   "Northern summer" 2
+   "Northern fall" 3
+   "Southern winter" 4
+   "Southern spring" 5
+   "Southern summer" 6
+   "Southern fall" 7})
 
 (defn parse-hemisphere
   "Returns a quarter->season map based on the hemisphere."
   [h]
   (let [n_seasons {0 "winter" 1 "spring" 2 "summer" 3 "fall"}
         s_seasons {0 "summer" 1 "fall" 2 "winter" 3 "spring"}]
-    (if (= h "N") n_seasons s_seasons)))
+    (if (= h "Northern") n_seasons s_seasons)))
 
 (defn get-season-idx
   "Returns season index (roughly quarter) given a month."
@@ -245,22 +250,23 @@
                      8 3 9 3 10 3}]
     (get season-idxs month)))
 
-(defn get-season
+(defn get-season-str
   "Based on the latitude and the month, return a season index
    as given in season-map.
 
    Usage:
-     (get-season 40.0 1)
-     ;=> \"0\""
-  [lat month]
-  (if (= "" month)
-    ""
+     (get-season 40.0 -1.0 1)
+     ;=> \"Northern winter\""
+  [lat lon month]
+  (if (or (not (valid-latlon? lat lon))
+          (= "" month))
+    "unknown"
     (let [lat (if (string? lat) (read-string lat) lat)
           month (if (string? month) (read-string month) month)
-          hemisphere (if (pos? lat) "N" "S")
+          hemisphere (if (pos? lat) "Northern" "Southern")
           season (get (parse-hemisphere hemisphere)
                       (get-season-idx month))]
-      (str (get season-map (format "%s %s" hemisphere season))))))
+      (format "%s %s" hemisphere season))))
 
 (defn cleanup-data
   "Cleanup data by handling rounding, missing data, etc."
@@ -300,3 +306,43 @@
         idxs (positions #(contains? reserved %) v)
         sqlize (fn [s] (str "_" s))]
     (reduce #(update-in % [%2] sqlize) v idxs)))
+
+(defn field->nullable
+  "Convert a non-nullable Cascalog field name string into a nullable
+  one (i.e. replace ? with !)."
+  [s]
+  (s/replace s "?" "!"))
+
+(defn nils->spaces
+  "Replace nils in fields with spaces. See test for appropriate usage
+  within Cascalog."
+  [& fields]
+  (let [fields (flatten fields)
+        replacer #(if (nil? %) "" %)]
+    (map replacer fields)))
+
+(defn positions
+  "Returns a lazy sequence containing the positions at which pred
+   is true for items in coll."
+  [pred coll]
+  (for [[idx elt] (map-indexed vector coll) :when (pred elt)] idx))
+
+(defn str->num-or-empty-str
+  "Convert a string to a number with read-string and return it. If not a
+   number, return an empty string.
+
+   Try/catch form will catch exception from using read-string with
+   non-decimal degree or entirely wrong lats and lons (a la 5°52.5'N, 6d
+   10m s S, or 0/0/0 - all have been seen in the data).
+
+   Note that this will also handle major errors in the lat/lon fields
+   that may be due to mal-formed or non-standard input text lines that
+   would otherwise cause parsing errors."
+  [s]
+  (try
+    (let [parsed-str (read-string s)]
+      (cond
+       (number? parsed-str) parsed-str
+       (symbol? parsed-str) (str->num-or-empty-str (format "0%s" parsed-str))
+       :else ""))
+    (catch Exception e "")))

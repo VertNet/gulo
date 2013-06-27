@@ -58,13 +58,16 @@
    "namepublishedinid" "taxonomicstatus" "nomenclaturalstatus" "nameaccordingto"
    "nameaccordingtoid" "parentnameusageid" "parentnameusage"
    "originalnameusageid" "originalnameusage" "acceptednameusageid"
-   "acceptednameusage" "taxonremarks" "dynamicproperties" "namepublishedinyear"])
+   "acceptednameusage" "taxonremarks" "dynamicproperties" "namepublishedinyear" "season"])
 
 ;; Ordered vector of harvesting output column names for use in wide Cascalog sources:
 (def harvest-fields
   (concat (vec (map u/kw->field-str resource-fields))
           (map u/str->cascalog-field base-fields)
           ["?dummy"]))
+
+(def harvest-fields-nullable
+  (vec (map u/field->nullable harvest-fields)))
 
 (def occ-fields
   (into ["?occ-uuid"] harvest-fields))

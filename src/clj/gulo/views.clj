@@ -33,7 +33,7 @@
 (defn publisher-count
   "Count unique publishers."
   [src]
-  (let [uniques (uniques-query src ["?orgname"])] ;; correct publisher id?
+  (let [uniques (uniques-query src ["?orgname"])]
     (<- [?count]
         (uniques ?dwca)
         (c/count ?count))))
@@ -41,7 +41,7 @@
 (defn total-recs
   "Count unique occurrences."
   [src]
-  (let [uniques (uniques-query src ["?harvestid"])] ;; correct id?
+  (let [uniques (uniques-query src ["?harvestid"])]
     (<- [?count]
         (uniques ?occurrenceid)
         (c/count ?count))))
@@ -49,7 +49,7 @@
 (defn total-recs-by-country
   "Count unique occurrence records by country."
   [src]
-  (let [uniques (uniques-query src ["?country" "?harvestid"])] ;; correct id?
+  (let [uniques (uniques-query src ["?country" "?harvestid"])]
     (<- [?country ?count]
         (uniques ?country _)
         (c/count ?count))))
