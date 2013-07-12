@@ -23,7 +23,7 @@
 
 (fact "Test `get-resource-props` by getting count from result (element 11)."
   (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg"]
-    (nth (get-resource-props url) 11)) => "14011")
+    (nth (get-resource-props url) 11)) => "14001")
 
 (future-fact "Test `resource->s3`.")
 
@@ -40,7 +40,11 @@
 
 (fact "Test `get-count`."
   (get-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds")
-  => "3945")
+  => "3945"
+  (get-count "http://ipt.calacademy.org:8080/ipt/resource.do?r=herp")
+  => "-1"
+  (get-count "http://ipt.nhm.ku.edu/ipt/resource.do?r=kubi_herps")
+  => "-1")
 
 (future-fact "Test `get-citation`")
 
