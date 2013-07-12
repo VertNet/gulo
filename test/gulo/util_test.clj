@@ -146,7 +146,10 @@
   (get-season-idx 3) => 1
   (get-season-idx 4) => 1
   (get-season-idx 6) => 2
-  (get-season-idx 7) => 2)
+  (get-season-idx 7) => 2
+  (get-season-idx 13) => nil
+  (get-season-idx 0) => nil
+  (get-season-idx "January") => nil)
 
 (fact
   "Test get-season"

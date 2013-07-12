@@ -243,12 +243,13 @@
 (defn get-season-idx
   "Returns season index (roughly quarter) given a month."
   [month]
-  {:pre [(>= 12 month)]}
   (let [season-idxs {11 0 12 0 1 0
                      2 1 3 1 4 1
                      5 2 6 2 7 2
                      8 3 9 3 10 3}]
-    (get season-idxs month)))
+    (if (and (number? month) (>= 12 month) (>= month 1))
+      (get season-idxs month)
+      nil)))
 
 (defn get-season-str
   "Based on the latitude and the month, return a season index
@@ -266,7 +267,9 @@
           hemisphere (if (pos? lat) "Northern" "Southern")
           season (get (parse-hemisphere hemisphere)
                       (get-season-idx month))]
-      (format "%s %s" hemisphere season))))
+      (if season
+        (format "%s %s" hemisphere season)
+        "unknown"))))
 
 (defn cleanup-data
   "Cleanup data by handling rounding, missing data, etc."
