@@ -162,10 +162,12 @@
           token (second (:content node))
           tokens (s/split token #" ")
           count (s/replace (nth tokens 3) "," "")]
-      count)
+      (if (empty? count)
+        (throw Exception)
+        count))
     (catch Exception e
       (prn (format "Unable to scrape size/count for %s" url))
-      -1)))
+      "-1")))
 
 (defn get-citation
   [eml]
