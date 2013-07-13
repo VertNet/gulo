@@ -234,10 +234,13 @@
 
 (defn harvest-all
   "Harvest all resources from resource table on CartoDB to S3."
-  [local-path s3-bucket s3-path & {:keys [sync] :or {sync false}}]
+  [local-path s3-bucket s3-path & {:keys [sync paths-file path-coll] :or {sync false path nil path-list nil}}]
   (if sync
     (sync-resource-table))
-  (let [resource-urls (get-resource-urls HARVEST-TABLE)
+  (let [resource-urls (cond
+                       paths-file (util/read-file paths-file)
+                       path-coll path-coll
+                       :else (get-resource-urls HARVEST-TABLE))
         harvest-fn #(harvest-resource % local-path s3-bucket s3-path)]
     (prn (format "Harvesting %s resources to %s" (count resource-urls) s3-path))
     (doall
