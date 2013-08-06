@@ -23,7 +23,7 @@
 
 (fact "Test `get-resource-props` by getting count from result (element 11)."
   (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg"]
-    (nth (get-resource-props url) 11)) => "14011")
+    (nth (get-resource-props url) 11)) => "14001")
 
 (future-fact "Test `resource->s3`.")
 
@@ -62,6 +62,15 @@
 
 (future-fact "Test `sync-resource`.")
 (future-fact "Test `sync-resource-table`.")
+
+(fact "Test `get-harvest-urls`."
+  (let [path-coll ["http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_bird"
+                   "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_herp"]
+        path-file "/tmp/vn-paths.txt"
+        _ (spit path-file (clojure.string/join "\n" path-coll))]
+    (get-harvest-urls :path-file path-file) => path-coll
+    (get-harvest-urls :path-coll path-coll) => path-coll
+    (< 2 (count (get-harvest-urls))) => true))
 
 (fact "Test that `harvest-resource` completes successfully."
   (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "vnproject" "tmp")

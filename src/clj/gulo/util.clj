@@ -350,7 +350,7 @@
        :else ""))
     (catch Exception e "")))
 
-(defn read-file
+(defn parse-path-file
   "Reads `path` and returns a sequence of lines."
   [path]
   (filter seq (map s/trim (seq (.split (slurp path) "\n")))))
