@@ -349,3 +349,8 @@
        (symbol? parsed-str) (str->num-or-empty-str (format "0%s" parsed-str))
        :else ""))
     (catch Exception e "")))
+
+(defn parse-path-file
+  "Reads `path` and returns a sequence of lines."
+  [path]
+  (filter seq (map s/trim (seq (.split (slurp path) "\n")))))

@@ -234,12 +234,21 @@
       (throw e)
       nil)))
 
+(defn get-harvest-urls
+  "Try getting URLs to harvest from a textfile of paths, a collection or finally from
+  `HARVEST-TABLE`."
+  [& {:keys [path-file path-coll] :or {path nil path-list nil}}]
+  (cond
+   path-file (util/parse-path-file path-file)
+   path-coll path-coll
+   :else (get-resource-urls HARVEST-TABLE)))
+
 (defn harvest-all
   "Harvest all resources from resource table on CartoDB to S3."
-  [local-path s3-bucket s3-path & {:keys [sync] :or {sync false}}]
+  [local-path s3-bucket s3-path & {:keys [sync path-file path-coll] :or {sync false path-file nil path-coll nil}}]
   (if sync
     (sync-resource-table))
-  (let [resource-urls (get-resource-urls HARVEST-TABLE)
+  (let [resource-urls (get-harvest-urls :paths-file path-file :path-coll path-coll)
         harvest-fn #(harvest-resource % local-path s3-bucket s3-path)]
     (prn (format "Harvesting %s resources to %s" (count resource-urls) s3-path))
     (doall
