@@ -67,6 +67,15 @@
 (future-fact "Test `sync-resource`.")
 (future-fact "Test `sync-resource-table`.")
 
+(fact "Test `get-harvest-urls`."
+  (let [path-coll ["http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_bird"
+                   "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_herp"]
+        path-file "/tmp/vn-paths.txt"
+        _ (spit path-file (clojure.string/join "\n" path-coll))]
+    (get-harvest-urls :path-file path-file) => path-coll
+    (get-harvest-urls :path-coll path-coll) => path-coll
+    (< 2 (count (get-harvest-urls))) => true))
+
 (fact "Test that `harvest-resource` completes successfully."
   (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "vnproject" "tmp")
   1 => 1)

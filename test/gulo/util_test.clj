@@ -188,3 +188,10 @@
   (str->num-or-empty-str "\\N") => ""
   (str->num-or-empty-str "5°52.5'N") => ""
   (str->num-or-empty-str ".435") => 0.435)
+
+(fact "Test `parse-path-file`."
+  (let [path-coll ["http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_bird"
+                   "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_herp"]
+        path-file "/tmp/vn-paths.txt"
+        _ (spit path-file (clojure.string/join "\n" path-coll))]
+    (parse-path-file path-file) => path-coll))
