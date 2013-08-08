@@ -44,6 +44,7 @@
 
 (def STAGING-TABLE "resource_staging")
 (def HARVEST-TABLE "resource")
+(def GS-PATH "gs://vn-staging/data/")
 
 (defn execute-sql
   ([sql]
@@ -60,33 +61,12 @@
   [vals]
   (cons (util/gen-uuid) vals))
 
-(defn file->s3
-  "Upload file at supplied path to S3 path."
-  [path s3-path]
-  (let [src (hfs-textline path)
-        sink (hfs-textline s3-path :sinkmode :replace)]
-    (?- sink src)))
-
-(defn record->season
-  [rec]
-  (let [record-vals (dwca/field-vals rec)
-        lat-idx (dwca/index-of rec :decimallatitude)
-        lon-idx (dwca/index-of rec :decimallongitude)
-        month-idx (dwca/index-of rec :month)
-        lat (nth record-vals lat-idx)
-        lon (nth record-vals lon-idx)
-        month (nth record-vals month-idx)
-        [lat lon month] (map util/str->num-or-empty-str [lat lon month])]
-    (util/get-season-str lat lon month)))
-
 (defn prep-record
   "Prepend record property fields to fields from a Darwin Core Archive record."
   [props record]
-  (let [season (record->season record)]
-    (-> (dwca/field-vals record)
-        prepend-uuid
-        (prepend-props props)
-        (concat [season ";"]))))
+  (-> (dwca/field-vals record)
+      prepend-uuid
+      (prepend-props props)))
 
 (defn get-resource-props
   "Extract and clean up props in resource map."
@@ -97,18 +77,17 @@
         props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
 
-(defn resource->s3
-  "Upload Darwn Core records from supplied IPT resource URL to S3."
-  [url path bucket s3-base-path]
+(defn resource->csv
+  "Convert Darwn Core records from supplied IPT resource URL to CSV"
+  [url path date-str]
   (prn (format "Downloading records from %s" url))
   (try
     (let [props (get-resource-props url)
           resource-name (util/resource-url->name url)
-          uuid (util/gen-uuid)
-          local-csv-path (util/mk-local-path path resource-name uuid)
-          s3-full-path (util/mk-full-s3-path bucket s3-base-path resource-name uuid)
-          stub (last (.split s3-full-path "@"))
           archive-url (util/resource-url->archive-url url)
+          uuid (util/gen-uuid)
+          local-csv-path (util/mk-local-path path resource-name uuid date-str)
+          _ (clojure.java.io/make-parents local-csv-path)
           records (dwca/open archive-url :path path)
           vals (map (partial prep-record props) records)
           out (io/writer (io/file local-csv-path) :encoding "UTF-8")]
@@ -117,11 +96,7 @@
         (prn (format "Writing to %s" local-csv-path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
-        (do
-          (prn (format "Uploading %s to S3: %s" local-csv-path stub))
-          (file->s3 local-csv-path s3-full-path))
-        (prn "Done harvesting" resource-name)
-        (cio/delete-file-recursively local-csv-path)))
+        (prn (format "Done harvesting %s" resource-name))))
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
 
@@ -226,9 +201,9 @@
      (map sync-resource urls))))
 
 (defn harvest-resource
-  [resource-url local-path bucket s3-path]
+  [resource-url local-path date-str]
   (try
-    (resource->s3  resource-url local-path bucket s3-path)
+    (resource->csv resource-url local-path date-str)
     (catch Exception e
       (prn (format "ERROR: Resource %s (%s)" resource-url (.getMessage e)))
       (throw e)
@@ -244,15 +219,18 @@
    :else (get-resource-urls HARVEST-TABLE)))
 
 (defn harvest-all
-  "Harvest all resources from resource table on CartoDB to S3."
-  [local-path s3-bucket s3-path & {:keys [sync path-file path-coll] :or {sync false path-file nil path-coll nil}}]
+  "Harvest all resources from resource table on CartoDB to Google Cloud Storage."
+  [local-path & {:keys [sync path-file path-coll date] :or {sync false path-file nil path-coll nil date (util/todays-date)}}]
   (if sync
     (sync-resource-table))
   (let [resource-urls (get-harvest-urls :paths-file path-file :path-coll path-coll)
-        harvest-fn #(harvest-resource % local-path s3-bucket s3-path)]
-    (prn (format "Harvesting %s resources to %s" (count resource-urls) s3-path))
+        harvest-fn #(harvest-resource % local-path date)]
+    (prn (format "Harvesting %s resources" (count resource-urls)))
     (doall
      (map harvest-fn resource-urls))
+    (prn (format "Syncing %s/%s to %s" local-path date GS-PATH))
+    (clojure.java.shell/sh "python" (.getPath (io/resource "send_to_gcs.py"))
+                           (format "%s/%s" local-path date) GS-PATH)
     (prn "Harvest complete.")))
 
 (def line "Wed Apr 18 00:00:00 UTC 2012	http://fmipt.fieldmuseum.org:8080/ipt/resource.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/eml.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/archive.do?r=fm_birds	Field Museum of Natural History (Zoology) Bird Collection	FMNH	The Division of Birds houses the third largest scientific bird collection in the United States. The main collection contains over 480,000 specimens, including 600 holotypes, 70,000 skeletons, and 7,000 fluid specimens. In addition, the division houses 21,000 egg sets and 200 nests. The scope of the collection is world-wide; all bird families but one are represented, as are 90% of the world's genera and species. Included among its many historically and scientifically valuable individual collections are the H. B. Conover Game Bird Collection, Good's and Van Someren's African collections, C. B. Cory's West Indian collection, the Bishop Collection of North American birds, a large portion of W. Koelz's material from India and the Middle East, and many separate collections from South America, Africa (Hoogstraal from Egypt) and the Philippines (Rabor).	Sharon Grant	Field Museum of Natural History	sgrant@fieldmuseum.org	\"Copyright © 2012 The Field Museum of Natural History

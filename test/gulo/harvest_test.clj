@@ -17,6 +17,7 @@
     (.matches (re-matcher uuid-pattern (first vals))) => true))
 
 (future-fact "Test `file->s3`.")
+(future-fact "Test `file->files`.")
 
 (future-fact "Test `get-season`.")
 (future-fact "Test `prep-record`.")
@@ -77,5 +78,5 @@
     (< 2 (count (get-harvest-urls))) => true))
 
 (fact "Test that `harvest-resource` completes successfully."
-  (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "vnproject" "tmp")
+  (harvest-resource "http://ipt.vertnet.org:8080/ipt/resource.do?r=msbobs_mamm" "/tmp" "2013-01-01")
   1 => 1)
