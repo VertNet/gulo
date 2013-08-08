@@ -56,8 +56,9 @@
   (second (s/split url #"=")))
 
 (defn mk-local-path
-  [path resource-name uuid]
-  (format "%s/%s-%s.csv" path resource-name uuid))
+  [path resource-name uuid & [date]]
+  (let [date-str (or date (todays-date))]
+    (format "%s/%s/%s-%s/%s-%s.csv" path date-str resource-name uuid resource-name uuid)))
 
 (defn mk-s3-path
   [bucket s3-path resource-name uuid]
@@ -221,55 +222,6 @@
   "Maps quoter function over supplied vals."
   [& vals]
   (vec (map quoter vals)))
-
-(def season-map
-  "Encodes seasons as indices: 0-3 for northern hemisphere, 4-7 for the south"
-  {"Northern winter" 0
-   "Northern spring" 1
-   "Northern summer" 2
-   "Northern fall" 3
-   "Southern winter" 4
-   "Southern spring" 5
-   "Southern summer" 6
-   "Southern fall" 7})
-
-(defn parse-hemisphere
-  "Returns a quarter->season map based on the hemisphere."
-  [h]
-  (let [n_seasons {0 "winter" 1 "spring" 2 "summer" 3 "fall"}
-        s_seasons {0 "summer" 1 "fall" 2 "winter" 3 "spring"}]
-    (if (= h "Northern") n_seasons s_seasons)))
-
-(defn get-season-idx
-  "Returns season index (roughly quarter) given a month."
-  [month]
-  (let [season-idxs {11 0 12 0 1 0
-                     2 1 3 1 4 1
-                     5 2 6 2 7 2
-                     8 3 9 3 10 3}]
-    (if (and (number? month) (>= 12 month) (>= month 1))
-      (get season-idxs month)
-      nil)))
-
-(defn get-season-str
-  "Based on the latitude and the month, return a season index
-   as given in season-map.
-
-   Usage:
-     (get-season 40.0 -1.0 1)
-     ;=> \"Northern winter\""
-  [lat lon month]
-  (if (or (not (valid-latlon? lat lon))
-          (= "" month))
-    "unknown"
-    (let [lat (if (string? lat) (read-string lat) lat)
-          month (if (string? month) (read-string month) month)
-          hemisphere (if (pos? lat) "Northern" "Southern")
-          season (get (parse-hemisphere hemisphere)
-                      (get-season-idx month))]
-      (if season
-        (format "%s %s" hemisphere season)
-        "unknown"))))
 
 (defn cleanup-data
   "Cleanup data by handling rounding, missing data, etc."
