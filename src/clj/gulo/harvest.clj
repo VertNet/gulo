@@ -38,8 +38,7 @@
             [clojure.contrib.io :as cio :only (delete-file-recursively)]
             [gulo.fields :as f]
             [gulo.util :as util]
-            [dwca.core :as dwca]
-            [clojure.java.shell :only (sh)])
+            [dwca.core :as dwca])
   (:import [java.io File]
            [org.gbif.metadata.eml EmlFactory]))
 
@@ -230,15 +229,9 @@
     (doall
      (map harvest-fn resource-urls))
     (prn (format "Syncing %s/%s to %s" local-path date GS-PATH))
-    (sh "python" "/home/robin/code/github/vertnet/gulo/dev/send_to_gcs.py"
-        (format "%s/%s" local-path date) GS-PATH)
+    (clojure.java.shell/sh "python" (.getPath (io/resource "send_to_gcs.py"))
+                           (format "%s/%s" local-path date) GS-PATH)
     (prn "Harvest complete.")))
 
 (def line "Wed Apr 18 00:00:00 UTC 2012	http://fmipt.fieldmuseum.org:8080/ipt/resource.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/eml.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/archive.do?r=fm_birds	Field Museum of Natural History (Zoology) Bird Collection	FMNH	The Division of Birds houses the third largest scientific bird collection in the United States. The main collection contains over 480,000 specimens, including 600 holotypes, 70,000 skeletons, and 7,000 fluid specimens. In addition, the division houses 21,000 egg sets and 200 nests. The scope of the collection is world-wide; all bird families but one are represented, as are 90% of the world's genera and species. Included among its many historically and scientifically valuable individual collections are the H. B. Conover Game Bird Collection, Good's and Van Someren's African collections, C. B. Cory's West Indian collection, the Bishop Collection of North American birds, a large portion of W. Koelz's material from India and the Middle East, and many separate collections from South America, Africa (Hoogstraal from Egypt) and the Philippines (Rabor).	Sharon Grant	Field Museum of Natural History	sgrant@fieldmuseum.org	\"Copyright © 2012 The Field Museum of Natural History
 Full details may be found at http://fieldmuseum.org/about/copyright-information\"	FMNH	505538	1743420						PreservedSpecimen			468422	Birds	Birds	Africa			Malawi		Malawi			8																														Africa, Malawi, Rumphi: Khuta maji, Vwaza Marsh, Vwaza Wildlife Reserve												FMNH										Khuta maji, Vwaza Marsh, Vwaza Wildlife Reserve																				1170	10							skin(r)		MLW-3422												8	Rumphi						1170 -						2009				FMNH				FMNH						birds-12-jul-2012								Animalia Chordata Aves Passeriformes Estrildidae	Animalia	Chordata	Aves	Passeriformes	Estrildidae	Pytilia		melba	melba	Pytilia melba melba							ICZN																;")
-
-
-
-
-
-
