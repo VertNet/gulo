@@ -43,8 +43,9 @@
   => "http://ipt.vertnet.org:8080/ipt/archive.do?r=ttrs_birds")
 
 (fact "Check mk-local-path"
-  (mk-local-path "/tmp/vn" "ttrs_birds" "asdfjkl")
-  => "/tmp/vn/ttrs_birds-asdfjkl.csv")
+  (let [date-str "2013-08-07"]
+    (mk-local-path "/tmp/vn" "ttrs_birds" "asdfjkl" date-str)
+    => (format "/tmp/vn/%s/ttrs_birds-asdfjkl/ttrs_birds-asdfjkl.csv" date-str)))
 
 (fact "Check `mk-s3-path`."
   (mk-s3-path "vertnet" "data/staging" "ttrs_birds" "asdfjkl")
@@ -134,35 +135,6 @@
   (round-to 7 -300.0) => -300.0
   (round-to 7 -300.0 :format-str true) => "-300"
   (round-to 7 -300.123456789) => -300.1234568)
-
-(fact
-  "Test parse-hemisphere"
-  (parse-hemisphere "Northern") => {0 "winter" 1 "spring" 2 "summer" 3 "fall"}
-  (parse-hemisphere "Southern") => {0 "summer" 1 "fall" 2 "winter" 3 "spring"})
-
-(fact
-  "Test get-season-idx"
-  (get-season-idx 1) => 0
-  (get-season-idx 3) => 1
-  (get-season-idx 4) => 1
-  (get-season-idx 6) => 2
-  (get-season-idx 7) => 2
-  (get-season-idx 13) => nil
-  (get-season-idx 0) => nil
-  (get-season-idx "January") => nil)
-
-(fact
-  "Test get-season"
-  (get-season-str 1 1 1) => "Northern winter"
-  (get-season-str -1 1 1) => "Southern summer"
-  (get-season-str 1 1 3) => "Northern spring"
-  (get-season-str -1 1 3) => "Southern fall"
-  (get-season-str 1 1 4) => "Northern spring"
-  (get-season-str -1 1 4) => "Southern fall"
-  (get-season-str 1 1 7) => "Northern summer"
-  (get-season-str -1 1 7) => "Southern winter"
-  (get-season-str 1 1 10) => "Northern fall"
-  (get-season-str -1 1 10) => "Southern spring")
 
 (fact "Test `field->nullable`."
   (field->nullable "?yo") => "!yo")

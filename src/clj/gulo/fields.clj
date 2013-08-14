@@ -58,7 +58,7 @@
    "namepublishedinid" "taxonomicstatus" "nomenclaturalstatus" "nameaccordingto"
    "nameaccordingtoid" "parentnameusageid" "parentnameusage"
    "originalnameusageid" "originalnameusage" "acceptednameusageid"
-   "acceptednameusage" "taxonremarks" "dynamicproperties" "namepublishedinyear" "season"])
+   "acceptednameusage" "taxonremarks" "dynamicproperties" "namepublishedinyear"])
 
 ;; Ordered vector of harvesting output column names for use in wide Cascalog sources:
 (def harvest-fields
