@@ -26,7 +26,10 @@
   (let [url "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg"]
     (nth (get-resource-props url) 11)) => "14001")
 
-(future-fact "Test `resource->s3`.")
+(fact "Test `gen-local-csv-path`."
+  (gen-local-csv-path "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg"
+                      "/tmp/test-data" "2013-01-01" "23ksdkjlwkek")
+  => "/tmp/test-data/2013-01-01/mvz_egg-23ksdkjlwkek/mvz_egg-23ksdkjlwkek.csv")
 
 (fact "Test `url->ipt`."
   (url->ipt "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => true)
@@ -67,6 +70,15 @@
 
 (future-fact "Test `sync-resource`.")
 (future-fact "Test `sync-resource-table`.")
+
+(fact "Test `gen-gcs-path`."
+  (gen-gcs-path "gs://mybucket/staging" "2013-01-01")
+  => "gs://mybucket/staging/2013-01-01/")
+
+(future-fact "Test `copy-to-gcs`.")
+
+(fact "Test `path-split`."
+  (path-split "/tmp/test-data/data.csv") => ["/tmp/test-data" "data.csv"])
 
 (fact "Test `get-harvest-urls`."
   (let [path-coll ["http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_bird"
