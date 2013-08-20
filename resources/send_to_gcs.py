@@ -53,7 +53,6 @@ def delete_csv_files(path, dry_run=True):
 		print "\n".join(["os.remove('%s')" % path for path in csvs])
 	return
 
-
 def copy_to_gs(local_base_dir, gs_base_path, dry_run=True):
 	"""Invoke gsutil -m cp -R dir gs://my_bucket to recursively upload
 	all directories w/multi-threading turned on."""
@@ -91,8 +90,7 @@ def main(base_path, gs_base_path, dry_run=True):
 		print "This is a dry run. Nothing will be split, deleted, or uploaded."
 		print "_______________________________________________________________"
 
-	for d in get_subdirs(base_path):
-		process_dir(d, dry_run=dry_run)
+        process_dir(base_path, dry_run=dry_run)
 
 	copy_to_gs(base_path, gs_base_path, dry_run=dry_run)
 
@@ -102,6 +100,5 @@ if __name__ == "__main__":
 	
 	base_path = sys.argv[1]
 	gs_base_path = sys.argv[2]
-	
+
 	main(base_path, gs_base_path, dry_run=False)
-	

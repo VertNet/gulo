@@ -44,7 +44,7 @@
 
 (def STAGING-TABLE "resource_staging")
 (def HARVEST-TABLE "resource")
-(def GS-PATH "gs://vn-staging/data/")
+(def GS-PATH "gs://vn-staging/data") ;; note lack of trailing slash
 
 (defn execute-sql
   ([sql]
@@ -77,18 +77,24 @@
         props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
 
+(defn gen-local-csv-path
+  "Given a resource URL, local base path and date string, generate a path
+   for a CSV file that will be used for expanding the DWCA."
+  [url path date-str & [uuid]]
+  (let [resource-name (util/resource-url->name url)
+        uuid (or uuid (util/gen-uuid))]
+    (util/mk-local-path path resource-name uuid date-str)))
+
 (defn resource->csv
-  "Convert Darwn Core records from supplied IPT resource URL to CSV"
-  [url path date-str]
+  "Convert Darwn Core records from supplied IPT resource URL to CSV."
+  [url archive-path local-csv-path]
   (prn (format "Downloading records from %s" url))
   (try
     (let [props (get-resource-props url)
           resource-name (util/resource-url->name url)
           archive-url (util/resource-url->archive-url url)
-          uuid (util/gen-uuid)
-          local-csv-path (util/mk-local-path path resource-name uuid date-str)
           _ (clojure.java.io/make-parents local-csv-path)
-          records (dwca/open archive-url :path path)
+          records (dwca/open archive-url :path archive-path)
           vals (map (partial prep-record props) records)
           out (io/writer (io/file local-csv-path) :encoding "UTF-8")]
       (do
@@ -200,10 +206,37 @@
     (doall
      (map sync-resource urls))))
 
+(defn gen-gcs-path
+  "Appropriately format a Google Cloud Storage path string based on a
+   base path and date string."
+  [base-gcs-path date-str]
+  (format "%s/%s/" base-gcs-path date-str)) ;; note the trailing slash
+
+(defn copy-to-gcs
+  "Recursively copy all files in `base-path` to Google Cloud Storage using
+   `send_to_gcs.py` script."
+  [base-path date-str]
+  (let [gcs-path (gen-gcs-path GS-PATH date-str)] 
+    (prn (format "Copying %s to %s" base-path gcs-path))
+    (clojure.java.shell/sh "python" (.getPath (io/resource "send_to_gcs.py"))
+                           base-path gcs-path)))
+
+(defn path-split
+  "Split path on `/` and return head and tail."
+  [path]
+  (let [coll (.split path "/")
+        head (clojure.string/join "/" (take (dec (count coll)) coll))
+        tail (last coll)]
+    [head tail]))
+
 (defn harvest-resource
-  [resource-url local-path date-str]
+  "Harvest a single resource and copy the result to Google Cloud Storage."
+  [resource-url archive-path date-str]
   (try
-    (resource->csv resource-url local-path date-str)
+    (let [local-csv-path (gen-local-csv-path resource-url archive-path date-str)
+          [base-path _] (path-split local-csv-path)]
+      (resource->csv resource-url archive-path local-csv-path)
+      (copy-to-gcs base-path date-str))
     (catch Exception e
       (prn (format "ERROR: Resource %s (%s)" resource-url (.getMessage e)))
       (throw e)
@@ -228,9 +261,6 @@
     (prn (format "Harvesting %s resources" (count resource-urls)))
     (doall
      (map harvest-fn resource-urls))
-    (prn (format "Syncing %s/%s to %s" local-path date GS-PATH))
-    (clojure.java.shell/sh "python" (.getPath (io/resource "send_to_gcs.py"))
-                           (format "%s/%s" local-path date) GS-PATH)
     (prn "Harvest complete.")))
 
 (def line "Wed Apr 18 00:00:00 UTC 2012	http://fmipt.fieldmuseum.org:8080/ipt/resource.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/eml.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/archive.do?r=fm_birds	Field Museum of Natural History (Zoology) Bird Collection	FMNH	The Division of Birds houses the third largest scientific bird collection in the United States. The main collection contains over 480,000 specimens, including 600 holotypes, 70,000 skeletons, and 7,000 fluid specimens. In addition, the division houses 21,000 egg sets and 200 nests. The scope of the collection is world-wide; all bird families but one are represented, as are 90% of the world's genera and species. Included among its many historically and scientifically valuable individual collections are the H. B. Conover Game Bird Collection, Good's and Van Someren's African collections, C. B. Cory's West Indian collection, the Bishop Collection of North American birds, a large portion of W. Koelz's material from India and the Middle East, and many separate collections from South America, Africa (Hoogstraal from Egypt) and the Philippines (Rabor).	Sharon Grant	Field Museum of Natural History	sgrant@fieldmuseum.org	\"Copyright © 2012 The Field Museum of Natural History
