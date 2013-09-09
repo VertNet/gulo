@@ -40,6 +40,9 @@
 (fact "Test `url->networks`."
   (url->networks "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg") => "ORNIS")
 
+(fact "Test `url->coll-count`."
+  (url->coll-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => nil)
+
 (future-fact "Test `fetch-url`.")
 
 (fact "Test `get-count`."

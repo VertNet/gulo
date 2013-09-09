@@ -124,6 +124,11 @@
          :networks
          (clojure.string/join ","))))
 
+(defn url->coll-count
+  [url]
+  (let [sql (format "SELECT ipt FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
+    (:collectioncount (first (execute-sql sql)))))
+
 (defn fetch-url
   "Return HTML from supplied URL."
   [url]
@@ -161,6 +166,7 @@
   (let [icode (url->icode url)
         ipt (url->ipt url)
         networks (url->networks url)
+        coll-count (url->coll-count url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
@@ -177,7 +183,8 @@
              :email (.getCreatorEmail eml)
              :count (get-count url)
              :citation (get-citation eml)
-             :networks networks}]
+             :networks networks
+             :collectioncount coll-count}]
     row))
 
 (defn get-resource-urls
