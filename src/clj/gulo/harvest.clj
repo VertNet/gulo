@@ -106,28 +106,20 @@
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
 
-(defn url->ipt
-  [url]
-  (let [sql (format "SELECT ipt FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
-    (:ipt (first (execute-sql sql)))))
+(defn url->field
+  "Query staging table for a field given a resource URL.
 
-(defn url->icode
-  [url]
-  (let [sql (format "SELECT icode FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
-    (:icode (first (execute-sql sql)))))
+   Fields that require further, custom processing (e.g. `networks`) should
+   use this function inside their custom helper functions."
+  [field-string url]
+  (let [sql (format "SELECT %s FROM %s WHERE url='%s' LIMIT 1" field-string
+                    STAGING-TABLE url)
+        field-kw (keyword field-string)]
+    (field-kw (first (execute-sql sql)))))
 
 (defn url->networks
   [url]
-  (let [sql (format "SELECT networks FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
-    (->> (execute-sql sql)
-         first
-         :networks
-         (clojure.string/join ","))))
-
-(defn url->coll-count
-  [url]
-  (let [sql (format "SELECT ipt FROM %s WHERE url='%s' LIMIT 1" STAGING-TABLE url)]
-    (:collectioncount (first (execute-sql sql)))))
+  (clojure.string/join "," (url->field "networks" url)))
 
 (defn fetch-url
   "Return HTML from supplied URL."
@@ -163,10 +155,10 @@
 (defn mk-resource-map
   "Return map of resource table columns from supplied IPT resource URL."
   [url]
-  (let [icode (url->icode url)
-        ipt (url->ipt url)
+  (let [icode (url->field "icode" url)
+        ipt (url->field "ipt" url)
         networks (url->networks url)
-        coll-count (url->coll-count url)
+        coll-count (url->field "collectioncount" url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
