@@ -34,11 +34,11 @@
 (fact "Test `url->field`"
   (url->field "ipt" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => true
   (url->field "icode" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => "MLZ"
-  (url->field "collectioncount" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => nil)
-
-(fact "Test `url->networks`."
-  (url->networks "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg")
-  => "ORNIS")
+  (url->field "collectioncount" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => nil
+  (url->field "networks" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird")
+  => "ORNIS"
+  (url->field "networks" "http://ipt.vertnet.org:8080/ipt/resource.do?r=sbmnh_verts")
+  => "MaNIS,ORNIS,HerpNET,FishNet")
 
 (future-fact "Test `fetch-url`.")
 

@@ -117,10 +117,6 @@
         field-kw (keyword field-string)]
     (field-kw (first (execute-sql sql)))))
 
-(defn url->networks
-  [url]
-  (clojure.string/join "," (url->field "networks" url)))
-
 (defn fetch-url
   "Return HTML from supplied URL."
   [url]
@@ -160,7 +156,7 @@
   [url]
   (let [icode (url->field "icode" url)
         ipt (url->field "ipt" url)
-        networks (url->networks url)
+        networks (url->field "networks" url)
         coll-count (url->field "collectioncount" url)
         org-name (url->field "orgname" url)
         eml-url (util/resource-url->eml-url url)
