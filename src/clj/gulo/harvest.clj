@@ -162,6 +162,7 @@
         ipt (url->field "ipt" url)
         networks (url->networks url)
         coll-count (url->field "collectioncount" url)
+        org-name (url->field "orgname" url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
@@ -171,7 +172,7 @@
              :eml eml-url
              :dwca (s/replace url "resource" "archive")
              :pubdate (.toString (.getPubDate eml))
-             :orgname (.getOrganisation (.getContact eml))
+             :orgname org-name
              :description (.getAbstract eml)
              :emlrights (.getIntellectualRights eml)
              :contact (.getCreatorName eml)
