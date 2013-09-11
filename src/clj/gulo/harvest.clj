@@ -141,8 +141,8 @@
                  #(= (:href (:attrs (first (:content %)))) dwca-url)
                  tds))
           token (second (:content node))
-          tokens (s/split token #" ")
-          count (s/replace (nth tokens 3) "," "")]
+          count-str (first (filter #(.contains % ",") (s/split token #" ")))
+          count (s/replace count-str "," "")]
       (if (empty? count)
         (throw Exception)
         count))
