@@ -255,7 +255,7 @@
   [local-path & {:keys [sync path-file path-coll date] :or {sync false path-file nil path-coll nil date (util/todays-date)}}]
   (if sync
     (sync-resource-table))
-  (let [resource-urls (get-harvest-urls :paths-file path-file :path-coll path-coll)
+  (let [resource-urls (get-harvest-urls :path-file path-file :path-coll path-coll)
         harvest-fn #(harvest-resource % local-path date)]
     (prn (format "Harvesting %s resources" (count resource-urls)))
     (doall
