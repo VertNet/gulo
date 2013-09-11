@@ -31,14 +31,14 @@
                       "/tmp/test-data" "2013-01-01" "23ksdkjlwkek")
   => "/tmp/test-data/2013-01-01/mvz_egg-23ksdkjlwkek/mvz_egg-23ksdkjlwkek.csv")
 
-(fact "Test `url->ipt`."
-  (url->ipt "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => true)
-
-(fact "Test `url->icode`."
-  (url->icode "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => "MLZ")
+(fact "Test `url->field`"
+  (url->field "ipt" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => true
+  (url->field "icode" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => "MLZ"
+  (url->field "collectioncount" "http://ipt.vertnet.org:8080/ipt/resource.do?r=mlz_bird") => nil)
 
 (fact "Test `url->networks`."
-  (url->networks "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg") => "ORNIS")
+  (url->networks "http://ipt.vertnet.org:8080/ipt/resource.do?r=mvz_egg")
+  => "ORNIS")
 
 (future-fact "Test `fetch-url`.")
 
