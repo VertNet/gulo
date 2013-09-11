@@ -138,8 +138,11 @@
                  #(= (:href (:attrs (first (:content %)))) dwca-url)
                  tds))
           token (second (:content node))
-          tokens (s/split token #" ")
-          count (s/replace (nth tokens 3) "," "")]
+          slugs (filter #(not (= "" %)) (s/split token #" "))
+          ;; capture number before `records`
+          ;; e.g. "(17 MB) 505,538 records"
+          count-str (nth slugs (dec (dec (count slugs))))
+          count (s/replace count-str "," "")]
       (if (empty? count)
         (throw Exception)
         count))
@@ -192,7 +195,7 @@
   (try
     (prn (format "Syncing: %s" url))
     (let [resource (mk-resource-map url)
-          sql (cartodb-utils/maps->insert-sql HARVEST-TABLE resource)]      
+          sql (cartodb-utils/maps->insert-sql HARVEST-TABLE resource)]
       (execute-sql sql))
     (catch Exception e
       (prn (format "SYNC FAIL: %s (%s)" url (.getMessage e))))))

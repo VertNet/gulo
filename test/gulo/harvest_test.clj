@@ -46,8 +46,10 @@
   (get-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=ttrs_birds")
   => "3945"
   (get-count "http://ipt.calacademy.org:8080/ipt/resource.do?r=herp")
-  => "-1"
+  => "306211"
   (get-count "http://ipt.nhm.ku.edu/ipt/resource.do?r=kubi_herps")
+  => "333485"
+  (get-count "http://ipt.vertnet.org:8080/ipt/resource.do?r=fake_resource")
   => "-1")
 
 (future-fact "Test `get-citation`")
