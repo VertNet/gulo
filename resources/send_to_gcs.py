@@ -61,7 +61,7 @@ def copy_to_gs(local_base_dir, gs_base_path, dry_run=True):
 	print "Copying to Google Cloud Storage:"
 	print local_base_dir
 
-	cmd = "gsutil -p vertnet-portal -m cp -R %s %s" % (local_base_dir, gs_base_path)
+	cmd = "gsutil -m cp -R %s %s" % (local_base_dir, gs_base_path)
 
 	if not dry_run:
 		status = subprocess.check_call(cmd.split())
