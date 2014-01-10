@@ -27,6 +27,7 @@ def invoke_split(path, dry_run=True):
 	print "Splitting CSV files in %s" % path
 
 	cmd = "cat %s/*.csv | split -l %s - %s/" % (path, LINE_COUNT, path)
+	print cmd
 
 	if dry_run:
 		print "\n<--Dry run-->"
@@ -62,6 +63,7 @@ def copy_to_gs(local_base_dir, gs_base_path, dry_run=True):
 	print local_base_dir
 
 	cmd = "gsutil -m cp -R %s %s" % (local_base_dir, gs_base_path)
+	print cmd
 
 	if not dry_run:
 		status = subprocess.check_call(cmd.split())

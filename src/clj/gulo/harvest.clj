@@ -44,7 +44,7 @@
 
 (def STAGING-TABLE "resource_staging")
 (def HARVEST-TABLE "resource")
-(def GS-PATH "gs://vn-harvest/data") ;; note lack of trailing slash
+(def GS-PATH "gs://vertnet-harvesting/data") ;; note lack of trailing slash
 
 (defn execute-sql
   ([sql]

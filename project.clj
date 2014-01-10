@@ -36,5 +36,5 @@
                  [clj-time "0.3.4"]
                  [clj-aws-s3 "0.3.6"]
                  [org.clojure/java.jdbc "0.3.0-alpha1"]]
-  :min-lein-version "2.0.0"
-  :aot [vn.schema gulo.hadoop.pail org.json])
+  :min-lein-version "2.0.0")
+  ;;:aot [vn.schema gulo.hadoop.pail org.json])
