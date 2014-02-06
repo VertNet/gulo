@@ -201,7 +201,7 @@
   "Sync resource table on CartoDB by populating from EML and resource_staging."
   []
   (let [urls (get-resource-urls STAGING-TABLE)]
-    (cartodb/query (format "DELETE FROM %s" HARVEST-TABLE) "vertnet" :api-key util/api-key)
+    (cartodb/query (format "TRUNCATE TABLE %s RESTART IDENTITY) "vertnet" :api-key util/api-key)
     (doall
      (map sync-resource urls))))
 
