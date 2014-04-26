@@ -48,7 +48,7 @@
    "verbatimlocality" "verbatimlongitude" "waterbody" "year" "footprintsrs"
    "georeferenceddate" "identificationverificationstatus" "institutionid"
    "locationaccordingto" "municipality" "occurrencestatus"
-   "ownerinstitutioncode" "samplingeffort" "verbatimsrs" "locationaccordingto7"
+   "ownerinstitutioncode" "samplingeffort" "verbatimsrs" "locationaccordingto"
    "taxonid" "taxonconceptid" "datasetid" "datasetname" "source" "modified"
    "accessrights" "rights" "rightsholder" "language" "higherclassification"
    "kingdom" "phylum" "classs" "order" "family" "genus" "subgenus"
