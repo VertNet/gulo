@@ -166,26 +166,28 @@
         migrator (url->field "migrator" url)
         source-url (url->field "source_url" url)
         eml-url (util/resource-url->eml-url url)
+        source-eml-url (util/resource-url->eml-url source-url)
         eml (EmlFactory/build (io/input-stream eml-url))
+        source-eml (EmlFactory/build (io/input-stream source-eml-url))
         row {:title (.getTitle eml)
              :icode icode
              :ipt ipt
              :url url
              :migrator migrator
              :source_url source-url
-             :eml eml-url
+             :eml source-eml-url
              :dwca (s/replace url "resource" "archive")
              :pubdate (.toString (.getPubDate eml))
              :orgname org-name
              :orgcity org-city
              :orgstateprovince org-stateprovince
              :orgcountry org-country
-             :description (.getAbstract eml)
-             :emlrights (.getIntellectualRights eml)
-             :contact (.getCreatorName eml)
-             :email (.getCreatorEmail eml)
+             :description (.getAbstract source-eml)
+             :emlrights (.getIntellectualRights source-eml)
+             :contact (.getCreatorName source-eml)
+             :email (.getCreatorEmail source-eml)
              :count (get-count url)
-             :citation (get-citation eml)
+             :citation (get-citation source-eml)
              :networks networks
              :the_geom the-geom
              :collectioncount coll-count}]
