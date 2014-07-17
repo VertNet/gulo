@@ -2,23 +2,23 @@
   "Functions for harvesting Darwin Core Archives from IPT.
 
   A Darwin Core Archive (archive) is a zip file that contains a Darwin
-  Core record dataset with an EML metadata document. The metadata
-  describes what the dataset is and when it was last updated.
+  Core record data set with an EML metadata document. The metadata
+  describes what the data set is and when it was last updated.
 
-  Archives are published online by the Integrated Publishing
-  Toolkit (IPT) as resources. Each resource has an RSS feed that
+  An archive is published online in an Integrated Publishing
+  Toolkit (IPT) instance as a resource. Each resource has an RSS feed that
   describes the resource, when it was last published, and provides
   download links to the archive.
 
-  For convienience, we store resource URLs that we want to harvest in
-  CartoDB:
+  For convienience, we store in a CartoDB table the URLs for resources we want to harvest:
 
     https://vertnet.cartodb.com/tables/resource
 
-  When we harvest resources, we extract the dataset and metadata from
-  their archive, lookup the resource organization if possible, and
-  encode everything (records, resource, dataset, organization) into a
-  simple CSV textline that gets uploaded to S3.
+  When we harvest a resource, we extract the data set and metadata from
+  its archive, look up the resource organization, if possible, and
+  encode everything (records, resource, data set, organization) into a
+  simple CSV text line and upload it to Google Cloud Storage in the location
+  referred to in the variable GS_PATH.
   
   For reference:
     Darwin Core: http://goo.gl/HgvY4
@@ -159,16 +159,27 @@
         networks (url->field "networks" url)
         coll-count (url->field "collectioncount" url)
         org-name (url->field "orgname" url)
+        org-city (url->field "orgcity" url)
+        org-country (url->field "orgcountry" url)
+        org-stateprovince (url->field "orgstateprovince" url)
+        the-geom (url->field "the_geom" url)
+        migrator (url->field "migrator" url)
+        source-url (url->field "source_url" url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
         row {:title (.getTitle eml)
              :icode icode
              :ipt ipt
              :url url
+             :migrator migrator
+             :source_url source-url
              :eml eml-url
              :dwca (s/replace url "resource" "archive")
              :pubdate (.toString (.getPubDate eml))
              :orgname org-name
+             :orgcity org-city
+             :orgstateprovince org-stateprovince
+             :orgcountry org-country
              :description (.getAbstract eml)
              :emlrights (.getIntellectualRights eml)
              :contact (.getCreatorName eml)
@@ -176,6 +187,7 @@
              :count (get-count url)
              :citation (get-citation eml)
              :networks networks
+             :the_geom the-geom
              :collectioncount coll-count}]
     row))
 
