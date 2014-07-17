@@ -163,7 +163,7 @@
         org-country (url->field "orgcountry" url)
         org-stateprovince (url->field "orgstateprovince" url)
         the-geom (url->field "the_geom" url)
-        migrator (url-field "migrator" url)
+        migrator (url->field "migrator" url)
         source-url (url->field "source_url" url)
         eml-url (util/resource-url->eml-url url)
         eml (EmlFactory/build (io/input-stream eml-url))
