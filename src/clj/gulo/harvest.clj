@@ -164,6 +164,10 @@
         org-stateprovince (url->field "orgstateprovince" url)
         the-geom (url->field "the_geom" url)
         migrator (url->field "migrator" url)
+        license (url->field "license" url)
+        lastindexed (url->field "lastindexed" url)
+        gbifdatasetid (url->field "gbifdatasetid" url)
+        gbifpublisherid (url->field "gbifpublisherid" url)
         source-url (url->field "source_url" url)
         eml-url (util/resource-url->eml-url url)
         source-eml-url (util/resource-url->eml-url source-url)
@@ -174,6 +178,10 @@
              :ipt ipt
              :url url
              :migrator migrator
+             :license license
+             :lastindexed lastindexed
+             :gbifdatasetid gbifdatasetid
+             :gbifpublisherid gbifpublisherid
              :source_url source-url
              :eml source-eml-url
              :dwca (s/replace url "resource" "archive")
