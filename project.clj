@@ -33,7 +33,6 @@
                  [org.clojure/clojure-contrib "1.2.0"]
                  [org.gbif/dwca-reader "1.19-SNAPSHOT"]
                  [org.gbif/gbif-common "0.16"]
-                 [dwca-reader-clj "0.8.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
                  [cartodb-clj "1.5.5"]
                  [org.clojure/data.csv "0.1.2"]
