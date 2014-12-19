@@ -1,5 +1,6 @@
 (ns gulo.harvest
   "Functions for harvesting Darwin Core Archives from IPT.
+  This version creates harvests compatible with the 2013 version of Darwin Core.
 
   A Darwin Core Archive (archive) is a zip file that contains a Darwin
   Core record data set with an EML metadata document. The metadata
