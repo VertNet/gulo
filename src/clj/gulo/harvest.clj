@@ -1,6 +1,9 @@
 (ns gulo.harvest
   "Functions for harvesting Darwin Core Archives from IPT.
-
+  This version is meant to be compatible with the Darwin Core as ratified in 2014.
+  Changes are not compatible with the VertNet portal as of 2014-12-19 and harvests
+  should not be indexed into index-2014-03-12.
+  
   A Darwin Core Archive (archive) is a zip file that contains a Darwin
   Core record data set with an EML metadata document. The metadata
   describes what the data set is and when it was last updated.
@@ -65,7 +68,6 @@
   "Prepend record property fields to fields from a Darwin Core Archive record."
   [props record]
   (-> (dwca/field-vals record)
-      prepend-uuid
       (prepend-props props)))
 
 (defn get-resource-props
