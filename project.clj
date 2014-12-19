@@ -1,4 +1,4 @@
-(defproject gulo "0.1.0-SNAPSHOT"
+(defproject gulo "0.1.1-SNAPSHOT"
   :description "Shredding Darwin Core Archives with ferocity, strength, and Cascalog."
   :repositories {"conjars" "http://conjars.org/repo/"
                  "gbif" "http://repository.gbif.org/content/groups/gbif/"
@@ -23,7 +23,7 @@
                  [cascading/cascading-hadoop "2.2.0-wip-19" :exclusions [org.slf4j/slf4j-log4j12]]
                  [org.pingles/cascading.protobuf "0.0.1"]
                  [org.clojure/clojure-contrib "1.2.0"]
-                 [dwca-reader-clj "0.8.0-SNAPSHOT"]
+                 [dwca-reader-clj "0.10.1-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
                  [cartodb-clj "1.5.5"]
                  [org.clojure/data.csv "0.1.2"]
