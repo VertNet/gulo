@@ -5,14 +5,14 @@
 (def resource-fields
   "Ordered vector of fields used in resource map."
   [:icode :title :citation :contact :dwca :email :eml
-   :emlrights :gbifdatasetid :gbifpublisherid :lastindexed :license
+   :emlrights :gbifdatasetid :gbifpublisherid :license
    :migrator :networks :orgcountry :orgname :orgstateprovince
    :pubdate :source_url :url])
-
+   
 (def base-fields
-  "Ordered vector of VertNet field names. Used as base for various
-   vectors of column and Cascalog field names."
-  ["harvestid" "id" "acceptednameusage" "acceptednameusageid" "accessrights" 
+  "Ordered vector of VertNet field names. Used as base for various vectors of column 
+   and Cascalog field names."
+  ["id" "acceptednameusage" "acceptednameusageid" "accessrights" 
    "associatedmedia" "associatedoccurrences" "associatedreferences" "associatedsequences" 
    "associatedtaxa" "basisofrecord" "bed" "behavior" "bibliographiccitation" 
    "catalognumber" "classs" "collectioncode" "collectionid" "continent" 
