@@ -206,7 +206,7 @@
 (defn get-resource-urls
   "Return vector of resource table row maps from CartoDB."
   [table & {:keys [limit] :or {limit nil}}]
-  (let [sql (format "SELECT url FROM %s WHERE ipt=true and networks like '%VertNet%' ORDER BY cartodb_id" table)
+  (let [sql (format "SELECT url FROM %s WHERE ipt=true and networks like %s ORDER BY cartodb_id" table, "'%VertNet%'")
         sql (if (nil? limit) sql (format "%s LIMIT %s" sql limit))]
     (map :url (execute-sql sql))))
 
