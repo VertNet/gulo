@@ -100,7 +100,7 @@
           vals (map (partial prep-record props) records)
           out (io/writer (io/file local-csv-path) :encoding "UTF-8")]
       (do
-        (prn (format "%s records found" (nth props 11)))
+        (prn (format "%s records found" (nth props 1)))
         (prn (format "Writing to %s" local-csv-path))
         (with-open [f out]
           (csv/write-csv f vals :separator \tab :quote \"))
