@@ -170,6 +170,7 @@
         lastindexed (url->field "lastindexed" url)
         gbifdatasetid (url->field "gbifdatasetid" url)
         gbifpublisherid (url->field "gbifpublisherid" url)
+        doi (url->field "doi" url)
         source-url (url->field "source_url" url)
         eml-url (util/resource-url->eml-url url)
         source-eml-url (util/resource-url->eml-url source-url)
@@ -184,6 +185,7 @@
              :lastindexed lastindexed
              :gbifdatasetid gbifdatasetid
              :gbifpublisherid gbifpublisherid
+             :doi doi
              :source_url source-url
              :eml source-eml-url
              :dwca (s/replace url "resource" "archive")
