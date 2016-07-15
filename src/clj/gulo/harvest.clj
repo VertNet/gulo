@@ -79,13 +79,24 @@
         props (map #(% resource-map) f/resource-fields)]
     (map util/line-breaks->spaces (flatten props))))
 
+(defn url->field
+  "Query staging table for a field given a resource URL.
+
+   Fields that require further, custom processing (e.g. `networks`) should
+   use this function inside their custom helper functions."
+  [field-string url]
+  (let [sql (format "SELECT %s FROM %s WHERE url='%s' LIMIT 1" field-string
+                    STAGING-TABLE url)
+        field-kw (keyword field-string)]
+    (field-kw (first (execute-sql sql)))))
+
 (defn gen-local-csv-path
   "Given a resource URL, local base path and date string, generate a path
    for a CSV file that will be used for expanding the DWCA."
   [url path date-str & [uuid]]
-  (let [resource-name (util/resource-url->name url)
-        uuid (or uuid (util/gen-uuid))]
-    (util/mk-local-path path resource-name uuid date-str)))
+  (let [resourcename (util/resource-url->name url)
+        icode (url->field "icode" url)]
+    (util/mk-local-path path resourcename icode date-str)))
 
 (defn resource->csv
   "Convert Darwn Core records from supplied IPT resource URL to CSV."
@@ -107,17 +118,6 @@
         (prn (format "Done harvesting %s" resource-name))))
     (catch Exception e (prn "Error harvesting" url (.getMessage e))
            (prn (throw e)))))
-
-(defn url->field
-  "Query staging table for a field given a resource URL.
-
-   Fields that require further, custom processing (e.g. `networks`) should
-   use this function inside their custom helper functions."
-  [field-string url]
-  (let [sql (format "SELECT %s FROM %s WHERE url='%s' LIMIT 1" field-string
-                    STAGING-TABLE url)
-        field-kw (keyword field-string)]
-    (field-kw (first (execute-sql sql)))))
 
 (defn fetch-url
   "Return HTML from supplied URL."
@@ -290,3 +290,4 @@
 
 (def line "Wed Apr 18 00:00:00 UTC 2012	http://fmipt.fieldmuseum.org:8080/ipt/resource.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/eml.do?r=fm_birds	http://fmipt.fieldmuseum.org:8080/ipt/archive.do?r=fm_birds	Field Museum of Natural History (Zoology) Bird Collection	FMNH	The Division of Birds houses the third largest scientific bird collection in the United States. The main collection contains over 480,000 specimens, including 600 holotypes, 70,000 skeletons, and 7,000 fluid specimens. In addition, the division houses 21,000 egg sets and 200 nests. The scope of the collection is world-wide; all bird families but one are represented, as are 90% of the world's genera and species. Included among its many historically and scientifically valuable individual collections are the H. B. Conover Game Bird Collection, Good's and Van Someren's African collections, C. B. Cory's West Indian collection, the Bishop Collection of North American birds, a large portion of W. Koelz's material from India and the Middle East, and many separate collections from South America, Africa (Hoogstraal from Egypt) and the Philippines (Rabor).	Sharon Grant	Field Museum of Natural History	sgrant@fieldmuseum.org	\"Copyright © 2012 The Field Museum of Natural History
 Full details may be found at http://fieldmuseum.org/about/copyright-information\"	FMNH	505538	1743420						PreservedSpecimen			468422	Birds	Birds	Africa			Malawi		Malawi			8																														Africa, Malawi, Rumphi: Khuta maji, Vwaza Marsh, Vwaza Wildlife Reserve												FMNH										Khuta maji, Vwaza Marsh, Vwaza Wildlife Reserve																				1170	10							skin(r)		MLW-3422												8	Rumphi						1170 -						2009				FMNH				FMNH						birds-12-jul-2012								Animalia Chordata Aves Passeriformes Estrildidae	Animalia	Chordata	Aves	Passeriformes	Estrildidae	Pytilia		melba	melba	Pytilia melba melba							ICZN																;")
+

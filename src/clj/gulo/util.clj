@@ -56,9 +56,9 @@
   (second (s/split url #"=")))
 
 (defn mk-local-path
-  [path resource-name uuid & [date]]
+  [path resourcename icode & [date]]
   (let [date-str (or date (todays-date))]
-    (format "%s/%s/%s-%s/%s-%s.csv" path date-str resource-name uuid resource-name uuid)))
+    (format "%s/%s/%s-%s/%s.csv" path date-str icode resourcename resourcename)))
 
 (defn mk-s3-path
   [bucket s3-path resource-name uuid]
