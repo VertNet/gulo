@@ -73,7 +73,7 @@
 (defn get-resource-props
   "Extract and clean up props in resource map."
   [resource-url]
-  (let [sql (format "SELECT * FROM resource WHERE url='%s' ORDER BY cartodb_id"
+  (let [sql (format "SELECT * FROM resource WHERE url='%s'"
                     resource-url)
         [resource-map] (execute-sql sql)
         props (map #(% resource-map) f/resource-fields)]

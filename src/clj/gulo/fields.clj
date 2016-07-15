@@ -4,7 +4,7 @@
 
 (def resource-fields
   "Ordered vector of fields used in resource map."
-  [:icode :title :citation :contact :dwca :email :eml
+  [:icode :count :title :citation :contact :dwca :email :eml
    :emlrights :gbifdatasetid :gbifpublisherid :doi :license
    :migrator :networks :orgcountry :orgname :orgstateprovince
    :pubdate :source_url :url])
