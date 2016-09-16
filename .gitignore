@@ -16,3 +16,4 @@ target/
 \#*.*\#
 .lein*
 .nrepl*
+.DS_Store
