@@ -1,0 +1,4 @@
+--- 
+format: SequenceFile
+structure: gulo.hadoop.pail.SplitDataPailStructure
+args: {}

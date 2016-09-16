@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<archive xmlns="http://rs.tdwg.org/dwc/text/">
+  <core encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/DarwinCore">
+    <files>
+      <location>DarwinCore.txt</location>
+    </files>
+    <id index="0" />
+    <field index="1" term="http://rs.tdwg.org/dwc/terms/ScientificName"/>
+    <field index="2" term="http://rs.tdwg.org/dwc/terms/DecimalLatitude"/>
+    <field index="3" term="http://rs.tdwg.org/dwc/terms/DecimalLongitude"/>
+    <field index="4" term="http://rs.tdwg.org/dwc/terms/Locality"/>
+  </core>
+</archive>
